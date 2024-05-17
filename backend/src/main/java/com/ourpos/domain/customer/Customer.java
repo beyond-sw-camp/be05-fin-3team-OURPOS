@@ -53,4 +53,5 @@ public class Customer extends BaseEntity {
         this.role = role;
         this.nickname = nickname;
     }
+    
 }
