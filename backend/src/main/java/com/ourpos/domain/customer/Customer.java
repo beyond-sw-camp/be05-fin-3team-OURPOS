@@ -1,5 +1,9 @@
 package com.ourpos.domain.customer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 import com.ourpos.domain.BaseEntity;
 
@@ -44,14 +49,27 @@ public class Customer extends BaseEntity {
     @Column(name = "customer_nickname")
     private String nickname;
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<CustomerAddress> customerAddresses = new ArrayList<>();
+
     @Builder
-    private Customer(String loginId, String password, String name, String phone, Role role, String nickname) {
+    private Customer(String loginId, String password, String name, String phone, Role role, String nickname,
+        CustomerAddress... customerAddresses) {
         this.loginId = loginId;
         this.password = password;
         this.name = name;
         this.phone = phone;
         this.role = role;
         this.nickname = nickname;
+        for (CustomerAddress customerAddress : customerAddresses) {
+            addCustomerAddress(customerAddress);
+        }
     }
-    
+
+    // 연관관계 편의 메서드
+    public void addCustomerAddress(CustomerAddress customerAddress) {
+        customerAddresses.add(customerAddress);
+        customerAddress.setCustomer(this);
+    }
+
 }
