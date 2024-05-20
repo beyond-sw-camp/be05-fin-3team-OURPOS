@@ -21,11 +21,11 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
-    @Column("category_name")
+    @Column(name = "category_name")
     private String name;
 
     @Builder
-    public Category(String name) {
+    private Category(String name) {
         this.name = name;
     }
 }

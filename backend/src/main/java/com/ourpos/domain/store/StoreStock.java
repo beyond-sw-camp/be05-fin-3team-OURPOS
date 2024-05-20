@@ -1,4 +1,4 @@
-package com.ourpos.domain.menu;
+package com.ourpos.domain.store;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,37 +10,39 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import com.ourpos.domain.storeorder.StoreMenu;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "menu_option")
-public class MenuOption {
+@Table(name = "store_stock")
+public class StoreStock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "menu_option_id")
+    @Column(name = "store_stock_id")
     private Long id;
 
-    @Setter
-    @JoinColumn(name = "menu_option_group_id")
+    @JoinColumn(name = "store_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private MenuOptionGroup menuOptionGroup;
+    private Store store;
 
-    @Column(name = "menu_option_name")
-    private String name;
+    @JoinColumn(name = "store_menu_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private StoreMenu storeMenu;
 
-    @Column(name = "menu_option_price")
-    private Integer price;
+    @Column(name = "store_stock_quantity")
+    private Integer quantity;
 
     @Builder
-    private MenuOption(String name, Integer price) {
-        this.name = name;
-        this.price = price;
+    private StoreStock(Store store, StoreMenu storeMenu, Integer quantity) {
+        this.store = store;
+        this.storeMenu = storeMenu;
+        this.quantity = quantity;
     }
 }

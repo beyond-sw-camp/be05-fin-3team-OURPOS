@@ -13,16 +13,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(name = "order_option_group")
 public class OrderOptionGroup {
 
     @Id
@@ -32,17 +35,17 @@ public class OrderOptionGroup {
 
     @Setter
     @JoinColumn(name = "order_detail_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private OrderDetail orderDetail;
 
     @Column(name = "order_option_group_name")
     private String name;
 
-    @OneToMany(mappedBy = "orderOptionGroup")
+    @OneToMany(mappedBy = "orderOptionGroup", cascade = CascadeType.ALL)
     private List<OrderOption> orderOptions = new ArrayList<>();
 
     @Builder
-    public OrderOptionGroup(String name, OrderOption... orderOptions) {
+    public OrderOptionGroup(String name, @Singular List<OrderOption> orderOptions) {
         this.name = name;
         for (OrderOption orderOption : orderOptions) {
             addOrderOption(orderOption);
@@ -53,5 +56,11 @@ public class OrderOptionGroup {
     public void addOrderOption(OrderOption orderOption) {
         orderOptions.add(orderOption);
         orderOption.setOrderOptionGroup(this);
+    }
+
+    public int calculatePrice() {
+        return orderOptions.stream()
+            .mapToInt(OrderOption::getPrice)
+            .sum();
     }
 }

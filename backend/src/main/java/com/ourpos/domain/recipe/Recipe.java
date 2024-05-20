@@ -1,4 +1,4 @@
-package com.ourpos.domain.menu;
+package com.ourpos.domain.recipe;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,39 +8,40 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+
+import com.ourpos.domain.menu.Menu;
+import com.ourpos.domain.storeorder.StoreMenu;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "menu_option")
-public class MenuOption {
+public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "menu_option_id")
+    @Column(name = "recipe_id")
     private Long id;
 
-    @Setter
-    @JoinColumn(name = "menu_option_group_id")
+    @JoinColumn(name = "store_menu_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private MenuOptionGroup menuOptionGroup;
+    private StoreMenu storeMenu;
 
-    @Column(name = "menu_option_name")
-    private String name;
+    @JoinColumn(name = "menu_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Menu menu;
 
-    @Column(name = "menu_option_price")
-    private Integer price;
+    @Column(name = "recipe_content")
+    private Integer content;
 
     @Builder
-    private MenuOption(String name, Integer price) {
-        this.name = name;
-        this.price = price;
+    private Recipe(StoreMenu storeMenu, Menu menu, Integer content) {
+        this.storeMenu = storeMenu;
+        this.menu = menu;
+        this.content = content;
     }
 }
