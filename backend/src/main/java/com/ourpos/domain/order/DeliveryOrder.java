@@ -1,6 +1,7 @@
 package com.ourpos.domain.order;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,12 +15,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+import com.ourpos.domain.customer.Customer;
+import com.ourpos.domain.orderdetail.OrderDetail;
 import com.ourpos.domain.rider.Rider;
+import com.ourpos.domain.store.Store;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -56,11 +61,14 @@ public class DeliveryOrder extends Order {
     private LocalTime estimatedTime;
 
     @Builder
-    private DeliveryOrder(String ownerMessage, String riderMessage, Integer tip, Boolean disposableYn) {
+    private DeliveryOrder(Customer customer, Store store, OrderAddress orderAddress, String ownerMessage,
+        String riderMessage, Integer tip, Boolean disposableYn, @Singular List<OrderDetail> orderDetails) {
+        super(customer, store, orderDetails);
+        this.orderAddress = orderAddress;
         this.ownerMessage = ownerMessage;
         this.riderMessage = riderMessage;
-        this.status = DeliveryStatus.WAITING;
         this.tip = tip;
         this.disposableYn = disposableYn;
+        this.status = DeliveryStatus.WAITING;
     }
 }
