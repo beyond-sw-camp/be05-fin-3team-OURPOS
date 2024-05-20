@@ -36,15 +36,15 @@ public class Menu extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Store store;
 
+    @JoinColumn(name = "category_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
+
     @Column(name = "menu_name")
     private String name;
 
     @Column(name = "menu_price")
     private Integer price;
-
-    @JoinColumn(name = "category_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Category category;
 
     @Column(name = "menu_available_yn")
     private Boolean availableYn;
@@ -65,7 +65,7 @@ public class Menu extends BaseEntity {
     private List<MenuOptionGroup> menuOptionGroups = new ArrayList<>();
 
     @Builder
-    public Menu(Store store, String name, Integer price, Boolean availableYn, Category category,
+    private Menu(Store store, String name, Integer price, Boolean availableYn, Category category,
         String description, String pictureUrl, MenuOptionGroup... menuOptionGroups) {
         this.store = store;
         this.name = name;
