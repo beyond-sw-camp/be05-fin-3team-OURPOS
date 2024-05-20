@@ -1,7 +1,10 @@
 package com.ourpos.domain.order;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
@@ -13,15 +16,18 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import com.ourpos.domain.BaseEntity;
 import com.ourpos.domain.customer.Customer;
+import com.ourpos.domain.orderdetail.OrderDetail;
 import com.ourpos.domain.store.Store;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -50,9 +56,27 @@ public abstract class Order extends BaseEntity {
     @Column(name = "order_completed_datetime")
     private LocalDateTime completedDateTime;
 
-    protected Order(Customer customer, Store store, Integer price) {
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderDetail> orderDetails = new ArrayList<>();
+
+    protected Order(Customer customer, Store store, @Singular List<OrderDetail> orderDetails) {
         this.customer = customer;
         this.store = store;
-        this.price = price;
+        for (OrderDetail orderDetail : orderDetails) {
+            addOrderDetail(orderDetail);
+        }
+        this.price = calculatePrice();
+    }
+
+    // 연관관계 편의 메서드
+    public void addOrderDetail(OrderDetail orderDetail) {
+        orderDetails.add(orderDetail);
+        orderDetail.setOrder(this);
+    }
+
+    public Integer calculatePrice() {
+        return orderDetails.stream()
+            .mapToInt(OrderDetail::getPrice)
+            .sum();
     }
 }

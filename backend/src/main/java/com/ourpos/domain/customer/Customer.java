@@ -19,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -54,7 +55,7 @@ public class Customer extends BaseEntity {
 
     @Builder
     private Customer(String loginId, String password, String name, String phone, Role role, String nickname,
-        CustomerAddress... customerAddresses) {
+        @Singular List<CustomerAddress> customerAddresses) {
         this.loginId = loginId;
         this.password = password;
         this.name = name;

@@ -12,16 +12,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(name = "menu_option_group")
 public class MenuOptionGroup {
 
     @Id
@@ -47,7 +50,8 @@ public class MenuOptionGroup {
     private List<MenuOption> menuOptions = new ArrayList<>();
 
     @Builder
-    private MenuOptionGroup(String name, Boolean exclusiveYn, String description, MenuOption... menuOptions) {
+    private MenuOptionGroup(String name, Boolean exclusiveYn, String description,
+        @Singular List<MenuOption> menuOptions) {
         this.name = name;
         this.exclusiveYn = exclusiveYn;
         this.description = description;

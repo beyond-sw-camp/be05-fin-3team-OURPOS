@@ -21,6 +21,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -66,7 +67,7 @@ public class Menu extends BaseEntity {
 
     @Builder
     private Menu(Store store, String name, Integer price, Boolean availableYn, Category category,
-        String description, String pictureUrl, MenuOptionGroup... menuOptionGroups) {
+        String description, String pictureUrl, @Singular List<MenuOptionGroup> menuOptionGroups) {
         this.store = store;
         this.name = name;
         this.price = price;
