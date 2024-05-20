@@ -26,10 +26,10 @@ import com.ourpos.domain.store.StoreRepository;
 
 @Transactional
 @SpringBootTest
-class OrderServiceTest {
+class OrderServiceImplTest {
 
     @Autowired
-    private OrderService orderService;
+    private OrderServiceImpl orderServiceImpl;
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
@@ -91,7 +91,7 @@ class OrderServiceTest {
         orderRequestDto.setOrderDetails(List.of(orderDetailRequestDto1, orderDetailRequestDto2));
 
         // when
-        orderService.createHallOrder(orderRequestDto);
+        orderServiceImpl.createHallOrder(orderRequestDto);
 
         // then
         List<HallOrder> orders = orderQueryRepository.findAll();

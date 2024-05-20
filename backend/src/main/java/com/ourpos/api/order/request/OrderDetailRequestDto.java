@@ -8,7 +8,9 @@ import com.ourpos.domain.orderdetail.OrderDetail;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 public class OrderDetailRequestDto {
