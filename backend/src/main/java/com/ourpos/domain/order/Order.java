@@ -79,4 +79,8 @@ public abstract class Order extends BaseEntity {
             .mapToInt(OrderDetail::getPrice)
             .sum();
     }
+
+    public void completeOrder() {
+        this.completedDateTime = LocalDateTime.now();
+    }
 }
