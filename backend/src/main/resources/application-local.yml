@@ -11,7 +11,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none # ddl-auto create에서 none으로 수정함
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
