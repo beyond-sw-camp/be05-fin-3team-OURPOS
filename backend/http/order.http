@@ -43,7 +43,7 @@ content-type: application/json
 
 ### 홀 주문 조회
 
-GET http://localhost:8080/api/v1/orders/hall/2
+GET http://localhost:8080/api/v1/orders/hall/1
 
 ### 배달 주문 요청
 
@@ -102,3 +102,7 @@ content-type: application/json
 ### 배달 주문 조회
 
 GET http://localhost:8080/api/v1/orders/delivery/1
+
+### 점주 홀주문 주문 상세 조회
+
+GET http://localhost:8080/api/v1/manager/orders/hall/1
