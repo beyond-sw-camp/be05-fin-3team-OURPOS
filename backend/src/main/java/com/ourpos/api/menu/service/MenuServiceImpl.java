@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ourpos.api.menu.request.MenuRequestDto;
+import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.menu.MenuRepository;
+import com.ourpos.domain.store.Store;
 import com.ourpos.domain.store.StoreRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,14 @@ public class MenuServiceImpl implements MenuService {
 	@Transactional
 	public void addMenu(MenuRequestDto menuRequestDto, MultipartFile nultipartfile) {
 		log.info("MenuService.addMenu() called");
-		Store
+		Store store = storeRepository.findById(menuRequestDto.getStoreId()).orElseThrow(
+			() -> new IllegalArgumentException("Store not found"));
+
+		addMenuPicture(menuRequestDto, multipartFile);
+
+		Menu menu = Menu.builder()
+			.name(menuRequestDto.getName())
+			.price(menuRequestDto.getPrice())
+			.build();
 	}
 }
