@@ -39,4 +39,16 @@ public class HallOrder extends Order {
         this.status = HallStatus.WAITING;
         this.orderTakeoutYn = orderTakeoutYn;
     }
+
+    public void cancelOrder() {
+        this.status = HallStatus.CANCELED;
+    }
+
+    public void acceptOrder() {
+        this.status = HallStatus.COOKING;
+    }
+
+    public void completeOrder() {
+        this.status = HallStatus.COMPLETED;
+    }
 }
