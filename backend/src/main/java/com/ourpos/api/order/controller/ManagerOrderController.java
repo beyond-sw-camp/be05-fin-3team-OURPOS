@@ -30,7 +30,7 @@ public class ManagerOrderController {
     private final OrderService orderService;
 
     // 대기 상태인 주문 목록 확인
-    @GetMapping("/orders/{storeId}")
+    @GetMapping("/orders/waiting/{storeId}")
     public ResponseEntity<List<HallOrderResponseDto>> checkWaitingOrder(@PathVariable Long storeId) {
         System.out.println("ManagerOrderController.checkWaitingOrder");
         List<HallOrderResponseDto> list = managerOrderService.checkWaitingOrder(storeId);
