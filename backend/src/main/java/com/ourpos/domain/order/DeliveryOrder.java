@@ -98,5 +98,6 @@ public class DeliveryOrder extends Order {
             throw new IllegalArgumentException("배달중인 주문만 완료할 수 있습니다.");
         }
         this.status = DeliveryStatus.COMPLETED;
+        super.completeOrder();
     }
 }

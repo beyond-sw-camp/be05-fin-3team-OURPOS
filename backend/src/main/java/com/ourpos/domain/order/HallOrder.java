@@ -41,8 +41,8 @@ public class HallOrder extends Order {
     }
 
     public void cancelOrder() {
-        if (this.status == HallStatus.COMPLETED) {
-            throw new IllegalArgumentException("이미 완료된 주문은 취소할 수 없습니다.");
+        if (this.status != HallStatus.WAITING) {
+            throw new IllegalArgumentException("대기중인 주문만 취소할 수 있습니다.");
         }
         this.status = HallStatus.CANCELED;
     }
@@ -59,5 +59,6 @@ public class HallOrder extends Order {
             throw new IllegalArgumentException("조리중인 주문만 완료할 수 있습니다.");
         }
         this.status = HallStatus.COMPLETED;
+        super.completeOrder();
     }
 }
