@@ -61,4 +61,12 @@ public class ManagerOrderController {
         orderService.cancelHallOrder(orderId);
     }
 
+    // 조리중 주문 목록 확인
+    @GetMapping("/orders/cooking/{storeId}")
+    public ResponseEntity<List<HallOrderResponseDto>> checkCookingOrder(@PathVariable Long storeId) {
+        System.out.println("ManagerOrderController.checkCookingOrder");
+        List<HallOrderResponseDto> list = managerOrderService.checkCookingOrder(storeId);
+        return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
+
 }

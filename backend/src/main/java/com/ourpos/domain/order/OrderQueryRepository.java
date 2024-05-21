@@ -38,6 +38,17 @@ public class OrderQueryRepository {
             .fetch();
     }
 
+    // 조리 상태인 주문 확인
+    public List<HallOrder> findCookingAll(Long storeId) {
+        return queryFactory
+            .selectFrom(hallOrder)
+            .join(hallOrder.customer).fetchJoin()  // Fetch join 사용
+            .join(hallOrder.store).fetchJoin()     // Fetch join 사용
+            .where(hallOrder.status.eq(HallStatus.valueOf("COOKING")) // 조건 추가
+                .and(hallOrder.store.id.eq(storeId)))
+            .fetch();
+    }
+
     public Optional<HallOrder> findOneHallOrder(Long orderId) {
         return Optional.ofNullable(queryFactory
             .selectFrom(hallOrder)

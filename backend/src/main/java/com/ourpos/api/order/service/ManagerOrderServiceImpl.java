@@ -19,7 +19,7 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
 
     private final OrderQueryRepository orderQueryRepository;
 
-    // 대기 상태인 주문 목록 조회 -> 상점 id..?
+    // 대기 상태인 주문 목록 조회
     @Override
     public List<HallOrderResponseDto> checkWaitingOrder(Long storeId) {
         System.out.println("ManagerOrderServiceImpl.checkWaitingOrder");
@@ -32,4 +32,18 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
 
         return orderResponseDtos;
     }
+
+    // 조리 상태인 주문 목록 조회
+    @Override
+    public List<HallOrderResponseDto> checkCookingOrder(Long storeId) {
+        System.out.println("ManagerOrderServiceImpl.checkCookingOrder");
+        List<HallOrder> hallOrders = orderQueryRepository.findCookingAll(storeId);
+        List<HallOrderResponseDto> orderResponseDtos = new ArrayList<>();
+
+        for (HallOrder order : hallOrders) {
+            orderResponseDtos.add(new HallOrderResponseDto(order));
+        }
+        return orderResponseDtos;
+    }
+
 }
