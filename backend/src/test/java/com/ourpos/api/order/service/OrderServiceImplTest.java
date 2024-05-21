@@ -11,10 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ourpos.api.order.request.OrderDetailRequestDto;
-import com.ourpos.api.order.request.OrderOptionGroupRequestDto;
-import com.ourpos.api.order.request.OrderOptionRequestDto;
-import com.ourpos.api.order.request.OrderRequestDto;
+import com.ourpos.api.order.dto.request.HallOrderRequestDto;
+import com.ourpos.api.order.dto.request.OrderDetailRequestDto;
+import com.ourpos.api.order.dto.request.OrderOptionGroupRequestDto;
+import com.ourpos.api.order.dto.request.OrderOptionRequestDto;
 import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerRepository;
 import com.ourpos.domain.menu.Menu;
@@ -84,14 +84,14 @@ class OrderServiceImplTest {
         orderDetailRequestDto2.setQuantity(2);
         orderDetailRequestDto2.setOrderOptionGroups(List.of(orderOptionGroupRequestDto));
 
-        OrderRequestDto orderRequestDto = new OrderRequestDto();
-        orderRequestDto.setCustomerId(customer.getId());
-        orderRequestDto.setStoreId(store.getId());
-        orderRequestDto.setOrderTakeoutYn(false);
-        orderRequestDto.setOrderDetails(List.of(orderDetailRequestDto1, orderDetailRequestDto2));
+        HallOrderRequestDto hallOrderRequestDto = new HallOrderRequestDto();
+        hallOrderRequestDto.setCustomerId(customer.getId());
+        hallOrderRequestDto.setStoreId(store.getId());
+        hallOrderRequestDto.setOrderTakeoutYn(false);
+        hallOrderRequestDto.setOrderDetails(List.of(orderDetailRequestDto1, orderDetailRequestDto2));
 
         // when
-        orderServiceImpl.createHallOrder(orderRequestDto);
+        orderServiceImpl.createHallOrder(hallOrderRequestDto);
 
         // then
         List<HallOrder> orders = orderQueryRepository.findAll();

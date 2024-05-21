@@ -1,5 +1,6 @@
 package com.ourpos.domain.menu;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class Menu extends BaseEntity {
     private Boolean deletedYn;
 
     @Column(name = "menu_deleted_datetime")
-    private Boolean deletedDateTime;
+    private LocalDateTime deletedDateTime;
 
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<MenuOptionGroup> menuOptionGroups = new ArrayList<>();

@@ -1,4 +1,4 @@
-package com.ourpos.api.order.request;
+package com.ourpos.api.order.dto.request;
 
 import com.ourpos.domain.orderdetail.OrderOption;
 

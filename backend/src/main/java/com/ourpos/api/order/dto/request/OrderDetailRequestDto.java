@@ -1,4 +1,4 @@
-package com.ourpos.api.order.request;
+package com.ourpos.api.order.dto.request;
 
 import java.util.ArrayList;
 import java.util.List;
