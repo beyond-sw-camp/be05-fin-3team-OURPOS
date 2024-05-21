@@ -54,4 +54,11 @@ public class ManagerOrderController {
         orderService.acceptHallOrder(orderId);
     }
 
+    // 대기 주문 거절 - 주문 상태 ( 대기 -> 거절 )
+    @PutMapping("/orders/hall/cancel/{orderId}")
+    public void cancelHallOrder(@PathVariable Long orderId) {
+        System.out.println("ManagerOrderController.cancelHallOrder");
+        orderService.cancelHallOrder(orderId);
+    }
+
 }
