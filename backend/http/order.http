@@ -1,0 +1,104 @@
+### 홀 주문 요청
+
+POST http://localhost:8080/api/v1/orders/hall
+content-type: application/json
+
+{
+  "customerId": 1,
+  "storeId": 1,
+  "orderTakeoutYn": true,
+  "orderDetails": [
+    {
+      "menuId": 1,
+      "quantity": 3,
+      "orderOptionGroups": [
+        {
+          "optionGroupName": "사이드 선택",
+          "orderOptions": [
+            {
+              "optionName": "감자튀김",
+              "price": 1000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "menuId": 1,
+      "quantity": 1,
+      "orderOptionGroups": [
+        {
+          "optionGroupName": "음료 선택",
+          "orderOptions": [
+            {
+              "optionName": "콜라",
+              "price": 1000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+### 홀 주문 조회
+
+GET http://localhost:8080/api/v1/orders/hall/2
+
+### 배달 주문 요청
+
+POST http://localhost:8080/api/v1/orders/delivery
+content-type: application/json
+
+{
+  "customerId": 1,
+  "storeId": 1,
+  "deliveryAddress": {
+    "addressSi": "서울시",
+    "addressGu": "강남구",
+    "addressStreetName": "강남대로 1234번길",
+    "addressDetail": "101호"
+  },
+  "ownerMessage": "문 앞에 놔주세요",
+  "riderMessage": "빨리 와주세요",
+  "tip": 1000,
+  "disposableYn": true,
+  "orderDetails": [
+    {
+      "menuId": 1,
+      "quantity": 3,
+      "orderOptionGroups": [
+        {
+          "optionGroupName": "사이드 선택",
+          "orderOptions": [
+            {
+              "optionName": "감자튀김",
+              "price": 1000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "menuId": 1,
+      "quantity": 1,
+      "orderOptionGroups": [
+        {
+          "optionGroupName": "음료 선택",
+          "orderOptions": [
+            {
+              "optionName": "콜라",
+              "price": 1000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+
+### 배달 주문 조회
+
+GET http://localhost:8080/api/v1/orders/delivery/1

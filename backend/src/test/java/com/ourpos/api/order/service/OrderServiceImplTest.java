@@ -88,7 +88,7 @@ class OrderServiceImplTest {
         hallOrderRequestDto.setCustomerId(customer.getId());
         hallOrderRequestDto.setStoreId(store.getId());
         hallOrderRequestDto.setOrderTakeoutYn(false);
-        hallOrderRequestDto.setOrderDetailDtos(List.of(orderDetailRequestDto1, orderDetailRequestDto2));
+        hallOrderRequestDto.setOrderDetails(List.of(orderDetailRequestDto1, orderDetailRequestDto2));
 
         // when
         orderServiceImpl.createHallOrder(hallOrderRequestDto);

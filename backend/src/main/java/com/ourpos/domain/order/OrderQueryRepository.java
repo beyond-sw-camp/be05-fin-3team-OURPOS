@@ -34,11 +34,11 @@ public class OrderQueryRepository {
             .fetchJoin()
             .join(hallOrder.store)
             .fetchJoin()
-            .where(orderEq(orderId))
+            .where(hallOrderEq(orderId))
             .fetchFirst());
     }
 
-    private static BooleanExpression orderEq(Long orderId) {
+    private static BooleanExpression hallOrderEq(Long orderId) {
         return hallOrder.id.eq(orderId);
     }
 
@@ -46,8 +46,16 @@ public class OrderQueryRepository {
         return Optional.ofNullable(queryFactory
             .selectFrom(deliveryOrder)
             .join(deliveryOrder.customer)
+            .fetchJoin()
             .join(deliveryOrder.store)
-            .where(orderEq(orderId))
+            .fetchJoin()
+            .join(deliveryOrder.orderAddress)
+            .fetchJoin()
+            .where(deliveryOrderEq(orderId))
             .fetchFirst());
+    }
+
+    private static BooleanExpression deliveryOrderEq(Long orderId) {
+        return deliveryOrder.id.eq(orderId);
     }
 }

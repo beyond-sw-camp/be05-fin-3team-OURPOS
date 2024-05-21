@@ -79,12 +79,4 @@ public abstract class Order extends BaseEntity {
             .mapToInt(OrderDetail::getPrice)
             .sum();
     }
-
-    public abstract void cancelOrder();
-
-    public abstract void acceptOrder();
-
-    public abstract void startDeliveryOrder();
-
-    public abstract void completeOrder();
 }

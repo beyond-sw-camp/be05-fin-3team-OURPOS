@@ -40,21 +40,14 @@ public class HallOrder extends Order {
         this.orderTakeoutYn = orderTakeoutYn;
     }
 
-    @Override
     public void cancelOrder() {
         this.status = HallStatus.CANCELED;
     }
 
-    @Override
     public void acceptOrder() {
         this.status = HallStatus.COOKING;
     }
 
-    @Override
-    public void startDeliveryOrder() {
-    }
-
-    @Override
     public void completeOrder() {
         this.status = HallStatus.COMPLETED;
     }

@@ -1,20 +1,20 @@
 package com.ourpos.api.order.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
-import com.ourpos.api.order.request.OrderRequestDto;
-import com.ourpos.api.order.response.OrderResponseDto;
+import com.ourpos.api.order.dto.request.DeliveryOrderRequestDto;
+import com.ourpos.api.order.dto.request.HallOrderRequestDto;
 
 @Service
 public interface OrderService {
 
-    void createHallOrder(OrderRequestDto orderRequestDto);
+    void createHallOrder(HallOrderRequestDto hallOrderRequestDto);
 
-    void createDeliveryOrder(OrderRequestDto orderRequestDto);
+    void createDeliveryOrder(DeliveryOrderRequestDto deliveryOrderRequestDto);
 
-    OrderResponseDto findOne(Long orderId);
+    void cancelHallOrder(Long orderId);
 
-    List<OrderResponseDto> findAll();
+    void acceptHallOrder(Long orderId);
+
+    void completeHallOrder(Long orderId);
 }

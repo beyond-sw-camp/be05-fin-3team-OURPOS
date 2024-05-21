@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -18,7 +17,6 @@ class CustomerRepositoryTest {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Rollback(false)
     @DisplayName("고객은 회원가입을 할 수 있다.")
     @Test
     void register() {
@@ -73,7 +71,6 @@ class CustomerRepositoryTest {
             );
     }
 
-    @Rollback(false)
     @DisplayName("고객은 여러 주소를 저장해 둘 수 있다.")
     @Test
     void saveCustomerAddress() {
