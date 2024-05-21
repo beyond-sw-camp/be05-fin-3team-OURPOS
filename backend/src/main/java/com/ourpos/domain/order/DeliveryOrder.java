@@ -71,4 +71,24 @@ public class DeliveryOrder extends Order {
         this.disposableYn = disposableYn;
         this.status = DeliveryStatus.WAITING;
     }
+
+    @Override
+    public void cancelOrder() {
+        this.status = DeliveryStatus.CANCELED;
+    }
+
+    @Override
+    public void acceptOrder() {
+        this.status = DeliveryStatus.COOKING;
+    }
+
+    @Override
+    public void startDeliveryOrder() {
+        this.status = DeliveryStatus.DELIVERING;
+    }
+
+    @Override
+    public void completeOrder() {
+        this.status = DeliveryStatus.COMPLETED;
+    }
 }
