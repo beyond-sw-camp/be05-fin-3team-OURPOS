@@ -13,4 +13,6 @@ public interface ManagerOrderService {
 
     List<HallOrderResponseDto> checkCookingOrder(Long storeId);
 
+    List<HallOrderResponseDto> checkCompleteOrder(Long storeId);
+
 }

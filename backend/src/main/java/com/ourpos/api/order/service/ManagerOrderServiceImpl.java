@@ -46,4 +46,18 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
         return orderResponseDtos;
     }
 
+    // 완료 상태인 주문 목록 조회
+    @Override
+    public List<HallOrderResponseDto> checkCompleteOrder(Long storeId) {
+
+        System.out.println("ManagerOrderServiceImpl.checkCompleteOrder");
+        List<HallOrder> hallOrders = orderQueryRepository.findCompleteAll(storeId);
+        List<HallOrderResponseDto> orderResponseDtos = new ArrayList<>();
+
+        for (HallOrder order : hallOrders) {
+            orderResponseDtos.add(new HallOrderResponseDto(order));
+        }
+        return orderResponseDtos;
+    }
+
 }

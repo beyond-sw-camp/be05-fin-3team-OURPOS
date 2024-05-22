@@ -76,4 +76,13 @@ public class ManagerOrderController {
         orderService.completeHallOrder(orderId);
     }
 
+    // 완료 주문 목록 조회
+    @GetMapping("/orders/complete/{storeId}")
+    public ResponseEntity<List<HallOrderResponseDto>> checkCompleteOrder(@PathVariable Long storeId) {
+        System.out.println("ManagerOrderController.checkCompleteOrder");
+        List<HallOrderResponseDto> list = managerOrderService.checkCompleteOrder(storeId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
+
 }
