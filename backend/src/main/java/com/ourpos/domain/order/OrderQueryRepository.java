@@ -3,6 +3,7 @@ package com.ourpos.domain.order;
 import static com.ourpos.domain.order.QDeliveryOrder.*;
 import static com.ourpos.domain.order.QHallOrder.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,11 @@ public class OrderQueryRepository {
 
         if (status != null && !status.isEmpty()) {
             builder.and(hallOrder.status.eq(HallStatus.valueOf(status)));
+
+            if (HallStatus.valueOf(status) == HallStatus.COMPLETED) {
+                LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
+                builder.and(hallOrder.completedDateTime.after(threeDaysAgo));
+            }
         }
 
         return queryFactory
