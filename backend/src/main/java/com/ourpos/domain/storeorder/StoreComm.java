@@ -17,45 +17,45 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "store_menu")
-public class StoreMenu {
+@Table(name = "store_comm")
+public class StoreComm {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "store_menu_id")
+    @Column(name = "store_comm_id")
     private Long id;
 
-    @Column(name = "store_menu_name")
+    @Column(name = "store_comm_name")
     private String name;
 
-    @Column(name = "store_menu_price")
+    @Column(name = "store_comm_price")
     private Integer price;
 
-    @Column(name = "store_menu_article_unit")
+    @Column(name = "store_comm_article_unit")
     private String articleUnit;
 
-    @Column(name = "store_menu_status")
+    @Column(name = "store_comm_status")
     @Enumerated(EnumType.STRING)
-    private StoreMenuStatus status;
+    private StoreCommStatus status;
 
-    @Column(name = "store_menu_description")
+    @Column(name = "store_comm_description")
     private String description;
 
-    @Column(name = "store_menu_category")
+    @Column(name = "store_comm_category")
     @Enumerated(EnumType.STRING)
-    private StoreMenuCategory category;
+    private StoreCommCategory category;
 
-    @Column(name = "store_menu_picture_url")
+    @Column(name = "store_comm_picture_url")
     private String pictureUrl;
 
-    @Column(name = "store_menu_deleted_yn")
+    @Column(name = "store_comm_deleted_yn")
     private Boolean deletedYn;
 
-    @Column(name = "store_menu_deleted_datetime")
+    @Column(name = "store_comm_deleted_datetime")
     private String deletedDatetime;
 
     @Builder
-    private StoreMenu(String name, Integer price, String articleUnit, String description, StoreMenuCategory category,
+    private StoreComm(String name, Integer price, String articleUnit, String description, StoreCommCategory category,
         String pictureUrl) {
         this.name = name;
         this.price = price;
@@ -63,7 +63,7 @@ public class StoreMenu {
         this.description = description;
         this.category = category;
         this.pictureUrl = pictureUrl;
-        this.status = StoreMenuStatus.WAITING;
+        this.status = StoreCommStatus.WAITING;
         this.deletedYn = false;
     }
 }

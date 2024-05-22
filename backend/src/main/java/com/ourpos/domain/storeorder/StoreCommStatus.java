@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum StoreMenuCategory {
-    INGREDIENT("식자재"), SUPPLIES("비품");
+public enum StoreCommStatus {
+    WAITING("대기 중"), COOKING("조리 중"), COMPLETED("조리 완료"), CANCELED("주문 취소");
 
     private final String text;
 }
