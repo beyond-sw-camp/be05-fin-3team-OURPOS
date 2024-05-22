@@ -1,14 +1,11 @@
 package com.ourpos.api.order.service;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ourpos.api.order.dto.request.HallOrderRequestDto;
@@ -19,8 +16,6 @@ import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerRepository;
 import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.menu.MenuRepository;
-import com.ourpos.domain.order.HallOrder;
-import com.ourpos.domain.order.OrderQueryRepository;
 import com.ourpos.domain.store.Store;
 import com.ourpos.domain.store.StoreRepository;
 
@@ -30,82 +25,101 @@ class OrderServiceImplTest {
 
     @Autowired
     private OrderServiceImpl orderServiceImpl;
+
     @Autowired
     private CustomerRepository customerRepository;
+
     @Autowired
     private StoreRepository storeRepository;
+
     @Autowired
     private MenuRepository menuRepository;
-    @Autowired
-    private OrderQueryRepository orderQueryRepository;
 
-    @Rollback(false)
+    @Autowired
+    private OrderQueryService orderQueryService;
+
     @DisplayName("홀 주문 생성")
     @Test
     void createHallOrder() {
         // given
-        Customer customer = Customer.builder()
-            .name("홍길동")
-            .build();
-        customerRepository.save(customer);
+        Customer customer = createCustomer();
 
-        Store store = Store.builder()
-            .name("매장1")
-            .build();
-        storeRepository.save(store);
+        Store store = createStore();
 
-        Menu menu1 = Menu.builder()
-            .name("햄버거")
-            .price(5000)
-            .build();
-        menuRepository.save(menu1);
+        Menu menu1 = createMenu("햄버거", 5000);
+        Menu menu2 = createMenu("감자튀김", 3000);
 
-        Menu menu2 = Menu.builder()
-            .name("감자튀김")
-            .price(3000)
-            .build();
-        menuRepository.save(menu2);
+        OrderOptionRequestDto orderOptionRequestDto = createOrderOption();
 
-        OrderOptionRequestDto orderOptionRequestDto = new OrderOptionRequestDto();
-        orderOptionRequestDto.setOptionName("패티 추가");
-        orderOptionRequestDto.setPrice(1000);
+        OrderOptionGroupRequestDto orderOptionGroupRequestDto = createOrderOptionGroup(orderOptionRequestDto);
 
-        OrderOptionGroupRequestDto orderOptionGroupRequestDto = new OrderOptionGroupRequestDto();
-        orderOptionGroupRequestDto.setOptionGroupName("사이드 선택");
-        orderOptionGroupRequestDto.setOrderOptions(List.of(orderOptionRequestDto));
+        OrderDetailRequestDto orderDetailRequestDto1 = createOrderDetail(menu1, orderOptionGroupRequestDto, 1);
+        OrderDetailRequestDto orderDetailRequestDto2 = createOrderDetail(menu2, orderOptionGroupRequestDto, 2);
 
-        OrderDetailRequestDto orderDetailRequestDto1 = new OrderDetailRequestDto();
-        orderDetailRequestDto1.setMenuId(menu1.getId());
-        orderDetailRequestDto1.setQuantity(1);
-        orderDetailRequestDto1.setOrderOptionGroups(List.of(orderOptionGroupRequestDto));
+        HallOrderRequestDto hallOrderRequestDto = createHallOrder(customer, store, orderDetailRequestDto1,
+            orderDetailRequestDto2);
 
-        OrderDetailRequestDto orderDetailRequestDto2 = new OrderDetailRequestDto();
-        orderDetailRequestDto2.setMenuId(menu2.getId());
-        orderDetailRequestDto2.setQuantity(2);
-        orderDetailRequestDto2.setOrderOptionGroups(List.of(orderOptionGroupRequestDto));
+        // when
+        orderServiceImpl.createHallOrder(hallOrderRequestDto);
+    }
 
+    private static HallOrderRequestDto createHallOrder(Customer customer, Store store,
+        OrderDetailRequestDto orderDetailRequestDto1, OrderDetailRequestDto orderDetailRequestDto2) {
         HallOrderRequestDto hallOrderRequestDto = new HallOrderRequestDto();
         hallOrderRequestDto.setCustomerId(customer.getId());
         hallOrderRequestDto.setStoreId(store.getId());
         hallOrderRequestDto.setOrderTakeoutYn(false);
         hallOrderRequestDto.setOrderDetails(List.of(orderDetailRequestDto1, orderDetailRequestDto2));
+        return hallOrderRequestDto;
+    }
 
-        // when
-        orderServiceImpl.createHallOrder(hallOrderRequestDto);
+    private static OrderDetailRequestDto createOrderDetail(Menu menu1,
+        OrderOptionGroupRequestDto orderOptionGroupRequestDto, int quantity) {
+        OrderDetailRequestDto orderDetailRequestDto1 = new OrderDetailRequestDto();
+        orderDetailRequestDto1.setMenuId(menu1.getId());
+        orderDetailRequestDto1.setQuantity(quantity);
+        orderDetailRequestDto1.setOrderOptionGroups(List.of(orderOptionGroupRequestDto));
+        return orderDetailRequestDto1;
+    }
 
-        // then
-        List<HallOrder> orders = orderQueryRepository.findAll();
-        for (HallOrder order : orders) {
-            Integer price = order.getOrderDetails()
-                .get(0)
-                .getOrderOptionGroups()
-                .get(0)
-                .getOrderOptions()
-                .get(0)
-                .getPrice();
-            System.out.println("price = " + price);
-        }
-        assertThat(orders).hasSize(1);
+    private static OrderOptionGroupRequestDto createOrderOptionGroup(
+        OrderOptionRequestDto orderOptionRequestDto) {
+        OrderOptionGroupRequestDto orderOptionGroupRequestDto = new OrderOptionGroupRequestDto();
+        orderOptionGroupRequestDto.setOptionGroupName("사이드 선택");
+        orderOptionGroupRequestDto.setOrderOptions(List.of(orderOptionRequestDto));
+        return orderOptionGroupRequestDto;
+    }
+
+    private static OrderOptionRequestDto createOrderOption() {
+        OrderOptionRequestDto orderOptionRequestDto = new OrderOptionRequestDto();
+        orderOptionRequestDto.setOptionName("패티 추가");
+        orderOptionRequestDto.setPrice(1000);
+        return orderOptionRequestDto;
+    }
+
+    private Menu createMenu(String name, int price) {
+        Menu menu = Menu.builder()
+            .name(name)
+            .price(price)
+            .build();
+        menuRepository.save(menu);
+        return menu;
+    }
+
+    private Store createStore() {
+        Store store = Store.builder()
+            .name("강남점")
+            .build();
+        storeRepository.save(store);
+        return store;
+    }
+
+    private Customer createCustomer() {
+        Customer customer = Customer.builder()
+            .name("홍길동")
+            .build();
+        customerRepository.save(customer);
+        return customer;
     }
 
 }
