@@ -69,4 +69,11 @@ public class ManagerOrderController {
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
+    // 완료 상태변경 ( 조리중 -> 완료 )
+    @PutMapping("/orders/hall/complete/{orderId}")
+    public void completeHallOrder(@PathVariable Long orderId) {
+        System.out.println("ManagerOrderController.completeHallOrder");
+        orderService.completeHallOrder(orderId);
+    }
+
 }
