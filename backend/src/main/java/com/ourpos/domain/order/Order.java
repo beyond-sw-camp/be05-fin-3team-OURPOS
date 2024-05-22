@@ -80,7 +80,8 @@ public abstract class Order extends BaseEntity {
             .sum();
     }
 
-    public void completeOrder() {
+    // 주문 완료 시간 설정
+    public void setCompleteOrderTime() {
         this.completedDateTime = LocalDateTime.now();
     }
 }

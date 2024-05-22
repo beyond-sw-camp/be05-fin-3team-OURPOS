@@ -1,5 +1,7 @@
 package com.ourpos.api.menu.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,5 +23,13 @@ public class MenuQueryService {
             .orElseThrow(() -> new IllegalArgumentException("해당 메뉴가 존재하지 않습니다."));
 
         return new MenuResponseDto(menu);
+    }
+
+    public List<MenuResponseDto> findMenusByCategory(String category) {
+        List<Menu> menus = menuQueryRepository.findAllWithCategory(category);
+
+        return menus.stream()
+            .map(MenuResponseDto::new)
+            .toList();
     }
 }

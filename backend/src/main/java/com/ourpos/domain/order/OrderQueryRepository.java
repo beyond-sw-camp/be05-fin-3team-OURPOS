@@ -19,11 +19,15 @@ public class OrderQueryRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<HallOrder> findAll() {
+    public List<HallOrder> findHallOrderByStoreId(Long storeId, String status, int offset, int limit) {
         return queryFactory
             .selectFrom(hallOrder)
-            .join(hallOrder.customer)
-            .join(hallOrder.store)
+            .join(hallOrder.customer).fetchJoin()
+            .join(hallOrder.store).fetchJoin()
+            .where(hallOrder.store.id.eq(storeId))
+            .where(hallOrder.status.eq(HallStatus.valueOf(status)))
+            .offset(offset)
+            .limit(limit)
             .fetch();
     }
 

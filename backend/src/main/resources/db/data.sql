@@ -18,8 +18,22 @@ VALUES (FALSE, 10000, NULL, NULL, 2, '22:00', NULL, '10:00', '맛집', '010-1234
 
 
 INSERT INTO category(category_name)
-VALUES ('햄버거');
+VALUES ('HAMBURGER');
 
 INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
                   menu_description, menu_name, menu_picture_url)
 VALUES (TRUE, NULL, FALSE, 10000, 1, 1, '치즈버거', '치즈버거', 'https://www.google.com');
+
+INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+                  menu_description, menu_name, menu_picture_url)
+VALUES (TRUE, NULL, FALSE, 10000, 1, 1, '치즈버거', '치즈버거', 'https://www.google.com');
+
+INSERT INTO menu_option_group (menu_option_group_name, menu_id)
+VALUES ('토핑', 1);
+
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+VALUES ('치즈', 1000, 1);
+
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+VALUES ('피클', 500, 1);
+
