@@ -98,10 +98,17 @@ public class ManagerOrderController {
     }
 
     // 배달 주문 승인 ( 대기 -> 조리중 )
-    @GetMapping("/delivers/{orderId}/accept")
+    @PutMapping("/delivers/{orderId}/accept")
     public void acceptDeliverOrder(@PathVariable Long orderId) {
         log.info("배달 대기 주문 승인 컨트롤러 : ", orderId);
         orderService.acceptDeliveryOrder(orderId);
+    }
+
+    // 배달 주문 거절 ( 대기 -> 거절 )
+    @PutMapping("/delivers/{orderId}/cancel")
+    public void cancelDeliverOrder(@PathVariable Long orderId) {
+        log.info("배달 대기 주문 거절 컨트롤러 : ", orderId);
+        orderService.cancelDeliveryOrder(orderId);
     }
 
 }
