@@ -33,33 +33,6 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
             .collect(Collectors.toList());
     }
 
-    // // 홀 조리 상태인 주문 목록 조회
-    // @Override
-    // public List<HallOrderResponseDto> checkCookingOrder(Long storeId) {
-    //     System.out.println("ManagerOrderServiceImpl.checkCookingOrder");
-    //     List<HallOrder> hallOrders = orderQueryRepository.findCookingAll(storeId);
-    //     List<HallOrderResponseDto> orderResponseDtos = new ArrayList<>();
-    //
-    //     for (HallOrder order : hallOrders) {
-    //         orderResponseDtos.add(new HallOrderResponseDto(order));
-    //     }
-    //     return orderResponseDtos;
-    // }
-
-    // // 홀 완료 상태인 주문 목록 조회
-    // @Override
-    // public List<HallOrderResponseDto> checkCompleteOrder(Long storeId) {
-    //
-    //     System.out.println("ManagerOrderServiceImpl.checkCompleteOrder");
-    //     List<HallOrder> hallOrders = orderQueryRepository.findCompleteAll(storeId);
-    //     List<HallOrderResponseDto> orderResponseDtos = new ArrayList<>();
-    //
-    //     for (HallOrder order : hallOrders) {
-    //         orderResponseDtos.add(new HallOrderResponseDto(order));
-    //     }
-    //     return orderResponseDtos;
-    // }
-
     // 배달 대기 주문 목록 조회
     @Override
     public List<DeliveryOrderResponseDto> checkWaitingDeliverOrder(Long storeId) {

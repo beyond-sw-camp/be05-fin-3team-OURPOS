@@ -36,58 +36,47 @@ public class ManagerOrderController {
     @GetMapping("/orders/hall")
     public Result<List<HallOrderResponseDto>> findHallOrder(@RequestParam Long storeId,
         @RequestParam(required = false) String status) {
+
         log.info("주문 상태에 따른 주문 목록 확인", storeId, status);
         List<HallOrderResponseDto> list = managerOrderService.findHallOrder(storeId, status);
+
         return new Result<>(HttpStatus.OK.value(), "지점용 POS에서, (전체, 대기, 조리, 완료)를 조회할 수 있다.", list);
     }
 
     // 주문 상세 확인
-    @GetMapping("/orders/hall/{orderId}")
+    @GetMapping("/orders/hall/{orderId}/accept")
     public Result<HallOrderResponseDto> showHallOrder(@PathVariable Long orderId) {
 
-        System.out.println("ManagerOrderController.showHallOrder");
+        log.info("주문 상세 확인", orderId);
         HallOrderResponseDto hallOrderResponseDto = orderQueryService.findHallOrder(orderId);
 
         return new Result<>(HttpStatus.OK.value(), "지점용 POS에서, 메뉴 상세를 확인합니다.", hallOrderResponseDto);
     }
 
     // 대기 주문 승인 - 주문 상태 ( 대기 -> 조리중 )
-    @PutMapping("/orders/hall/accept/{orderId}")
+    @PutMapping("/orders/hall/{orderId}/accept")
     public void acceptHallOrder(@PathVariable Long orderId) {
-        System.out.println("ManagerOrderController.acceptHallOrder");
+
+        log.info("대기 주문 승인", orderId);
         orderService.acceptHallOrder(orderId);
+
     }
 
     // 대기 주문 거절 - 주문 상태 ( 대기 -> 거절 )
-    @PutMapping("/orders/hall/cancel/{orderId}")
+    @PutMapping("/orders/hall/{orderId}/cancel")
     public void cancelHallOrder(@PathVariable Long orderId) {
-        System.out.println("ManagerOrderController.cancelHallOrder");
-        orderService.cancelHallOrder(orderId);
-    }
 
-    // // 조리중 주문 목록 확인
-    // @GetMapping("/orders/cooking/{storeId}")
-    // public ResponseEntity<List<HallOrderResponseDto>> checkCookingOrder(@PathVariable Long storeId) {
-    //     System.out.println("ManagerOrderController.checkCookingOrder");
-    //     List<HallOrderResponseDto> list = managerOrderService.checkCookingOrder(storeId);
-    //     return ResponseEntity.status(HttpStatus.OK).body(list);
-    // }
+        log.info("대기 주문 거절", orderId);
+        orderService.cancelHallOrder(orderId);
+
+    }
 
     // 완료 상태변경 ( 조리중 -> 완료 )
-    @PutMapping("/orders/hall/complete/{orderId}")
+    @PutMapping("/orders/hall/{orderId}/complete")
     public void completeHallOrder(@PathVariable Long orderId) {
-        System.out.println("ManagerOrderController.completeHallOrder");
+        log.info("조리 주문 완료", orderId);
         orderService.completeHallOrder(orderId);
     }
-
-    // // 완료 주문 목록 조회
-    // @GetMapping("/orders/complete/{storeId}")
-    // public ResponseEntity<List<HallOrderResponseDto>> checkCompleteOrder(@PathVariable Long storeId) {
-    //     System.out.println("ManagerOrderController.checkCompleteOrder");
-    //     List<HallOrderResponseDto> list = managerOrderService.checkCompleteOrder(storeId);
-    //
-    //     return ResponseEntity.status(HttpStatus.OK).body(list);
-    // }
 
     // 배달 대기 주문 확인
     @GetMapping("/delivers/{storeId}/waiting")
