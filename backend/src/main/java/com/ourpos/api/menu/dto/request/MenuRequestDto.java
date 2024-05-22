@@ -2,10 +2,16 @@ package com.ourpos.api.menu.dto.request;
 
 import java.time.LocalDateTime;
 
+
 import com.ourpos.domain.menu.Category;
 import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.store.Store;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class MenuRequestDto {
 
 	private Long storeId;
