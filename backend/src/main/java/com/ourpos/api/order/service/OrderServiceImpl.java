@@ -41,62 +41,28 @@ public class OrderServiceImpl implements OrderService {
         hallOrderRepository.save(hallOrder);
     }
 
-    private HallOrder createOrder(HallOrderRequestDto hallOrderRequestDto) {
-        Customer customer = customerRepository.findById(hallOrderRequestDto.getCustomerId()).orElseThrow(
-            () -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
-        Store store = storeRepository.findById(hallOrderRequestDto.getStoreId()).orElseThrow(
-            () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
-
-        List<OrderDetailRequestDto> orderDetailDtos = hallOrderRequestDto.getOrderDetails();
-        List<OrderDetail> orderDetails = new ArrayList<>();
-        for (OrderDetailRequestDto orderDetailDto : orderDetailDtos) {
-            Menu menu = menuRepository.findById(orderDetailDto.getMenuId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 메뉴가 존재하지 않습니다."));
-            orderDetails.add(orderDetailDto.toEntity(menu));
-        }
-
-        return hallOrderRequestDto.toEntity(customer, store, orderDetails);
-    }
-
     @Override
     public void createDeliveryOrder(DeliveryOrderRequestDto deliveryOrderRequestDto) {
         DeliveryOrder deliveryOrder = createOrder(deliveryOrderRequestDto);
+        if (deliveryOrder.getPrice() < deliveryOrder.getStore().getMinimumOrderPrice()) {
+            throw new IllegalArgumentException("최소 주문 금액을 충족하지 못했습니다.");
+        }
         deliveryOrderRepository.save(deliveryOrder);
     }
 
-    private DeliveryOrder createOrder(DeliveryOrderRequestDto deliveryOrderRequestDto) {
-        Customer customer = customerRepository.findById(deliveryOrderRequestDto.getCustomerId()).orElseThrow(
-            () -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
-        Store store = storeRepository.findById(deliveryOrderRequestDto.getStoreId()).orElseThrow(
-            () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
-
-        List<OrderDetailRequestDto> orderDetailDtos = deliveryOrderRequestDto.getOrderDetails();
-        List<OrderDetail> orderDetails = new ArrayList<>();
-        for (OrderDetailRequestDto orderDetailDto : orderDetailDtos) {
-            Menu menu = menuRepository.findById(orderDetailDto.getMenuId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 메뉴가 존재하지 않습니다."));
-            orderDetails.add(orderDetailDto.toEntity(menu));
-        }
-        return deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
-    }
-
-    // 관리자 주문 취소
     @Override
     public void cancelHallOrder(Long orderId) {
         HallOrder order = hallOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
-        // 대기중 -> 취소
         order.cancelOrder();
     }
 
-    // 관리자 주문 승인
     @Override
     public void acceptHallOrder(Long orderId) {
         HallOrder order = hallOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
-        // 도메인에서 상태를 승인 -> 조리중 으로 변경
         order.acceptOrder();
     }
 
@@ -105,7 +71,6 @@ public class OrderServiceImpl implements OrderService {
         HallOrder order = hallOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
-        // 도메인에서 상태를 조리중 -> 승인으로 변경
         order.completeOrder();
     }
 
@@ -139,5 +104,38 @@ public class OrderServiceImpl implements OrderService {
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
         order.completeOrder();
+    }
+
+    private HallOrder createOrder(HallOrderRequestDto hallOrderRequestDto) {
+        Customer customer = customerRepository.findById(hallOrderRequestDto.getCustomerId()).orElseThrow(
+            () -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
+        Store store = storeRepository.findById(hallOrderRequestDto.getStoreId()).orElseThrow(
+            () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
+
+        List<OrderDetailRequestDto> orderDetailDtos = hallOrderRequestDto.getOrderDetails();
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (OrderDetailRequestDto orderDetailDto : orderDetailDtos) {
+            Menu menu = menuRepository.findById(orderDetailDto.getMenuId()).orElseThrow(
+                () -> new IllegalArgumentException("해당 메뉴가 존재하지 않습니다."));
+            orderDetails.add(orderDetailDto.toEntity(menu));
+        }
+
+        return hallOrderRequestDto.toEntity(customer, store, orderDetails);
+    }
+
+    private DeliveryOrder createOrder(DeliveryOrderRequestDto deliveryOrderRequestDto) {
+        Customer customer = customerRepository.findById(deliveryOrderRequestDto.getCustomerId()).orElseThrow(
+            () -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
+        Store store = storeRepository.findById(deliveryOrderRequestDto.getStoreId()).orElseThrow(
+            () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
+
+        List<OrderDetailRequestDto> orderDetailDtos = deliveryOrderRequestDto.getOrderDetails();
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (OrderDetailRequestDto orderDetailDto : orderDetailDtos) {
+            Menu menu = menuRepository.findById(orderDetailDto.getMenuId()).orElseThrow(
+                () -> new IllegalArgumentException("해당 메뉴가 존재하지 않습니다."));
+            orderDetails.add(orderDetailDto.toEntity(menu));
+        }
+        return deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
     }
 }

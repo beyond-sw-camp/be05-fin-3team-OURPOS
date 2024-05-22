@@ -84,14 +84,13 @@ public class Customer extends BaseEntity {
     }
 
     public void addAddress(CustomerAddress customerAddress) {
-        if (customerAddresses.size() < 3) {
-            addCustomerAddress(customerAddress);
-        } else {
+        if (customerAddresses.size() >= 3) {
             throw new IllegalStateException("주소는 최대 3개까지 추가 가능합니다.");
         }
+        addCustomerAddress(customerAddress);
     }
 
-    }
+}
 
 
 

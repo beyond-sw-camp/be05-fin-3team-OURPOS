@@ -101,7 +101,7 @@ content-type: application/json
 
 ### 배달 주문 조회
 
-GET http://localhost:8080/api/v1/orders/delivery/1
+GET http://localhost:8080/api/v1/orders/delivery/2
 
 ### 점주 홀주문 주문 상세 조회
 
