@@ -11,16 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ourpos.api.Result;
+import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 import com.ourpos.api.order.service.ManagerOrderService;
 import com.ourpos.api.order.service.OrderQueryService;
 import com.ourpos.api.order.service.OrderService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/manager")
+@RequestMapping("/api/v1")
 public class ManagerOrderController {
 
     private final OrderQueryService orderQueryService;
@@ -83,6 +86,15 @@ public class ManagerOrderController {
         List<HallOrderResponseDto> list = managerOrderService.checkCompleteOrder(storeId);
 
         return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
+
+    // 배달 대기 주문 확인
+    @GetMapping("/delivers/{storeId}/waiting")
+    public Result<List<DeliveryOrderResponseDto>> checkWaitingDeliver(@PathVariable Long storeId) {
+        log.info("배달 대기 주문 조회 : ", storeId);
+        List<DeliveryOrderResponseDto> list = managerOrderService.checkWaitingDeliverOrder(storeId);
+
+        return new Result<>(HttpStatus.OK.value(), "지점용 POS에서, 배달 대기 주문 목록을 확인합니다.", list);
     }
 
 }

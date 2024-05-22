@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
+import com.ourpos.domain.order.DeliveryOrder;
 import com.ourpos.domain.order.HallOrder;
 import com.ourpos.domain.order.OrderQueryRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ManagerOrderServiceImpl implements ManagerOrderService {
@@ -19,7 +23,7 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
 
     private final OrderQueryRepository orderQueryRepository;
 
-    // 대기 상태인 주문 목록 조회
+    // 홀 대기 상태인 주문 목록 조회
     @Override
     public List<HallOrderResponseDto> checkWaitingOrder(Long storeId) {
         System.out.println("ManagerOrderServiceImpl.checkWaitingOrder");
@@ -33,7 +37,7 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
         return orderResponseDtos;
     }
 
-    // 조리 상태인 주문 목록 조회
+    // 홀 조리 상태인 주문 목록 조회
     @Override
     public List<HallOrderResponseDto> checkCookingOrder(Long storeId) {
         System.out.println("ManagerOrderServiceImpl.checkCookingOrder");
@@ -46,7 +50,7 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
         return orderResponseDtos;
     }
 
-    // 완료 상태인 주문 목록 조회
+    // 홀 완료 상태인 주문 목록 조회
     @Override
     public List<HallOrderResponseDto> checkCompleteOrder(Long storeId) {
 
@@ -59,5 +63,22 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
         }
         return orderResponseDtos;
     }
+
+    // 배달 대기 주문 목록 조회
+    @Override
+    public List<DeliveryOrderResponseDto> checkWaitingDeliverOrder(Long storeId) {
+        log.info("배달 대기 주문 조회 서비스 : ", storeId);
+
+        List<DeliveryOrder> deliveryOrders = orderQueryRepository.findAllDeliveryWaiting(storeId);
+        List<DeliveryOrderResponseDto> deliveryOrderResponseDtos = new ArrayList<>();
+
+        for (DeliveryOrder order : deliveryOrders) {
+            deliveryOrderResponseDtos.add(new DeliveryOrderResponseDto(order));
+        }
+
+        return deliveryOrderResponseDtos;
+    }
+
+    // 배달 대기 주문 조회
 
 }

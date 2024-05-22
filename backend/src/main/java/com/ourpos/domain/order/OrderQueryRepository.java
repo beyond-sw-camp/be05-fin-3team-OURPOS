@@ -88,6 +88,21 @@ public class OrderQueryRepository {
             .fetchFirst());
     }
 
+    // 대기 상태인 배달 목록 확인
+    public List<DeliveryOrder> findAllDeliveryWaiting(Long storeId) {
+        return queryFactory
+            .selectFrom(deliveryOrder)
+            .join(deliveryOrder.customer)
+            .fetchJoin()
+            .join(deliveryOrder.store)
+            .fetchJoin()
+            .join(deliveryOrder.orderAddress)
+            .fetchJoin()
+            .where(deliveryOrder.status.eq(DeliveryStatus.valueOf("WAITING"))
+                .and(deliveryOrder.store.id.eq(storeId)))
+            .fetch();
+    }
+
     private static BooleanExpression deliveryOrderEq(Long orderId) {
         return deliveryOrder.id.eq(orderId);
     }

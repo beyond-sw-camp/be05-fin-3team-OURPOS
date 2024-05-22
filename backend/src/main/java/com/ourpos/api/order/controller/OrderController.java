@@ -12,7 +12,6 @@ import com.ourpos.api.Result;
 import com.ourpos.api.order.dto.request.DeliveryOrderRequestDto;
 import com.ourpos.api.order.dto.request.HallOrderRequestDto;
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
-import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 import com.ourpos.api.order.service.OrderQueryService;
 import com.ourpos.api.order.service.OrderService;
 
@@ -42,14 +41,6 @@ public class OrderController {
         orderService.createDeliveryOrder(deliveryOrderRequestDto);
 
         return new Result<>(HttpStatus.OK.value(), "배달 주문이 완료되었습니다.", null);
-    }
-
-    @GetMapping("/hall/{orderId}")
-    public Result<HallOrderResponseDto> findOne(@PathVariable Long orderId) {
-        log.info("홀 주문 조회: {}", orderId);
-        HallOrderResponseDto hallOrder = orderQueryService.findHallOrder(orderId);
-
-        return new Result<>(HttpStatus.OK.value(), "홀 주문 조회가 완료되었습니다.", hallOrder);
     }
 
     @GetMapping("/delivery/{orderId}")

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 
 @Service
@@ -14,5 +15,7 @@ public interface ManagerOrderService {
     List<HallOrderResponseDto> checkCookingOrder(Long storeId);
 
     List<HallOrderResponseDto> checkCompleteOrder(Long storeId);
+
+    List<DeliveryOrderResponseDto> checkWaitingDeliverOrder(Long storeId);
 
 }
