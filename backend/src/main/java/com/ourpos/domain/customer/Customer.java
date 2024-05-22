@@ -73,4 +73,26 @@ public class Customer extends BaseEntity {
         customerAddress.setCustomer(this);
     }
 
-}
+    public void update(String addressSi, String addressGu, String streetName, String addressDetail) {
+        for (CustomerAddress address : this.customerAddresses) {
+
+            address.setAddressSi(addressSi);
+            address.setAddressGu(addressGu);
+            address.setStreetName(streetName);
+            address.setAddressDetail(addressDetail);
+        }
+    }
+
+    public void addAddress(CustomerAddress customerAddress) {
+        if (customerAddresses.size() < 3) {
+            addCustomerAddress(customerAddress);
+        } else {
+            throw new IllegalStateException("주소는 최대 3개까지 추가 가능합니다.");
+        }
+    }
+
+    }
+
+
+
+

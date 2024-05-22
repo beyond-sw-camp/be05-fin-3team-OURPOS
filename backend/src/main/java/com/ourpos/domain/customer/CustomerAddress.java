@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "customer_address")
@@ -60,4 +61,19 @@ public class CustomerAddress {
         this.addressDetail = addressDetail;
         this.defaultYn = defaultYn;
     }
+
+    public CustomerAddress(CustomerAddress customerAddrress){
+        this.id = customerAddrress.getId();
+        this.customer = customerAddrress.getCustomer();
+        this.name = customerAddrress.getName();
+        this.addressSi = customerAddrress.getAddressSi();
+        this.addressGu = customerAddrress.getAddressGu();
+        this.streetName = customerAddrress.getStreetName();
+        this.addressDetail = customerAddrress.getAddressDetail();
+        this.defaultYn = customerAddrress.getDefaultYn();
+
+
+    }
+
+
 }
