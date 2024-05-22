@@ -26,8 +26,8 @@ public class StoreOrderDetail {
     @ManyToOne(fetch = FetchType.LAZY)
     private StoreOrder storeOrder;
 
-    @JoinColumn(name = "store_menu_id")
+    @JoinColumn(name = "store_comm_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private StoreMenu storeMenu;
+    private StoreComm storeMenu;
 
 }

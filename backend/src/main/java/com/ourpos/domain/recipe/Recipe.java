@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import com.ourpos.domain.menu.Menu;
-import com.ourpos.domain.storeorder.StoreMenu;
+import com.ourpos.domain.storeorder.StoreComm;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,7 +29,7 @@ public class Recipe {
 
     @JoinColumn(name = "store_menu_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private StoreMenu storeMenu;
+    private StoreComm storeComm;
 
     @JoinColumn(name = "menu_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,8 +39,8 @@ public class Recipe {
     private Integer content;
 
     @Builder
-    private Recipe(StoreMenu storeMenu, Menu menu, Integer content) {
-        this.storeMenu = storeMenu;
+    private Recipe(StoreComm storeComm, Menu menu, Integer content) {
+        this.storeComm = storeComm;
         this.menu = menu;
         this.content = content;
     }

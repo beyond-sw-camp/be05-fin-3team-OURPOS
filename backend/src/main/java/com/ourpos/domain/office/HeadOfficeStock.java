@@ -8,7 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-import com.ourpos.domain.storeorder.StoreMenu;
+import com.ourpos.domain.storeorder.StoreComm;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -27,14 +27,14 @@ public class HeadOfficeStock {
 
     @JoinColumn(name = "store_menu_id")
     @OneToOne(fetch = FetchType.LAZY)
-    private StoreMenu storeMenu;
+    private StoreComm storeComm;
 
     @Column(name = "head_office_stock_quantity")
     private Integer quantity;
 
     @Builder
-    private HeadOfficeStock(StoreMenu storeMenu, Integer quantity) {
-        this.storeMenu = storeMenu;
+    private HeadOfficeStock(StoreComm storeMenu, Integer quantity) {
+        this.storeComm = storeMenu;
         this.quantity = quantity;
     }
 }
