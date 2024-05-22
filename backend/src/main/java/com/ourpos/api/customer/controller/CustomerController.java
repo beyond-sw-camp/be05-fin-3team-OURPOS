@@ -53,7 +53,7 @@ public class CustomerController {
 		return ResponseEntity.noContent().build(); // 수정 후 상태 코드 204 (No Content) 반환
 	}
 
-	//마이페이지-개인정보 변경(서브주소 추가)-> 최대 개수 3개 제한 x
+	//마이페이지-개인정보 변경(서브주소 추가)
 	@PostMapping("/address")
 	public ResponseEntity<Void> addAddress(@RequestBody CustomerRequestDto addressDto) {
 		Long customerId = addressDto.getCustomerId();

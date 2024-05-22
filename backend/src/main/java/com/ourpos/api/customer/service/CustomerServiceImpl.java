@@ -44,18 +44,6 @@ public class CustomerServiceImpl {
 	}
 	 */
 
-	//주문 내역 조회
-	//매장이름, {주문메뉴이름, 주문 수량, 주문 상세 가격}, 총 가격, 주문 날짜
-    /*
-	public List<OrderResponseDto> findAllByCustomerId(Long customerId) {
-		Optional<Order> ordersOptional = orderRepository.findAllByCustomerId(customerId)
-			.orElseThrow(() -> new IllegalArgumentException("Order not found. Customer Id: " + customerId));
-
-		return orders.stream()
-			.map(OrderResponseDto::new)
-			.toList();
-	}
-	*/
 
 	//개인정보 변경(주소 변경)
 	@Transactional
@@ -69,27 +57,6 @@ public class CustomerServiceImpl {
 		customerRepository.save(customer);
 
 	}
-	/*
-	//개인정보 변경(서브주소 추가)
-	@Transactional
-	public void addSubAddress(Long customerId, CustomerRequestDto addressDto) {
-
-		Customer customer = customerRepository.findById(customerId).orElseThrow(
-			() -> new IllegalArgumentException("Customer not found. Id: " + customerId));
-
-		CustomerAddress customerAddress = CustomerAddress.builder()
-			.name(addressDto.getAddressName())
-			.addressSi(addressDto.getAddressSi())
-			.addressGu(addressDto.getAddressGu())
-			.streetName(addressDto.getStreetName())
-			.addressDetail(addressDto.getAddressDetail())
-			.defaultYn(addressDto.getDefaultYn())
-			.build();
-
-		customer.addCustomerAddress(customerAddress);
-		customerRepository.save(customer);
-	}
-	*/
 
 	//개인정보 변경(서브주소 추가)
 	@Transactional
@@ -116,11 +83,11 @@ public class CustomerServiceImpl {
 
 	@Transactional
 	public void deleteAddress(Long addressId) {
-		// 주소를 찾아서 삭제하는 로직으로 수정
+		// 주소 찾아서 삭제하는 로직
 		CustomerAddress address = customerAddressRepository.findById(addressId)
 			.orElseThrow(() -> new IllegalArgumentException("Address not found. Id: " + addressId));
 
-		// 주소를 삭제합니다.
+		// 주소 삭제
 		customerAddressRepository.delete(address);
 
 	}
