@@ -18,13 +18,13 @@ public class MenuQueryRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public Optional<List<Menu>> findAllWithCategory(Long categoryId) {
-        return Optional.ofNullable(queryFactory
+    public List<Menu> findAllWithCategory(String category) {
+        return queryFactory
             .selectFrom(menu)
             .join(menu.category)
-            .where(categoryEq(categoryId))
+            .where(categoryEq(category))
             .where(isNotDelete())
-            .fetch());
+            .fetch();
     }
 
     public Optional<Menu> findOne(Long menuId) {
@@ -34,15 +34,15 @@ public class MenuQueryRepository {
             .fetchFirst());
     }
 
+    private static BooleanExpression categoryEq(String category) {
+        return menu.category.name.eq(category);
+    }
+
     private static BooleanExpression isNotDelete() {
         return menu.deletedYn.eq(false);
     }
 
     private static BooleanExpression menuIdEq(Long menuId) {
         return menu.id.eq(menuId);
-    }
-
-    private static BooleanExpression categoryEq(Long categoryId) {
-        return menu.category.id.eq(categoryId);
     }
 }

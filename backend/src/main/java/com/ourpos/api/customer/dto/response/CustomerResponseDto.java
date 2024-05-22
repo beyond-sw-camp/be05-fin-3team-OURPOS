@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ourpos.domain.customer.Customer;
-import com.ourpos.domain.customer.CustomerAddress;
-
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,25 +12,20 @@ import lombok.Setter;
 @Setter
 public class CustomerResponseDto {
 
-	private Long customerId;
-	private String nickname;
-	private String password;
-	private String phone;
-	private List<CustomerAddressResponseDto> customerAddresses = new ArrayList<>();
+    private Long customerId;
+    private String nickname;
+    private String password;
+    private String phone;
+    private List<CustomerAddressResponseDto> customerAddresses = new ArrayList<>();
 
-	public CustomerResponseDto(Customer customer) {
-		this.customerId = customer.getId();
-		this.nickname = customer.getNickname();
-		this.password = customer.getPassword();
-		this.phone = customer.getPhone();
-		this.customerAddresses = customer.getCustomerAddresses().stream()
-			.map(CustomerAddressResponseDto::new)
-			.toList();
-
-	}
-
-
-
-
+    public CustomerResponseDto(Customer customer) {
+        this.customerId = customer.getId();
+        this.nickname = customer.getNickname();
+        this.password = customer.getPassword();
+        this.phone = customer.getPhone();
+        this.customerAddresses = customer.getCustomerAddresses().stream()
+            .map(CustomerAddressResponseDto::new)
+            .toList();
+    }
 
 }
