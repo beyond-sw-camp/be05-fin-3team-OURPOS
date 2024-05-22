@@ -2,6 +2,7 @@ package com.ourpos.api.order.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -19,50 +20,45 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ManagerOrderServiceImpl implements ManagerOrderService {
 
-    // 레파지토리에서 모든 정보를 가지고 온 후, 해당 id 를 이용해서, Order order 로, 값을 하나하나 넣고, dto 에 값을 다시 대입
-
     private final OrderQueryRepository orderQueryRepository;
 
-    // 홀 대기 상태인 주문 목록 조회
+    // 홀 상태 주문 목록 조회
     @Override
-    public List<HallOrderResponseDto> checkWaitingOrder(Long storeId) {
-        System.out.println("ManagerOrderServiceImpl.checkWaitingOrder");
-        List<HallOrder> hallOrders = orderQueryRepository.findWaitingAll(storeId);
-        List<HallOrderResponseDto> orderResponseDtos = new ArrayList<>();
+    public List<HallOrderResponseDto> findHallOrder(Long storeId, String status) {
+        log.info("홀 상태 주문 목록 조회 서비스", storeId, status);
+        List<HallOrder> hallOrders = orderQueryRepository.findHallOrder(storeId, status);
 
-        for (HallOrder order : hallOrders) {
-            orderResponseDtos.add(new HallOrderResponseDto(order));
-        }
-
-        return orderResponseDtos;
+        return hallOrders.stream()
+            .map(HallOrderResponseDto::new)
+            .collect(Collectors.toList());
     }
 
-    // 홀 조리 상태인 주문 목록 조회
-    @Override
-    public List<HallOrderResponseDto> checkCookingOrder(Long storeId) {
-        System.out.println("ManagerOrderServiceImpl.checkCookingOrder");
-        List<HallOrder> hallOrders = orderQueryRepository.findCookingAll(storeId);
-        List<HallOrderResponseDto> orderResponseDtos = new ArrayList<>();
+    // // 홀 조리 상태인 주문 목록 조회
+    // @Override
+    // public List<HallOrderResponseDto> checkCookingOrder(Long storeId) {
+    //     System.out.println("ManagerOrderServiceImpl.checkCookingOrder");
+    //     List<HallOrder> hallOrders = orderQueryRepository.findCookingAll(storeId);
+    //     List<HallOrderResponseDto> orderResponseDtos = new ArrayList<>();
+    //
+    //     for (HallOrder order : hallOrders) {
+    //         orderResponseDtos.add(new HallOrderResponseDto(order));
+    //     }
+    //     return orderResponseDtos;
+    // }
 
-        for (HallOrder order : hallOrders) {
-            orderResponseDtos.add(new HallOrderResponseDto(order));
-        }
-        return orderResponseDtos;
-    }
-
-    // 홀 완료 상태인 주문 목록 조회
-    @Override
-    public List<HallOrderResponseDto> checkCompleteOrder(Long storeId) {
-
-        System.out.println("ManagerOrderServiceImpl.checkCompleteOrder");
-        List<HallOrder> hallOrders = orderQueryRepository.findCompleteAll(storeId);
-        List<HallOrderResponseDto> orderResponseDtos = new ArrayList<>();
-
-        for (HallOrder order : hallOrders) {
-            orderResponseDtos.add(new HallOrderResponseDto(order));
-        }
-        return orderResponseDtos;
-    }
+    // // 홀 완료 상태인 주문 목록 조회
+    // @Override
+    // public List<HallOrderResponseDto> checkCompleteOrder(Long storeId) {
+    //
+    //     System.out.println("ManagerOrderServiceImpl.checkCompleteOrder");
+    //     List<HallOrder> hallOrders = orderQueryRepository.findCompleteAll(storeId);
+    //     List<HallOrderResponseDto> orderResponseDtos = new ArrayList<>();
+    //
+    //     for (HallOrder order : hallOrders) {
+    //         orderResponseDtos.add(new HallOrderResponseDto(order));
+    //     }
+    //     return orderResponseDtos;
+    // }
 
     // 배달 대기 주문 목록 조회
     @Override

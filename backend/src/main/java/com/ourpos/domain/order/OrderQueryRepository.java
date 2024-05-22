@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -31,36 +32,20 @@ public class OrderQueryRepository {
             .fetch();
     }
 
-    // 대기 상태인 주문 확인
-    public List<HallOrder> findWaitingAll(Long storeId) {
-        return queryFactory
-            .selectFrom(hallOrder)
-            .join(hallOrder.customer).fetchJoin()  // Fetch join 사용
-            .join(hallOrder.store).fetchJoin()     // Fetch join 사용
-            .where(hallOrder.status.eq(HallStatus.valueOf("WAITING")) // 조건 추가
-                .and(hallOrder.store.id.eq(storeId)))
-            .fetch();
-    }
+    // 상태 홀 주문 확인
+    public List<HallOrder> findHallOrder(Long storeId, String status) {
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(hallOrder.store.id.eq(storeId));
 
-    // 조리 상태인 주문 확인
-    public List<HallOrder> findCookingAll(Long storeId) {
-        return queryFactory
-            .selectFrom(hallOrder)
-            .join(hallOrder.customer).fetchJoin()  // Fetch join 사용
-            .join(hallOrder.store).fetchJoin()     // Fetch join 사용
-            .where(hallOrder.status.eq(HallStatus.valueOf("COOKING")) // 조건 추가
-                .and(hallOrder.store.id.eq(storeId)))
-            .fetch();
-    }
+        if (status != null && !status.isEmpty()) {
+            builder.and(hallOrder.status.eq(HallStatus.valueOf(status)));
+        }
 
-    // 완료 상태인 주문 확인
-    public List<HallOrder> findCompleteAll(Long storeId) {
         return queryFactory
             .selectFrom(hallOrder)
-            .join(hallOrder.customer).fetchJoin()  // Fetch join 사용
-            .join(hallOrder.store).fetchJoin()     // Fetch join 사용
-            .where(hallOrder.status.eq(HallStatus.valueOf("COMPLETED")) // 조건 추가
-                .and(hallOrder.store.id.eq(storeId)))
+            .join(hallOrder.customer).fetchJoin()
+            .join(hallOrder.store).fetchJoin()
+            .where(builder)
             .fetch();
     }
 

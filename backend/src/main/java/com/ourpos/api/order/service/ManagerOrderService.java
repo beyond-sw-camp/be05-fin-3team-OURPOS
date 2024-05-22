@@ -10,11 +10,8 @@ import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 @Service
 public interface ManagerOrderService {
 
-    List<HallOrderResponseDto> checkWaitingOrder(Long storeId);
-
-    List<HallOrderResponseDto> checkCookingOrder(Long storeId);
-
-    List<HallOrderResponseDto> checkCompleteOrder(Long storeId);
+    // 홀 주문 목록 확인
+    List<HallOrderResponseDto> findHallOrder(Long storeId, String status);
 
     List<DeliveryOrderResponseDto> checkWaitingDeliverOrder(Long storeId);
 
