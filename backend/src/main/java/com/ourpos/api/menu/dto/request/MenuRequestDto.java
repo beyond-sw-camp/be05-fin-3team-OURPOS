@@ -1,8 +1,5 @@
 package com.ourpos.api.menu.dto.request;
 
-import java.time.LocalDateTime;
-
-
 import com.ourpos.domain.menu.Category;
 import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.store.Store;
@@ -21,7 +18,7 @@ public class MenuRequestDto {
 	private Boolean menuAvailableYn;
 	private String menuDescription;
 	private String menuPictureUrl;
-	private LocalDateTime deletedDateTime;
+	// private LocalDateTime deletedDateTime;
 
 	public Menu toEntity(Store store, Category category) {
 		return Menu.builder()

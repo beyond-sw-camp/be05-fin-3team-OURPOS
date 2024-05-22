@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FileStore {
 
-	@Value("${file.dir}")
+	@Value("${file.dir}") // file.dir -> file:dir 로 수정
 	private String fileDir;
 
 	public UploadFile storeFile(MultipartFile multipartFile) {
