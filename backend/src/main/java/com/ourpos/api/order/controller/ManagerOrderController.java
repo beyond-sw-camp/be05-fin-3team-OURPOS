@@ -97,4 +97,11 @@ public class ManagerOrderController {
         return new Result<>(HttpStatus.OK.value(), "지점용 POS에서, 배달 대기 주문 목록을 확인합니다.", list);
     }
 
+    // 배달 주문 승인 ( 대기 -> 조리중 )
+    @GetMapping("/delivers/{orderId}/accept")
+    public void acceptDeliverOrder(@PathVariable Long orderId) {
+        log.info("배달 대기 주문 승인 컨트롤러 : ", orderId);
+        orderService.acceptDeliveryOrder(orderId);
+    }
+
 }
