@@ -80,19 +80,23 @@ public class OrderServiceImpl implements OrderService {
         return deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
     }
 
+    // 관리자 주문 취소
     @Override
     public void cancelHallOrder(Long orderId) {
         HallOrder order = hallOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
+        // 대기중 -> 취소
         order.cancelOrder();
     }
 
+    // 관리자 주문 승인
     @Override
     public void acceptHallOrder(Long orderId) {
         HallOrder order = hallOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
+        // 도메인에서 상태를 승인 -> 조리중 으로 변경
         order.acceptOrder();
     }
 
@@ -101,6 +105,7 @@ public class OrderServiceImpl implements OrderService {
         HallOrder order = hallOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
+        // 도메인에서 상태를 조리중 -> 승인으로 변경
         order.completeOrder();
     }
 
