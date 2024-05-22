@@ -1,6 +1,7 @@
 package com.ourpos.domain.store;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -40,10 +41,10 @@ public class Store extends BaseEntity {
     private String phone;
 
     @Column(name = "store_open_time")
-    private LocalDateTime openTime;
+    private LocalTime openTime;
 
     @Column(name = "store_close_time")
-    private LocalDateTime closeTime;
+    private LocalTime closeTime;
 
     @Column(name = "store_minimum_order_price")
     private Integer minimumOrderPrice;
@@ -58,7 +59,7 @@ public class Store extends BaseEntity {
     private LocalDateTime closedDateTime;
 
     @Builder
-    private Store(StoreAddress address, String name, String phone, LocalDateTime openTime, LocalDateTime closeTime,
+    private Store(StoreAddress address, String name, String phone, LocalTime openTime, LocalTime closeTime,
         Integer minimumOrderPrice, String pictureUrl) {
         this.address = address;
         this.name = name;

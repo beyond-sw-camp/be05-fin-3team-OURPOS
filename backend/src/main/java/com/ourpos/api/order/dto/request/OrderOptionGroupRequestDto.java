@@ -1,4 +1,4 @@
-package com.ourpos.api.order.request;
+package com.ourpos.api.order.dto.request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,9 @@ import com.ourpos.domain.orderdetail.OrderOptionGroup;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 public class OrderOptionGroupRequestDto {
