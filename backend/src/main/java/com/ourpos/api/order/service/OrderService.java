@@ -17,4 +17,12 @@ public interface OrderService {
     void acceptHallOrder(Long orderId);
 
     void completeHallOrder(Long orderId);
+
+    void cancelDeliveryOrder(Long orderId);
+
+    void acceptDeliveryOrder(Long orderId);
+
+    void startDelivery(Long orderId);
+
+    void completeDeliveryOrder(Long orderId);
 }

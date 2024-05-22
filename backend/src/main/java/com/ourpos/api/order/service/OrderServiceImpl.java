@@ -108,4 +108,36 @@ public class OrderServiceImpl implements OrderService {
         // 도메인에서 상태를 조리중 -> 승인으로 변경
         order.completeOrder();
     }
+
+    @Override
+    public void cancelDeliveryOrder(Long orderId) {
+        DeliveryOrder order = deliveryOrderRepository.findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
+
+        order.cancelOrder();
+    }
+
+    @Override
+    public void acceptDeliveryOrder(Long orderId) {
+        DeliveryOrder order = deliveryOrderRepository.findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
+
+        order.acceptOrder();
+    }
+
+    @Override
+    public void startDelivery(Long orderId) {
+        DeliveryOrder order = deliveryOrderRepository.findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
+
+        order.startDelivery();
+    }
+
+    @Override
+    public void completeDeliveryOrder(Long orderId) {
+        DeliveryOrder order = deliveryOrderRepository.findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
+
+        order.completeOrder();
+    }
 }
