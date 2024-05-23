@@ -3,3 +3,31 @@ GET http://localhost:8080/api/v1/menus/1
 
 ### 카테고리 별 메뉴 조회
 GET http://localhost:8080/api/v1/menus?category=HAMBURGER
+
+### 메뉴 추가
+POST http://localhost:8080/api/v1/menus
+
+{
+ "storeId": 1,
+ "categoryId": 1,
+ "name": "싸이버거",
+ "price": 8000,
+ "availableYn": true,
+ "description": "맘스터치싸이버거",
+ "pictureUrl":null,
+ "menuOptionGroups":[
+   {
+     "menuId":7,
+     "name":"토핑",
+     "exclusiveYn":false,
+     "description":null,
+     "menuOptions":[
+       {
+
+         "name":"올더웨이",
+         "price":0
+       }
+     ]
+   }
+ ]
+}

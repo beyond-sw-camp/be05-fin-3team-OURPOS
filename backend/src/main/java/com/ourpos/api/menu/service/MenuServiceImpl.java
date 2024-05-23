@@ -42,13 +42,7 @@ public class MenuServiceImpl implements MenuService {
 
 		addMenuPicture(menuRequestDto, multipartFile);
 
-		Menu menu = Menu.builder()
-			.name(menuRequestDto.getMenuName())
-			.price(menuRequestDto.getMenuPrice())
-			.store(store)
-			.category(category)
-			.pictureUrl(menuRequestDto.getMenuPictureUrl())
-			.build();
+		Menu menu = menuRequestDto.toEntity(store, category);
 
 		menuRepository.save(menu);
 	}
@@ -56,9 +50,9 @@ public class MenuServiceImpl implements MenuService {
 	private void addMenuPicture(MenuRequestDto menuRequestDto, MultipartFile multipartFile) {
 		if (multipartFile != null) {
 			UploadFile uploadFile = fileStore.storeFile(multipartFile);
-			menuRequestDto.setMenuPictureUrl(uploadFile.getStoreFilename());
+			menuRequestDto.setPictureUrl(uploadFile.getStoreFilename());
 		} else {
-			menuRequestDto.setMenuPictureUrl("default.png");
+			menuRequestDto.setPictureUrl("default.png");
 		}
 	}
 
