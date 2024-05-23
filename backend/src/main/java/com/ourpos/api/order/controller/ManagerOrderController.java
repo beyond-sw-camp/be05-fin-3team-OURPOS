@@ -38,55 +38,59 @@ public class ManagerOrderController {
     public Result<List<HallOrderResponseDto>> findHallOrder(@RequestParam Long storeId,
         @RequestParam(required = false) String status) {
 
-        log.info("주문 상태에 따른 주문 목록 확인", storeId, status);
+        log.info("주문 상태에 따른 주문 목록 확인 {} {}", storeId, status);
         List<HallOrderResponseDto> list = managerOrderService.findHallOrder(storeId, status);
 
-        return new Result<>(HttpStatus.OK.value(), "지점용 POS에서, (전체, 대기, 조리, 완료)를 조회할 수 있다.", list);
+        return new Result<>(HttpStatus.OK.value(), "홀  주문 상태에 따른 주문(전체, 대기, 조리, 완료)를 조회할 수 있다.", list);
     }
 
     // 홀 주문 상세 확인
     @GetMapping("/orders/hall/{orderId}")
     public Result<HallOrderResponseDto> findOneHall(@PathVariable Long orderId) {
 
-        log.info("주문 상세 확인", orderId);
+        log.info("주문 상세 확인 {}", orderId);
         HallOrderResponseDto hallOrderResponseDto = orderQueryService.findHallOrder(orderId);
 
-        return new Result<>(HttpStatus.OK.value(), "지점용 POS에서, 메뉴 상세를 확인합니다.", hallOrderResponseDto);
+        return new Result<>(HttpStatus.OK.value(), "홀 주문 상세를 확인합니다.", hallOrderResponseDto);
     }
 
     // 홀 대기 주문 승인 - 주문 상태 ( 대기 -> 조리중 )
     @PutMapping("/orders/hall/{orderId}/accept")
-    public void acceptHallOrder(@PathVariable Long orderId) {
+    public Result<Void> acceptHallOrder(@PathVariable Long orderId) {
 
-        log.info("대기 주문 승인", orderId);
+        log.info("대기 주문 승인 {}", orderId);
         orderService.acceptHallOrder(orderId);
 
+        return new Result<>(HttpStatus.OK.value(), "홀 대기 승인되었습니다.", null);
     }
 
     // 홀 대기 주문 거절 - 주문 상태 ( 대기 -> 거절 )
     @PutMapping("/orders/hall/{orderId}/cancel")
-    public void cancelHallOrder(@PathVariable Long orderId) {
+    public Result<Void> cancelHallOrder(@PathVariable Long orderId) {
 
-        log.info("대기 주문 거절", orderId);
+        log.info("대기 주문 거절 {}", orderId);
         orderService.cancelHallOrder(orderId);
 
+        return new Result<>(HttpStatus.OK.value(), "홀 대기 거절되었습니다.", null);
     }
 
     // 홀 완료 상태변경 ( 조리중 -> 완료 )
     @PutMapping("/orders/hall/{orderId}/complete")
-    public void completeHallOrder(@PathVariable Long orderId) {
-        log.info("조리 주문 완료", orderId);
+    public Result<Void> completeHallOrder(@PathVariable Long orderId) {
+        log.info("조리 주문 완료  {}", orderId);
         orderService.completeHallOrder(orderId);
+
+        return new Result<>(HttpStatus.OK.value(), "홀 조리 완료 되었습니다.", null);
     }
 
     // 배달 주문 목록 확인 ( 전체, 대기, 조리중, 배달중, 완료 )
     @GetMapping("orders/delivery")
     public Result<List<DeliveryOrderResponseDto>> findDeliveryOrder(@RequestParam Long storeId,
         @RequestParam(required = false) String status) {
-        log.info("배달 상태에 따른 목록 조회 : ", storeId, status);
+        log.info("배달 상태에 따른 목록 조회  {} {}", storeId, status);
         List<DeliveryOrderResponseDto> list = managerOrderService.findDeliveryOrder(storeId, status);
 
-        return new Result<>(HttpStatus.OK.value(), "지점용 POS에서, 배달 (전체, 대기, 조리, 완료)를 조회할 수 있다.", list);
+        return new Result<>(HttpStatus.OK.value(), "배달 주문 목록(전체, 대기, 조리, 배달중, 완료)를 조회할 수 있다.", list);
     }
 
     // 배달 각 주문 상세 확인
@@ -95,35 +99,47 @@ public class ManagerOrderController {
         log.info("배달 주문 조회: {}", orderId);
         DeliveryOrderResponseDto deliveryOrder = orderQueryService.findDeliveryOrder(orderId);
 
-        return new Result<>(HttpStatus.OK.value(), "배달 주문 조회가 완료되었습니다.", deliveryOrder);
+        return new Result<>(HttpStatus.OK.value(), "배달 각 주문 상세를 확인 완료되었습니다.", deliveryOrder);
     }
 
     // 배달 주문 승인 ( 대기 -> 조리중 )
     @PutMapping("orders/delivery/{orderId}/accept")
-    public void acceptDeliveryOrder(@PathVariable Long orderId) {
-        log.info("배달 대기 주문 승인 컨트롤러 : ", orderId);
+    public Result<Void> acceptDeliveryOrder(@PathVariable Long orderId) {
+
+        log.info("배달 대기 주문 승인 컨트롤러 {}", orderId);
         orderService.acceptDeliveryOrder(orderId);
+
+        return new Result<>(HttpStatus.OK.value(), "배달 주문 승인 되었습니다.", null);
     }
 
     // 배달 주문 거절 ( 대기 -> 거절 )
     @PutMapping("orders/delivery/{orderId}/cancel")
-    public void cancelDeliveryOrder(@PathVariable Long orderId) {
-        log.info("배달 대기 주문 거절 컨트롤러 : ", orderId);
+    public Result<Void> cancelDeliveryOrder(@PathVariable Long orderId) {
+
+        log.info("배달 대기 주문 거절 컨트롤러 {}", orderId);
         orderService.cancelDeliveryOrder(orderId);
+
+        return new Result<>(HttpStatus.OK.value(), "배달 주문 거절되었습니다.", null);
     }
 
     // 배달 라이더 호출 ( 조리중 -> 배달중 )
     @PutMapping("orders/delivery/{orderId}/deliver")
-    public void deliverDeliveryOrder(@PathVariable Long orderId) {
-        log.info("배달 라이더 호출 컨트롤러 : ", orderId);
+    public Result<Void> deliverDeliveryOrder(@PathVariable Long orderId) {
+
+        log.info("배달 라이더 호출 컨트롤러 {}", orderId);
         orderService.startDelivery(orderId);
+
+        return new Result<>(HttpStatus.OK.value(), "배달 라이더 호출 되었습니다.", null);
     }
 
     // 라이더 배달 완료 ( 배달중 -> 배송 완료 )
     @PutMapping("orders/delivery/{orderId}/complete")
-    public void completeDeliveryOrder(@PathVariable Long orderId) {
-        log.info("배달 라이더 배송 완료 컨트롤러 : ", orderId);
+    public Result<Void> completeDeliveryOrder(@PathVariable Long orderId) {
+
+        log.info("배달 라이더 배송 완료 컨트롤러 {}", orderId);
         orderService.completeDeliveryOrder(orderId);
+
+        return new Result<>(HttpStatus.OK.value(), "배달 완료 되었습니다.", null);
     }
 
 }

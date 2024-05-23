@@ -24,7 +24,7 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
     // 홀 상태 주문 목록 조회
     @Override
     public List<HallOrderResponseDto> findHallOrder(Long storeId, String status) {
-        log.info("홀 상태 주문 목록 조회 서비스", storeId, status);
+        log.info("홀 상태 주문 목록 조회 서비스 {} {}", storeId, status);
         List<HallOrder> hallOrders = orderQueryRepository.findHallOrder(storeId, status);
 
         return hallOrders.stream()
@@ -35,7 +35,7 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
     // 배달 상태에 따른 목록 조회
     @Override
     public List<DeliveryOrderResponseDto> findDeliveryOrder(Long storeId, String status) {
-        log.info("배달 대기 주문 조회 서비스 : ", storeId, status);
+        log.info("배달 대기 주문 조회 서비스 {} {} ", storeId, status);
 
         List<DeliveryOrder> deliveryOrders = orderQueryRepository.findDeliveryOrder(storeId, status);
 
