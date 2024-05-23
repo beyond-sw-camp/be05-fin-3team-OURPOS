@@ -23,6 +23,7 @@ spring:
       platform: h2
       data-locations: classpath:/db/data.sql
       mode: always
+      encoding: utf-8
 
   h2:
     console:

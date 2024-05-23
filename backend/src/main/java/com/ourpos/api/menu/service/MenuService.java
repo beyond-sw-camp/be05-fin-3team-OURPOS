@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ourpos.api.menu.dto.request.MenuRequestDto;
+import com.ourpos.api.menu.dto.request.MenuUpdateDto;
 
 @Service
 public interface MenuService {
@@ -11,4 +12,6 @@ public interface MenuService {
 	public void addMenu(MenuRequestDto menuRequestDto, MultipartFile nultipartfile);
 
 	public void deleteMenu(Long menuId);
+
+	public void updateMenu(Long menuId, MenuUpdateDto menuDto);
 }

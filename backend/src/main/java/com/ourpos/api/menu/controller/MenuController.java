@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ourpos.api.Result;
 import com.ourpos.api.menu.dto.request.MenuRequestDto;
+import com.ourpos.api.menu.dto.request.MenuUpdateDto;
 import com.ourpos.api.menu.dto.response.MenuResponseDto;
 import com.ourpos.api.menu.service.MenuQueryService;
 import com.ourpos.api.menu.service.MenuServiceImpl;
@@ -56,6 +59,14 @@ public class MenuController {
 
 		menuServiceImpl.addMenu(menuRequestDto, multipartFile);
 		return new Result<>(HttpStatus.OK.value(), "메뉴 추가 성공", null);
+	}
+
+	@PutMapping("/{menuId}")
+	public Result<Void> updateMenu(@PathVariable Long menuId, @RequestBody MenuUpdateDto menuUpdateDto) {
+		log.info("MenuController.updateMenu() called");
+
+		menuServiceImpl.updateMenu(menuId, menuUpdateDto);
+		return new Result<>(HttpStatus.OK.value(), "메뉴 수정 성공", null);
 	}
 
 	@DeleteMapping("/{menuId}")

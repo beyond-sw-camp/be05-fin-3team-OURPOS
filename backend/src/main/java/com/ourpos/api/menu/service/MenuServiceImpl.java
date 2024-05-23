@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ourpos.api.file.FileStore;
 import com.ourpos.api.file.UploadFile;
 import com.ourpos.api.menu.dto.request.MenuRequestDto;
+import com.ourpos.api.menu.dto.request.MenuUpdateDto;
 import com.ourpos.domain.menu.Category;
 import com.ourpos.domain.menu.CategoryRepository;
 import com.ourpos.domain.menu.Menu;
@@ -59,6 +60,18 @@ public class MenuServiceImpl implements MenuService {
 		} else {
 			menuRequestDto.setMenuPictureUrl("default.png");
 		}
+	}
+
+	@Transactional
+	public void updateMenu(Long menuId, MenuUpdateDto menuDto) {
+		log.info("MenuService.updateMenu() called");
+		Menu menu = menuRepository.findById(menuId).orElseThrow(
+			() -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
+		Category category = categoryRepository.findById(menuDto.getCategoryId()).orElseThrow(
+			() -> new IllegalArgumentException("카테고리가 존재하지 않습니다"));
+
+		menu.update(menuDto.getName(), menuDto.getPrice(), category,
+			menuDto.getPictureUrl());
 	}
 
 	@Transactional
