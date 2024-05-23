@@ -27,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 public class StoreCommController {
 
     private final StoreCommService storeCommService;
-    private final StoreCommQueryService storeCommQueryService;
 
     // 새로운 비품/식자재를 추가하는 코드
     @PostMapping("/addstorecomm")
