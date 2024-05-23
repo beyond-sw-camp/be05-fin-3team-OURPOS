@@ -1,5 +1,7 @@
 package com.ourpos.domain.storeorder;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,6 +10,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import com.ourpos.api.storeorder.dto.request.StoreCommRequestDto;
+import com.ourpos.domain.BaseEntity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -18,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "store_comm")
-public class StoreComm {
+public class StoreComm extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +57,7 @@ public class StoreComm {
     private Boolean deletedYn;
 
     @Column(name = "store_comm_deleted_datetime")
-    private String deletedDatetime;
+    private LocalDateTime deletedDatetime;
 
     @Builder
     private StoreComm(String name, Integer price, String articleUnit, String description, StoreCommCategory category,
@@ -65,5 +70,15 @@ public class StoreComm {
         this.pictureUrl = pictureUrl;
         this.status = StoreCommStatus.WAITING;
         this.deletedYn = false;
+    }
+
+    public void updateFromDto(StoreCommRequestDto dto) {
+        this.name = dto.getStoreCommName();
+        this.price = dto.getStoreCommPrice();
+        this.articleUnit = dto.getStoreCommArticleUnit();
+        this.description = dto.getStoreCommDescription();
+        this.category = dto.getStoreCommCategory();
+        this.pictureUrl = dto.getStoreCommPictureUrl();
+        // 필요한 경우 status와 deletedYn 등의 필드도 업데이트할 수 있습니다.
     }
 }
