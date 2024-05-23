@@ -1,22 +1,22 @@
 package com.ourpos.api.menu.dto.request;
 
 import com.ourpos.domain.menu.MenuOption;
-import com.ourpos.domain.menu.MenuOptionGroup;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 public class MenuOptionRequestDto {
-	private Long menuOptionGroupId;
 	private String name;
-	private String price;
+	private Integer price;
 
-	public MenuOption toEntity(MenuOptionGroup menuOptionGroup) {
+	public MenuOption toEntity() {
 		return MenuOption.builder()
-			.menuOptionGroup(menuOptionGroup)
 			.name(name)
+			.price(price)
 			.build();
 	}
 }

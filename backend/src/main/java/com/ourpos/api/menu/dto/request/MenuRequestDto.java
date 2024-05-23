@@ -1,5 +1,9 @@
 package com.ourpos.api.menu.dto.request;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 import com.ourpos.domain.menu.Category;
 import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.store.Store;
@@ -18,7 +22,7 @@ public class MenuRequestDto {
 	private Boolean availableYn;
 	private String description;
 	private String pictureUrl;
-	// private LocalDateTime deletedDateTime;
+	private List<MenuOptionGroupRequestDto> menuOptionGroups = new ArrayList<>();
 
 	public Menu toEntity(Store store, Category category) {
 		return Menu.builder()
@@ -29,6 +33,9 @@ public class MenuRequestDto {
 			.availableYn(availableYn)
 			.description(description)
 			.pictureUrl(pictureUrl)
+			.menuOptionGroups(menuOptionGroups.stream()
+				.map(MenuOptionGroupRequestDto::toEntity)
+				.toList())
 			.build();
 	}
 
