@@ -58,6 +58,7 @@ content-type: application/json
     "addressGu": "강남구",
     "addressStreetName": "강남대로 1234번길",
     "addressDetail": "101호"
+    4
   },
   "ownerMessage": "문 앞에 놔주세요",
   "riderMessage": "빨리 와주세요",
