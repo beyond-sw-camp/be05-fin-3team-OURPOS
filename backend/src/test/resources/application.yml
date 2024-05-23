@@ -16,3 +16,6 @@ spring:
 logging.level:
   org.hibernate.SQL: debug
 #  org.hibernate.orm.jdbc.bind: trace
+
+file:
+  dir: C:\Users\user\Desktop\한화 PLAYDATA SW캠프\팀프로젝트\최종\메뉴추가\
