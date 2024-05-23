@@ -61,4 +61,10 @@ public class MenuServiceImpl implements MenuService {
 		}
 	}
 
+	@Transactional
+	public void deleteMenu(Long menuId) {
+		log.info("MenuService.deleteMenu() called");
+		menuRepository.deleteById(menuId);
+	}
+
 }

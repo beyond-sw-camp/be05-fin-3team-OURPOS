@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,6 +56,15 @@ public class MenuController {
 
 		menuServiceImpl.addMenu(menuRequestDto, multipartFile);
 		return new Result<>(HttpStatus.OK.value(), "메뉴 추가 성공", null);
+	}
+
+	@DeleteMapping("/{menuId}")
+	public Result<Void> deleteMenu(@PathVariable Long menuId) {
+		log.info("MenuController.deleteMenu() called");
+		log.info("menuId: {}", menuId);
+
+		menuServiceImpl.deleteMenu(menuId);
+		return new Result<>(HttpStatus.OK.value(), "메뉴 삭제 성공", null);
 	}
 
 }

@@ -9,4 +9,6 @@ import com.ourpos.api.menu.dto.request.MenuRequestDto;
 public interface MenuService {
 
 	public void addMenu(MenuRequestDto menuRequestDto, MultipartFile nultipartfile);
+
+	public void deleteMenu(Long menuId);
 }
