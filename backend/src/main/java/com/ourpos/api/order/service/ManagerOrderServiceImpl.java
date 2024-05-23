@@ -1,6 +1,5 @@
 package com.ourpos.api.order.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,21 +32,16 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
             .collect(Collectors.toList());
     }
 
-    // 배달 대기 주문 목록 조회
+    // 배달 상태에 따른 목록 조회
     @Override
-    public List<DeliveryOrderResponseDto> checkWaitingDeliverOrder(Long storeId) {
-        log.info("배달 대기 주문 조회 서비스 : ", storeId);
+    public List<DeliveryOrderResponseDto> findDeliveryOrder(Long storeId, String status) {
+        log.info("배달 대기 주문 조회 서비스 : ", storeId, status);
 
-        List<DeliveryOrder> deliveryOrders = orderQueryRepository.findAllDeliveryWaiting(storeId);
-        List<DeliveryOrderResponseDto> deliveryOrderResponseDtos = new ArrayList<>();
+        List<DeliveryOrder> deliveryOrders = orderQueryRepository.findDeliveryOrder(storeId, status);
 
-        for (DeliveryOrder order : deliveryOrders) {
-            deliveryOrderResponseDtos.add(new DeliveryOrderResponseDto(order));
-        }
-
-        return deliveryOrderResponseDtos;
+        return deliveryOrders.stream()
+            .map(DeliveryOrderResponseDto::new)
+            .collect(Collectors.toList());
     }
-
-    // 배달 대기 주문 조회
 
 }

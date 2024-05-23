@@ -83,18 +83,27 @@ public class OrderQueryRepository {
             .fetchFirst());
     }
 
-    // 대기 상태인 배달 목록 확인
-    public List<DeliveryOrder> findAllDeliveryWaiting(Long storeId) {
+    // 상태에 따른 배달 목록 확인
+    public List<DeliveryOrder> findDeliveryOrder(Long storeId, String status) {
+
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(deliveryOrder.store.id.eq(storeId));
+
+        if (status != null && !status.isEmpty()) {
+            builder.and(deliveryOrder.status.eq(DeliveryStatus.valueOf(status)));
+
+            if (DeliveryStatus.valueOf(status) == DeliveryStatus.COMPLETED) {
+                LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
+                builder.and(deliveryOrder.completedDateTime.after(threeDaysAgo));
+            }
+        }
+
         return queryFactory
             .selectFrom(deliveryOrder)
-            .join(deliveryOrder.customer)
-            .fetchJoin()
-            .join(deliveryOrder.store)
-            .fetchJoin()
-            .join(deliveryOrder.orderAddress)
-            .fetchJoin()
-            .where(deliveryOrder.status.eq(DeliveryStatus.valueOf("WAITING"))
-                .and(deliveryOrder.store.id.eq(storeId)))
+            .join(deliveryOrder.customer).fetchJoin()
+            .join(deliveryOrder.store).fetchJoin()
+            .join(deliveryOrder.orderAddress).fetchJoin()
+            .where(builder)
             .fetch();
     }
 

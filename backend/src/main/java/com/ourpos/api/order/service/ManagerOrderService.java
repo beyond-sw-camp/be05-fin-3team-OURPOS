@@ -13,6 +13,6 @@ public interface ManagerOrderService {
     // 홀 주문 목록 확인
     List<HallOrderResponseDto> findHallOrder(Long storeId, String status);
 
-    List<DeliveryOrderResponseDto> checkWaitingDeliverOrder(Long storeId);
+    List<DeliveryOrderResponseDto> findDeliveryOrder(Long storeId, String status);
 
 }
