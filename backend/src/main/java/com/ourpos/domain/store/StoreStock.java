@@ -1,5 +1,8 @@
 package com.ourpos.domain.store;
 
+import java.time.LocalDateTime;
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import com.ourpos.api.storeorder.dto.request.StoreCommRequestDto;
+import com.ourpos.domain.customer.CustomerAddress;
 import com.ourpos.domain.storeorder.StoreComm;
 
 import lombok.AccessLevel;
@@ -45,4 +50,7 @@ public class StoreStock {
         this.storeComm = storeComm;
         this.quantity = quantity;
     }
+
+
 }
+

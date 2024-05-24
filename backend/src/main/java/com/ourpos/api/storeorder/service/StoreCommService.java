@@ -10,4 +10,6 @@ public interface StoreCommService {
     List<StoreCommResponseDto> getStoreComms();
 
     void updateStoreComm(Long StoreCommId, StoreCommRequestDto storeCommRequestDto);
+
+    void deletetStoreComm(Long storeCommId);
 }
