@@ -64,12 +64,27 @@ public class MenuController {
 	}
 
 	@PutMapping("/{menuId}")
-	public Result<Void> updateMenu(@PathVariable Long menuId, @RequestBody MenuUpdateDto menuUpdateDto
-		, MenuOptionGroupUpdateDto menuOptionGroupUpdateDto, MenuOptionUpdateDto menuOptionUpdateDto) {
+	public Result<Void> updateMenu(@PathVariable Long menuId, @RequestBody MenuUpdateDto menuUpdateDto) {
 		log.info("MenuController.updateMenu() called");
 
 		menuServiceImpl.updateMenu(menuId, menuUpdateDto);
 		return new Result<>(HttpStatus.OK.value(), "메뉴 수정 성공", null);
+	}
+
+	@PutMapping("/menuOptionGroups/{menuOptionGroupId}")
+	public Result<Void> updateMenuOptionGroup(@PathVariable Long menuOptionGroupId,
+		@RequestBody MenuOptionGroupUpdateDto menuOptionGroupUpdateDto) {
+		log.info("MenuController.updateMenuOptionGroup() called");
+		menuServiceImpl.updateMenuOptionGroup(menuOptionGroupId, menuOptionGroupUpdateDto);
+		return new Result<>(HttpStatus.OK.value(), "메뉴 옵션 그룹 수정 성공", null);
+	}
+
+	@PutMapping("/menuOptions/{menuOptionId}")
+	public Result<Void> updateMenuOption(@PathVariable Long menuOptionId,
+		@RequestBody MenuOptionUpdateDto menuOptionUpdateDto) {
+		log.info("MenuController.updateMenuOption() called");
+		menuServiceImpl.updateMenuOption(menuOptionId, menuOptionUpdateDto);
+		return new Result<>(HttpStatus.OK.value(), "메뉴 옵션 그룹 수정 성공", null);
 	}
 
 	@DeleteMapping("/{menuId}")

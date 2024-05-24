@@ -88,10 +88,12 @@ public class Menu extends BaseEntity {
 		menuOptionGroup.setMenu(this);
 	}
 
-	public void update(String name, Integer price, Category menuCategory, String pictureUrl) {
+	public void update(Category category, String name, Integer price,
+		String description, String pictureUrl) {
+		this.category = category;
 		this.name = name;
 		this.price = price;
-		this.category = menuCategory;
+		this.description = description;
 		this.pictureUrl = pictureUrl;
 	}
 }

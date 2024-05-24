@@ -8,16 +8,13 @@ GET http://localhost:8080/api/v1/menus?category=HAMBURGER
 POST http://localhost:8080/api/v1/menus
 
 {
- "storeId": 1,
  "categoryId": 1,
  "name": "싸이버거",
  "price": 8000,
- "availableYn": true,
  "description": "맘스터치싸이버거",
  "pictureUrl":null,
  "menuOptionGroups":[
    {
-     "menuId":7,
      "name":"토핑",
      "exclusiveYn":false,
      "description":null,
@@ -30,4 +27,31 @@ POST http://localhost:8080/api/v1/menus
      ]
    }
  ]
+}
+
+### 메뉴 수정
+PUT http://localhost:8080/api/v1/menus/7
+{
+ "categoryId": 1,
+ "name": "와퍼",
+ "price": 7100,
+ "description": "버거킹와퍼",
+ "pictureUrl":null
+}
+
+### 메뉴옵션그룹 수정
+PUT http://localhost:8080/api/v1/menus/menuOptionGroups/1
+{
+ "menuId" : 2,
+ "name":"와퍼용토핑",
+ "exclusiveYn":false,
+ "description":null,
+}
+
+### 메뉴옵션 수정
+PUT http://localhost:8080/api/v1/menus/menuOptions/3
+{
+ "menuOptionGroupId" : 1,
+ "name":"하인즈케첩",
+ "price":0
 }
