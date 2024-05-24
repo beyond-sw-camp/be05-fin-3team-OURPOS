@@ -43,4 +43,10 @@ public class MenuOption {
 		this.name = name;
 		this.price = price;
 	}
+
+	public void update(MenuOptionGroup menuOptionGroup, String name, Integer price) {
+		this.menuOptionGroup = menuOptionGroup;
+		this.name = name;
+		this.price = price;
+	}
 }

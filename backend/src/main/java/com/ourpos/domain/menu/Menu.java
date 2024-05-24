@@ -89,12 +89,11 @@ public class Menu extends BaseEntity {
 	}
 
 	public void update(Category category, String name, Integer price,
-		String description, String pictureUrl, List menuOptionGroups) {
+		String description, String pictureUrl) {
 		this.category = category;
 		this.name = name;
 		this.price = price;
 		this.description = description;
 		this.pictureUrl = pictureUrl;
-		this.menuOptionGroups = menuOptionGroups;
 	}
 }

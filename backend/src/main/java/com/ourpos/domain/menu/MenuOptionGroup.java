@@ -66,4 +66,12 @@ public class MenuOptionGroup {
 		menuOptions.add(menuOption);
 		menuOption.setMenuOptionGroup(this);
 	}
+
+	public void update(Menu menu, String name, Boolean exclusiveYn,
+		String description) {
+		this.menu = menu;
+		this.name = name;
+		this.exclusiveYn = exclusiveYn;
+		this.description = description;
+	}
 }
