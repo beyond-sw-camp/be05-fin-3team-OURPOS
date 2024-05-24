@@ -12,7 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MenuOptionGroupRequestDto {
-	private Long menuId;
 	private String name;
 	private Boolean exclusiveYn;
 	private String description;

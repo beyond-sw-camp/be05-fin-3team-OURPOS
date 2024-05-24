@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ourpos.api.Result;
-import com.ourpos.api.menu.dto.request.MenuOptionGroupUpdateDto;
-import com.ourpos.api.menu.dto.request.MenuOptionUpdateDto;
 import com.ourpos.api.menu.dto.request.MenuRequestDto;
 import com.ourpos.api.menu.dto.request.MenuUpdateDto;
 import com.ourpos.api.menu.dto.response.MenuResponseDto;
@@ -64,8 +62,7 @@ public class MenuController {
 	}
 
 	@PutMapping("/{menuId}")
-	public Result<Void> updateMenu(@PathVariable Long menuId, @RequestBody MenuUpdateDto menuUpdateDto
-		, MenuOptionGroupUpdateDto menuOptionGroupUpdateDto, MenuOptionUpdateDto menuOptionUpdateDto) {
+	public Result<Void> updateMenu(@PathVariable Long menuId, @RequestBody MenuUpdateDto menuUpdateDto) {
 		log.info("MenuController.updateMenu() called");
 
 		menuServiceImpl.updateMenu(menuId, menuUpdateDto);
