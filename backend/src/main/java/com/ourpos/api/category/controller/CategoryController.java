@@ -29,6 +29,8 @@
 // 	}
 //
 // 	@GetMapping
-// 	public Result<List<CategoryResponseDto>> findAllCategories()
+// 	public Result<List<CategoryResponseDto>> findAllCategories(
+// 		@RequestParam
 // 	)
+//
 // }
