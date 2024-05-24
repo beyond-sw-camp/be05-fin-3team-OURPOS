@@ -18,8 +18,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "store_comm")
@@ -81,4 +83,14 @@ public class StoreComm extends BaseEntity {
         this.pictureUrl = dto.getStoreCommPictureUrl();
         // 필요한 경우 status와 deletedYn 등의 필드도 업데이트할 수 있습니다.
     }
+
+    public void delete() {
+        this.deletedYn = false;
+        this.deletedDatetime = LocalDateTime.now();
+    }
+
+
+
+
+
 }

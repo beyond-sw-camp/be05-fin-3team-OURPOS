@@ -1,14 +1,17 @@
 package com.ourpos.api.storeorder.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 import com.ourpos.api.storeorder.dto.request.StoreCommRequestDto;
 import com.ourpos.api.storeorder.dto.request.StoreCommResponseDto;
 import com.ourpos.domain.order.HallOrder;
+import com.ourpos.domain.store.StoreStock;
 import com.ourpos.domain.storeorder.StoreComm;
 import com.ourpos.domain.storeorder.StoreCommRepository;
 
@@ -50,4 +53,16 @@ public class StoreCommServiceImpl implements StoreCommService{
         StoreComm storeComm = storeCommRequestDto.toEntity();
         storeCommRepository.save(storeComm);
     }
+
+    @Override
+    @Transactional
+    public void deletetStoreComm(Long storeCommId) {
+        StoreComm storeComm = storeCommRepository.findById(storeCommId)
+            .orElseThrow(() -> new RuntimeException("StoreComm not found with id: " + storeCommId));
+        storeComm.delete();
+        storeCommRepository.save(storeComm);
+    }
+
+
+
 }
