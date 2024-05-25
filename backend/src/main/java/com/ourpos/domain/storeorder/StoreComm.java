@@ -61,6 +61,8 @@ public class StoreComm extends BaseEntity {
     @Column(name = "store_comm_deleted_datetime")
     private LocalDateTime deletedDatetime;
 
+
+
     @Builder
     private StoreComm(String name, Integer price, String articleUnit, String description, StoreCommCategory category,
         String pictureUrl) {
