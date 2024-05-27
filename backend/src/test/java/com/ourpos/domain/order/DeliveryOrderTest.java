@@ -244,10 +244,8 @@ class DeliveryOrderTest {
 
     private static OrderAddress createOrderAddress() {
         return OrderAddress.builder()
-            .addressSi("서울특별시")
-            .addressGu("강남구")
-            .addressStreetName("강남대로 123길")
-            .addressDetail("강남 아파트 101동 101호")
+            .addressBase("서울시 강남구 역삼동 123-45")
+            .addressDetail("우성아파트 101동 202호")
             .build();
     }
 

@@ -22,18 +22,18 @@ class CustomerRepositoryTest {
     void register() {
         CustomerAddress customerAddress1 = CustomerAddress.builder()
             .name("집")
-            .addressSi("군포시")
-            .addressGu("당정동")
-            .streetName("금정로 1번길")
+            .receiverName("홍길동")
+            .telNo("02-1234-5678")
+            .addressBase("경기도 군포시 당정동 금정로 1번길")
             .addressDetail("아파트 1층 101호")
             .defaultYn(true)
             .build();
 
         CustomerAddress customerAddress2 = CustomerAddress.builder()
             .name("회사")
-            .addressSi("서울시")
-            .addressGu("강남구")
-            .streetName("강남로 1번길")
+            .receiverName("홍길동")
+            .telNo("02-1234-5678")
+            .addressBase("서울시 강남구 강남로 1번길")
             .addressDetail("아파트 2층 201호")
             .defaultYn(false)
             .build();
@@ -77,18 +77,18 @@ class CustomerRepositoryTest {
         // given
         CustomerAddress customerAddress1 = CustomerAddress.builder()
             .name("집")
-            .addressSi("군포시")
-            .addressGu("당정동")
-            .streetName("금정로 1번길")
+            .receiverName("홍길동")
+            .telNo("02-1234-5678")
+            .addressBase("경기도 군포시 당정동 금정로 1번길")
             .addressDetail("아파트 1층 101호")
             .defaultYn(true)
             .build();
 
         CustomerAddress customerAddress2 = CustomerAddress.builder()
             .name("회사")
-            .addressSi("서울시")
-            .addressGu("강남구")
-            .streetName("강남로 1번길")
+            .receiverName("홍길동")
+            .telNo("02-1234-5678")
+            .addressBase("서울시 강남구 강남로 1번길")
             .addressDetail("아파트 2층 201호")
             .defaultYn(false)
             .build();

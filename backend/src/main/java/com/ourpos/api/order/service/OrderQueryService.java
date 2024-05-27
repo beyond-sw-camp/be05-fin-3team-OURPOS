@@ -1,5 +1,7 @@
 package com.ourpos.api.order.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,5 +30,21 @@ public class OrderQueryService {
         DeliveryOrder deliveryOrder = orderQueryRepository.findOneDeliveryOrder(orderId)
             .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다."));
         return new DeliveryOrderResponseDto(deliveryOrder);
+    }
+
+    public List<HallOrderResponseDto> findHallOrderByLoginId(String loginId) {
+        List<HallOrder> hallOrders = orderQueryRepository.findOneHallOrderByLoginId(loginId);
+
+        return hallOrders.stream()
+            .map(HallOrderResponseDto::new)
+            .toList();
+    }
+
+    public List<DeliveryOrderResponseDto> findDeliveryOrderByLoginId(String loginId) {
+        List<DeliveryOrder> deliveryOrders = orderQueryRepository.findOneDeliveryOrderByLoginId(loginId);
+
+        return deliveryOrders.stream()
+            .map(DeliveryOrderResponseDto::new)
+            .toList();
     }
 }

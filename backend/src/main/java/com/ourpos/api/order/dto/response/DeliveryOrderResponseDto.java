@@ -20,11 +20,7 @@ public class DeliveryOrderResponseDto {
     private Integer price;
     private LocalDateTime orderCreatedDateTime;
     private DeliveryStatus deliveryOrderStatus;
-    private Long orderAddressId;
-    private String orderAddressSi;
-    private String orderAddressGu;
-    private String orderAddressStreetName;
-    private String orderAddressDetail;
+    private OrderAddressResponseDto orderAddressResponseDto;
     private String ownerMessage;
     private String riderMessage;
     private Integer tip;
@@ -39,11 +35,7 @@ public class DeliveryOrderResponseDto {
         this.price = order.getPrice();
         this.orderCreatedDateTime = order.getCreatedDateTime();
         this.deliveryOrderStatus = order.getStatus();
-        this.orderAddressId = order.getOrderAddress().getId();
-        this.orderAddressSi = order.getOrderAddress().getAddressSi();
-        this.orderAddressGu = order.getOrderAddress().getAddressGu();
-        this.orderAddressStreetName = order.getOrderAddress().getAddressStreetName();
-        this.orderAddressDetail = order.getOrderAddress().getAddressDetail();
+        this.orderAddressResponseDto = new OrderAddressResponseDto(order.getOrderAddress());
         this.ownerMessage = order.getOwnerMessage();
         this.riderMessage = order.getRiderMessage();
         this.tip = order.getTip();

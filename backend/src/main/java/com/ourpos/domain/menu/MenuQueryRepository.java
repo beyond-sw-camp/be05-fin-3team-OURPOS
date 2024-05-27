@@ -18,6 +18,7 @@ public class MenuQueryRepository {
 
     private final JPAQueryFactory queryFactory;
 
+    // TODO: Category가 null일 때 처리
     public List<Menu> findAllWithCategory(String category) {
         return queryFactory
             .selectFrom(menu)

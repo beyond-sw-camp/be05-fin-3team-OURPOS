@@ -1,6 +1,5 @@
 package com.ourpos.api.customer.dto.response;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.ourpos.domain.customer.Customer;
@@ -16,7 +15,7 @@ public class CustomerResponseDto {
     private String nickname;
     private String password;
     private String phone;
-    private List<CustomerAddressResponseDto> customerAddresses = new ArrayList<>();
+    private List<CustomerAddressResponseDto> customerAddresses;
 
     public CustomerResponseDto(Customer customer) {
         this.customerId = customer.getId();
