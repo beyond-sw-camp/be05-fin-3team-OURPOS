@@ -3,7 +3,6 @@ package com.ourpos.api.category.service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,13 +35,16 @@ public class CategoryServiceImpl implements CategoryService {
 
 		List<Long> groups = categoryRequestDto.getMenuOptionGroupIds();
 
-		List<MenuOptionGroup> groupList = new ArrayList<>();
+		List<MenuOptionGroup> groupList = categoryRequestDto.toEntity().getMenuOptionGroups();
 		for (Long id : groups) {
-			MenuOptionGroup group = menuOptionGroupRepository.findById(id).orElseThrow(
-				() -> new IllegalArgumentException("메뉴옵션그룹이 존재하지 않습니다."));
-			groupList.add(group);
+			// MenuOptionGroup group = menuOptionGroupRepository.findById(id).orElseThrow(
+			// 	() -> new IllegalArgumentException("메뉴옵션그룹이 존재하지 않습니다."));
+			// groupList.add(group);
+			groupList.add(categoryRequestDto.)
 		}
-		Category category = categoryRequestDto.toEntity(groupList);
+
+		categoryRequestDto.toEntity()
+		Category category = categoryRequestDto.toEntity();
 		category = Category.builder()
 			.name(categoryRequestDto.getName())
 			.menuOptionGroups(groupList)
