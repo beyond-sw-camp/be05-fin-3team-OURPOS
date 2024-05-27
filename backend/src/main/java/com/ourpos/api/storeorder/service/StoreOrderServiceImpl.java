@@ -29,6 +29,9 @@ public class StoreOrderServiceImpl {
 	private final StoreOrderRepository storeOrderRepository;
 	private  final StoreOrderDetailRepository storeOrderDetailRepository;
 	private final StoreCommRepository storeCommRepository;
+	//private final StoreComm storeComm;
+
+
 
 
 
@@ -46,23 +49,20 @@ public class StoreOrderServiceImpl {
 	}
 
 	// 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영)
-	/*
-	public void createStoreOrder(StoreOrderRequestDto storeOrderRequestDto){
-		StoreOrder storeOrder = createOrder(storeOrderRequestDto);
-		storeOrderRepository.save(storeOrder);
-
-	}
-	 */
 	public void createStoreOrder(StoreOrderRequestDto requestDto) {
+
+		//int totalPrice = requestDto.getStoreCommPrice() * requestDto.getStoreOrderDetailQuantity();
 
 		// StoreOrder 생성
 		StoreOrder storeOrder = StoreOrder.builder()
 			.price(0)
+			.status(StoreOrderStatus.WAITING)
 			.quantity(requestDto.getStoreOrderDetailQuantity())
 			.build();
 
 		// StoreOrder 저장
 		storeOrderRepository.save(storeOrder);
+
 
 		StoreComm storeComm = storeCommRepository.findById(requestDto.getStoreCommId())
 			.orElseThrow(() -> new IllegalArgumentException("해당 StoreComm을 찾을 수 없습니다."));

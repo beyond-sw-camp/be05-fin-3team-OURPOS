@@ -36,6 +36,7 @@ public class StoreOrderDetail {
     @ManyToOne(fetch = FetchType.LAZY)
     private StoreComm storeMenu;
 
+
     @Builder
     public StoreOrderDetail(StoreOrder storeOrder, StoreComm storeMenu) {
         this.storeOrder = storeOrder;
