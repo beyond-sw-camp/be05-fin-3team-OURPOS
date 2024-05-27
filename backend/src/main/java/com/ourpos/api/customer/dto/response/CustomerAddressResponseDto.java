@@ -9,21 +9,20 @@ import lombok.Setter;
 @Setter
 public class CustomerAddressResponseDto {
 
-	private Long id;
-	private String name;
-	private String addressSi;
-	private String addressGu;
-	private String streetName;
-	private String addressDetail;
-	private Boolean defaultYn;
+    private Long customerAddressId;
+    private String receiverName;
+    private String telNo;
+    private String addressBase;
+    private String addressDetail;
+    private String zipcode;
 
-	public CustomerAddressResponseDto(CustomerAddress customerAddress) {
-		this.id = customerAddress.getId();
-		this.name = customerAddress.getName();
-		this.addressSi = customerAddress.getAddressSi();
-		this.addressGu = customerAddress.getAddressGu();
-		this.streetName = customerAddress.getStreetName();
-		this.addressDetail = customerAddress.getAddressDetail();
-		this.defaultYn = customerAddress.getDefaultYn();
-	}
+    public CustomerAddressResponseDto(CustomerAddress customerAddress) {
+        this.customerAddressId = customerAddress.getId();
+        this.receiverName = customerAddress.getReceiverName();
+        this.telNo = customerAddress.getTelNo();
+        this.addressBase = customerAddress.getAddressBase();
+        this.addressDetail = customerAddress.getAddressDetail();
+        this.zipcode = customerAddress.getZipcode();
+    }
+
 }

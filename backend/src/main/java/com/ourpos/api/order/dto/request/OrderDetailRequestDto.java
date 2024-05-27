@@ -7,13 +7,14 @@ import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.orderdetail.OrderDetail;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@ToString
 @Getter
 @Setter
+@NoArgsConstructor
 public class OrderDetailRequestDto {
+
     private Long menuId;
     private Integer quantity;
     private List<OrderOptionGroupRequestDto> orderOptionGroups = new ArrayList<>();
@@ -27,4 +28,5 @@ public class OrderDetailRequestDto {
                 .toList())
             .build();
     }
+
 }

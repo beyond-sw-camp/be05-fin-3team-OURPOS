@@ -36,44 +36,48 @@ public class CustomerAddress {
     @Column(name = "customer_address_name")
     private String name;
 
-    @Column(name = "customer_address_si")
-    private String addressSi;
+    @Column(name = "customer_adrress_receiver_name")
+    private String receiverName;
 
-    @Column(name = "customer_address_gu")
-    private String addressGu;
+    @Column(name = "customer_address_tel_no")
+    private String telNo;
 
-    @Column(name = "customer_address_street_name")
-    private String streetName;
+    @Column(name = "customer_address_base")
+    private String addressBase;
 
     @Column(name = "customer_address_detail")
     private String addressDetail;
+
+    @Column(name = "customer_address_zipcode")
+    private String zipcode;
 
     @Column(name = "customer_address_default_yn")
     private Boolean defaultYn;
 
     @Builder
-    private CustomerAddress(String name, String addressSi, String addressGu, String streetName, String addressDetail,
-        Boolean defaultYn) {
+    public CustomerAddress(Customer customer, String name, String receiverName, String telNo, String addressBase,
+        String addressDetail, String zipcode, Boolean defaultYn) {
+        this.customer = customer;
         this.name = name;
-        this.addressSi = addressSi;
-        this.addressGu = addressGu;
-        this.streetName = streetName;
+        this.receiverName = receiverName;
+        this.telNo = telNo;
+        this.addressBase = addressBase;
         this.addressDetail = addressDetail;
+        this.zipcode = zipcode;
         this.defaultYn = defaultYn;
     }
 
-    public CustomerAddress(CustomerAddress customerAddrress){
-        this.id = customerAddrress.getId();
-        this.customer = customerAddrress.getCustomer();
-        this.name = customerAddrress.getName();
-        this.addressSi = customerAddrress.getAddressSi();
-        this.addressGu = customerAddrress.getAddressGu();
-        this.streetName = customerAddrress.getStreetName();
-        this.addressDetail = customerAddrress.getAddressDetail();
-        this.defaultYn = customerAddrress.getDefaultYn();
-
-
+    public void update(String name, String receiverName, String telNo, String addressBase, String addressDetail,
+        String zipcode) {
+        this.name = name;
+        this.receiverName = receiverName;
+        this.telNo = telNo;
+        this.addressBase = addressBase;
+        this.addressDetail = addressDetail;
+        this.zipcode = zipcode;
     }
 
-
+    public void updateDefaultYn(Boolean defaultYn) {
+        this.defaultYn = defaultYn;
+    }
 }

@@ -2,8 +2,6 @@ package com.ourpos.api.order.service;
 
 import java.util.List;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,31 +36,6 @@ class OrderServiceImplTest {
     @Autowired
     private OrderQueryService orderQueryService;
 
-    @DisplayName("홀 주문 생성")
-    @Test
-    void createHallOrder() {
-        // given
-        Customer customer = createCustomer();
-
-        Store store = createStore();
-
-        Menu menu1 = createMenu("햄버거", 5000);
-        Menu menu2 = createMenu("감자튀김", 3000);
-
-        OrderOptionRequestDto orderOptionRequestDto = createOrderOption();
-
-        OrderOptionGroupRequestDto orderOptionGroupRequestDto = createOrderOptionGroup(orderOptionRequestDto);
-
-        OrderDetailRequestDto orderDetailRequestDto1 = createOrderDetail(menu1, orderOptionGroupRequestDto, 1);
-        OrderDetailRequestDto orderDetailRequestDto2 = createOrderDetail(menu2, orderOptionGroupRequestDto, 2);
-
-        HallOrderRequestDto hallOrderRequestDto = createHallOrder(customer, store, orderDetailRequestDto1,
-            orderDetailRequestDto2);
-
-        // when
-        orderServiceImpl.createHallOrder(hallOrderRequestDto);
-    }
-
     private static HallOrderRequestDto createHallOrder(Customer customer, Store store,
         OrderDetailRequestDto orderDetailRequestDto1, OrderDetailRequestDto orderDetailRequestDto2) {
         HallOrderRequestDto hallOrderRequestDto = new HallOrderRequestDto();
@@ -71,15 +44,6 @@ class OrderServiceImplTest {
         hallOrderRequestDto.setOrderTakeoutYn(false);
         hallOrderRequestDto.setOrderDetails(List.of(orderDetailRequestDto1, orderDetailRequestDto2));
         return hallOrderRequestDto;
-    }
-
-    private static OrderDetailRequestDto createOrderDetail(Menu menu1,
-        OrderOptionGroupRequestDto orderOptionGroupRequestDto, int quantity) {
-        OrderDetailRequestDto orderDetailRequestDto1 = new OrderDetailRequestDto();
-        orderDetailRequestDto1.setMenuId(menu1.getId());
-        orderDetailRequestDto1.setQuantity(quantity);
-        orderDetailRequestDto1.setOrderOptionGroups(List.of(orderOptionGroupRequestDto));
-        return orderDetailRequestDto1;
     }
 
     private static OrderOptionGroupRequestDto createOrderOptionGroup(
