@@ -17,18 +17,18 @@ public class DeliveryOrderRequestDto {
 
     private Long customerId;
     private Long storeId;
-    private DeliveryAddressDto deliveryAddress;
+    private OrderAddressRequestDto orderAddressRequestDto;
     private String ownerMessage;
     private String riderMessage;
     private Integer tip;
     private Boolean disposableYn;
-    private List<OrderDetailRequestDto> orderDetails = new ArrayList<>();
+    private List<OrderDetailRequestDto> orderDetailDtos = new ArrayList<>();
 
     public DeliveryOrder toEntity(Customer customer, Store store, List<OrderDetail> orderDetails) {
         return DeliveryOrder.builder()
             .customer(customer)
             .store(store)
-            .orderAddress(deliveryAddress.toEntity())
+            .orderAddress(orderAddressRequestDto.toEntity())
             .ownerMessage(ownerMessage)
             .riderMessage(riderMessage)
             .tip(tip)

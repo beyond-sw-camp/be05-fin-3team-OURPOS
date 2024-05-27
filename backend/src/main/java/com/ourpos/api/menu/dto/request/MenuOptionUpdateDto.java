@@ -8,5 +8,5 @@ import lombok.Setter;
 public class MenuOptionUpdateDto {
 	private Long menuOptionGroupId;
 	private String name;
-	private String price;
+	private Integer price;
 }

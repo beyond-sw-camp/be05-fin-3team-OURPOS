@@ -10,4 +10,5 @@ public class MenuOptionGroupUpdateDto {
 	private String name;
 	private Boolean exclusiveYn;
 	private String description;
+	// private List<MenuOptionUpdateDto> menuOptions = new ArrayList<>();
 }

@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CustomerAddressUpdateDto {
+public class CustomerAddressRequestDto {
 
     private String name;
     private String receiverName;
@@ -14,7 +14,7 @@ public class CustomerAddressUpdateDto {
     private String addressDetail;
     private String zipcode;
 
-    public CustomerAddressUpdateDto(String name, String receiverName, String telNo, String addressBase,
+    public CustomerAddressRequestDto(String name, String receiverName, String telNo, String addressBase,
         String addressDetail, String zipcode) {
         this.name = name;
         this.receiverName = receiverName;

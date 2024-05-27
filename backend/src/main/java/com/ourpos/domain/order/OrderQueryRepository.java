@@ -24,10 +24,13 @@ public class OrderQueryRepository {
     public List<HallOrder> findHallOrderByStoreId(Long storeId, String status, int offset, int limit) {
         return queryFactory
             .selectFrom(hallOrder)
-            .join(hallOrder.customer).fetchJoin()
-            .join(hallOrder.store).fetchJoin()
-            .where(hallOrder.store.id.eq(storeId))
-            .where(hallOrder.status.eq(HallStatus.valueOf(status)))
+            .join(hallOrder.customer)
+            .fetchJoin()
+            .join(hallOrder.store)
+            .fetchJoin()
+            .where(hallOrder.store.id.eq(storeId), hallOrder.status.eq(HallStatus.valueOf(status)))
+            .where(hallOrder.store.id.eq(storeId), hallOrder.status.eq(HallStatus.valueOf(status)))
+
             .offset(offset)
             .limit(limit)
             .fetch();
@@ -104,6 +107,25 @@ public class OrderQueryRepository {
             .join(deliveryOrder.store).fetchJoin()
             .join(deliveryOrder.orderAddress).fetchJoin()
             .where(builder)
+            .fetch();
+    }
+
+    public List<HallOrder> findOneHallOrderByLoginId(String loginId) {
+        return queryFactory
+            .selectFrom(hallOrder)
+            .join(hallOrder.customer).fetchJoin()
+            .join(hallOrder.store).fetchJoin()
+            .where(hallOrder.customer.loginId.eq(loginId))
+            .fetch();
+    }
+
+    public List<DeliveryOrder> findOneDeliveryOrderByLoginId(String loginId) {
+        return queryFactory
+            .selectFrom(deliveryOrder)
+            .join(deliveryOrder.customer).fetchJoin()
+            .join(deliveryOrder.store).fetchJoin()
+            .join(deliveryOrder.orderAddress).fetchJoin()
+            .where(deliveryOrder.customer.loginId.eq(loginId))
             .fetch();
     }
 

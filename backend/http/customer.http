@@ -1,0 +1,19 @@
+### 마이페이지- 개인정보조회
+GET http://localhost:8080/api/v1/customers
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfQlRBTG1COEsxUEZqN3RNTjRnbHR0SDkwWER5SUhOaUlLMjhaN3dMUFFYOCIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY2NDI4ODYsImV4cCI6MTcxNjY0MzEwMn0.1vs4JtXBc6a6yZ4MWmDjFnda2wGfDa8bmDHzSuNkEmk
+
+### 주소 추가
+POST http://localhost:8080/api/v1/customers/address
+Content-Type: application/json
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfQlRBTG1COEsxUEZqN3RNTjRnbHR0SDkwWER5SUhOaUlLMjhaN3dMUFFYOCIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY2NDM5OTUsImV4cCI6MTcxNjY0NDIxMX0.3W-blIj_TXZVrl1R6OSZoXcBnQPhYJZUwHzyAER3ucc
+
+{
+  "addressSi": "서울특별시",
+  "addressGu": "강남구",
+  "streetName": "강남대로",
+  "addressDetail": "123-456"
+}
+
+### 내 주문 내역 조회
+GET http://localhost:8080/api/v1/customers/my/orders/hall
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoia2FrYW9fMzQ5ODY0MzMzOSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3MDY2NzUsImV4cCI6MTcxNjcwNjg5MX0.h-U3y34AiNeNulX6usa99h_ATD8srvVJDzHRU4-1qLc

@@ -90,9 +90,5 @@ public class StoreComm extends BaseEntity {
         this.deletedYn = false;
         this.deletedDatetime = LocalDateTime.now();
     }
-
-
-
-
-
+    
 }

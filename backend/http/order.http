@@ -2,9 +2,10 @@
 
 POST http://localhost:8080/api/v1/orders/hall
 content-type: application/json
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3Mjk2OTQsImV4cCI6MTcxNjcyOTkxMH0.DKhpJlsIFX_Q6Ko-fv36gbzfQ4JNF8-OlcaG8G6yEis
 
 {
-  "customerId": 1,
+  "customerId": 2,
   "storeId": 1,
   "orderTakeoutYn": true,
   "orderDetails": [
@@ -49,16 +50,16 @@ GET http://localhost:8080/api/v1/orders/hall/1
 
 POST http://localhost:8080/api/v1/orders/delivery
 content-type: application/json
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3Mjk5NTgsImV4cCI6MTcxNjczMDE3NH0.WHPatTEor3-KwP2I2VrRPEvBkf7PJpn4UWnrAob6g0c
 
 {
-  "customerId": 1,
+  "customerId": 2,
   "storeId": 1,
   "deliveryAddress": {
     "addressSi": "서울시",
     "addressGu": "강남구",
     "addressStreetName": "강남대로 1234번길",
     "addressDetail": "101호"
-    4
   },
   "ownerMessage": "문 앞에 놔주세요",
   "riderMessage": "빨리 와주세요",

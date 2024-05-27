@@ -12,5 +12,6 @@ public class MenuUpdateDto {
 	private Integer price;
 	private String description;
 	private String pictureUrl;
+	// private List<MenuOptionGroupUpdateDto> menuOptionGroups = new ArrayList<>();
 
 }
