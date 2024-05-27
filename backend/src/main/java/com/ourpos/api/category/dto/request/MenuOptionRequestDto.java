@@ -1,4 +1,4 @@
-package com.ourpos.api.menu.dto.request;
+package com.ourpos.api.category.dto.request;
 
 import com.ourpos.domain.menu.MenuOption;
 

@@ -1,7 +1,6 @@
 package com.ourpos.domain.menu;
 
 import static com.ourpos.domain.menu.QCategory.*;
-import static com.ourpos.domain.menu.QMenu.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,6 @@ public class CategoryQueryRepository {
 	public List<Category> findAllCategories() {
 		return queryFactory
 			.selectFrom(category)
-			.where(isNotDelete())
 			.fetch();
 	}
 
@@ -36,10 +34,6 @@ public class CategoryQueryRepository {
 
 	private static BooleanExpression categoryIdEq(Long categoryId) {
 		return category.id.eq(categoryId);
-	}
-
-	private static BooleanExpression isNotDelete() {
-		return menu.deletedYn.eq(false);
 	}
 
 }

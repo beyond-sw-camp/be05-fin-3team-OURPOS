@@ -3,7 +3,6 @@ package com.ourpos.api.category.dto.response;
 import java.util.List;
 
 
-import com.ourpos.api.menu.dto.response.MenuOptionGroupResponseDto;
 import com.ourpos.domain.menu.Category;
 
 import lombok.Getter;
