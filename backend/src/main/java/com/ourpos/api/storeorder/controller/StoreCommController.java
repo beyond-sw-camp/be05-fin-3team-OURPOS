@@ -3,7 +3,6 @@ package com.ourpos.api.storeorder.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ourpos.api.Result;
 import com.ourpos.api.storeorder.dto.request.StoreCommRequestDto;
-import com.ourpos.api.storeorder.dto.request.StoreCommResponseDto;
-import com.ourpos.api.storeorder.service.StoreCommQueryService;
+import com.ourpos.api.storeorder.dto.response.StoreCommResponseDto;
 import com.ourpos.api.storeorder.service.StoreCommService;
 import com.ourpos.api.storeorder.service.StoreCommServiceImpl;
 
@@ -55,7 +53,7 @@ public class StoreCommController {
 
     // 비품 식자재 삭제
     @PutMapping("/deletestorecomm/{storeCommId}")
-    public Result<Void> restoreStoreComm(@PathVariable Long storeCommId) {
+    public Result<Void> deleteStoreComm(@PathVariable Long storeCommId) {
         log.info("비품/식자재 삭제 : {}", storeCommId);
         storeCommService.deletetStoreComm(storeCommId);
         return new Result<>(HttpStatus.OK.value(), "비품/식자재가 삭제되었습니다.", null);
