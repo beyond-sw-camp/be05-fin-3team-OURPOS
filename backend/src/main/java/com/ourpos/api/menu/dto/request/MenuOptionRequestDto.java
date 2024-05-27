@@ -10,13 +10,13 @@ import lombok.ToString;
 @Getter
 @Setter
 public class MenuOptionRequestDto {
-	private String name;
-	private Integer price;
+    private String name;
+    private Integer price;
 
-	public MenuOption toEntity() {
-		return MenuOption.builder()
-			.name(name)
-			.price(price)
-			.build();
-	}
+    public MenuOption toEntity() {
+        return MenuOption.builder()
+            .name(name)
+            .price(price)
+            .build();
+    }
 }

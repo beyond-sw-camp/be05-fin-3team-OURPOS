@@ -11,13 +11,13 @@ import com.ourpos.api.menu.dto.request.MenuUpdateDto;
 @Service
 public interface MenuService {
 
-	public void addMenu(MenuRequestDto menuRequestDto, MultipartFile nultipartfile);
+    public void addMenu(MenuRequestDto menuRequestDto, MultipartFile nultipartfile);
 
-	public void deleteMenu(Long menuId);
+    public void deleteMenu(Long menuId);
 
-	public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto);
+    public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto);
 
-	public void updateMenuOptionGroup(Long menuOptionGroupId, MenuOptionGroupUpdateDto menuOptionGroupUpdateDto);
+    public void updateMenuOptionGroup(Long menuOptionGroupId, MenuOptionGroupUpdateDto menuOptionGroupUpdateDto);
 
-	public void updateMenuOption(Long menuOptionId, MenuOptionUpdateDto menuOptionUpdateDto);
+    public void updateMenuOption(Long menuOptionId, MenuOptionUpdateDto menuOptionUpdateDto);
 }

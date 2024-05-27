@@ -45,7 +45,7 @@ public class OrderOptionGroup {
     private List<OrderOption> orderOptions = new ArrayList<>();
 
     @Builder
-    public OrderOptionGroup(String name, @Singular List<OrderOption> orderOptions) {
+    private OrderOptionGroup(String name, @Singular List<OrderOption> orderOptions) {
         this.name = name;
         for (OrderOption orderOption : orderOptions) {
             addOrderOption(orderOption);

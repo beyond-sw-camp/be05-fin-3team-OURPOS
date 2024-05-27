@@ -17,5 +17,5 @@ public interface OAuth2Response {
     String getAge();
 
     String getPhone();
-    
+
 }

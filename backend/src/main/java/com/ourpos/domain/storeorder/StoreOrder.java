@@ -35,7 +35,7 @@ public class StoreOrder extends BaseEntity {
     private StoreOrderStatus status;
 
     @Builder
-    public StoreOrder(Integer price, Integer quantity) {
+    private StoreOrder(Integer price, Integer quantity) {
         this.price = price;
         this.quantity = quantity;
         this.status = StoreOrderStatus.WAITING;
