@@ -1,148 +1,148 @@
 INSERT INTO customer (customer_login_id, customer_name, customer_nickname, customer_password, customer_phone,
                       customer_role)
 VALUES ('loginId', '박상철', '상철', '1234', '010-1234-1234', 'ROLE_ADMIN');
-
-INSERT INTO store_address(store_address_detail, store_address_gu, store_address_si, store_address_street_name)
-VALUES ('상세주소', '구', '시', '도');
-
-
-INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time, modified_date_time, store_address_id,
-                   store_close_time, store_closed_datetime, store_open_time, store_name, store_phone, store_picture_url)
-VALUES (FALSE, 10000, NULL, NULL, 1, '22:00', NULL, '10:00', '맛집', '010-1234-1234', 'https://www.google.com');
-
-
-INSERT INTO category(category_name)
-VALUES ('BURGERS');
-
-INSERT INTO category(category_name)
-VALUES ('FRIES');
-
-INSERT INTO category(category_name)
-VALUES ('MILKSHAKES');
-
-INSERT INTO category(category_name)
-VALUES ('DRINKS');
-
-INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
-                  menu_description, menu_name, menu_picture_url)
-VALUES (TRUE, NULL, FALSE, 9900, 1, 1, '햄버거', '햄버거', 'https://www.google.com');
-
-INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
-                  menu_description, menu_name, menu_picture_url)
-VALUES (TRUE, NULL, FALSE, 11400, 1, 1, '치즈버거', '치즈버거', 'https://www.google.com');
-
-INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
-                  menu_description, menu_name, menu_picture_url)
-VALUES (TRUE, NULL, FALSE, 12400, 1, 1, '베이컨 버거', '베이컨 버거', 'https://www.google.com');
-
-INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
-                  menu_description, menu_name, menu_picture_url)
-VALUES (TRUE, NULL, FALSE, 13900, 1, 1, '베이컨 치즈버거', '베이컨 치즈버거', 'https://www.google.com');
-
-INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
-                  menu_description, menu_name, menu_picture_url)
-VALUES (TRUE, NULL, FALSE, 6900, 2, 1, '감자튀김', 'FRIES', 'https://www.google.com');
-
-INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
-                  menu_description, menu_name, menu_picture_url)
-VALUES (TRUE, NULL, FALSE, 6900, 2, 1, '밀크쉐이크', '파이브가이즈 쉐이크', 'https://www.google.com');
-
-
-INSERT INTO menu_option_group (menu_option_group_name, menu_id)
-VALUES ('토핑', 1);
-
-INSERT INTO menu_option_group (menu_option_group_name, menu_id)
-VALUES ('사이즈', 2);
-
-INSERT INTO menu_option_group (menu_option_group_name, menu_id)
-VALUES ('밀크쉐이크 토핑', 3);
-
-INSERT INTO menu_option_group (menu_option_group_name, menu_id)
-VALUES ('FRIES 사이즈', 4);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('올 더 웨이', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('마요네즈', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('케첩', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('머스타드', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('양상추', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('피클', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('토마토', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('그릴드 어니언', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('그릴드 머쉬룸', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('랠리시', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('어니언', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('할라피뇨', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('피망', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('스테이크 소스', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('바비큐 소스', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('핫소스', 0, 1);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('보통', 3500, 2);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('리틀', 0, 2);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('초콜릿', 0, 3);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('피너 버터', 0, 3);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('솔티드 카라멜', 0, 3);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('바나나', 0, 3);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('딸기', 0, 3);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('오레오', 0, 3);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('로투스 비스코프', 0, 3);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('베이컨', 0, 3);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('리틀', 0, 4);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('레귤러', 2000, 4);
-
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('라지', 4000, 4);
+--
+-- INSERT INTO store_address(store_address_detail, store_address_gu, store_address_si, store_address_street_name)
+-- VALUES ('상세주소', '구', '시', '도');
+--
+--
+-- INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time, modified_date_time, store_address_id,
+--                    store_close_time, store_closed_datetime, store_open_time, store_name, store_phone, store_picture_url)
+-- VALUES (FALSE, 10000, NULL, NULL, 1, '22:00', NULL, '10:00', '맛집', '010-1234-1234', 'https://www.google.com');
+--
+--
+-- INSERT INTO category(category_name)
+-- VALUES ('BURGERS');
+--
+-- INSERT INTO category(category_name)
+-- VALUES ('FRIES');
+--
+-- INSERT INTO category(category_name)
+-- VALUES ('MILKSHAKES');
+--
+-- INSERT INTO category(category_name)
+-- VALUES ('DRINKS');
+--
+-- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+--                   menu_description, menu_name, menu_picture_url)
+-- VALUES (TRUE, NULL, FALSE, 9900, 1, 1, '햄버거', '햄버거', 'https://www.google.com');
+--
+-- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+--                   menu_description, menu_name, menu_picture_url)
+-- VALUES (TRUE, NULL, FALSE, 11400, 1, 1, '치즈버거', '치즈버거', 'https://www.google.com');
+--
+-- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+--                   menu_description, menu_name, menu_picture_url)
+-- VALUES (TRUE, NULL, FALSE, 12400, 1, 1, '베이컨 버거', '베이컨 버거', 'https://www.google.com');
+--
+-- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+--                   menu_description, menu_name, menu_picture_url)
+-- VALUES (TRUE, NULL, FALSE, 13900, 1, 1, '베이컨 치즈버거', '베이컨 치즈버거', 'https://www.google.com');
+--
+-- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+--                   menu_description, menu_name, menu_picture_url)
+-- VALUES (TRUE, NULL, FALSE, 6900, 2, 1, '감자튀김', 'FRIES', 'https://www.google.com');
+--
+-- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+--                   menu_description, menu_name, menu_picture_url)
+-- VALUES (TRUE, NULL, FALSE, 6900, 2, 1, '밀크쉐이크', '파이브가이즈 쉐이크', 'https://www.google.com');
+--
+--
+-- INSERT INTO menu_option_group (menu_option_group_name, menu_id)
+-- VALUES ('토핑', 1);
+--
+-- INSERT INTO menu_option_group (menu_option_group_name, menu_id)
+-- VALUES ('사이즈', 2);
+--
+-- INSERT INTO menu_option_group (menu_option_group_name, menu_id)
+-- VALUES ('밀크쉐이크 토핑', 3);
+--
+-- INSERT INTO menu_option_group (menu_option_group_name, menu_id)
+-- VALUES ('FRIES 사이즈', 4);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('올 더 웨이', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('마요네즈', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('케첩', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('머스타드', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('양상추', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('피클', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('토마토', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('그릴드 어니언', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('그릴드 머쉬룸', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('랠리시', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('어니언', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('할라피뇨', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('피망', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('스테이크 소스', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('바비큐 소스', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('핫소스', 0, 1);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('보통', 3500, 2);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('리틀', 0, 2);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('초콜릿', 0, 3);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('피너 버터', 0, 3);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('솔티드 카라멜', 0, 3);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('바나나', 0, 3);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('딸기', 0, 3);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('오레오', 0, 3);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('로투스 비스코프', 0, 3);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('베이컨', 0, 3);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('리틀', 0, 4);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('레귤러', 2000, 4);
+--
+-- INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
+-- VALUES ('라지', 4000, 4);

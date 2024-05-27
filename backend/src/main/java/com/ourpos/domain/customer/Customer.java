@@ -73,14 +73,10 @@ public class Customer extends BaseEntity {
         customerAddress.setCustomer(this);
     }
 
-    public void update(String addressSi, String addressGu, String streetName, String addressDetail) {
-        for (CustomerAddress address : this.customerAddresses) {
-
-            address.setAddressSi(addressSi);
-            address.setAddressGu(addressGu);
-            address.setStreetName(streetName);
-            address.setAddressDetail(addressDetail);
-        }
+    public void update(String name, String nickname, String phone) {
+        this.name = name;
+        this.nickname = nickname;
+        this.phone = phone;
     }
 
     public void addAddress(CustomerAddress customerAddress) {

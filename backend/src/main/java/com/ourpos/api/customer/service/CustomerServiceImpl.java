@@ -3,14 +3,14 @@ package com.ourpos.api.customer.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ourpos.api.customer.dto.request.CustomerAddressRequestDto;
 import com.ourpos.api.customer.dto.request.CustomerAddressUpdateDto;
-import com.ourpos.api.customer.dto.request.CustomerRequestDto;
 import com.ourpos.api.customer.dto.response.CustomerResponseDto;
+import com.ourpos.api.order.service.OrderQueryService;
 import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerAddress;
 import com.ourpos.domain.customer.CustomerAddressRepository;
 import com.ourpos.domain.customer.CustomerRepository;
-import com.ourpos.domain.order.OrderRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,13 +18,13 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CustomerServiceImpl {
     private final CustomerRepository customerRepository;
-    private final OrderRepository orderRepository;
     private final CustomerAddressRepository customerAddressRepository;
+    private final OrderQueryService orderQueryService;
 
     //개인 정보 조회
-    public CustomerResponseDto getCustomer(Long customerId) {
-        Customer customer = customerRepository.findByCustomerId(customerId)
-            .orElseThrow(() -> new IllegalArgumentException("Customer not found. Id: " + customerId));
+    public CustomerResponseDto findCustomer(String loginId) {
+        Customer customer = customerRepository.findByLoginId(loginId)
+            .orElseThrow(() -> new IllegalArgumentException("Customer not found. Id: " + loginId));
 
         return new CustomerResponseDto(customer);
     }
@@ -44,31 +44,30 @@ public class CustomerServiceImpl {
 
     //개인정보 변경(주소 변경)
     @Transactional
-    public void updateAddress(Long addressId, CustomerAddressUpdateDto addressupdateDto) {
-        Customer customer = customerRepository.findById(addressId).orElseThrow(
-            () -> new IllegalArgumentException("Customer not found. Id: " + addressId));
+    public void updateAddress(Long addressId, CustomerAddressUpdateDto addressUpdateDto) {
+        CustomerAddress customerAddress = customerAddressRepository.findById(addressId).
+            orElseThrow(() -> new IllegalArgumentException("Address not found. Id: " + addressId));
 
-        customer.update(addressupdateDto.getAddressSi(), addressupdateDto.getAddressGu(),
-            addressupdateDto.getStreetName(), addressupdateDto.getAddressDetail());
-
-        customerRepository.save(customer);
-
+        customerAddress.update(addressUpdateDto.getName(), addressUpdateDto.getReceiverName(),
+            addressUpdateDto.getTelNo(), addressUpdateDto.getAddressBase(), addressUpdateDto.getAddressDetail(),
+            addressUpdateDto.getZipcode());
     }
 
     //개인정보 변경(서브주소 추가)
     @Transactional
-    public void addSubAddress(Long customerId, CustomerRequestDto addressDto) {
-
-        Customer customer = customerRepository.findById(customerId).orElseThrow(
-            () -> new IllegalArgumentException("Customer not found. Id: " + customerId));
+    public void addSubAddress(String loginId, CustomerAddressRequestDto customerAddressRequestDto) {
+        Customer customer = customerRepository.findByLoginId(loginId).orElseThrow(
+            () -> new IllegalArgumentException("Customer not found. loginId: " + loginId));
 
         CustomerAddress customerAddress = CustomerAddress.builder()
-            .name(addressDto.getAddressName())
-            .addressSi(addressDto.getAddressSi())
-            .addressGu(addressDto.getAddressGu())
-            .streetName(addressDto.getStreetName())
-            .addressDetail(addressDto.getAddressDetail())
-            .defaultYn(addressDto.getDefaultYn())
+            .customer(customer)
+            .name(customerAddressRequestDto.getName())
+            .receiverName(customerAddressRequestDto.getReceiverName())
+            .telNo(customerAddressRequestDto.getTelNo())
+            .addressBase(customerAddressRequestDto.getAddressBase())
+            .addressDetail(customerAddressRequestDto.getAddressDetail())
+            .zipcode(customerAddressRequestDto.getZipcode())
+            .defaultYn(false)
             .build();
 
         customer.addAddress(customerAddress);
@@ -76,7 +75,6 @@ public class CustomerServiceImpl {
     }
 
     //개인정보 변경(서브주소 삭제)
-
     @Transactional
     public void deleteAddress(Long addressId) {
         // 주소 찾아서 삭제하는 로직
@@ -84,8 +82,11 @@ public class CustomerServiceImpl {
             .orElseThrow(() -> new IllegalArgumentException("Address not found. Id: " + addressId));
 
         // 주소 삭제
-        customerAddressRepository.delete(address);
+        if (address.getDefaultYn()) {
+            throw new IllegalStateException("기본 주소는 삭제할 수 없습니다.");
+        }
 
+        customerAddressRepository.delete(address);
     }
 
 }

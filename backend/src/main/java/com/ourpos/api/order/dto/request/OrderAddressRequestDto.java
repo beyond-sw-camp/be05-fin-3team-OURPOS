@@ -7,19 +7,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DeliveryAddressDto {
+public class OrderAddressRequestDto {
 
-    private String addressSi;
-    private String addressGu;
-    private String addressStreetName;
+    private String receiverName;
+    private String telNo;
+    private String addressBase;
     private String addressDetail;
+    private String zipcode;
 
     public OrderAddress toEntity() {
         return OrderAddress.builder()
-            .addressSi(addressSi)
-            .addressGu(addressGu)
-            .addressStreetName(addressStreetName)
+            .receiverName(receiverName)
+            .telNo(telNo)
+            .addressBase(addressBase)
             .addressDetail(addressDetail)
+            .zipcode(zipcode)
             .build();
     }
 }

@@ -44,6 +44,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void createDeliveryOrder(DeliveryOrderRequestDto deliveryOrderRequestDto) {
         DeliveryOrder deliveryOrder = createOrder(deliveryOrderRequestDto);
+
         if (deliveryOrder.getPrice() < deliveryOrder.getStore().getMinimumOrderPrice()) {
             throw new IllegalArgumentException("최소 주문 금액을 충족하지 못했습니다.");
         }
@@ -112,13 +113,7 @@ public class OrderServiceImpl implements OrderService {
         Store store = storeRepository.findById(hallOrderRequestDto.getStoreId()).orElseThrow(
             () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
 
-        List<OrderDetailRequestDto> orderDetailDtos = hallOrderRequestDto.getOrderDetails();
-        List<OrderDetail> orderDetails = new ArrayList<>();
-        for (OrderDetailRequestDto orderDetailDto : orderDetailDtos) {
-            Menu menu = menuRepository.findById(orderDetailDto.getMenuId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 메뉴가 존재하지 않습니다."));
-            orderDetails.add(orderDetailDto.toEntity(menu));
-        }
+        List<OrderDetail> orderDetails = createOrderDetails(hallOrderRequestDto.getOrderDetails());
 
         return hallOrderRequestDto.toEntity(customer, store, orderDetails);
     }
@@ -129,13 +124,18 @@ public class OrderServiceImpl implements OrderService {
         Store store = storeRepository.findById(deliveryOrderRequestDto.getStoreId()).orElseThrow(
             () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
 
-        List<OrderDetailRequestDto> orderDetailDtos = deliveryOrderRequestDto.getOrderDetails();
+        List<OrderDetail> orderDetails = createOrderDetails(
+            deliveryOrderRequestDto.getOrderDetailDtos());
+        return deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
+    }
+
+    private List<OrderDetail> createOrderDetails(List<OrderDetailRequestDto> orderDetailRequestDtos) {
         List<OrderDetail> orderDetails = new ArrayList<>();
-        for (OrderDetailRequestDto orderDetailDto : orderDetailDtos) {
+        for (OrderDetailRequestDto orderDetailDto : orderDetailRequestDtos) {
             Menu menu = menuRepository.findById(orderDetailDto.getMenuId()).orElseThrow(
                 () -> new IllegalArgumentException("해당 메뉴가 존재하지 않습니다."));
             orderDetails.add(orderDetailDto.toEntity(menu));
         }
-        return deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
+        return orderDetails;
     }
 }
