@@ -59,15 +59,15 @@ public class Menu extends BaseEntity {
     private LocalDateTime deletedDateTime;
 
     @Builder
-    private Menu(Store store, String name, Integer price, Boolean availableYn, Category category, String description,
+    private Menu(Store store, String name, Integer price, Category category, String description,
         String pictureUrl) {
         this.store = store;
         this.name = name;
         this.price = price;
-        this.availableYn = availableYn;
         this.category = category;
         this.description = description;
         this.pictureUrl = pictureUrl;
+        this.availableYn = true;
         this.deletedYn = false;
     }
 
@@ -78,5 +78,13 @@ public class Menu extends BaseEntity {
         this.price = price;
         this.description = description;
         this.pictureUrl = pictureUrl;
+    }
+
+    public void disabled() {
+        this.availableYn = false;
+    }
+
+    public void activated() {
+        this.availableYn = true;
     }
 }

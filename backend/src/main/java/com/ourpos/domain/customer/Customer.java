@@ -34,9 +34,6 @@ public class Customer extends BaseEntity {
     @Column(name = "customer_login_id")
     private String loginId;
 
-    @Column(name = "customer_password")
-    private String password;
-
     @Column(name = "customer_name")
     private String name;
 
@@ -50,18 +47,25 @@ public class Customer extends BaseEntity {
     @Column(name = "customer_nickname")
     private String nickname;
 
+    @Column(name = "customer_gender")
+    private String gender;
+
+    @Column(name = "customer_age_range")
+    private String ageRange;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<CustomerAddress> customerAddresses = new ArrayList<>();
 
     @Builder
-    private Customer(String loginId, String password, String name, String phone, Role role, String nickname,
-        @Singular List<CustomerAddress> customerAddresses) {
+    private Customer(String loginId, String name, String phone, Role role, String nickname, String gender,
+        String ageRange, @Singular List<CustomerAddress> customerAddresses) {
         this.loginId = loginId;
-        this.password = password;
         this.name = name;
         this.phone = phone;
         this.role = role;
         this.nickname = nickname;
+        this.gender = gender;
+        this.ageRange = ageRange;
         for (CustomerAddress customerAddress : customerAddresses) {
             addCustomerAddress(customerAddress);
         }
