@@ -13,6 +13,8 @@ import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerRepository;
 import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.menu.MenuRepository;
+import com.ourpos.domain.menu.StoreRestrictedMenu;
+import com.ourpos.domain.menu.StoreRestrictedMenuRepository;
 import com.ourpos.domain.order.DeliveryOrder;
 import com.ourpos.domain.order.HallOrder;
 import com.ourpos.domain.order.Order;
@@ -41,23 +43,13 @@ public class OrderServiceImpl implements OrderService {
     private final MenuRepository menuRepository;
     private final RecipeRepository recipeRepository;
     private final StoreStockRepository storeStockRepository;
+    private final StoreRestrictedMenuRepository storeRestrictedMenuRepository;
 
     @Override
     public void createHallOrder(HallOrderRequestDto hallOrderRequestDto) {
         HallOrder hallOrder = createOrder(hallOrderRequestDto);
 
-        List<OrderDetail> orderDetails = hallOrder.getOrderDetails();
-        for (OrderDetail orderDetail : orderDetails) {
-            try {
-                decreaseStoreStock(recipeRepository.findByMenuId(orderDetail.getMenu().getId()), hallOrder,
-                    orderDetail.getQuantity());
-            } catch (IllegalArgumentException e) {
-                Menu menu = orderDetail.getMenu();
-                // 메뉴 재고 소진으로 인한 주문 불가능 설정
-                menu.disabled();
-                throw new IllegalArgumentException("재고가 부족합니다.");
-            }
-        }
+        storeStockCalculate(hallOrder);
         hallOrderRepository.save(hallOrder);
     }
 
@@ -68,12 +60,30 @@ public class OrderServiceImpl implements OrderService {
             throw new IllegalArgumentException("최소 주문 금액을 충족하지 못했습니다.");
         }
 
-        List<OrderDetail> orderDetails = deliveryOrder.getOrderDetails();
-        for (OrderDetail orderDetail : orderDetails) {
-            decreaseStoreStock(recipeRepository.findByMenuId(deliveryOrderRequestDto.getStoreId()), deliveryOrder,
-                orderDetail.getQuantity());
-        }
+        storeStockCalculate(deliveryOrder);
         deliveryOrderRepository.save(deliveryOrder);
+    }
+
+    private void storeStockCalculate(Order order) {
+        List<OrderDetail> orderDetails = order.getOrderDetails();
+        for (OrderDetail orderDetail : orderDetails) {
+            try {
+                decreaseStoreStock(recipeRepository.findByMenuId(orderDetail.getMenu().getId()), order,
+                    orderDetail.getQuantity());
+            } catch (IllegalArgumentException e) {
+                disabledStoreMenu(orderDetail.getMenu(), order.getStore());
+                throw new IllegalArgumentException("재고가 부족합니다.");
+            }
+        }
+    }
+
+    private void disabledStoreMenu(Menu menu, Store store) {
+        StoreRestrictedMenu storeRestrictedMenu = StoreRestrictedMenu.builder()
+            .store(store)
+            .menu(menu)
+            .build();
+
+        storeRestrictedMenuRepository.save(storeRestrictedMenu);
     }
 
     private void decreaseStoreStock(List<Recipe> recipes, Order order, Integer quantity) {

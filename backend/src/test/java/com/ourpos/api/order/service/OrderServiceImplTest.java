@@ -18,6 +18,7 @@ import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerRepository;
 import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.menu.MenuRepository;
+import com.ourpos.domain.menu.StoreRestrictedMenuRepository;
 import com.ourpos.domain.recipe.Recipe;
 import com.ourpos.domain.recipe.RecipeRepository;
 import com.ourpos.domain.store.Store;
@@ -48,6 +49,8 @@ class OrderServiceImplTest {
     private StoreCommRepository storeCommRepository;
     @Autowired
     private StoreStockRepository storeStockRepository;
+    @Autowired
+    private StoreRestrictedMenuRepository storeRestrictedMenuRepository;
 
     @DisplayName("포장/홀 주문을 통해 주문 하게 되면 레시피만큼 재고가 감소한다.")
     @Test
@@ -83,7 +86,7 @@ class OrderServiceImplTest {
         assertThat(storeStock.getQuantity()).isEqualTo(5);
     }
 
-    @DisplayName("재고가 모두 소진되면 주문이 불가능하다.")
+    @DisplayName("재고가 모두 소진되면 주문이 불가능하고, 그 메뉴는 가게별제한메뉴 테이블에 저장된다.")
     @Test
     void soldOut() {
         // given
@@ -108,14 +111,15 @@ class OrderServiceImplTest {
         OrderDetailRequestDto orderDetail2 = createOrderDetail(coke, 1,
             List.of(orderOptionGroup1, orderOptionGroup2));
 
+        // when
         HallOrderRequestDto hallOrder = createHallOrder(customer, store, List.of(orderDetail1, orderDetail2));
 
-        // when
-        assertThat(hamburger.getAvailableYn()).isTrue();
+        // then
         assertThatThrownBy(() -> orderServiceImpl.createHallOrder(hallOrder))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("재고가 부족합니다.");
-        assertThat(hamburger.getAvailableYn()).isFalse();
+
+        assertThat(storeRestrictedMenuRepository.findByStoreId(store.getId())).hasSize(1);
     }
 
     private StoreComm createStoreComm() {
