@@ -49,7 +49,7 @@ public class StoreOrderController {
 	}
 
 
-	// 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영) ?-> price가 반영안됨, 주문 삭제후에 다시 주문을 넣으면 storeorderid가 2번이 아닌 3번으로 들어감
+	// 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영) ?-> price가 반영 안됨
 	@PostMapping("/storecommorder")
 	public Result<Void> createStoreOrder(@RequestBody StoreOrderRequestDto storeOrderRequestDto ) {
 		log.info("가게 식자재, 비품 주문: {}", storeOrderRequestDto);
@@ -58,7 +58,7 @@ public class StoreOrderController {
 	}
 
 
-	// 비품, 식자재 주문 내역 확인 ? 주문 내역 전체 조회x 개별 조회 o
+	// 비품, 식자재 주문 내역 확인 ? 주문 내역  개별 조회 o
 
 	@GetMapping("/{orderDetailId}")
 	public Result<StoreOrderResponseDto> getStoreOrder(@PathVariable Long orderDetailId) {
