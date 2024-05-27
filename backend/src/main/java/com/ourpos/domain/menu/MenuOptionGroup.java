@@ -34,9 +34,9 @@ public class MenuOptionGroup {
 	private Long id;
 
 	@Setter
-	@JoinColumn(name = "menu_id")
+	@JoinColumn(name = "category_id")
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Menu menu;
+	private Category category;
 
 	@Column(name = "menu_option_group_name")
 	private String name;
@@ -67,9 +67,9 @@ public class MenuOptionGroup {
 		menuOption.setMenuOptionGroup(this);
 	}
 
-	public void update(Menu menu, String name, Boolean exclusiveYn,
+	public void update(Category category, String name, Boolean exclusiveYn,
 		String description) {
-		this.menu = menu;
+		this.category = category;
 		this.name = name;
 		this.exclusiveYn = exclusiveYn;
 		this.description = description;

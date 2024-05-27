@@ -83,10 +83,10 @@ public class Menu extends BaseEntity {
 	}
 
 	// 연관관계 편의 메서드
-	public void addMenuOptionGroup(MenuOptionGroup menuOptionGroup) {
-		this.menuOptionGroups.add(menuOptionGroup);
-		menuOptionGroup.setMenu(this);
-	}
+	// public void addMenuOptionGroup(MenuOptionGroup menuOptionGroup) {
+	// 	this.menuOptionGroups.add(menuOptionGroup);
+	// 	menuOptionGroup.setMenu(this);
+	// }
 
 	public void update(Category category, String name, Integer price,
 		String description, String pictureUrl) {

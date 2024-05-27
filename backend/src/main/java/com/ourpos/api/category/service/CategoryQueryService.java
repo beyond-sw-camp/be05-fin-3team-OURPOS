@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ourpos.api.menu.dto.response.MenuResponseDto;
-import com.ourpos.domain.menu.Menu;
-import com.ourpos.domain.menu.MenuQueryRepository;
+import com.ourpos.api.category.dto.response.CategoryResponseDto;
+import com.ourpos.domain.menu.Category;
+import com.ourpos.domain.menu.CategoryQueryRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,20 +17,20 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CategoryQueryService {
 
-	private final MenuQueryRepository menuQueryRepository;
+	private final CategoryQueryRepository categoryQueryRepository;
 
-	public MenuResponseDto findMenu(Long menuId) {
-		Menu menu = menuQueryRepository.findOne(menuId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 메뉴가 존재하지 않습니다."));
+	public CategoryResponseDto findCategory(Long categoryId) {
+		Category category = categoryQueryRepository.findOne(categoryId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 존재하지 않습니다."));
 
-		return new MenuResponseDto(menu);
+		return new CategoryResponseDto(category);
 	}
 
-	public List<MenuResponseDto> findMenusByCategory(String category) {
-		List<Menu> menus = menuQueryRepository.findAllWithCategory(category);
+	public List<CategoryResponseDto> findAllCategories() {
+		List<Category> categories = categoryQueryRepository.findAllCategories();
 
-		return menus.stream()
-			.map(MenuResponseDto::new)
+		return categories.stream()
+			.map(CategoryResponseDto::new)
 			.toList();
 	}
 }

@@ -20,7 +20,7 @@ public class CategoryQueryRepository {
 
 	private final JPAQueryFactory queryFactory;
 
-	public List<Category> findAllCategory() {
+	public List<Category> findAllCategories() {
 		return queryFactory
 			.selectFrom(category)
 			.where(isNotDelete())
