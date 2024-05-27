@@ -49,7 +49,6 @@ class OrderTest {
 
         Menu menu = Menu.builder()
             .name("햄버거")
-            .store(store)
             .price(5000)
             .build();
 

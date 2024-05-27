@@ -1,4 +1,4 @@
-package com.ourpos.domain.store;
+package com.ourpos.domain.menu;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,9 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
-import com.ourpos.domain.storeorder.StoreComm;
+import com.ourpos.domain.store.Store;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,38 +19,24 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "store_stock")
-public class StoreStock {
+public class StoreRestrictedMenu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "store_stock_id")
+    @Column(name = "store_restricted_menu_id")
     private Long id;
 
     @JoinColumn(name = "store_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Store store;
 
-    @JoinColumn(name = "store_menu_id")
+    @JoinColumn(name = "menu_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private StoreComm storeComm;
-
-    @Column(name = "store_stock_quantity")
-    private Integer quantity;
+    private Menu menu;
 
     @Builder
-    private StoreStock(Store store, StoreComm storeComm, Integer quantity) {
+    private StoreRestrictedMenu(Store store, Menu menu) {
         this.store = store;
-        this.storeComm = storeComm;
-        this.quantity = quantity;
+        this.menu = menu;
     }
-
-    public void decreaseQuantity(Integer quantity) {
-        if (this.quantity < quantity) {
-            throw new IllegalArgumentException("재고가 부족합니다.");
-        }
-        this.quantity -= quantity;
-    }
-
 }
-

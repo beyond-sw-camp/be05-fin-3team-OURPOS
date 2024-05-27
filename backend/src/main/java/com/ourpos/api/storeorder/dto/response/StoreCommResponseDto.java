@@ -1,4 +1,4 @@
-package com.ourpos.api.storeorder.dto.request;
+package com.ourpos.api.storeorder.dto.response;
 
 import java.time.LocalDateTime;
 

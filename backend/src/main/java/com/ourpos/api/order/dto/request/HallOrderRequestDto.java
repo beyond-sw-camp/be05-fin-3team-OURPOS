@@ -19,7 +19,7 @@ public class HallOrderRequestDto {
     private Long customerId;
     private Long storeId;
     private Boolean orderTakeoutYn;
-    private List<OrderDetailRequestDto> orderDetails = new ArrayList<>();
+    private List<OrderDetailRequestDto> orderDetailDtos = new ArrayList<>();
 
     public HallOrder toEntity(Customer customer, Store store, List<OrderDetail> orderDetails) {
         return HallOrder.builder()

@@ -2,13 +2,13 @@
 
 POST http://localhost:8080/api/v1/orders/hall
 content-type: application/json
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3Mjk2OTQsImV4cCI6MTcxNjcyOTkxMH0.DKhpJlsIFX_Q6Ko-fv36gbzfQ4JNF8-OlcaG8G6yEis
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3ODAzNTcsImV4cCI6MTcxNzM4NTE1N30.OHIBv0VEGgkp7RJPbGKKf5ayhLvi_InqgsS_ObjltRw
 
 {
   "customerId": 2,
   "storeId": 1,
   "orderTakeoutYn": true,
-  "orderDetails": [
+  "orderDetailDtos": [
     {
       "menuId": 1,
       "quantity": 3,
@@ -50,25 +50,25 @@ GET http://localhost:8080/api/v1/orders/hall/1
 
 POST http://localhost:8080/api/v1/orders/delivery
 content-type: application/json
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3Mjk5NTgsImV4cCI6MTcxNjczMDE3NH0.WHPatTEor3-KwP2I2VrRPEvBkf7PJpn4UWnrAob6g0c
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3ODExMzQsImV4cCI6MTcxNzM4NTkzNH0.fBiIVY36IzpToBW7iynOymcI5Mb55o_dzdAeGYVAFho
 
 {
   "customerId": 2,
   "storeId": 1,
-  "deliveryAddress": {
-    "addressSi": "서울시",
-    "addressGu": "강남구",
-    "addressStreetName": "강남대로 1234번길",
-    "addressDetail": "101호"
+  "orderAddressRequestDto": {
+    "receiverName": "홍길동",
+    "telNo": "010-1234-5678",
+    "addressBase": "서울시 강남구 2로",
+    "addressDetail": "아파트 101동 101호"
   },
   "ownerMessage": "문 앞에 놔주세요",
   "riderMessage": "빨리 와주세요",
   "tip": 1000,
   "disposableYn": true,
-  "orderDetails": [
+  "orderDetailDtos": [
     {
       "menuId": 1,
-      "quantity": 3,
+      "quantity": 100,
       "orderOptionGroups": [
         {
           "optionGroupName": "사이드 선택",
