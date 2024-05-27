@@ -13,15 +13,17 @@ public class CustomerResponseDto {
 
     private Long customerId;
     private String nickname;
-    private String password;
     private String phone;
+    private String gender;
+    private String ageRange;
     private List<CustomerAddressResponseDto> customerAddresses;
 
     public CustomerResponseDto(Customer customer) {
         this.customerId = customer.getId();
         this.nickname = customer.getNickname();
-        this.password = customer.getPassword();
         this.phone = customer.getPhone();
+        this.gender = customer.getGender();
+        this.ageRange = customer.getAgeRange();
         this.customerAddresses = customer.getCustomerAddresses().stream()
             .map(CustomerAddressResponseDto::new)
             .toList();

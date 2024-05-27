@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ourpos.api.Result;
 import com.ourpos.api.order.dto.request.DeliveryOrderRequestDto;
 import com.ourpos.api.order.dto.request.HallOrderRequestDto;
-import com.ourpos.api.order.service.OrderQueryService;
 import com.ourpos.api.order.service.OrderService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderQueryService orderQueryService;
 
     @PostMapping("/hall")
     public Result<Void> createHallOrder(@RequestBody HallOrderRequestDto hallOrderRequestDto) {

@@ -15,10 +15,15 @@ import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.menu.MenuRepository;
 import com.ourpos.domain.order.DeliveryOrder;
 import com.ourpos.domain.order.HallOrder;
+import com.ourpos.domain.order.Order;
 import com.ourpos.domain.order.OrderRepository;
 import com.ourpos.domain.orderdetail.OrderDetail;
+import com.ourpos.domain.recipe.Recipe;
+import com.ourpos.domain.recipe.RecipeRepository;
 import com.ourpos.domain.store.Store;
 import com.ourpos.domain.store.StoreRepository;
+import com.ourpos.domain.store.StoreStockRepository;
+import com.ourpos.domain.storeorder.StoreComm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,21 +39,49 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerRepository customerRepository;
     private final StoreRepository storeRepository;
     private final MenuRepository menuRepository;
+    private final RecipeRepository recipeRepository;
+    private final StoreStockRepository storeStockRepository;
 
     @Override
     public void createHallOrder(HallOrderRequestDto hallOrderRequestDto) {
         HallOrder hallOrder = createOrder(hallOrderRequestDto);
+
+        List<OrderDetail> orderDetails = hallOrder.getOrderDetails();
+        for (OrderDetail orderDetail : orderDetails) {
+            try {
+                decreaseStoreStock(recipeRepository.findByMenuId(orderDetail.getMenu().getId()), hallOrder,
+                    orderDetail.getQuantity());
+            } catch (IllegalArgumentException e) {
+                Menu menu = orderDetail.getMenu();
+                // 메뉴 재고 소진으로 인한 주문 불가능 설정
+                menu.disabled();
+                throw new IllegalArgumentException("재고가 부족합니다.");
+            }
+        }
         hallOrderRepository.save(hallOrder);
     }
 
     @Override
     public void createDeliveryOrder(DeliveryOrderRequestDto deliveryOrderRequestDto) {
         DeliveryOrder deliveryOrder = createOrder(deliveryOrderRequestDto);
-
         if (deliveryOrder.getPrice() < deliveryOrder.getStore().getMinimumOrderPrice()) {
             throw new IllegalArgumentException("최소 주문 금액을 충족하지 못했습니다.");
         }
+
+        List<OrderDetail> orderDetails = deliveryOrder.getOrderDetails();
+        for (OrderDetail orderDetail : orderDetails) {
+            decreaseStoreStock(recipeRepository.findByMenuId(deliveryOrderRequestDto.getStoreId()), deliveryOrder,
+                orderDetail.getQuantity());
+        }
         deliveryOrderRepository.save(deliveryOrder);
+    }
+
+    private void decreaseStoreStock(List<Recipe> recipes, Order order, Integer quantity) {
+        for (Recipe recipe : recipes) {
+            StoreComm storeComm = recipe.getStoreComm();
+            storeStockRepository.findByStoreIdAndStoreCommId(order.getStore().getId(), storeComm.getId())
+                .forEach(storeStock -> storeStock.decreaseQuantity(recipe.getContent() * quantity));
+        }
     }
 
     @Override
@@ -108,21 +141,27 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private HallOrder createOrder(HallOrderRequestDto hallOrderRequestDto) {
-        Customer customer = customerRepository.findById(hallOrderRequestDto.getCustomerId()).orElseThrow(
-            () -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
-        Store store = storeRepository.findById(hallOrderRequestDto.getStoreId()).orElseThrow(
-            () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
+        Customer customer = getCustomer(hallOrderRequestDto.getCustomerId());
+        Store store = getStore(hallOrderRequestDto.getStoreId());
 
-        List<OrderDetail> orderDetails = createOrderDetails(hallOrderRequestDto.getOrderDetails());
+        List<OrderDetail> orderDetails = createOrderDetails(hallOrderRequestDto.getOrderDetailDtos());
 
         return hallOrderRequestDto.toEntity(customer, store, orderDetails);
     }
 
-    private DeliveryOrder createOrder(DeliveryOrderRequestDto deliveryOrderRequestDto) {
-        Customer customer = customerRepository.findById(deliveryOrderRequestDto.getCustomerId()).orElseThrow(
+    private Customer getCustomer(Long hallOrderRequestDto) {
+        return customerRepository.findById(hallOrderRequestDto).orElseThrow(
             () -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
-        Store store = storeRepository.findById(deliveryOrderRequestDto.getStoreId()).orElseThrow(
+    }
+
+    private Store getStore(Long hallOrderRequestDto) {
+        return storeRepository.findById(hallOrderRequestDto).orElseThrow(
             () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
+    }
+
+    private DeliveryOrder createOrder(DeliveryOrderRequestDto deliveryOrderRequestDto) {
+        Customer customer = getCustomer(deliveryOrderRequestDto.getCustomerId());
+        Store store = getStore(deliveryOrderRequestDto.getStoreId());
 
         List<OrderDetail> orderDetails = createOrderDetails(
             deliveryOrderRequestDto.getOrderDetailDtos());
