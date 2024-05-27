@@ -40,7 +40,6 @@ class CustomerRepositoryTest {
 
         Customer customer = Customer.builder()
             .loginId("로그인 ID")
-            .password("비밀번호")
             .name("홍길동")
             .phone("010-1234-5678")
             .role(Role.ROLE_USER)
@@ -49,7 +48,6 @@ class CustomerRepositoryTest {
 
         Customer admin = Customer.builder()
             .loginId("로그인 ID2")
-            .password("비밀번호2")
             .name("홍길동2")
             .phone("010-1234-5678")
             .role(Role.ROLE_ADMIN)
@@ -95,7 +93,6 @@ class CustomerRepositoryTest {
 
         Customer customer = Customer.builder()
             .loginId("로그인 ID")
-            .password("비밀번호")
             .name("홍길동")
             .phone("010-1234-5678")
             .role(Role.ROLE_USER)
