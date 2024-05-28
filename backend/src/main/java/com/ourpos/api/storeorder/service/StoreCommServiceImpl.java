@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ourpos.api.storeorder.dto.request.StoreCommRequestDto;
-import com.ourpos.api.storeorder.dto.request.StoreCommResponseDto;
+import com.ourpos.api.storeorder.dto.response.StoreCommResponseDto;
 import com.ourpos.domain.storeorder.StoreComm;
 import com.ourpos.domain.storeorder.StoreCommRepository;
 

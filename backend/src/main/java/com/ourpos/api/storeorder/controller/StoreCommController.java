@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ourpos.api.Result;
 import com.ourpos.api.storeorder.dto.request.StoreCommRequestDto;
-import com.ourpos.api.storeorder.dto.request.StoreCommResponseDto;
+import com.ourpos.api.storeorder.dto.response.StoreCommResponseDto;
 import com.ourpos.api.storeorder.service.StoreCommService;
 import com.ourpos.api.storeorder.service.StoreCommServiceImpl;
 
