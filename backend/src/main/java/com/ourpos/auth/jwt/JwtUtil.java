@@ -7,10 +7,12 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
 
+@PropertySource("classpath:config.properties")
 @Component
 public class JwtUtil {
 

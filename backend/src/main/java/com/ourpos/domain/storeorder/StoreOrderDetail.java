@@ -36,21 +36,10 @@ public class StoreOrderDetail {
     @ManyToOne(fetch = FetchType.LAZY)
     private StoreComm storeMenu;
 
-
     @Builder
     public StoreOrderDetail(StoreOrder storeOrder, StoreComm storeMenu) {
         this.storeOrder = storeOrder;
         this.storeMenu = storeMenu;
     }
-
-
-
-    public void update(Integer storeOrderDetailQuantity) {
-        if (this.storeOrder != null) {
-            this.storeOrder.setQuantity(storeOrderDetailQuantity);
-        }
-    }
-
-
 
 }

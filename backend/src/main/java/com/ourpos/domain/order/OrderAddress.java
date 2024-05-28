@@ -39,7 +39,7 @@ public class OrderAddress {
     private String zipcode;
 
     @Builder
-    public OrderAddress(String receiverName, String telNo, String addressBase, String addressDetail, String zipcode) {
+    private OrderAddress(String receiverName, String telNo, String addressBase, String addressDetail, String zipcode) {
         this.receiverName = receiverName;
         this.telNo = telNo;
         this.addressBase = addressBase;

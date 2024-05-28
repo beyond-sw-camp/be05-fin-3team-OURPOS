@@ -7,6 +7,7 @@ import com.ourpos.api.storeorder.dto.response.StoreCommResponseDto;
 
 public interface StoreCommService {
     void addStoreComm(StoreCommRequestDto storeCommRequestDto);
+
     List<StoreCommResponseDto> getStoreComms();
 
     void updateStoreComm(Long StoreCommId, StoreCommRequestDto storeCommRequestDto);

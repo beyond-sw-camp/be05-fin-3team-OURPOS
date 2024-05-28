@@ -55,7 +55,7 @@ public class OrderDetail {
     List<OrderOptionGroup> orderOptionGroups = new ArrayList<>();
 
     @Builder
-    public OrderDetail(Menu menu, Integer quantity, @Singular List<OrderOptionGroup> orderOptionGroups) {
+    private OrderDetail(Menu menu, Integer quantity, @Singular List<OrderOptionGroup> orderOptionGroups) {
         this.menu = menu;
         this.quantity = quantity;
         for (OrderOptionGroup orderOptionGroup : orderOptionGroups) {

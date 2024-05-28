@@ -133,14 +133,13 @@ class OrderServiceImplTest {
         return storeComm;
     }
 
-    private Recipe createRecipe(StoreComm storeComm, Menu hamburger, int content) {
+    private void createRecipe(StoreComm storeComm, Menu hamburger, int content) {
         Recipe recipe = Recipe.builder()
             .storeComm(storeComm)
             .menu(hamburger)
             .content(content)
             .build();
         recipeRepository.save(recipe);
-        return recipe;
     }
 
     private StoreStock createStoreStock(Store store, StoreComm storeComm, int quantity) {

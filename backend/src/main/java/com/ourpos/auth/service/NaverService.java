@@ -24,16 +24,19 @@ public class NaverService {
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<Map> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, Map.class);
-        Map<String, String> address = (Map<String, String>)response.getBody().get("data");
-
-        return Optional.ofNullable(CustomerAddressLoginDto.builder()
-            .name("집")
-            .receiverName(address.get("receiverName"))
-            .receiverTelNo(address.get("telNo"))
-            .zipcode(address.get("zipCode"))
-            .baseAddress(address.get("baseAddress"))
-            .detailAddress(address.get("detailAddress"))
-            .build());
+        try {
+            ResponseEntity<Map> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, Map.class);
+            Map<String, String> address = (Map<String, String>)response.getBody().get("data");
+            return Optional.ofNullable(CustomerAddressLoginDto.builder()
+                .name("집")
+                .receiverName(address.get("receiverName"))
+                .receiverTelNo(address.get("telNo"))
+                .zipcode(address.get("zipCode"))
+                .baseAddress(address.get("baseAddress"))
+                .detailAddress(address.get("detailAddress"))
+                .build());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }

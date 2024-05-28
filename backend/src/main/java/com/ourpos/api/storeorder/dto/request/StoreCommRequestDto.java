@@ -1,6 +1,5 @@
 package com.ourpos.api.storeorder.dto.request;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.ourpos.domain.storeorder.StoreComm;
@@ -16,19 +15,18 @@ import lombok.ToString;
 @Setter
 public class StoreCommRequestDto {
 
-    private Long                storeCommId;
-    private String              storeCommName;
-    private Integer             storeCommPrice;
-    private String              storeCommArticleUnit;
-    private StoreCommStatus     storeCommStatus;
-    private String              storeCommDescription;
-    private StoreCommCategory   storeCommCategory;
-    private String              storeCommPictureUrl;
-    private LocalDateTime       storeCommCreatedDateTime;
-    private LocalDateTime       storeCommModifiedDateTime;
-    private Boolean             storeCommDeleteYn;
-    private LocalDateTime       storeCommDeletedDateTime;
-
+    private Long storeCommId;
+    private String storeCommName;
+    private Integer storeCommPrice;
+    private String storeCommArticleUnit;
+    private StoreCommStatus storeCommStatus;
+    private String storeCommDescription;
+    private StoreCommCategory storeCommCategory;
+    private String storeCommPictureUrl;
+    private LocalDateTime storeCommCreatedDateTime;
+    private LocalDateTime storeCommModifiedDateTime;
+    private Boolean storeCommDeleteYn;
+    private LocalDateTime storeCommDeletedDateTime;
 
     // public StoreCommRequestDto(StoreComm storeComm){
     //     this.storeCommId = storeComm.getId();

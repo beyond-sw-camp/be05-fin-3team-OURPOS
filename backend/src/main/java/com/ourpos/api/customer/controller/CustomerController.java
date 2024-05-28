@@ -3,7 +3,6 @@ package com.ourpos.api.customer.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,21 +45,12 @@ public class CustomerController {
             customerServiceImpl.findCustomer(loginId));
     }
 
-    // 마이페이지- 주문내역조회(페이징처리x)
-	/*
-	@GetMapping("/{customerId}/orders") // 중괄호 추가
-	public List<OrderResponseDto> getOrdersByCustomerId(@PathVariable Long customerId) {
-		List<OrderResponseDto> orders = CustomerService.findAllByCustomerId(customerId);
-		return orders;
-	}
-	*/
-
     //마이페이지-개인정보 변경(주소 변경)
     @PutMapping("/address/{addressId}")
-    public ResponseEntity<Void> updateAddress(@PathVariable Long addressId,
-        @RequestBody CustomerAddressUpdateDto addressDto) {
+    public Result<Void> updateAddress(@PathVariable Long addressId, @RequestBody CustomerAddressUpdateDto addressDto) {
         customerServiceImpl.updateAddress(addressId, addressDto);
-        return ResponseEntity.noContent().build(); // 수정 후 상태 코드 204 (No Content) 반환
+
+        return new Result<>(HttpStatus.OK.value(), "주소 변경이 완료되었습니다.", null);
     }
 
     //마이페이지-개인정보 변경(서브주소 추가)
@@ -74,9 +64,10 @@ public class CustomerController {
 
     //마이페이지-개인정보 변경(서브주소 삭제)
     @DeleteMapping("/address/{addressId}")
-    public Void deleteAddress(@PathVariable Long addressId) {
+    public Result<Void> deleteAddress(@PathVariable Long addressId) {
         customerServiceImpl.deleteAddress(addressId);
-        return null;
+
+        return new Result<>(HttpStatus.OK.value(), "서브주소 삭제가 완료되었습니다.", null);
     }
 
     @GetMapping("/my/orders/hall")
@@ -100,6 +91,7 @@ public class CustomerController {
     private static String getLoginCustomerLoginId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomOAuth2Customer customOAuth2Customer = (CustomOAuth2Customer)principal;
+
         return customOAuth2Customer.getLoginId();
     }
 

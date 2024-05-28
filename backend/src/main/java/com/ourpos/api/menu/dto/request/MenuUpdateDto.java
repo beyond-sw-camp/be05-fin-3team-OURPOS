@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class MenuUpdateDto {
 
-	private Long categoryId;
-	private String name;
-	private Integer price;
-	private String description;
-	private String pictureUrl;
-	// private List<MenuOptionGroupUpdateDto> menuOptionGroups = new ArrayList<>();
+    private Long categoryId;
+    private String name;
+    private Integer price;
+    private String description;
+    private String pictureUrl;
+    // private List<MenuOptionGroupUpdateDto> menuOptionGroups = new ArrayList<>();
 
 }

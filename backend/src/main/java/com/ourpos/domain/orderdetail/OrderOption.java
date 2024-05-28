@@ -39,7 +39,7 @@ public class OrderOption {
     private Integer price;
 
     @Builder
-    public OrderOption(String name, Integer price) {
+    private OrderOption(String name, Integer price) {
         this.name = name;
         this.price = price;
     }
