@@ -16,20 +16,20 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class MenuQueryService {
 
-    private final MenuQueryRepository menuQueryRepository;
+	private final MenuQueryRepository menuQueryRepository;
 
-    public MenuResponseDto findMenu(Long menuId) {
-        Menu menu = menuQueryRepository.findOne(menuId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 메뉴가 존재하지 않습니다."));
+	public MenuResponseDto findMenu(Long menuId) {
+		Menu menu = menuQueryRepository.findOne(menuId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 메뉴가 존재하지 않습니다."));
 
-        return new MenuResponseDto(menu);
-    }
+		return new MenuResponseDto(menu);
+	}
 
-    public List<MenuResponseDto> findMenusByCategory(String category) {
-        List<Menu> menus = menuQueryRepository.findAllWithCategory(category);
+	public List<MenuResponseDto> findMenusByCategory(String category) {
+		List<Menu> menus = menuQueryRepository.findAllWithCategory(category);
 
-        return menus.stream()
-            .map(MenuResponseDto::new)
-            .toList();
-    }
+		return menus.stream()
+			.map(MenuResponseDto::new)
+			.toList();
+	}
 }

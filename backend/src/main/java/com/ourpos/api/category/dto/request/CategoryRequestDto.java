@@ -13,6 +13,7 @@ public class CategoryRequestDto {
 	// private List<MenuOptionGroupRequestDto> menuOptionGroups = new ArrayList<>();
 
 	public Category toEntity() {
+
 		return Category.builder()
 			.name(name)
 			// .menuOptionGroups(menuOptionGroups.stream()

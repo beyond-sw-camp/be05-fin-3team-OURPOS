@@ -16,34 +16,34 @@ import lombok.RequiredArgsConstructor;
 @Repository
 public class MenuQueryRepository {
 
-    private final JPAQueryFactory queryFactory;
+	private final JPAQueryFactory queryFactory;
 
-    // TODO: Category가 null일 때 처리
-    public List<Menu> findAllWithCategory(String category) {
-        return queryFactory
-            .selectFrom(menu)
-            .join(menu.category)
-            .where(categoryEq(category))
-            .where(isNotDelete())
-            .fetch();
-    }
+	// TODO: Category가 null일 때 처리
+	public List<Menu> findAllWithCategory(String category) {
+		return queryFactory
+			.selectFrom(menu)
+			.join(menu.category)
+			.where(categoryEq(category))
+			.where(isNotDelete())
+			.fetch();
+	}
 
-    public Optional<Menu> findOne(Long menuId) {
-        return Optional.ofNullable(queryFactory
-            .selectFrom(menu)
-            .where(menuIdEq(menuId))
-            .fetchFirst());
-    }
+	public Optional<Menu> findOne(Long menuId) {
+		return Optional.ofNullable(queryFactory
+			.selectFrom(menu)
+			.where(menuIdEq(menuId))
+			.fetchFirst());
+	}
 
-    private static BooleanExpression categoryEq(String category) {
-        return menu.category.name.eq(category);
-    }
+	private static BooleanExpression categoryEq(String category) {
+		return menu.category.name.eq(category);
+	}
 
-    private static BooleanExpression isNotDelete() {
-        return menu.deletedYn.eq(false);
-    }
+	private static BooleanExpression isNotDelete() {
+		return menu.deletedYn.eq(false);
+	}
 
-    private static BooleanExpression menuIdEq(Long menuId) {
-        return menu.id.eq(menuId);
-    }
+	private static BooleanExpression menuIdEq(Long menuId) {
+		return menu.id.eq(menuId);
+	}
 }

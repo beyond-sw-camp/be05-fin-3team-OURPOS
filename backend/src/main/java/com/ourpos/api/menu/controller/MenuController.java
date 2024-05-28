@@ -2,7 +2,6 @@ package com.ourpos.api.menu.controller;
 
 import java.util.List;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,7 +45,8 @@ public class MenuController {
 	@GetMapping
 	public Result<List<MenuResponseDto>> findAllMenus(
 		@RequestParam(value = "category", required = false) String category) {
-		log.info("카테고리 별 메뉴 조회");
+		log.info("MenuController.findAllMenus() called");
+		log.info(category);
 		List<MenuResponseDto> menus = menuQueryService.findMenusByCategory(category);
 
 		return new Result<>(HttpStatus.OK.value(), "카테고리별 메뉴 조회가 완료되었습니다.", menus);
