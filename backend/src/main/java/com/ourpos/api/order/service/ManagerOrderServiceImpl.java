@@ -50,7 +50,9 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
     public List<CountMonthlyResponseDto> countMonthly(Long storeId) {
         log.info("월 매출 확인 서비스 {}", storeId);
 
-        return orderQueryRepository.countMonthly(storeId);
+        List<CountMonthlyResponseDto> dto = orderQueryRepository.countMonthly(storeId);
+
+        return dto;
     }
 
 }

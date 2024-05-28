@@ -17,9 +17,11 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Repository
+@Slf4j
 public class OrderQueryRepository {
 
     private final JPAQueryFactory queryFactory;
@@ -138,12 +140,15 @@ public class OrderQueryRepository {
 
     // 월별 매출량
     public List<CountMonthlyResponseDto> countMonthly(Long storeId) {
+
         return queryFactory
             .select(Projections.constructor(CountMonthlyResponseDto.class,
-                order.completedDateTime.yearMonth().as("month"),
-                order.price.sum().as("total")))
+                order.createdDateTime.year().as("year"),
+                order.createdDateTime.month().as("month"),
+                order.price.as("total")))
             .from(order)
-            .join(order.store).fetchJoin()
+            .groupBy(order.createdDateTime.year())
+            .join(order.store)
             .where(order.store.id.eq(storeId))
             .fetch();
     }
