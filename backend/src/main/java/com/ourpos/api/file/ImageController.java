@@ -2,7 +2,6 @@ package com.ourpos.api.file;
 
 import java.net.MalformedURLException;
 
-
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class ImageController {
 
-	private final FileStore fileStore;
+    private final FileStore fileStore;
 
-	@GetMapping("/images/{fileName}")
-	public Resource downloadImage(@PathVariable String fileName) throws MalformedURLException {
-		return new UrlResource("file:" + fileStore.getFullPath(fileName));
-	}
+    @GetMapping("/images/{fileName}")
+    public Resource downloadImage(@PathVariable String fileName) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath(fileName));
+    }
 }

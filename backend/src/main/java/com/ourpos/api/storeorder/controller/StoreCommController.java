@@ -31,21 +31,24 @@ public class StoreCommController {
 
     // 새로운 비품,식자재를 추가하는 코드
     @PostMapping("/addstorecomm")
-    public Result<Void> addStoreComm(@RequestBody StoreCommRequestDto storeCommRequestDto){
+    public Result<Void> addStoreComm(@RequestBody StoreCommRequestDto storeCommRequestDto) {
         log.info("비품/식자재추가 : {}", storeCommRequestDto);
         storeCommService.addStoreComm(storeCommRequestDto);
         return new Result<>(HttpStatus.OK.value(), "비품/식자재 주문이 완료되었습니다.", null);
     }
+
     //  비품,식자재 조회
     @GetMapping("/getstorecomms")
-    public Result<List<StoreCommResponseDto>> getStoreComms(){
+    public Result<List<StoreCommResponseDto>> getStoreComms() {
         log.info("비품/식자재 목록 출력");
         List<StoreCommResponseDto> storeCommsList = storeCommService.getStoreComms();
         return new Result<>(HttpStatus.OK.value(), "전체 비품/식자재 목록을 불러옵니다.", storeCommsList);
     }
+
     // 비품,식자재 수정
     @PutMapping("/modifystorecomm/{storeCommId}")
-    public Result<Void> updateStoreComm(@PathVariable Long StoreCommId, @RequestBody StoreCommRequestDto storeCommRequestDto){
+    public Result<Void> updateStoreComm(@PathVariable Long StoreCommId,
+        @RequestBody StoreCommRequestDto storeCommRequestDto) {
         log.info("제품 인덱스로 비품/식자재 정보 수정");
         storeCommService.updateStoreComm(StoreCommId, storeCommRequestDto);
         return new Result<>(HttpStatus.OK.value(), "비품/식자재 정보 수정이 완료되었습니다.", null);
@@ -53,14 +56,10 @@ public class StoreCommController {
 
     // 비품 식자재 삭제
     @PutMapping("/deletestorecomm/{storeCommId}")
-    public Result<Void> deleteStoreComm(@PathVariable Long storeCommId) {
+    public Result<Void> restoreStoreComm(@PathVariable Long storeCommId) {
         log.info("비품/식자재 삭제 : {}", storeCommId);
         storeCommService.deletetStoreComm(storeCommId);
         return new Result<>(HttpStatus.OK.value(), "비품/식자재가 삭제되었습니다.", null);
     }
-
-
-
-
 
 }

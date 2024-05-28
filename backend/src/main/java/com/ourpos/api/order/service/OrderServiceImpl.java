@@ -68,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = order.getOrderDetails();
         for (OrderDetail orderDetail : orderDetails) {
             try {
-                decreaseStoreStock(recipeRepository.findByMenuId(orderDetail.getMenu().getId()), order,
+                decreaseStoreStock(recipeRepository.findByMenuId(orderDetail.getMenu().getId()), order.getStore(),
                     orderDetail.getQuantity());
             } catch (IllegalArgumentException e) {
                 disabledStoreMenu(orderDetail.getMenu(), order.getStore());
@@ -86,10 +86,10 @@ public class OrderServiceImpl implements OrderService {
         storeRestrictedMenuRepository.save(storeRestrictedMenu);
     }
 
-    private void decreaseStoreStock(List<Recipe> recipes, Order order, Integer quantity) {
+    private void decreaseStoreStock(List<Recipe> recipes, Store store, Integer quantity) {
         for (Recipe recipe : recipes) {
             StoreComm storeComm = recipe.getStoreComm();
-            storeStockRepository.findByStoreIdAndStoreCommId(order.getStore().getId(), storeComm.getId())
+            storeStockRepository.findByStoreIdAndStoreCommId(store.getId(), storeComm.getId())
                 .forEach(storeStock -> storeStock.decreaseQuantity(recipe.getContent() * quantity));
         }
     }
