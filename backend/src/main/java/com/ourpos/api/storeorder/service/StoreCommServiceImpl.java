@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class StoreCommServiceImpl implements StoreCommService{
+public class StoreCommServiceImpl implements StoreCommService {
 
     private final StoreCommRepository storeCommRepository;
 
@@ -26,7 +26,7 @@ public class StoreCommServiceImpl implements StoreCommService{
     }
 
     @Override
-    public List<StoreCommResponseDto> getStoreComms(){
+    public List<StoreCommResponseDto> getStoreComms() {
         System.out.println("StoreCommServiceImplServiceImpl.getStoreComms");
         List<StoreComm> storeComms = storeCommRepository.findAll();
         List<StoreCommResponseDto> storeCommResponseDtos = new ArrayList<>();
@@ -45,7 +45,7 @@ public class StoreCommServiceImpl implements StoreCommService{
         storeCommRepository.save(existingStoreComm);
     }
 
-    private void saveStoreComm(StoreCommRequestDto storeCommRequestDto){
+    private void saveStoreComm(StoreCommRequestDto storeCommRequestDto) {
         StoreComm storeComm = storeCommRequestDto.toEntity();
         storeCommRepository.save(storeComm);
     }
@@ -58,7 +58,5 @@ public class StoreCommServiceImpl implements StoreCommService{
         storeComm.delete();
         storeCommRepository.save(storeComm);
     }
-
-
 
 }

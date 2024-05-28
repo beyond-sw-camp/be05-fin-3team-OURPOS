@@ -5,8 +5,10 @@ import java.util.List;
 import com.ourpos.domain.orderdetail.OrderDetail;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class OrderDetailResponseDto {
 
     private Long orderDetailId;

@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import com.ourpos.auth.jwt.CustomLogoutFilter;
 import com.ourpos.auth.jwt.JwtFilter;
 import com.ourpos.auth.jwt.JwtUtil;
+import com.ourpos.auth.oauth2.CustomClientRegistrationRepo;
 import com.ourpos.auth.oauth2.CustomSuccessHandler;
 import com.ourpos.auth.service.CustomOAuth2CustomerService;
 
@@ -31,6 +32,7 @@ public class SecurityConfig {
 
     private final CustomOAuth2CustomerService customOAuth2CustomerService;
     private final CustomSuccessHandler customSuccessHandler;
+    private final CustomClientRegistrationRepo customClientRegistrationRepo;
     private final JwtUtil jwtUtil;
 
     @Bean
@@ -72,6 +74,7 @@ public class SecurityConfig {
 
         http
             .oauth2Login(oauth2 -> oauth2
+                .clientRegistrationRepository(customClientRegistrationRepo.clientRegistrationRepository())
                 .userInfoEndpoint(userInfo -> userInfo
                     .userService(customOAuth2CustomerService)
                 )

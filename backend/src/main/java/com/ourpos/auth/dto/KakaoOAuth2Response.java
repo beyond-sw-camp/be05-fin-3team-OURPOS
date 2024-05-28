@@ -21,8 +21,10 @@ public class KakaoOAuth2Response implements OAuth2Response {
     }
 
     @Override
-    public String getEmail() {
-        return null;
+    public String getProfileImage() {
+        Object properties = attributes.get("properties");
+        Map<String, Object> propertiesMap = (Map<String, Object>)properties;
+        return propertiesMap.get("thumbnail_image").toString();
     }
 
     @Override
@@ -43,21 +45,27 @@ public class KakaoOAuth2Response implements OAuth2Response {
     public String getGender() {
         Object kakaoAccount = attributes.get("kakao_account");
         Map<String, Object> kakaoAccountMap = (Map<String, Object>)kakaoAccount;
-        return kakaoAccountMap.get("gender").toString();
+        String gender = kakaoAccountMap.get("gender").toString();
+        if (gender.equals("male")) {
+            return "M";
+        } else {
+            return "F";
+        }
     }
 
     @Override
     public String getAge() {
         Object kakaoAccount = attributes.get("kakao_account");
         Map<String, Object> kakaoAccountMap = (Map<String, Object>)kakaoAccount;
-        return kakaoAccountMap.get("age_range").toString();
+        return kakaoAccountMap.get("age_range").toString().replace("~", "-");
     }
 
     @Override
     public String getPhone() {
         Object kakaoAccount = attributes.get("kakao_account");
         Map<String, Object> kakaoAccountMap = (Map<String, Object>)kakaoAccount;
-        return kakaoAccountMap.get("phone_number").toString();
+        String phoneNumber = kakaoAccountMap.get("phone_number").toString();
+        return phoneNumber.replace("+82", "").replace(" ", "0");
     }
 
 }

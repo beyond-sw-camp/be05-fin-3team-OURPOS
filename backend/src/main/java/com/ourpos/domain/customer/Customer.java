@@ -53,12 +53,15 @@ public class Customer extends BaseEntity {
     @Column(name = "customer_age_range")
     private String ageRange;
 
+    @Column(name = "customer_profile_image")
+    private String profileImage;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<CustomerAddress> customerAddresses = new ArrayList<>();
 
     @Builder
     private Customer(String loginId, String name, String phone, Role role, String nickname, String gender,
-        String ageRange, @Singular List<CustomerAddress> customerAddresses) {
+        String ageRange, String profileImage, @Singular List<CustomerAddress> customerAddresses) {
         this.loginId = loginId;
         this.name = name;
         this.phone = phone;
@@ -66,6 +69,7 @@ public class Customer extends BaseEntity {
         this.nickname = nickname;
         this.gender = gender;
         this.ageRange = ageRange;
+        this.profileImage = profileImage;
         for (CustomerAddress customerAddress : customerAddresses) {
             addCustomerAddress(customerAddress);
         }

@@ -33,7 +33,7 @@ public class StoreAddress {
     private String zipcode;
 
     @Builder
-    public StoreAddress(String addressSi, String addressDetail, String zipcode) {
+    private StoreAddress(String addressSi, String addressDetail, String zipcode) {
         this.addressSi = addressSi;
         this.addressDetail = addressDetail;
         this.zipcode = zipcode;

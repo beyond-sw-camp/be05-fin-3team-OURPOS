@@ -34,7 +34,8 @@ public class HallOrder extends Order {
     private Boolean orderTakeoutYn;
 
     @Builder
-    public HallOrder(Customer customer, Store store, Boolean orderTakeoutYn, @Singular List<OrderDetail> orderDetails) {
+    private HallOrder(Customer customer, Store store, Boolean orderTakeoutYn,
+        @Singular List<OrderDetail> orderDetails) {
         super(customer, store, orderDetails);
         this.status = HallStatus.WAITING;
         this.orderTakeoutYn = orderTakeoutYn;

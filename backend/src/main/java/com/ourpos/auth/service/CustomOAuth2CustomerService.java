@@ -65,6 +65,7 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
                 .phone(oAuth2Response.getPhone())
                 .gender(oAuth2Response.getGender())
                 .ageRange(oAuth2Response.getAge())
+                .profileImage(oAuth2Response.getProfileImage())
                 .build();
             customerRepository.save(customer);
 
