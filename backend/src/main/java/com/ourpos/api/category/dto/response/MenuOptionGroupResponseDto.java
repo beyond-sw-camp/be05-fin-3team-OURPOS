@@ -12,17 +12,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MenuOptionGroupResponseDto {
 
-	private Long menuOptionGroupId;
-	private String menuOptionGroupName;
-	// private Long categoryId;
-	// private String categoryName;
+	private Long Id;
+	private Long categoryId;
+	private String name;
 	private List<MenuOptionResponseDto> menuOptionResponseDtos;
 
 	public MenuOptionGroupResponseDto(MenuOptionGroup menuOptionGroup) {
-		this.menuOptionGroupId = menuOptionGroup.getId();
-		this.menuOptionGroupName = menuOptionGroup.getName();
-		// this.categoryId = menuOptionGroup.getCategory().getId();
-		// this.categoryName = menuOptionGroup.getCategory().getName();
+		this.Id = menuOptionGroup.getId();
+		this.name = menuOptionGroup.getName();
+		this.categoryId = menuOptionGroup.getCategory().getId();
 		this.menuOptionResponseDtos = menuOptionGroup.getMenuOptions().stream()
 			.map(MenuOptionResponseDto::new)
 			.toList();

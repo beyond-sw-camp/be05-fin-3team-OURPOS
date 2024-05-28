@@ -39,29 +39,29 @@ VALUES ('FRIES 사이즈', 2);
 --
 
 
- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                    menu_description, menu_name, menu_picture_url)
- VALUES (TRUE, NULL, FALSE, 9900, 1, 1, '햄버거', '햄버거', 'https://www.google.com');
+ VALUES (NULL, FALSE, 9900, 1,  '햄버거', '햄버거', 'https://www.google.com');
 
- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                    menu_description, menu_name, menu_picture_url)
- VALUES (TRUE, NULL, FALSE, 11400, 1, 1, '치즈버거', '치즈버거', 'https://www.google.com');
+ VALUES (NULL, FALSE, 11400, 1,  '치즈버거', '치즈버거', 'https://www.google.com');
 
- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                    menu_description, menu_name, menu_picture_url)
- VALUES (TRUE, NULL, FALSE, 12400, 1, 1, '베이컨 버거', '베이컨 버거', 'https://www.google.com');
+ VALUES (NULL, FALSE, 12400, 1,  '베이컨 버거', '베이컨 버거', 'https://www.google.com');
 
- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                    menu_description, menu_name, menu_picture_url)
- VALUES (TRUE, NULL, FALSE, 13900, 1, 1, '베이컨 치즈버거', '베이컨 치즈버거', 'https://www.google.com');
+ VALUES (NULL, FALSE, 13900, 1,  '베이컨 치즈버거', '베이컨 치즈버거', 'https://www.google.com');
 
- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                    menu_description, menu_name, menu_picture_url)
- VALUES (TRUE, NULL, FALSE, 6900, 2, 1, '감자튀김', 'FRIES', 'https://www.google.com');
+ VALUES (NULL, FALSE, 6900, 2,  '감자튀김', 'FRIES', 'https://www.google.com');
 
- INSERT INTO menu (menu_available_yn, menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, store_id,
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                    menu_description, menu_name, menu_picture_url)
- VALUES (TRUE, NULL, FALSE, 6900, 3, 1, '밀크쉐이크', '파이브가이즈 쉐이크', 'https://www.google.com');
+ VALUES (NULL, FALSE, 6900, 3,  '밀크쉐이크', '파이브가이즈 쉐이크', 'https://www.google.com');
 
 
 

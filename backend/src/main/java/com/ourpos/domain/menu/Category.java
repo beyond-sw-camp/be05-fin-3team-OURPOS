@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Category {
 	@Column(name = "category_name")
 	private String name;
 
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<MenuOptionGroup> menuOptionGroups = new ArrayList<>();
 
 	@Builder

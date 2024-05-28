@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ourpos.api.Result;
 import com.ourpos.api.category.dto.request.CategoryRequestDto;
+import com.ourpos.api.category.dto.request.CategoryUpdateDto;
+import com.ourpos.api.category.dto.request.MenuOptionGroupRequestDto;
 import com.ourpos.api.category.dto.request.MenuOptionGroupUpdateDto;
+import com.ourpos.api.category.dto.request.MenuOptionRequestDto;
 import com.ourpos.api.category.dto.request.MenuOptionUpdateDto;
 import com.ourpos.api.category.dto.response.CategoryResponseDto;
 import com.ourpos.api.category.service.CategoryQueryService;
 import com.ourpos.api.category.service.CategoryServiceImpl;
-import com.ourpos.api.category.service.CategoryUpdateDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,15 +53,34 @@ public class CategoryController {
 		return new Result<>(HttpStatus.OK.value(), "전체 카테고리 조회완료.", categoryQueryService.findAllCategories());
 	}
 
-	@PostMapping
+	@PostMapping("/add/category")
 	public Result<Void> addCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
 		log.info("CategoryController.addCategory() called");
 
 		categoryServiceImpl.addCategory(categoryRequestDto);
+
 		return new Result<>(HttpStatus.OK.value(), "카테고리 추가 완료", null);
 	}
 
-	@PutMapping("/{categoryId}")
+	@PostMapping("/add/menuOptionGroup")
+	public Result<Void> addMenuOptionGroup(@RequestBody MenuOptionGroupRequestDto menuOptionGroupRequestDto) {
+		log.info("CategoryController.addMenuOptionGroup() called");
+
+		categoryServiceImpl.addMenuOptionGroup(menuOptionGroupRequestDto);
+
+		return new Result<>(HttpStatus.OK.value(), "메뉴옵션그룹 추가 완료", null);
+	}
+
+	@PostMapping("/add/menuOption")
+	public Result<Void> addMenuOption(@RequestBody MenuOptionRequestDto menuOptionRequestDto) {
+		log.info("CategoryController.addMenuOption() called");
+
+		categoryServiceImpl.addMenuOption(menuOptionRequestDto);
+
+		return new Result<>(HttpStatus.OK.value(), "메뉴옵션 추가 완료", null);
+	}
+
+	@PutMapping("update/category/{categoryId}")
 	public Result<Void> updateCategory(@PathVariable Long categoryId,
 		@RequestBody CategoryUpdateDto categoryUpdateDto) {
 		log.info("CategoryController.updateCategory() called");
@@ -68,15 +89,16 @@ public class CategoryController {
 		return new Result<>(HttpStatus.OK.value(), "카테고리 수정 완료", null);
 	}
 
-	@PutMapping("/menuOptionGroups/{menuOptionGroupId}")
+	@PutMapping("update/menuOptionGroup/{menuOptionGroupId}")
 	public Result<Void> updateMenuOptionGroup(@PathVariable Long menuOptionGroupId,
 		@RequestBody MenuOptionGroupUpdateDto menuOptionGroupUpdateDto) {
 		log.info("CategoryController.updateMenuOptionGroup() called");
+		log.info(menuOptionGroupUpdateDto.getName());
 		categoryServiceImpl.updateMenuOptionGroup(menuOptionGroupId, menuOptionGroupUpdateDto);
 		return new Result<>(HttpStatus.OK.value(), "메뉴 옵션 그룹 수정 성공", null);
 	}
 
-	@PutMapping("/menuOptions/{menuOptionId}")
+	@PutMapping("update/menuOption/{menuOptionId}")
 	public Result<Void> updateMenuOption(@PathVariable Long menuOptionId,
 		@RequestBody MenuOptionUpdateDto menuOptionUpdateDto) {
 		log.info("CategoryController.updateMenuOption() called");
@@ -84,11 +106,27 @@ public class CategoryController {
 		return new Result<>(HttpStatus.OK.value(), "메뉴 옵션 그룹 수정 성공", null);
 	}
 
-	@DeleteMapping("/{categoryId}")
+	@DeleteMapping("delete/category/{categoryId}")
 	public Result<Void> deleteCategory(@PathVariable Long categoryId) {
 		log.info("CategoryController.deleteCategory() called");
 		log.info("categoryId: {}", categoryId);
 		categoryServiceImpl.deleteCategory(categoryId);
 		return new Result<>(HttpStatus.OK.value(), "카테고리 삭제 성공", null);
+	}
+
+	@DeleteMapping("delete/menuOptionGroup/{menuOptionGroupId}")
+	public Result<Void> deleteMenuOptionGroup(@PathVariable Long menuOptionGroupId) {
+		log.info("CategoryController.deleteMenuOptionGroup() called");
+		log.info("menuOptionGroupId: {}", menuOptionGroupId);
+		categoryServiceImpl.deleteMenuOptionGroup(menuOptionGroupId);
+		return new Result<>(HttpStatus.OK.value(), "메뉴옵션그룹 삭제 성공", null);
+	}
+
+	@DeleteMapping("delete/menuOption/{menuOptionId}")
+	public Result<Void> deleteMenuOption(@PathVariable Long menuOptionId) {
+		log.info("CategoryController.deleteMenuOption() called");
+		log.info("menuOptionId: {}", menuOptionId);
+		categoryServiceImpl.deleteMenuOption(menuOptionId);
+		return new Result<>(HttpStatus.OK.value(), "메뉴옵션 삭제 성공", null);
 	}
 }

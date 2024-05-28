@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class CategoryUpdateDto {
 
-	private Long categoryId;
-	private String categoryName;
+	// private Long categoryId;
+	private String name;
 	// private List<MenuOptionGroupUpdateDto> menuOptionGroups = new ArrayList<>();
 
 }

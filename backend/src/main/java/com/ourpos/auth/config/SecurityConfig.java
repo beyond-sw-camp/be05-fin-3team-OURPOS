@@ -2,7 +2,6 @@ package com.ourpos.auth.config;
 
 import java.util.Collections;
 
-import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +22,7 @@ import com.ourpos.auth.oauth2.CustomClientRegistrationRepo;
 import com.ourpos.auth.oauth2.CustomSuccessHandler;
 import com.ourpos.auth.service.CustomOAuth2CustomerService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -30,66 +30,66 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 public class SecurityConfig {
 
-    private final CustomOAuth2CustomerService customOAuth2CustomerService;
-    private final CustomSuccessHandler customSuccessHandler;
-    private final CustomClientRegistrationRepo customClientRegistrationRepo;
-    private final JwtUtil jwtUtil;
+	private final CustomOAuth2CustomerService customOAuth2CustomerService;
+	private final CustomSuccessHandler customSuccessHandler;
+	private final CustomClientRegistrationRepo customClientRegistrationRepo;
+	private final JwtUtil jwtUtil;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-            .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+		http
+			.cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
 
-                @Override
-                public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+				@Override
+				public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 
-                    CorsConfiguration configuration = new CorsConfiguration();
+					CorsConfiguration configuration = new CorsConfiguration();
 
-                    configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-                    configuration.setAllowedMethods(Collections.singletonList("*"));
-                    configuration.setAllowCredentials(true);
-                    configuration.setAllowedHeaders(Collections.singletonList("*"));
-                    configuration.setMaxAge(3600L);
+					configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+					configuration.setAllowedMethods(Collections.singletonList("*"));
+					configuration.setAllowCredentials(true);
+					configuration.setAllowedHeaders(Collections.singletonList("*"));
+					configuration.setMaxAge(3600L);
 
-                    configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
-                    configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+					configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
+					configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
-                    return configuration;
-                }
-            }));
+					return configuration;
+				}
+			}));
 
-        http
-            .csrf(AbstractHttpConfigurer::disable);
+		http
+			.csrf(AbstractHttpConfigurer::disable);
 
-        http
-            .formLogin(AbstractHttpConfigurer::disable);
+		http
+			.formLogin(AbstractHttpConfigurer::disable);
 
-        http
-            .httpBasic(AbstractHttpConfigurer::disable);
+		http
+			.httpBasic(AbstractHttpConfigurer::disable);
 
-        http
-            .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class)
-            .addFilterBefore(new CustomLogoutFilter(jwtUtil), LogoutFilter.class);
+		http
+			.addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class)
+			.addFilterBefore(new CustomLogoutFilter(jwtUtil), LogoutFilter.class);
 
-        http
-            .oauth2Login(oauth2 -> oauth2
-                .clientRegistrationRepository(customClientRegistrationRepo.clientRegistrationRepository())
-                .userInfoEndpoint(userInfo -> userInfo
-                    .userService(customOAuth2CustomerService)
-                )
-                .successHandler(customSuccessHandler)
-            );
+		http
+			.oauth2Login(oauth2 -> oauth2
+				.clientRegistrationRepository(customClientRegistrationRepo.clientRegistrationRepository())
+				.userInfoEndpoint(userInfo -> userInfo
+					.userService(customOAuth2CustomerService)
+				)
+				.successHandler(customSuccessHandler)
+			);
 
-        http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/").permitAll()
-                .anyRequest().authenticated());
+		http
+			.authorizeHttpRequests(auth -> auth
+				.requestMatchers("/**").permitAll()
+				.anyRequest().authenticated());
 
-        http
-            .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		http
+			.sessionManagement(session -> session
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        return http.build();
-    }
+		return http.build();
+	}
 }
