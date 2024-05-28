@@ -5,7 +5,7 @@ content-type: application/json
 Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3ODAzNTcsImV4cCI6MTcxNzM4NTE1N30.OHIBv0VEGgkp7RJPbGKKf5ayhLvi_InqgsS_ObjltRw
 
 {
-  "customerId": 2,
+  "customerId": 1,
   "storeId": 1,
   "orderTakeoutYn": true,
   "orderDetailDtos": [
@@ -25,7 +25,7 @@ Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2S
       ]
     },
     {
-      "menuId": 1,
+      "menuId": 3,
       "quantity": 1,
       "orderOptionGroups": [
         {

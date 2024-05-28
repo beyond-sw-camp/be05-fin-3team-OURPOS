@@ -3,6 +3,7 @@ package com.ourpos.api.order.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ourpos.api.Result;
+import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 import com.ourpos.api.order.service.ManagerOrderService;
@@ -24,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ManagerOrderController {
 
     // 주문 상세는 OrderQueryService
@@ -140,6 +143,12 @@ public class ManagerOrderController {
         orderService.completeDeliveryOrder(orderId);
 
         return new Result<>(HttpStatus.OK.value(), "배달 완료 되었습니다.", null);
+    }
+
+    @GetMapping("orders/monthly")
+    public Result<List<CountMonthlyResponseDto>> countMouthly(@RequestParam Long storeId) {
+        List<CountMonthlyResponseDto> dto = managerOrderService.countMonthly(storeId);
+        return new Result<>(HttpStatus.OK.value(), "월 매출 확인 되었습니다.", dto);
     }
 
 }

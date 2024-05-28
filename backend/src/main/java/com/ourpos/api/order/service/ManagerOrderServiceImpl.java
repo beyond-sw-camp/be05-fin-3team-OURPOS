@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 import com.ourpos.domain.order.DeliveryOrder;
@@ -42,6 +43,14 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
         return deliveryOrders.stream()
             .map(DeliveryOrderResponseDto::new)
             .collect(Collectors.toList());
+    }
+
+    // 월 매출 확인
+    @Override
+    public List<CountMonthlyResponseDto> countMonthly(Long storeId) {
+        log.info("월 매출 확인 서비스 {}", storeId);
+
+        return orderQueryRepository.countMonthly(storeId);
     }
 
 }

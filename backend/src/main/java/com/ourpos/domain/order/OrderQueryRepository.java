@@ -2,6 +2,7 @@ package com.ourpos.domain.order;
 
 import static com.ourpos.domain.order.QDeliveryOrder.*;
 import static com.ourpos.domain.order.QHallOrder.*;
+import static com.ourpos.domain.order.QOrder.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -131,5 +134,17 @@ public class OrderQueryRepository {
 
     private static BooleanExpression deliveryOrderEq(Long orderId) {
         return deliveryOrder.id.eq(orderId);
+    }
+
+    // 월별 매출량
+    public List<CountMonthlyResponseDto> countMonthly(Long storeId) {
+        return queryFactory
+            .select(Projections.constructor(CountMonthlyResponseDto.class,
+                order.completedDateTime.yearMonth().as("month"),
+                order.price.sum().as("total")))
+            .from(order)
+            .join(order.store).fetchJoin()
+            .where(order.store.id.eq(storeId))
+            .fetch();
     }
 }
