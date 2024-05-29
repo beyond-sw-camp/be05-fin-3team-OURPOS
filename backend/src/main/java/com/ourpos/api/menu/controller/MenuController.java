@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class MenuController {
         return new Result<>(HttpStatus.OK.value(), "메뉴 조회가 완료되었습니다.", menuQueryService.findMenu(menuId));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public Result<List<MenuResponseDto>> findAllMenus(
         @RequestParam(value = "category", required = false) String category) {

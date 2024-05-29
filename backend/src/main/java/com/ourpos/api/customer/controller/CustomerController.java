@@ -41,8 +41,7 @@ public class CustomerController {
         String loginId = getLoginCustomerLoginId();
         log.info("개인 정보 조회: {}", loginId);
 
-        return new Result<>(HttpStatus.OK.value(), "개인 정보 조회가 완료되었습니다.",
-            customerServiceImpl.findCustomer(loginId));
+        return new Result<>(HttpStatus.OK.value(), "개인 정보 조회가 완료되었습니다.", customerServiceImpl.findCustomer(loginId));
     }
 
     //마이페이지-개인정보 변경(주소 변경)

@@ -81,19 +81,55 @@ public class Customer extends BaseEntity {
         customerAddress.setCustomer(this);
     }
 
-    public void update(String name, String nickname, String phone) {
-        this.name = name;
-        this.nickname = nickname;
-        this.phone = phone;
-    }
-
     public void addAddress(CustomerAddress customerAddress) {
         if (customerAddresses.size() >= 3) {
             throw new IllegalStateException("주소는 최대 3개까지 추가 가능합니다.");
         }
+
+        if (isDefaultAddress()) {
+            customerAddress.updateDefaultYn(true);
+        }
         addCustomerAddress(customerAddress);
     }
 
+    private boolean isDefaultAddress() {
+        return customerAddresses.stream().noneMatch(CustomerAddress::getDefaultYn);
+    }
+
+    public void update(String name, String nickname, String phone, String gender, String age, String profileImage) {
+        this.name = name;
+        this.nickname = nickname;
+        this.phone = phone;
+        this.gender = gender;
+        this.ageRange = age;
+        this.profileImage = profileImage;
+    }
+
+    public void updateDefaultAddress(CustomerAddress customerAddress) {
+        if (customerAddresses.size() == 1) {
+            throw new IllegalStateException("주소가 1개일 때는 기본 주소를 변경할 수 없습니다.");
+        }
+
+        customerAddresses.stream()
+            .filter(CustomerAddress::getDefaultYn)
+            .findFirst()
+            .ifPresentOrElse(address -> address.updateDefaultYn(false), () -> {
+                throw new IllegalStateException("기본 주소가 없습니다.");
+            });
+        customerAddress.updateDefaultYn(true);
+    }
+
+    public void enrollUser() {
+        this.role = Role.ROLE_USER;
+    }
+
+    public void enrollAdmin() {
+        this.role = Role.ROLE_ADMIN;
+    }
+
+    public void enrollRider() {
+        this.role = Role.ROLE_RIDER;
+    }
 }
 
 

@@ -67,7 +67,6 @@ public class CustomerServiceImpl {
             .addressBase(customerAddressRequestDto.getAddressBase())
             .addressDetail(customerAddressRequestDto.getAddressDetail())
             .zipcode(customerAddressRequestDto.getZipcode())
-            .defaultYn(false)
             .build();
 
         customer.addAddress(customerAddress);
