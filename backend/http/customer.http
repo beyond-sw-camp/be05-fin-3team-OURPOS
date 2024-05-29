@@ -1,19 +1,51 @@
-### 마이페이지- 개인정보조회
-GET http://localhost:8080/api/v1/customers
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfQlRBTG1COEsxUEZqN3RNTjRnbHR0SDkwWER5SUhOaUlLMjhaN3dMUFFYOCIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY2NDI4ODYsImV4cCI6MTcxNjY0MzEwMn0.1vs4JtXBc6a6yZ4MWmDjFnda2wGfDa8bmDHzSuNkEmk
+### 로그인 한 고객의 정보 조회
+GET http://localhost:8080/api/v1/customers/my
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NDM3ODEsImV4cCI6MTcxNzU0ODU4MX0.yIEP9q3d3C3fN2bWQ3B9Sra8OyW-M85pdy1Mh6_sRAk
+
+### 로그인 한 고객의 주소 목록 조회
+GET http://localhost:8080/api/v1/customers/my/addresses
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NDM2NzAsImV4cCI6MTcxNzU0ODQ3MH0.buGwpk5_sbZFt1DzqTYOGG-EbFPHuiI-Vjjpd41ty9g
 
 ### 주소 추가
-POST http://localhost:8080/api/v1/customers/address
+POST http://localhost:8080/api/v1/customers/addresses
 Content-Type: application/json
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfQlRBTG1COEsxUEZqN3RNTjRnbHR0SDkwWER5SUhOaUlLMjhaN3dMUFFYOCIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY2NDM5OTUsImV4cCI6MTcxNjY0NDIxMX0.3W-blIj_TXZVrl1R6OSZoXcBnQPhYJZUwHzyAER3ucc
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NDU0OTEsImV4cCI6MTcxNzU1MDI5MX0.A1Cd1FHag-l2TXzI0hVudMZJ4KO-G9Hx8hjenyvTHM8
 
 {
-  "addressSi": "서울특별시",
-  "addressGu": "강남구",
-  "streetName": "강남대로",
-  "addressDetail": "123-456"
+  "name": "집",
+  "receiverName": "김철수",
+  "telNo": "010-1234-5678",
+  "addressBase": "서울시 강남구 역삼동 3번길 12",
+  "addressDetail": "아파트 1동 101호",
+  "zipcode": "12345"
 }
 
-### 내 주문 내역 조회
+### 주소 수정
+PUT http://localhost:8080/api/v1/customers/addresses/1
+Content-Type: application/json
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NDU0OTEsImV4cCI6MTcxNzU1MDI5MX0.A1Cd1FHag-l2TXzI0hVudMZJ4KO-G9Hx8hjenyvTHM8
+
+{
+  "name": "집",
+  "receiverName": "김철수",
+  "telNo": "010-1234-5678",
+  "addressBase": "서울시 강남구 역삼동 3번길 12",
+  "addressDetail": "아파트 1동 101호",
+  "zipCode": "12345"
+}
+
+### 기본 주소 수정
+PUT http://localhost:8080/api/v1/customers/addresses/2/default
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NDU0OTEsImV4cCI6MTcxNzU1MDI5MX0.A1Cd1FHag-l2TXzI0hVudMZJ4KO-G9Hx8hjenyvTHM8
+
+### 주소 삭제
+DELETE http://localhost:8080/api/v1/customers/addresses/2
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NDE5NDcsImV4cCI6MTcxNzU0Njc0N30.w5tGHwBzSvSdY-ii2ZuYqiYsgWySbIIHjVLDgMvUpRc
+
+### 로그인 고객의 홀/포장 주문 내역 조회
 GET http://localhost:8080/api/v1/customers/my/orders/hall
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoia2FrYW9fMzQ5ODY0MzMzOSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3MDY2NzUsImV4cCI6MTcxNjcwNjg5MX0.h-U3y34AiNeNulX6usa99h_ATD8srvVJDzHRU4-1qLc
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NDE5NDcsImV4cCI6MTcxNzU0Njc0N30.w5tGHwBzSvSdY-ii2ZuYqiYsgWySbIIHjVLDgMvUpRc
+
+### 로그인 고객의 배달 주문 내역 조회
+GET http://localhost:8080/api/v1/customers/my/orders/delivery
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NDE5NDcsImV4cCI6MTcxNzU0Njc0N30.w5tGHwBzSvSdY-ii2ZuYqiYsgWySbIIHjVLDgMvUpRc

@@ -131,7 +131,3 @@ public class Customer extends BaseEntity {
         this.role = Role.ROLE_RIDER;
     }
 }
-
-
-
-

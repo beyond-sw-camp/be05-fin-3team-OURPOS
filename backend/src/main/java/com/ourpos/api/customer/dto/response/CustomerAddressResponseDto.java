@@ -15,6 +15,7 @@ public class CustomerAddressResponseDto {
     private String addressBase;
     private String addressDetail;
     private String zipcode;
+    private Boolean defaultYn;
 
     public CustomerAddressResponseDto(CustomerAddress customerAddress) {
         this.customerAddressId = customerAddress.getId();
@@ -23,6 +24,7 @@ public class CustomerAddressResponseDto {
         this.addressBase = customerAddress.getAddressBase();
         this.addressDetail = customerAddress.getAddressDetail();
         this.zipcode = customerAddress.getZipcode();
+        this.defaultYn = customerAddress.getDefaultYn();
     }
 
 }
