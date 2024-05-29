@@ -35,7 +35,7 @@ public class StoreStockServiceImpl implements StoreStockService {
 			);
 
 			if(storeStocks.isEmpty()){
-				//재고 없으묜 새로 생성
+				//재고 없으면 새로 넣음
 				StoreStock newStoreStock = StoreStock.builder()
 					.store(storeOrderDetail.getStoreOrder().getStore())
 					.storeComm(storeOrderDetail.getStoreMenu())
