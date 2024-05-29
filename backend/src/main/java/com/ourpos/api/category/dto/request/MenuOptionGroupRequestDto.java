@@ -4,6 +4,7 @@ import com.ourpos.domain.menu.Category;
 import com.ourpos.domain.menu.MenuOptionGroup;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class MenuOptionGroupRequestDto {
 
-	@NotBlank(message = "카테고리 아이디를 입력해 주세요")
+	@NotNull(message = "카테고리 아이디를 입력해 주세요")
 	@Positive(message = "1 이상의 상수만 입력해 주세요")
 	private Long categoryId;
 
