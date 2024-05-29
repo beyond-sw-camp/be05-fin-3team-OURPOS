@@ -13,6 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class OrderOptionGroupRequestDto {
+
     private String optionGroupName;
     private List<OrderOptionRequestDto> orderOptions = new ArrayList<>();
 

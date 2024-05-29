@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class HallOrderRequestDto {
-    private Long customerId;
+
     private Long storeId;
     private Boolean orderTakeoutYn;
     private List<OrderDetailRequestDto> orderDetailDtos = new ArrayList<>();

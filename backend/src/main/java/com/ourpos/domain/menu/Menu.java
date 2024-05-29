@@ -68,4 +68,8 @@ public class Menu extends BaseEntity {
         this.pictureUrl = pictureUrl;
     }
 
+    public void delete(LocalDateTime deletedDateTime) {
+        this.deletedYn = true;
+        this.deletedDateTime = deletedDateTime;
+    }
 }

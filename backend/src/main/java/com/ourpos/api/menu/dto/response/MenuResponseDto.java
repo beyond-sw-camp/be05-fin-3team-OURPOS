@@ -9,21 +9,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MenuResponseDto {
 
-    private Long menuId;
-    private Long categoryId;
-    private String menuName;
-    private Integer price;
-    private String description;
-    private String pictureUrl;
-    private String categoryName;
+	private Long Id;
+	private Long categoryId;
+	private String name;
+	private Integer price;
+	private String description;
+	private String pictureUrl;
 
-    public MenuResponseDto(Menu menu) {
-        this.menuId = menu.getId();
-        this.categoryId = menu.getCategory().getId();
-        this.menuName = menu.getName();
-        this.price = menu.getPrice();
-        this.description = menu.getDescription();
-        this.pictureUrl = menu.getPictureUrl();
-        this.categoryName = menu.getCategory().getName();
-    }
+	public MenuResponseDto(Menu menu) {
+		this.Id = menu.getId();
+		this.categoryId = menu.getCategory().getId();
+		this.name = menu.getName();
+		this.price = menu.getPrice();
+		this.description = menu.getDescription();
+		this.pictureUrl = menu.getPictureUrl();
+	}
 }

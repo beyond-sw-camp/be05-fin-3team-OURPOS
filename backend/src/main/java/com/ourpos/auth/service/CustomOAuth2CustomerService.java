@@ -89,7 +89,8 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
             return new CustomOAuth2Customer(customerLoginDto);
         } else {
             log.info("Existing User");
-            customer.update(oAuth2Response.getName(), oAuth2Response.getNickname(), oAuth2Response.getPhone());
+            customer.update(oAuth2Response.getName(), oAuth2Response.getNickname(), oAuth2Response.getPhone(),
+                oAuth2Response.getGender(), oAuth2Response.getAge(), oAuth2Response.getProfileImage());
 
             CustomerLoginDto customerLoginDto = CustomerLoginDto.builder()
                 .name(oAuth2Response.getName())
@@ -115,14 +116,12 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
             return;
         }
         CustomerAddress customerAddress = CustomerAddress.builder()
-            .customer(customer)
             .name(customerAddressLoginDto.getName())
             .receiverName(customerAddressLoginDto.getReceiverName())
             .telNo(customerAddressLoginDto.getReceiverTelNo())
             .addressBase(customerAddressLoginDto.getBaseAddress())
             .addressDetail(customerAddressLoginDto.getDetailAddress())
             .zipcode(customerAddressLoginDto.getZipcode())
-            .defaultYn(true)
             .build();
 
         customer.addAddress(customerAddress);
@@ -131,14 +130,12 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
     private void saveKakaoAddress(String accessToken, Customer customer) {
         CustomerAddressLoginDto customerAddressLoginDto = kakaoService.getKakaoAddress(accessToken);
         CustomerAddress customerAddress = CustomerAddress.builder()
-            .customer(customer)
             .name(customerAddressLoginDto.getName())
             .receiverName(customerAddressLoginDto.getReceiverName())
             .telNo(customerAddressLoginDto.getReceiverTelNo())
             .addressBase(customerAddressLoginDto.getBaseAddress())
             .addressDetail(customerAddressLoginDto.getDetailAddress())
             .zipcode(customerAddressLoginDto.getZipcode())
-            .defaultYn(true)
             .build();
 
         customer.addAddress(customerAddress);

@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "customer_address")
@@ -55,16 +54,15 @@ public class CustomerAddress {
     private Boolean defaultYn;
 
     @Builder
-    private CustomerAddress(Customer customer, String name, String receiverName, String telNo, String addressBase,
-        String addressDetail, String zipcode, Boolean defaultYn) {
-        this.customer = customer;
+    private CustomerAddress(String name, String receiverName, String telNo, String addressBase,
+        String addressDetail, String zipcode) {
         this.name = name;
         this.receiverName = receiverName;
         this.telNo = telNo;
         this.addressBase = addressBase;
         this.addressDetail = addressDetail;
         this.zipcode = zipcode;
-        this.defaultYn = defaultYn;
+        this.defaultYn = false;
     }
 
     public void update(String name, String receiverName, String telNo, String addressBase, String addressDetail,
