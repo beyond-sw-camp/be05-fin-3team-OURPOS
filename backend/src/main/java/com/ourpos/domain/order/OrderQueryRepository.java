@@ -145,9 +145,9 @@ public class OrderQueryRepository {
             .select(Projections.constructor(CountMonthlyResponseDto.class,
                 order.createdDateTime.year().as("year"),
                 order.createdDateTime.month().as("month"),
-                order.price.as("total")))
+                order.price.sum().as("total")))
             .from(order)
-            .groupBy(order.createdDateTime.year())
+            .groupBy(order.createdDateTime.year(), order.createdDateTime.month())
             .join(order.store)
             .where(order.store.id.eq(storeId))
             .fetch();
