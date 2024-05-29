@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ourpos.api.Result;
 import com.ourpos.api.storeorder.dto.request.StoreOrderRequestDto;
 import com.ourpos.api.storeorder.dto.response.StoreCommResponseDto;
+import com.ourpos.api.storeorder.dto.response.StoreOrderCheckResponseDto;
 import com.ourpos.api.storeorder.dto.response.StoreOrderResponseDto;
 import com.ourpos.api.storeorder.service.StoreCommServiceImpl;
+
+import com.ourpos.api.storeorder.service.StoreOrderService;
+import com.ourpos.api.storeorder.service.StoreOrderService;
 import com.ourpos.api.storeorder.service.StoreOrderServiceImpl;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderDetailRepository;
@@ -31,10 +35,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/v1/storeorder")
 public class StoreOrderController {
 
-    private final StoreOrderServiceImpl storeOrderService;
+
     private final StoreCommServiceImpl storeCommService;
     private final StoreOrderDetailRepository storeOrderDetailRepository;
     private final StoreOrderRepository storeOrderRepository;
+    private final StoreOrderServiceImpl storeOrderService;
+
+
 
     // 판매 비품, 식자재 목록 확인
     @GetMapping("/checkstorecomms")
@@ -85,5 +92,42 @@ public class StoreOrderController {
         }
         return new Result<>(HttpStatus.OK.value(), "주문이 삭제되었습니다.", null);
     }
+
+    //비품, 식자재 주문 확인 (본사)
+
+    @GetMapping("/{storeId}")
+    public Result<StoreOrderCheckResponseDto> getStoreOrderCheck(@PathVariable Long storeId) {
+        log.info("가게 식자재, 비품 주문: {}", storeId);
+        StoreOrderCheckResponseDto storeOrderCheckResponseDto = storeOrderService.getStoreOrdercheck(storeId);
+        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문이 완료되었습니다.", storeOrderCheckResponseDto );
+    }
+    //비품, 식자재 주문 상태 변경
+
+    // 1. WAITING -> ACCEPTED
+    @PutMapping("/accepted/{storeOrderId}")
+    public Result<Void> acceptedStoreOrder(@PathVariable Long storeOrderId ) {
+        log.info("가게 식자재, 비품 주문 수정: {}", storeOrderId );
+        storeOrderService.acceptedStoreOrder(storeOrderId);
+        return new Result<>(HttpStatus.OK.value(), "주문이 승인되었습니다.", null);
+    }
+
+    // 2. ACCEPTED -> DELIVERING
+    @PutMapping("/delivering/{storeOrderId}")
+    public Result<Void> deliveringStoreOrder(@PathVariable Long storeOrderId ) {
+        log.info("가게 식자재, 비품 주문 수정: {}", storeOrderId );
+        storeOrderService.deliveringStoreOrder(storeOrderId);
+        return new Result<>(HttpStatus.OK.value(), "배달이 시작되었습니다.", null);
+    }
+
+    // 3. DELIVERING -> COMPLETED
+
+    @PutMapping("/complete/{storeOrderId}")
+    public Result<Void> completeStoreOrder(@PathVariable Long storeOrderId ) {
+        log.info("가게 식자재, 비품 주문 수정: {}", storeOrderId );
+        storeOrderService.completeStoreOrder(storeOrderId);
+        return new Result<>(HttpStatus.OK.value(), "배달이 완료되었습니다.", null);
+    }
+
+
 
 }
