@@ -85,7 +85,7 @@ class OrderServiceImplTest {
         OrderDetailRequestDto orderDetail2 = createOrderDetail(coke, 1,
             List.of(orderOptionGroup1, orderOptionGroup2));
 
-        HallOrderRequestDto hallOrder = createHallOrder(customer, store, List.of(orderDetail1, orderDetail2));
+        HallOrderRequestDto hallOrder = createHallOrder(store, List.of(orderDetail1, orderDetail2));
 
         // when
         orderServiceImpl.createHallOrder(customer.getLoginId(), hallOrder);
@@ -107,7 +107,7 @@ class OrderServiceImplTest {
         StoreComm pt = createStoreComm();
         createRecipe(pt, hamburger, 2);
         createRecipe(pt, coke, 1);
-        StoreStock storeStock = createStoreStock(store, pt, 1);
+        createStoreStock(store, pt, 1);
 
         OrderOptionRequestDto orderOption1 = createOrderOption();
         OrderOptionRequestDto orderOption2 = createOrderOption();
@@ -120,10 +120,13 @@ class OrderServiceImplTest {
             List.of(orderOptionGroup1, orderOptionGroup2));
 
         // when
-        HallOrderRequestDto hallOrder = createHallOrder(customer, store, List.of(orderDetail1, orderDetail2));
+        HallOrderRequestDto hallOrder = createHallOrder(store, List.of(orderDetail1, orderDetail2));
+        String loginId = customer.getLoginId();
 
         // then
-        assertThatThrownBy(() -> orderServiceImpl.createHallOrder(customer.getLoginId(), hallOrder))
+        assertThatThrownBy(() -> {
+            orderServiceImpl.createHallOrder(loginId, hallOrder);
+        })
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("재고가 부족합니다.");
 
@@ -161,7 +164,7 @@ class OrderServiceImplTest {
         return storeStock;
     }
 
-    private static HallOrderRequestDto createHallOrder(Customer customer, Store store,
+    private static HallOrderRequestDto createHallOrder(Store store,
         List<OrderDetailRequestDto> orderDetailRequestDto) {
         HallOrderRequestDto hallOrderRequestDto = new HallOrderRequestDto();
         hallOrderRequestDto.setStoreId(store.getId());

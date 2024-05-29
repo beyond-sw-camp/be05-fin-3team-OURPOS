@@ -69,7 +69,7 @@ public class MenuOptionGroup {
     }
 
     public void update(Category category, String name, Boolean exclusiveYn, String description) {
-        this.category = this.category;
+        this.category = category;
         this.name = name;
         this.exclusiveYn = exclusiveYn;
         this.description = description;
