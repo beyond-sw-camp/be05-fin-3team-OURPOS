@@ -46,16 +46,16 @@ public class OrderServiceImpl implements OrderService {
     private final StoreRestrictedMenuRepository storeRestrictedMenuRepository;
 
     @Override
-    public void createHallOrder(HallOrderRequestDto hallOrderRequestDto) {
-        HallOrder hallOrder = createOrder(hallOrderRequestDto);
+    public void createHallOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
+        HallOrder hallOrder = createOrder(loginId, hallOrderRequestDto);
 
         storeStockCalculate(hallOrder);
         hallOrderRepository.save(hallOrder);
     }
 
     @Override
-    public void createDeliveryOrder(DeliveryOrderRequestDto deliveryOrderRequestDto) {
-        DeliveryOrder deliveryOrder = createOrder(deliveryOrderRequestDto);
+    public void createDeliveryOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto) {
+        DeliveryOrder deliveryOrder = createOrder(loginId, deliveryOrderRequestDto);
         if (deliveryOrder.getPrice() < deliveryOrder.getStore().getMinimumOrderPrice()) {
             throw new IllegalArgumentException("최소 주문 금액을 충족하지 못했습니다.");
         }
@@ -150,8 +150,8 @@ public class OrderServiceImpl implements OrderService {
         order.completeOrder();
     }
 
-    private HallOrder createOrder(HallOrderRequestDto hallOrderRequestDto) {
-        Customer customer = getCustomer(hallOrderRequestDto.getCustomerId());
+    private HallOrder createOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
+        Customer customer = getCustomer(loginId);
         Store store = getStore(hallOrderRequestDto.getStoreId());
 
         List<OrderDetail> orderDetails = createOrderDetails(hallOrderRequestDto.getOrderDetailDtos());
@@ -159,23 +159,23 @@ public class OrderServiceImpl implements OrderService {
         return hallOrderRequestDto.toEntity(customer, store, orderDetails);
     }
 
-    private Customer getCustomer(Long hallOrderRequestDto) {
-        return customerRepository.findById(hallOrderRequestDto).orElseThrow(
+    private DeliveryOrder createOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto) {
+        Customer customer = getCustomer(loginId);
+        Store store = getStore(deliveryOrderRequestDto.getStoreId());
+
+        List<OrderDetail> orderDetails = createOrderDetails(
+            deliveryOrderRequestDto.getOrderDetailDtos());
+        return deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
+    }
+
+    private Customer getCustomer(String loginId) {
+        return customerRepository.findByLoginId(loginId).orElseThrow(
             () -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
     }
 
     private Store getStore(Long hallOrderRequestDto) {
         return storeRepository.findById(hallOrderRequestDto).orElseThrow(
             () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
-    }
-
-    private DeliveryOrder createOrder(DeliveryOrderRequestDto deliveryOrderRequestDto) {
-        Customer customer = getCustomer(deliveryOrderRequestDto.getCustomerId());
-        Store store = getStore(deliveryOrderRequestDto.getStoreId());
-
-        List<OrderDetail> orderDetails = createOrderDetails(
-            deliveryOrderRequestDto.getOrderDetailDtos());
-        return deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
     }
 
     private List<OrderDetail> createOrderDetails(List<OrderDetailRequestDto> orderDetailRequestDtos) {

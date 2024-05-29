@@ -1,5 +1,6 @@
 package com.ourpos.domain.order;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -98,7 +99,7 @@ public class DeliveryOrder extends Order {
             throw new IllegalArgumentException("배달중인 주문만 완료할 수 있습니다.");
         }
         this.status = DeliveryStatus.COMPLETED;
-        super.setCompleteOrderTime();
+        super.setCompleteOrderTime(LocalDateTime.now());
     }
 
     // 라이더 배정

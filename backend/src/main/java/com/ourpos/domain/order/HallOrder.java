@@ -1,5 +1,6 @@
 package com.ourpos.domain.order;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -60,7 +61,7 @@ public class HallOrder extends Order {
             throw new IllegalArgumentException("조리중인 주문만 완료할 수 있습니다.");
         }
         this.status = HallStatus.COMPLETED;
-        super.setCompleteOrderTime();
+        super.setCompleteOrderTime(LocalDateTime.now());
     }
 
 }

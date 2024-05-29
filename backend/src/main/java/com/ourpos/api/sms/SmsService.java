@@ -17,6 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class SmsService {
 
+    @Value("${sms.api.from}")
+    private String from;
+
     private final DefaultMessageService messageService;
 
     public SmsService(@Value("${sms.api.key}") String apiKey, @Value("${sms.api.secret}") String apiSecret) {
@@ -24,7 +27,7 @@ public class SmsService {
             apiKey, apiSecret, "https://api.coolsms.co.kr");
     }
 
-    public void sendOne(String from, String to, String text) {
+    public void sendOne(String to, String text) {
         Message message = new Message();
 
         message.setFrom(from);
