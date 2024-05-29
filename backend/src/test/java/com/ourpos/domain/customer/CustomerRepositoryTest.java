@@ -26,7 +26,6 @@ class CustomerRepositoryTest {
             .telNo("02-1234-5678")
             .addressBase("경기도 군포시 당정동 금정로 1번길")
             .addressDetail("아파트 1층 101호")
-            .defaultYn(true)
             .build();
 
         CustomerAddress customerAddress2 = CustomerAddress.builder()
@@ -35,7 +34,6 @@ class CustomerRepositoryTest {
             .telNo("02-1234-5678")
             .addressBase("서울시 강남구 강남로 1번길")
             .addressDetail("아파트 2층 201호")
-            .defaultYn(false)
             .build();
 
         Customer customer = Customer.builder()
@@ -79,7 +77,6 @@ class CustomerRepositoryTest {
             .telNo("02-1234-5678")
             .addressBase("경기도 군포시 당정동 금정로 1번길")
             .addressDetail("아파트 1층 101호")
-            .defaultYn(true)
             .build();
 
         CustomerAddress customerAddress2 = CustomerAddress.builder()
@@ -88,7 +85,6 @@ class CustomerRepositoryTest {
             .telNo("02-1234-5678")
             .addressBase("서울시 강남구 강남로 1번길")
             .addressDetail("아파트 2층 201호")
-            .defaultYn(false)
             .build();
 
         Customer customer = Customer.builder()

@@ -65,7 +65,7 @@ class OrderTest {
             .orderDetail(orderDetail)
             .build();
 
-        // then
+        // when then
         assertThat(order.getPrice()).isEqualTo(5000 * 2 + 500 + 1000 + 700);
     }
 

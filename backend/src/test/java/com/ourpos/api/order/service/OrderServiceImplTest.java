@@ -80,7 +80,7 @@ class OrderServiceImplTest {
         HallOrderRequestDto hallOrder = createHallOrder(customer, store, List.of(orderDetail1, orderDetail2));
 
         // when
-        orderServiceImpl.createHallOrder(hallOrder);
+        orderServiceImpl.createHallOrder(customer.getLoginId(), hallOrder);
 
         // then
         assertThat(storeStock.getQuantity()).isEqualTo(5);
@@ -115,7 +115,7 @@ class OrderServiceImplTest {
         HallOrderRequestDto hallOrder = createHallOrder(customer, store, List.of(orderDetail1, orderDetail2));
 
         // then
-        assertThatThrownBy(() -> orderServiceImpl.createHallOrder(hallOrder))
+        assertThatThrownBy(() -> orderServiceImpl.createHallOrder(customer.getLoginId(), hallOrder))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("재고가 부족합니다.");
 
@@ -156,7 +156,6 @@ class OrderServiceImplTest {
     private static HallOrderRequestDto createHallOrder(Customer customer, Store store,
         List<OrderDetailRequestDto> orderDetailRequestDto) {
         HallOrderRequestDto hallOrderRequestDto = new HallOrderRequestDto();
-        hallOrderRequestDto.setCustomerId(customer.getId());
         hallOrderRequestDto.setStoreId(store.getId());
         hallOrderRequestDto.setOrderTakeoutYn(false);
         hallOrderRequestDto.setOrderDetailDtos(orderDetailRequestDto);
