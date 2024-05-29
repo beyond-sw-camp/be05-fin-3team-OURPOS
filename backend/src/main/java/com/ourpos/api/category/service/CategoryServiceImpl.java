@@ -83,10 +83,10 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public void updateMenuOption(Long menuOptionId, MenuOptionUpdateDto menuOptionUpdateDto) {
-		log.info("MenuService.updateMenuOption() called");
+		log.info("CategoryService.updateMenuOption() called");
 		MenuOption menuOption = menuOptionRepository.findById(menuOptionId).orElseThrow(
 			() -> new IllegalArgumentException("메뉴옵션이 존재하지 않습니다"));
-		MenuOptionGroup menuOptionGroup = menuOptionGroupRepository.findById(menuOptionId)
+		MenuOptionGroup menuOptionGroup = menuOptionGroupRepository.findById(menuOptionUpdateDto.getMenuOptionGroupId())
 			.orElseThrow(
 				() -> new IllegalArgumentException("메뉴옵션그룹이 존재하지 않습니다"));
 		menuOption.update(menuOptionGroup, menuOptionUpdateDto.getName(), menuOptionUpdateDto.getPrice());

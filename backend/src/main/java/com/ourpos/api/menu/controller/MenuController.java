@@ -2,6 +2,7 @@ package com.ourpos.api.menu.controller;
 
 import java.util.List;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,7 +49,7 @@ public class MenuController {
 		log.info("MenuController.findAllMenus() called");
 		log.info(category);
 		List<MenuResponseDto> menus = menuQueryService.findMenusByCategory(category);
-
+		log.info(category);
 		return new Result<>(HttpStatus.OK.value(), "카테고리별 메뉴 조회가 완료되었습니다.", menus);
 	}
 

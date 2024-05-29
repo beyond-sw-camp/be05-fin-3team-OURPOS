@@ -19,8 +19,8 @@ public class MenuOptionGroupResponseDto {
 
 	public MenuOptionGroupResponseDto(MenuOptionGroup menuOptionGroup) {
 		this.Id = menuOptionGroup.getId();
-		this.name = menuOptionGroup.getName();
 		this.categoryId = menuOptionGroup.getCategory().getId();
+		this.name = menuOptionGroup.getName();
 		this.menuOptionResponseDtos = menuOptionGroup.getMenuOptions().stream()
 			.map(MenuOptionResponseDto::new)
 			.toList();
