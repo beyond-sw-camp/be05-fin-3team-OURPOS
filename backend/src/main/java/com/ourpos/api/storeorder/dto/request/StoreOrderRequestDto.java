@@ -1,5 +1,6 @@
 package com.ourpos.api.storeorder.dto.request;
 
+import com.ourpos.domain.store.Store;
 import com.ourpos.domain.storeorder.StoreComm;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderStatus;
@@ -17,15 +18,19 @@ public class StoreOrderRequestDto {
 
     //order_detail_id, store_order_detail_quantity
     private Long storeCommId;
+    private Long storeId;
     private Integer storeOrderDetailQuantity;
     private StoreOrderStatus storeOrderStatus;
     private Integer storeCommPrice;
+
 
     public StoreOrderRequestDto(StoreOrderDetail storeOrderDetail, StoreComm storeComm) {
         this.storeCommId = storeOrderDetail.getStoreMenu().getId();
         this.storeOrderDetailQuantity = storeOrderDetail.getStoreOrder().getQuantity();
         this.storeOrderStatus = storeOrderDetail.getStoreOrder().getStatus();
         this.storeCommPrice = storeComm.getPrice();
+        this.storeId= storeOrderDetail.getStoreOrder().getStore().getId();
+        //this.storeId = storeOrderDetail.getStoreOrder().getStore().getId();
 
     }
 
