@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StoreRestrictedMenuRepository extends JpaRepository<StoreRestrictedMenu, Long> {
 
-    List<StoreRestrictedMenu> findByStoreId(Long store_id);
+    List<StoreRestrictedMenu> findByStoreId(Long storeId);
 }

@@ -1,5 +1,6 @@
 package com.ourpos.api.customer.dto.request;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ public class CustomerAddressRequestDto {
     private String addressDetail;
     private String zipcode;
 
+    @Builder
     public CustomerAddressRequestDto(String name, String receiverName, String telNo, String addressBase,
         String addressDetail, String zipcode) {
         this.name = name;

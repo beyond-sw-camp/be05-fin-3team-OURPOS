@@ -8,9 +8,9 @@ import com.ourpos.api.order.dto.request.HallOrderRequestDto;
 @Service
 public interface OrderService {
 
-    void createHallOrder(HallOrderRequestDto hallOrderRequestDto);
+    void createHallOrder(String loginId, HallOrderRequestDto hallOrderRequestDto);
 
-    void createDeliveryOrder(DeliveryOrderRequestDto deliveryOrderRequestDto);
+    void createDeliveryOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto);
 
     void cancelHallOrder(Long orderId);
 

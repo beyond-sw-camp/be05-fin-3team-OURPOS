@@ -35,20 +35,28 @@ class OrderServiceImplTest {
 
     @Autowired
     private OrderServiceImpl orderServiceImpl;
+
     @Autowired
     private CustomerRepository customerRepository;
+
     @Autowired
     private StoreRepository storeRepository;
+
     @Autowired
     private MenuRepository menuRepository;
+
     @Autowired
     private OrderQueryService orderQueryService;
+
     @Autowired
     private RecipeRepository recipeRepository;
+
     @Autowired
     private StoreCommRepository storeCommRepository;
+
     @Autowired
     private StoreStockRepository storeStockRepository;
+
     @Autowired
     private StoreRestrictedMenuRepository storeRestrictedMenuRepository;
 
@@ -77,10 +85,10 @@ class OrderServiceImplTest {
         OrderDetailRequestDto orderDetail2 = createOrderDetail(coke, 1,
             List.of(orderOptionGroup1, orderOptionGroup2));
 
-        HallOrderRequestDto hallOrder = createHallOrder(customer, store, List.of(orderDetail1, orderDetail2));
+        HallOrderRequestDto hallOrder = createHallOrder(store, List.of(orderDetail1, orderDetail2));
 
         // when
-        orderServiceImpl.createHallOrder(hallOrder);
+        orderServiceImpl.createHallOrder(customer.getLoginId(), hallOrder);
 
         // then
         assertThat(storeStock.getQuantity()).isEqualTo(5);
@@ -99,7 +107,7 @@ class OrderServiceImplTest {
         StoreComm pt = createStoreComm();
         createRecipe(pt, hamburger, 2);
         createRecipe(pt, coke, 1);
-        StoreStock storeStock = createStoreStock(store, pt, 1);
+        createStoreStock(store, pt, 1);
 
         OrderOptionRequestDto orderOption1 = createOrderOption();
         OrderOptionRequestDto orderOption2 = createOrderOption();
@@ -112,10 +120,13 @@ class OrderServiceImplTest {
             List.of(orderOptionGroup1, orderOptionGroup2));
 
         // when
-        HallOrderRequestDto hallOrder = createHallOrder(customer, store, List.of(orderDetail1, orderDetail2));
+        HallOrderRequestDto hallOrder = createHallOrder(store, List.of(orderDetail1, orderDetail2));
+        String loginId = customer.getLoginId();
 
         // then
-        assertThatThrownBy(() -> orderServiceImpl.createHallOrder(hallOrder))
+        assertThatThrownBy(() -> {
+            orderServiceImpl.createHallOrder(loginId, hallOrder);
+        })
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("재고가 부족합니다.");
 
@@ -153,10 +164,9 @@ class OrderServiceImplTest {
         return storeStock;
     }
 
-    private static HallOrderRequestDto createHallOrder(Customer customer, Store store,
+    private static HallOrderRequestDto createHallOrder(Store store,
         List<OrderDetailRequestDto> orderDetailRequestDto) {
         HallOrderRequestDto hallOrderRequestDto = new HallOrderRequestDto();
-        hallOrderRequestDto.setCustomerId(customer.getId());
         hallOrderRequestDto.setStoreId(store.getId());
         hallOrderRequestDto.setOrderTakeoutYn(false);
         hallOrderRequestDto.setOrderDetailDtos(orderDetailRequestDto);
