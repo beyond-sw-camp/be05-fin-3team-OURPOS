@@ -1,6 +1,6 @@
-INSERT INTO customer (customer_login_id, customer_name, customer_nickname, customer_gender, customer_age_range,
-                      customer_phone, customer_role)
-VALUES ('test', '테스트', '닉네임', 'M', '20', '010-1234-1234', 'ROLE_USER');
+--INSERT INTO customer (customer_login_id, customer_name, customer_nickname, customer_gender, customer_age_range,
+--                      customer_phone, customer_role)
+--VALUES ('test', '테스트', '닉네임', 'M', '20', '010-1234-1234', 'ROLE_USER');
 --
 INSERT INTO store_address(store_address_detail, store_address_base, store_address_zipcode)
 VALUES ('서울시 강남구 역삼동 123-4', '서울시 강남구 역삼동', '123-4');
@@ -23,29 +23,6 @@ VALUES ('MILKSHAKES');
 INSERT INTO category(category_name)
 VALUES ('DRINKS');
 --
-INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, menu_description, menu_name,
-                  menu_picture_url)
-VALUES (NULL, FALSE, 9900, 1, '햄버거', '햄버거', 'https://www.google.com');
---
-INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, menu_description, menu_name,
-                  menu_picture_url)
-VALUES (NULL, FALSE, 10900, 1, '치즈버거', '치즈버거', 'https://www.google.com');
-
-INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, menu_description, menu_name,
-                  menu_picture_url)
-VALUES (NULL, FALSE, 11900, 1, '더블버거', '더블버거', 'https://www.google.com');
-
-INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, menu_description, menu_name,
-                  menu_picture_url)
-VALUES (NULL, FALSE, 12900, 1, '치킨버거', '치킨버거', 'https://www.google.com');
-
-INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, menu_description, menu_name,
-                  menu_picture_url)
-VALUES (NULL, FALSE, 13900, 1, '치킨치즈버거', '치킨치즈버거', 'https://www.google.com');
-
-INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id, menu_description, menu_name,
-                  menu_picture_url)
-VALUES (NULL, FALSE, 14900, 1, '치킨더블버거', '치킨더블버거', 'https://www.google.com');
 --
 --
 INSERT INTO menu_option_group (menu_option_group_name, category_id)
@@ -55,17 +32,48 @@ INSERT INTO menu_option_group (menu_option_group_name, category_id)
 VALUES ('사이즈', 1);
 --
 INSERT INTO menu_option_group (menu_option_group_name, category_id)
-VALUES ('밀크쉐이크 토핑', 2);
+VALUES ('밀크쉐이크 토핑', 3);
 --
 INSERT INTO menu_option_group (menu_option_group_name, category_id)
-VALUES ('FRIES 사이즈', 3);
+VALUES ('FRIES 사이즈', 2);
 --
+
+
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
+                   menu_description, menu_name, menu_picture_url)
+ VALUES (NULL, FALSE, 9900, 1,  '햄버거', '햄버거', 'https://www.google.com');
+
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
+                   menu_description, menu_name, menu_picture_url)
+ VALUES (NULL, FALSE, 11400, 1,  '치즈버거', '치즈버거', 'https://www.google.com');
+
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
+                   menu_description, menu_name, menu_picture_url)
+ VALUES (NULL, FALSE, 12400, 1,  '베이컨 버거', '베이컨 버거', 'https://www.google.com');
+
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
+                   menu_description, menu_name, menu_picture_url)
+ VALUES (NULL, FALSE, 13900, 1,  '베이컨 치즈버거', '베이컨 치즈버거', 'https://www.google.com');
+
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
+                   menu_description, menu_name, menu_picture_url)
+ VALUES (NULL, FALSE, 6900, 2,  '감자튀김', 'FRIES', 'https://www.google.com');
+
+ INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
+                   menu_description, menu_name, menu_picture_url)
+ VALUES (NULL, FALSE, 6900, 3,  '밀크쉐이크', '파이브가이즈 쉐이크', 'https://www.google.com');
+
+
+
+
+
+
 INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
 VALUES ('올 더 웨이', 0, 1);
---
+
 INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
 VALUES ('마요네즈', 0, 1);
---
+
 INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
 VALUES ('케첩', 0, 1);
 
