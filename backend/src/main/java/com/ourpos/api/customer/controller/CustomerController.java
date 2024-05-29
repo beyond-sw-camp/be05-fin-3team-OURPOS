@@ -2,6 +2,8 @@ package com.ourpos.api.customer.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,7 +60,7 @@ public class CustomerController {
 
     // 마이페이지-개인정보 변경(서브주소 추가)
     @PostMapping("/addresses")
-    public Result<Void> addAddress(@RequestBody CustomerAddressRequestDto customerAddressRequestDto) {
+    public Result<Void> addAddress(@Valid @RequestBody CustomerAddressRequestDto customerAddressRequestDto) {
         String loginId = getLoginCustomerLoginId();
         log.info("서브주소 추가: {}", loginId);
 
