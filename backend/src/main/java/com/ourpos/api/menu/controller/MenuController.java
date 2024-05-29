@@ -24,6 +24,7 @@ import com.ourpos.api.menu.dto.response.MenuResponseDto;
 import com.ourpos.api.menu.service.MenuQueryService;
 import com.ourpos.api.menu.service.MenuServiceImpl;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,7 +55,7 @@ public class MenuController {
 	}
 
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-	public Result<Void> addMenu(@RequestPart MenuRequestDto menuRequestDto,
+	public Result<Void> addMenu(@RequestPart @Valid MenuRequestDto menuRequestDto,
 		@RequestPart(required = false) MultipartFile multipartFile) {
 		log.info("MenuController.addMenu() called");
 
@@ -63,7 +64,7 @@ public class MenuController {
 	}
 
 	@PutMapping("/{menuId}")
-	public Result<Void> updateMenu(@PathVariable Long menuId, @RequestBody MenuUpdateDto menuUpdateDto) {
+	public Result<Void> updateMenu(@PathVariable Long menuId, @RequestBody @Valid MenuUpdateDto menuUpdateDto) {
 		log.info("MenuController.updateMenu() called");
 
 		menuServiceImpl.updateMenu(menuId, menuUpdateDto);

@@ -24,6 +24,7 @@ import com.ourpos.api.category.dto.response.CategoryResponseDto;
 import com.ourpos.api.category.service.CategoryQueryService;
 import com.ourpos.api.category.service.CategoryServiceImpl;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,7 +55,7 @@ public class CategoryController {
 	}
 
 	@PostMapping("/add/category")
-	public Result<Void> addCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
+	public Result<Void> addCategory(@RequestBody @Valid CategoryRequestDto categoryRequestDto) {
 		log.info("CategoryController.addCategory() called");
 
 		categoryServiceImpl.addCategory(categoryRequestDto);
@@ -63,7 +64,7 @@ public class CategoryController {
 	}
 
 	@PostMapping("/add/menuOptionGroup")
-	public Result<Void> addMenuOptionGroup(@RequestBody MenuOptionGroupRequestDto menuOptionGroupRequestDto) {
+	public Result<Void> addMenuOptionGroup(@RequestBody @Valid MenuOptionGroupRequestDto menuOptionGroupRequestDto) {
 		log.info("CategoryController.addMenuOptionGroup() called");
 
 		categoryServiceImpl.addMenuOptionGroup(menuOptionGroupRequestDto);
@@ -72,7 +73,7 @@ public class CategoryController {
 	}
 
 	@PostMapping("/add/menuOption")
-	public Result<Void> addMenuOption(@RequestBody MenuOptionRequestDto menuOptionRequestDto) {
+	public Result<Void> addMenuOption(@RequestBody @Valid MenuOptionRequestDto menuOptionRequestDto) {
 		log.info("CategoryController.addMenuOption() called");
 
 		categoryServiceImpl.addMenuOption(menuOptionRequestDto);
@@ -82,7 +83,7 @@ public class CategoryController {
 
 	@PutMapping("update/category/{categoryId}")
 	public Result<Void> updateCategory(@PathVariable Long categoryId,
-		@RequestBody CategoryUpdateDto categoryUpdateDto) {
+		@RequestBody @Valid CategoryUpdateDto categoryUpdateDto) {
 		log.info("CategoryController.updateCategory() called");
 
 		categoryServiceImpl.updateCategory(categoryId, categoryUpdateDto);
@@ -91,7 +92,7 @@ public class CategoryController {
 
 	@PutMapping("update/menuOptionGroup/{menuOptionGroupId}")
 	public Result<Void> updateMenuOptionGroup(@PathVariable Long menuOptionGroupId,
-		@RequestBody MenuOptionGroupUpdateDto menuOptionGroupUpdateDto) {
+		@RequestBody @Valid MenuOptionGroupUpdateDto menuOptionGroupUpdateDto) {
 		log.info("CategoryController.updateMenuOptionGroup() called");
 		log.info(menuOptionGroupUpdateDto.getName());
 		categoryServiceImpl.updateMenuOptionGroup(menuOptionGroupId, menuOptionGroupUpdateDto);
@@ -100,7 +101,7 @@ public class CategoryController {
 
 	@PutMapping("update/menuOption/{menuOptionId}")
 	public Result<Void> updateMenuOption(@PathVariable Long menuOptionId,
-		@RequestBody MenuOptionUpdateDto menuOptionUpdateDto) {
+		@RequestBody @Valid MenuOptionUpdateDto menuOptionUpdateDto) {
 		log.info("CategoryController.updateMenuOption() called");
 		categoryServiceImpl.updateMenuOption(menuOptionId, menuOptionUpdateDto);
 		return new Result<>(HttpStatus.OK.value(), "메뉴 옵션 그룹 수정 성공", null);
