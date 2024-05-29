@@ -30,7 +30,7 @@ public class StoreOrderRequestDto {
         this.storeOrderStatus = storeOrderDetail.getStoreOrder().getStatus();
         this.storeCommPrice = storeComm.getPrice();
         this.storeId= storeOrderDetail.getStoreOrder().getStore().getId();
-        //this.storeId = storeOrderDetail.getStoreOrder().getStore().getId();
+
 
     }
 
