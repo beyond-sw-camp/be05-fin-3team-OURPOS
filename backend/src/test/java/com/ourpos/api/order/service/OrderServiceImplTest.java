@@ -35,20 +35,28 @@ class OrderServiceImplTest {
 
     @Autowired
     private OrderServiceImpl orderServiceImpl;
+
     @Autowired
     private CustomerRepository customerRepository;
+
     @Autowired
     private StoreRepository storeRepository;
+
     @Autowired
     private MenuRepository menuRepository;
+
     @Autowired
     private OrderQueryService orderQueryService;
+
     @Autowired
     private RecipeRepository recipeRepository;
+
     @Autowired
     private StoreCommRepository storeCommRepository;
+
     @Autowired
     private StoreStockRepository storeStockRepository;
+
     @Autowired
     private StoreRestrictedMenuRepository storeRestrictedMenuRepository;
 

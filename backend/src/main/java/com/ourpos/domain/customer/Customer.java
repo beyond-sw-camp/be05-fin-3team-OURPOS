@@ -71,12 +71,12 @@ public class Customer extends BaseEntity {
         this.ageRange = ageRange;
         this.profileImage = profileImage;
         for (CustomerAddress customerAddress : customerAddresses) {
-            addCustomerAddress(customerAddress);
+            addAddress(customerAddress);
         }
     }
 
     // 연관관계 편의 메서드
-    public void addCustomerAddress(CustomerAddress customerAddress) {
+    private void addCustomerAddress(CustomerAddress customerAddress) {
         customerAddresses.add(customerAddress);
         customerAddress.setCustomer(this);
     }

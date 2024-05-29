@@ -54,9 +54,8 @@ public class CustomerAddress {
     private Boolean defaultYn;
 
     @Builder
-    private CustomerAddress(Customer customer, String name, String receiverName, String telNo, String addressBase,
+    private CustomerAddress(String name, String receiverName, String telNo, String addressBase,
         String addressDetail, String zipcode) {
-        this.customer = customer;
         this.name = name;
         this.receiverName = receiverName;
         this.telNo = telNo;

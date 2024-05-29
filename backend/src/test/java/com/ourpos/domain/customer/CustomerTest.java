@@ -27,7 +27,7 @@ class CustomerTest {
     void addAddress() {
         // given
         Customer customer = createCustomer("홍길동", "010-1234-5678", "M", "30-39", "profile.jpg");
-        CustomerAddress customerAddress = createCustomerAddress(customer, "집", "경기도 군포시 당정동 금정로 1번길", "아파트 1층 101호",
+        CustomerAddress customerAddress = createCustomerAddress("집", "경기도 군포시 당정동 금정로 1번길", "아파트 1층 101호",
             "홍길동", "02-1234-5678");
 
         // when
@@ -47,16 +47,16 @@ class CustomerTest {
         // given
         Customer customer = createCustomer("홍길동", "010-1234-5678", "M", "30-39", "profile1.jpg");
 
-        CustomerAddress customerAddress1 = createCustomerAddress(customer, "집", "경기도 군포시 당정동 금정로 1번길",
+        CustomerAddress customerAddress1 = createCustomerAddress("집", "경기도 군포시 당정동 금정로 1번길",
             "아파트 1층 101호", "홍길순", "02-1234-5678");
 
-        CustomerAddress customerAddress2 = createCustomerAddress(customer, "회사", "서울시 강남구 강남로 1번길",
+        CustomerAddress customerAddress2 = createCustomerAddress("회사", "서울시 강남구 강남로 1번길",
             "아파트 2층 201호", "홍길동", "02-1234-5678");
 
-        CustomerAddress customerAddress3 = createCustomerAddress(customer, "학교", "서울시 강북구 강북로 1번길",
+        CustomerAddress customerAddress3 = createCustomerAddress("학교", "서울시 강북구 강북로 1번길",
             "아파트 3층 301호", "홍길동", "02-1234-5678");
 
-        CustomerAddress customerAddress4 = createCustomerAddress(customer, "기타", "서울시 강동구 강동로 1번길",
+        CustomerAddress customerAddress4 = createCustomerAddress("기타", "서울시 강동구 강동로 1번길",
             "아파트 4층 401호", "홍길동", "02-1234-5678");
 
         // when
@@ -76,7 +76,7 @@ class CustomerTest {
         // given
         Customer customer = createCustomer("홍길자", "010-1234-567", "F", "20-29", "profile.jpg");
 
-        CustomerAddress customerAddress = createCustomerAddress(customer, "집", "경기도 군포시 당정동 금정로 1번길",
+        CustomerAddress customerAddress = createCustomerAddress("집", "경기도 군포시 당정동 금정로 1번길",
             "아파트 1층 101호", "홍길동", "010-1234-5678");
 
         customer.addAddress(customerAddress);
@@ -97,7 +97,7 @@ class CustomerTest {
     void customerAddressDefaultYn() {
         // given
         Customer customer = createCustomer("홍길동", "010-1234-5678", "M", "30-39", "profile.jpg");
-        CustomerAddress customerAddress = createCustomerAddress(customer, "집", "경기도 군포시 당정동 금정로 1번길", "아파트 1층 101호",
+        CustomerAddress customerAddress = createCustomerAddress("집", "경기도 군포시 당정동 금정로 1번길", "아파트 1층 101호",
             "홍길동", "02-1234-5678");
 
         // when
@@ -115,9 +115,9 @@ class CustomerTest {
         // given
         Customer customer = createCustomer("홍길동", "010-1234-5678", "M", "30-39", "profile.jpg");
 
-        CustomerAddress customerAddress1 = createCustomerAddress(customer, "집", "경기도 군포시 당정동 금정로 1번길", "아파트 1층 101호",
+        CustomerAddress customerAddress1 = createCustomerAddress("집", "경기도 군포시 당정동 금정로 1번길", "아파트 1층 101호",
             "홍길동", "02-1234-5678");
-        CustomerAddress customerAddress2 = createCustomerAddress(customer, "회사", "서울시 강남구 강남로 1번길", "아파트 2층 201호",
+        CustomerAddress customerAddress2 = createCustomerAddress("회사", "서울시 강남구 강남로 1번길", "아파트 2층 201호",
             "홍길동", "02-1234-5678");
 
         // when
@@ -175,11 +175,11 @@ class CustomerTest {
         // given
         Customer customer = createCustomer("홍길동", "010-1234-5678", "M", "30-39", "profile.jpg");
 
-        CustomerAddress customerAddress1 = createCustomerAddress(customer, "집", "경기도 군포시 당정동 금정로 1번길", "아파트 1층 101호",
+        CustomerAddress customerAddress1 = createCustomerAddress("집", "경기도 군포시 당정동 금정로 1번길", "아파트 1층 101호",
             "홍길동", "02-1234-5678");
-        CustomerAddress customerAddress2 = createCustomerAddress(customer, "회사", "서울시 강남구 강남로 1번길", "아파트 2층 201호",
+        CustomerAddress customerAddress2 = createCustomerAddress("회사", "서울시 강남구 강남로 1번길", "아파트 2층 201호",
             "홍길동", "02-1234-5678");
-        CustomerAddress customerAddress3 = createCustomerAddress(customer, "학교", "서울시 강북구 강북로 1번길", "아파트 3층 301호",
+        CustomerAddress customerAddress3 = createCustomerAddress("학교", "서울시 강북구 강북로 1번길", "아파트 3층 301호",
             "홍길동", "02-1234-5678");
 
         // when
@@ -204,8 +204,8 @@ class CustomerTest {
         // given
         Customer customer = createCustomer("홍길동", "010-1234-5678", "M", "30-39", "profile.jpg");
 
-        CustomerAddress customerAddress = createCustomerAddress(customer, "집", "경기도 군포시 당정동 금정로 1번길", "아파트 1층 101호",
-            "홍길동", "02-1234-5678");
+        CustomerAddress customerAddress = createCustomerAddress("집", "경기도 군포시 당정동 금정로 1번길", "아파트 1층 101호", "홍길동",
+            "02-1234-5678");
 
         // when
         customer.addAddress(customerAddress);
@@ -216,10 +216,9 @@ class CustomerTest {
             .hasMessage("주소가 1개일 때는 기본 주소를 변경할 수 없습니다.");
     }
 
-    private CustomerAddress createCustomerAddress(Customer customer, String name, String addressBase,
-        String addressDetail, String receiverName, String telNo) {
+    private CustomerAddress createCustomerAddress(String name, String addressBase, String addressDetail,
+        String receiverName, String telNo) {
         return CustomerAddress.builder()
-            .customer(customer)
             .name(name)
             .addressBase(addressBase)
             .addressDetail(addressDetail)

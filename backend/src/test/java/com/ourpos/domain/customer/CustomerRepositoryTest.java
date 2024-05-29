@@ -17,32 +17,31 @@ class CustomerRepositoryTest {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @DisplayName("고객은 로그인 ID로 조회할 수 있다.")
+    @Test
+    void findByLoginId() {
+        // given
+        String loginId = "로그인 ID";
+        Customer customer = createCustomer(loginId);
+
+        // when
+        customerRepository.save(customer);
+        Customer findCustomer = customerRepository.findByLoginId(loginId).get();
+
+        // then
+        assertThat(findCustomer).isEqualTo(customer);
+    }
+
     @DisplayName("고객은 회원가입을 할 수 있다.")
     @Test
     void register() {
-        CustomerAddress customerAddress1 = CustomerAddress.builder()
-            .name("집")
-            .receiverName("홍길동")
-            .telNo("02-1234-5678")
-            .addressBase("경기도 군포시 당정동 금정로 1번길")
-            .addressDetail("아파트 1층 101호")
-            .build();
+        CustomerAddress customerAddress1 = createCustomerAddress("집", "경기도 군포시 당정동 금정로 1번길",
+            "아파트 1층 101호");
 
-        CustomerAddress customerAddress2 = CustomerAddress.builder()
-            .name("회사")
-            .receiverName("홍길동")
-            .telNo("02-1234-5678")
-            .addressBase("서울시 강남구 강남로 1번길")
-            .addressDetail("아파트 2층 201호")
-            .build();
+        CustomerAddress customerAddress2 = createCustomerAddress("회사", "서울시 강남구 강남로 1번길",
+            "아파트 2층 201호");
 
-        Customer customer = Customer.builder()
-            .loginId("로그인 ID")
-            .name("홍길동")
-            .phone("010-1234-5678")
-            .role(Role.ROLE_USER)
-            .nickname("닉네임")
-            .build();
+        Customer customer = createCustomer("로그인 ID");
 
         Customer admin = Customer.builder()
             .loginId("로그인 ID2")
@@ -71,21 +70,11 @@ class CustomerRepositoryTest {
     @Test
     void saveCustomerAddress() {
         // given
-        CustomerAddress customerAddress1 = CustomerAddress.builder()
-            .name("집")
-            .receiverName("홍길동")
-            .telNo("02-1234-5678")
-            .addressBase("경기도 군포시 당정동 금정로 1번길")
-            .addressDetail("아파트 1층 101호")
-            .build();
+        CustomerAddress customerAddress1 = createCustomerAddress("집", "경기도 군포시 당정동 금정로 1번길",
+            "아파트 1층 101호");
 
-        CustomerAddress customerAddress2 = CustomerAddress.builder()
-            .name("회사")
-            .receiverName("홍길동")
-            .telNo("02-1234-5678")
-            .addressBase("서울시 강남구 강남로 1번길")
-            .addressDetail("아파트 2층 201호")
-            .build();
+        CustomerAddress customerAddress2 = createCustomerAddress("회사", "서울시 강남구 강남로 1번길",
+            "아파트 2층 201호");
 
         Customer customer = Customer.builder()
             .loginId("로그인 ID")
@@ -102,5 +91,25 @@ class CustomerRepositoryTest {
 
         // then
         assertThat(customer.getCustomerAddresses()).hasSize(2);
+    }
+
+    private CustomerAddress createCustomerAddress(String name, String addressBase, String addressDetail) {
+        return CustomerAddress.builder()
+            .name(name)
+            .receiverName("홍길동")
+            .telNo("02-1234-5678")
+            .addressBase(addressBase)
+            .addressDetail(addressDetail)
+            .build();
+    }
+
+    private Customer createCustomer(String loginId) {
+        return Customer.builder()
+            .loginId(loginId)
+            .name("홍길동")
+            .phone("010-1234-5678")
+            .role(Role.ROLE_USER)
+            .nickname("닉네임")
+            .build();
     }
 }

@@ -4,12 +4,15 @@ import com.ourpos.domain.customer.CustomerAddress;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 public class CustomerAddressResponseDto {
 
     private Long customerAddressId;
+    private String name;
     private String receiverName;
     private String telNo;
     private String addressBase;
@@ -19,6 +22,7 @@ public class CustomerAddressResponseDto {
 
     public CustomerAddressResponseDto(CustomerAddress customerAddress) {
         this.customerAddressId = customerAddress.getId();
+        this.name = customerAddress.getName();
         this.receiverName = customerAddress.getReceiverName();
         this.telNo = customerAddress.getTelNo();
         this.addressBase = customerAddress.getAddressBase();

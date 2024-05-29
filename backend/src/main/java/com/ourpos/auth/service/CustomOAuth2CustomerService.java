@@ -116,7 +116,6 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
             return;
         }
         CustomerAddress customerAddress = CustomerAddress.builder()
-            .customer(customer)
             .name(customerAddressLoginDto.getName())
             .receiverName(customerAddressLoginDto.getReceiverName())
             .telNo(customerAddressLoginDto.getReceiverTelNo())
@@ -131,7 +130,6 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
     private void saveKakaoAddress(String accessToken, Customer customer) {
         CustomerAddressLoginDto customerAddressLoginDto = kakaoService.getKakaoAddress(accessToken);
         CustomerAddress customerAddress = CustomerAddress.builder()
-            .customer(customer)
             .name(customerAddressLoginDto.getName())
             .receiverName(customerAddressLoginDto.getReceiverName())
             .telNo(customerAddressLoginDto.getReceiverTelNo())

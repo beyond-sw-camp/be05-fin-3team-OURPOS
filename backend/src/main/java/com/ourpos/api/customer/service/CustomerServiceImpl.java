@@ -33,7 +33,7 @@ public class CustomerServiceImpl {
     }
 
     //로그인 고객의 주소 조회
-    public List<CustomerAddressResponseDto> findLoginCustomerAddress(String loginId) {
+    public List<CustomerAddressResponseDto> findLoginCustomerAddresses(String loginId) {
         Customer customer = customerRepository.findByLoginId(loginId)
             .orElseThrow(() -> new IllegalArgumentException("Customer not found. Id: " + loginId));
 
@@ -50,10 +50,8 @@ public class CustomerServiceImpl {
         Customer customer = customerRepository.findByLoginId(loginId).orElseThrow(
             () -> new IllegalArgumentException("Customer not found. loginId: " + loginId));
 
-        CustomerAddress customerAddress = createCustomerAddress(customerAddressRequestDto, customer);
+        CustomerAddress customerAddress = createCustomerAddress(customerAddressRequestDto);
         customer.addAddress(customerAddress);
-
-        customerRepository.save(customer);
     }
 
     //개인정보 변경(주소 변경)
@@ -71,15 +69,16 @@ public class CustomerServiceImpl {
     @Transactional
     public void deleteAddress(Long addressId) {
         // 주소 찾아서 삭제하는 로직
-        CustomerAddress address = customerAddressRepository.findById(addressId)
+        CustomerAddress customerAddress = customerAddressRepository.findById(addressId)
             .orElseThrow(() -> new IllegalArgumentException("Address not found. Id: " + addressId));
 
-        if (Boolean.TRUE.equals(address.getDefaultYn())) {
+        if (Boolean.TRUE.equals(customerAddress.getDefaultYn())) {
             throw new IllegalStateException("기본 주소는 삭제할 수 없습니다.");
         }
 
         // 주소 삭제
-        customerAddressRepository.delete(address);
+        customerAddress.setCustomer(null);
+        customerAddressRepository.delete(customerAddress);
     }
 
     @Transactional
@@ -93,11 +92,9 @@ public class CustomerServiceImpl {
         customer.updateDefaultAddress(customerAddress);
     }
 
-    private CustomerAddress createCustomerAddress(CustomerAddressRequestDto customerAddressRequestDto,
-        Customer customer) {
+    private CustomerAddress createCustomerAddress(CustomerAddressRequestDto customerAddressRequestDto) {
 
         return CustomerAddress.builder()
-            .customer(customer)
             .name(customerAddressRequestDto.getName())
             .receiverName(customerAddressRequestDto.getReceiverName())
             .telNo(customerAddressRequestDto.getTelNo())

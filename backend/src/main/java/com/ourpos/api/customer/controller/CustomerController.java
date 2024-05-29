@@ -52,7 +52,7 @@ public class CustomerController {
         String loginId = getLoginCustomerLoginId();
         log.info("나의 주소 조회: {}", loginId);
 
-        List<CustomerAddressResponseDto> customerAddresses = customerServiceImpl.findLoginCustomerAddress(loginId);
+        List<CustomerAddressResponseDto> customerAddresses = customerServiceImpl.findLoginCustomerAddresses(loginId);
         return new Result<>(HttpStatus.OK.value(), "나의 주소 조회가 완료되었습니다.", customerAddresses);
     }
 
