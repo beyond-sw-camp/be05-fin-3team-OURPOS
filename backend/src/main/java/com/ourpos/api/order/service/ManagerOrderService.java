@@ -9,6 +9,7 @@ import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 import com.ourpos.api.order.dto.response.MealTimeResponseDto;
 import com.ourpos.api.order.dto.response.MealTypeResponseDto;
+import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 
 @Service
 public interface ManagerOrderService {
@@ -22,6 +23,9 @@ public interface ManagerOrderService {
 
     // 식사 유형에 따른 매출액 비중
     List<MealTypeResponseDto> mealType(Long storeId);
+
+    // 각 메뉴별 주문 비중
+    List<MenuPreferResponseDto> menuPrefer(Long storeId);
 
     // 시간대별 매출 발생 추이
     List<MealTimeResponseDto> mealTime(Long storeId);

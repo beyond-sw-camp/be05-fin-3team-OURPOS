@@ -17,6 +17,7 @@ import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 import com.ourpos.api.order.dto.response.MealTimeResponseDto;
 import com.ourpos.api.order.dto.response.MealTypeResponseDto;
+import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 import com.ourpos.api.order.service.ManagerOrderService;
 import com.ourpos.api.order.service.OrderQueryService;
 import com.ourpos.api.order.service.OrderService;
@@ -161,14 +162,14 @@ public class ManagerOrderController {
         return new Result<>(HttpStatus.OK.value(), "식사 유형 매출액 비율이 확인 되었습니다.", dtos);
     }
 
-    // 각 메뉴별 주문 비중
-    // @GetMapping("orders/menu-prefer")
-    // public Result<Void> menuPrefer(@RequestParam Long storeId){
-    //     log.info("각 메뉴별 주문 비중 컨트롤러 {} ", storeId);
-    //     managerOrderService.
-    //
-    //     return new Result<>(HttpStatus.OK.value(), "각 메뉴별 주문 비중",  null);
-    // }
+    //각 메뉴별 주문 비중
+    @GetMapping("orders/menu-prefer")
+    public Result<List<MenuPreferResponseDto>> menuPrefer(@RequestParam Long storeId) {
+        log.info("각 메뉴별 주문 비중 컨트롤러 {} ", storeId);
+        List<MenuPreferResponseDto> dtos = managerOrderService.menuPrefer(storeId);
+
+        return new Result<>(HttpStatus.OK.value(), "각 메뉴별 주문 비중", dtos);
+    }
 
     // 시간대별 매출 발생 추이
     @GetMapping("orders/meal-time")

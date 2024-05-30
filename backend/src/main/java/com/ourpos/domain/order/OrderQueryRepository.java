@@ -3,6 +3,7 @@ package com.ourpos.domain.order;
 import static com.ourpos.domain.order.QDeliveryOrder.*;
 import static com.ourpos.domain.order.QHallOrder.*;
 import static com.ourpos.domain.order.QOrder.*;
+import static com.ourpos.domain.orderdetail.QOrderDetail.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
 import com.ourpos.api.order.dto.response.MealTimeResponseDto;
 import com.ourpos.api.order.dto.response.MealTypeResponseDto;
+import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -198,4 +200,24 @@ public class OrderQueryRepository {
             .where(order.store.id.eq(storeId))
             .fetch();
     }
+
+    // 메뉴별 주문 비중 ->
+    public List<MenuPreferResponseDto> menuPrefer(Long storeId) {
+
+        return queryFactory
+            .select(Projections.constructor(MenuPreferResponseDto.class,
+                orderDetail.menu.id,
+                orderDetail.menu.name,
+                orderDetail.menu.category.name,
+                orderDetail.order.countDistinct().as("quantity")))
+            .from(orderDetail)
+            .groupBy(orderDetail.menu.id, orderDetail.menu.name)
+            .join(orderDetail.order)
+            .join(orderDetail.menu)
+            .join(orderDetail.menu.category)
+            .where(orderDetail.order.store.id.eq(storeId))
+            .fetch();
+
+    }
+
 }

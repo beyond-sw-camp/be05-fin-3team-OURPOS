@@ -10,6 +10,7 @@ import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 import com.ourpos.api.order.dto.response.MealTimeResponseDto;
 import com.ourpos.api.order.dto.response.MealTypeResponseDto;
+import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 import com.ourpos.domain.order.DeliveryOrder;
 import com.ourpos.domain.order.HallOrder;
 import com.ourpos.domain.order.OrderQueryRepository;
@@ -66,11 +67,12 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
         return dtos;
     }
 
-    // // 각 메뉴별 주문 비중
-    // public void menuPrefer(Long storeId){
-    //     log.info("각 메뉴별 주문 비중 {}", storeId);
-    //     orderQueryRepository.
-    // }
+    // 각 메뉴별 주문 비중
+    @Override
+    public List<MenuPreferResponseDto> menuPrefer(Long storeId) {
+        log.info("각 메뉴별 주문 비중 {}", storeId);
+        return orderQueryRepository.menuPrefer(storeId);
+    }
 
     // 시간대별 매출 발생 추이
     @Override
