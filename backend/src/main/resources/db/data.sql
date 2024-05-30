@@ -11,31 +11,31 @@ INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time,
 VALUES (FALSE, 10000, NULL, NULL, 1, '22:00', NULL, '10:00', '맛집', '010-1234-1234', 'https://www.google.com');
 --
 --
-INSERT INTO category(category_name)
-VALUES ('BURGERS');
+INSERT INTO category(category_name,category_deleted_yn)
+VALUES ('BURGERS',FALSE);
 --
-INSERT INTO category(category_name)
-VALUES ('FRIES');
+INSERT INTO category(category_name,category_deleted_yn)
+VALUES ('FRIES',FALSE);
 
-INSERT INTO category(category_name)
-VALUES ('MILKSHAKES');
+INSERT INTO category(category_name,category_deleted_yn)
+VALUES ('MILKSHAKES',FALSE);
 --
-INSERT INTO category(category_name)
-VALUES ('DRINKS');
+INSERT INTO category(category_name,category_deleted_yn)
+VALUES ('DRINKS',FALSE);
 --
 --
 --
-INSERT INTO menu_option_group (menu_option_group_name, category_id)
-VALUES ('토핑', 1);
+INSERT INTO menu_option_group (menu_option_group_name, category_id,menu_option_group_deleted_yn)
+VALUES ('토핑', 1,FALSE);
 --
-INSERT INTO menu_option_group (menu_option_group_name, category_id)
-VALUES ('사이즈', 1);
+INSERT INTO menu_option_group (menu_option_group_name, category_id,menu_option_group_deleted_yn)
+VALUES ('사이즈', 1,FALSE);
 --
-INSERT INTO menu_option_group (menu_option_group_name, category_id)
-VALUES ('밀크쉐이크 토핑', 3);
+INSERT INTO menu_option_group (menu_option_group_name, category_id,menu_option_group_deleted_yn)
+VALUES ('밀크쉐이크 토핑', 3,FALSE);
 --
-INSERT INTO menu_option_group (menu_option_group_name, category_id)
-VALUES ('FRIES 사이즈', 2);
+INSERT INTO menu_option_group (menu_option_group_name, category_id,menu_option_group_deleted_yn)
+VALUES ('FRIES 사이즈', 2,FALSE);
 --
 
 
@@ -68,89 +68,89 @@ VALUES ('FRIES 사이즈', 2);
 
 
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('올 더 웨이', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('올 더 웨이', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('마요네즈', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('마요네즈', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('케첩', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('케첩', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('머스타드', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('머스타드', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('양상추', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('양상추', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('피클', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('피클', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('토마토', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('토마토', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('그릴드 어니언', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('그릴드 어니언', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('그릴드 머쉬룸', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('그릴드 머쉬룸', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('랠리시', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('랠리시', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('어니언', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('어니언', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('할라피뇨', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('할라피뇨', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('피망', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('피망', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('스테이크 소스', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('스테이크 소스', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('바비큐 소스', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('바비큐 소스', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('핫소스', 0, 1);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('핫소스', 0, 1,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('보통', 3500, 2);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('보통', 3500, 2,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('리틀', 0, 2);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('리틀', 0, 2,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('초콜릿', 0, 3);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('초콜릿', 0, 3,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('피너 버터', 0, 3);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('피너 버터', 0, 3,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('솔티드 카라멜', 0, 3);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('솔티드 카라멜', 0, 3,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('바나나', 0, 3);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('바나나', 0, 3,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('딸기', 0, 3);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('딸기', 0, 3,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('오레오', 0, 3);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('오레오', 0, 3,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('로투스 비스코프', 0, 3);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('로투스 비스코프', 0, 3,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('베이컨', 0, 3);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('베이컨', 0, 3,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('리틀', 0, 4);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('리틀', 0, 4,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('레귤러', 2000, 4);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('레귤러', 2000, 4,FALSE);
 
-INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id)
-VALUES ('라지', 4000, 4);
+INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id,menu_option_deleted_yn)
+VALUES ('라지', 4000, 4,FALSE);

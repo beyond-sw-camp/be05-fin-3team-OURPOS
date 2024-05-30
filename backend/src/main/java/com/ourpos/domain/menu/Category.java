@@ -1,10 +1,10 @@
 package com.ourpos.domain.menu;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,12 +30,19 @@ public class Category {
 	@Column(name = "category_name")
 	private String name;
 
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	@Column(name = "category_deleted_yn")
+	private Boolean deletedYn;
+
+	@Column(name = "category_deletedDateTime")
+	private LocalDateTime deletedDateTime;
+
+	@OneToMany(mappedBy = "category")
 	private List<MenuOptionGroup> menuOptionGroups = new ArrayList<>();
 
 	@Builder
 	private Category(String name, @Singular List<MenuOptionGroup> menuOptionGroups) {
 		this.name = name;
+		this.deletedYn = false;
 		for (MenuOptionGroup menuOptionGroup : menuOptionGroups) {
 			addMenuOptionGroup(menuOptionGroup);
 		}
@@ -49,6 +56,11 @@ public class Category {
 
 	public void update(String name) {
 		this.name = name;
+	}
+
+	public void delete(LocalDateTime deletedDateTime) {
+		this.deletedYn = true;
+		this.deletedDateTime = deletedDateTime;
 	}
 }
 
