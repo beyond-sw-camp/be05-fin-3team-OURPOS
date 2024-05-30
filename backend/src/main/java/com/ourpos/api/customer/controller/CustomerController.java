@@ -4,6 +4,9 @@ import java.util.List;
 
 import jakarta.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -70,10 +73,11 @@ public class CustomerController {
 
     // 마이페이지-개인정보 변경(주소 변경)
     @PutMapping("/addresses/{addressId}")
-    public Result<Void> updateAddress(@Valid @PathVariable Long addressId, @RequestBody CustomerAddressUpdateDto addressDto) {
-        customerServiceImpl.updateAddress(addressId, addressDto);
+    public Result<Void> updateAddress(@Valid @PathVariable Long addressId,
+        @RequestBody CustomerAddressUpdateDto addressDto) {
         log.info("주소 변경: {}", addressId);
 
+        customerServiceImpl.updateAddress(addressId, addressDto);
         return new Result<>(HttpStatus.OK.value(), "주소 변경이 완료되었습니다.", null);
     }
 
@@ -98,21 +102,21 @@ public class CustomerController {
 
     // 마이페이지 - 내가 주문한 홀/포장 주문 내역 조회
     @GetMapping("/my/orders/hall")
-    public Result<List<HallOrderResponseDto>> getMyOrders() {
+    public Result<Page<HallOrderResponseDto>> getMyOrders(@PageableDefault(size = 10) Pageable pageable) {
         String loginId = getLoginCustomerLoginId();
         log.info("나의 주문 내역 조회: {}", loginId);
 
-        List<HallOrderResponseDto> hallOrders = orderQueryService.findHallOrderByLoginId(loginId);
+        Page<HallOrderResponseDto> hallOrders = orderQueryService.findHallOrderByLoginId(loginId, pageable);
         return new Result<>(HttpStatus.OK.value(), "나의 주문 내역 조회가 완료되었습니다.", hallOrders);
     }
 
     // 마이페이지 - 내가 주문한 배달 주문 내역 조회
     @GetMapping("/my/orders/delivery")
-    public Result<List<DeliveryOrderResponseDto>> getMyDeliveryOrders() {
+    public Result<Page<DeliveryOrderResponseDto>> getMyDeliveryOrders(@PageableDefault(size = 10) Pageable pageable) {
         String loginId = getLoginCustomerLoginId();
         log.info("나의 배달 주문 내역 조회: {}", loginId);
 
-        List<DeliveryOrderResponseDto> deliveryOrders = orderQueryService.findDeliveryOrderByLoginId(loginId);
+        Page<DeliveryOrderResponseDto> deliveryOrders = orderQueryService.findDeliveryOrderByLoginId(loginId, pageable);
         return new Result<>(HttpStatus.OK.value(), "나의 배달 주문 내역 조회가 완료되었습니다.", deliveryOrders);
     }
 
