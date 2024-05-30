@@ -1,8 +1,10 @@
 package com.ourpos.api;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class Result<T> {
 
     private Integer code;
