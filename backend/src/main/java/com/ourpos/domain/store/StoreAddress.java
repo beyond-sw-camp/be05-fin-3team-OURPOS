@@ -24,7 +24,7 @@ public class StoreAddress {
     private Long id;
 
     @Column(name = "store_address_base")
-    private String addressSi;
+    private String addressBase;
 
     @Column(name = "store_address_detail")
     private String addressDetail;
@@ -32,10 +32,18 @@ public class StoreAddress {
     @Column(name = "store_address_zipcode")
     private String zipcode;
 
+    @Column(name = "store_address_latitude")
+    private Double latitude;
+
+    @Column(name = "store_address_longitude")
+    private Double longitude;
+
     @Builder
-    private StoreAddress(String addressSi, String addressDetail, String zipcode) {
-        this.addressSi = addressSi;
+    private StoreAddress(String addressBase, String addressDetail, String zipcode, Double latitude, Double longitude) {
+        this.addressBase = addressBase;
         this.addressDetail = addressDetail;
         this.zipcode = zipcode;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }

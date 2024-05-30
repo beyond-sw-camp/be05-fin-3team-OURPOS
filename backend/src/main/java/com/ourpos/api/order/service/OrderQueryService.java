@@ -1,7 +1,7 @@
 package com.ourpos.api.order.service;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,19 +32,15 @@ public class OrderQueryService {
         return new DeliveryOrderResponseDto(deliveryOrder);
     }
 
-    public List<HallOrderResponseDto> findHallOrderByLoginId(String loginId) {
-        List<HallOrder> hallOrders = orderQueryRepository.findOneHallOrderByLoginId(loginId);
+    public Page<HallOrderResponseDto> findHallOrderByLoginId(String loginId, Pageable pageable) {
+        Page<HallOrder> hallOrders = orderQueryRepository.findOneHallOrderByLoginId(loginId, pageable);
 
-        return hallOrders.stream()
-            .map(HallOrderResponseDto::new)
-            .toList();
+        return hallOrders.map(HallOrderResponseDto::new);
     }
 
-    public List<DeliveryOrderResponseDto> findDeliveryOrderByLoginId(String loginId) {
-        List<DeliveryOrder> deliveryOrders = orderQueryRepository.findOneDeliveryOrderByLoginId(loginId);
+    public Page<DeliveryOrderResponseDto> findDeliveryOrderByLoginId(String loginId, Pageable pageable) {
+        Page<DeliveryOrder> deliveryOrders = orderQueryRepository.findOneDeliveryOrderByLoginId(loginId, pageable);
 
-        return deliveryOrders.stream()
-            .map(DeliveryOrderResponseDto::new)
-            .toList();
+        return deliveryOrders.map(DeliveryOrderResponseDto::new);
     }
 }
