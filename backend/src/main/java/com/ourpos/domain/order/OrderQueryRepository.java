@@ -7,10 +7,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +41,7 @@ public class OrderQueryRepository {
     }
 
     // 상태 홀 주문 확인
-    public List<HallOrder> findHallOrder(Long storeId, String status) {
+    public Page<HallOrder> findHallOrder(Long storeId, String status, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(hallOrder.store.id.eq(storeId));
 
@@ -50,12 +54,23 @@ public class OrderQueryRepository {
             }
         }
 
-        return queryFactory
+        List<HallOrder> content = queryFactory
             .selectFrom(hallOrder)
             .join(hallOrder.customer).fetchJoin()
             .join(hallOrder.store).fetchJoin()
             .where(builder)
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
             .fetch();
+
+        // count query
+        JPAQuery<HallOrder> countQuery = queryFactory
+            .selectFrom(hallOrder)
+            .join(hallOrder.customer).fetchJoin()
+            .join(hallOrder.store).fetchJoin()
+            .where(builder);
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
     public Optional<HallOrder> findOneHallOrder(Long orderId) {
@@ -87,7 +102,7 @@ public class OrderQueryRepository {
     }
 
     // 상태에 따른 배달 목록 확인
-    public List<DeliveryOrder> findDeliveryOrder(Long storeId, String status) {
+    public Page<DeliveryOrder> findDeliveryOrder(Long storeId, String status, Pageable pageable) {
 
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(deliveryOrder.store.id.eq(storeId));
@@ -101,13 +116,25 @@ public class OrderQueryRepository {
             }
         }
 
-        return queryFactory
+        List<DeliveryOrder> content = queryFactory
             .selectFrom(deliveryOrder)
             .join(deliveryOrder.customer).fetchJoin()
             .join(deliveryOrder.store).fetchJoin()
             .join(deliveryOrder.orderAddress).fetchJoin()
             .where(builder)
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
             .fetch();
+
+        // count query
+        JPAQuery<DeliveryOrder> countQuery = queryFactory
+            .selectFrom(deliveryOrder)
+            .join(deliveryOrder.customer).fetchJoin()
+            .join(deliveryOrder.store).fetchJoin()
+            .join(deliveryOrder.orderAddress).fetchJoin()
+            .where(builder);
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
     public List<HallOrder> findOneHallOrderByLoginId(String loginId) {
