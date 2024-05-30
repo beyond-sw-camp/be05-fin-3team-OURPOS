@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
+import com.ourpos.api.order.dto.response.MealTimeResponseDto;
 import com.ourpos.api.order.dto.response.MealTypeResponseDto;
 
 @Service
@@ -21,4 +22,7 @@ public interface ManagerOrderService {
 
     // 식사 유형에 따른 매출액 비중
     List<MealTypeResponseDto> mealType(Long storeId);
+
+    // 시간대별 매출 발생 추이
+    List<MealTimeResponseDto> mealTime(Long storeId);
 }

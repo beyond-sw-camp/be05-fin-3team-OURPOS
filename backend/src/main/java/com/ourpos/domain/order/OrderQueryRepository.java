@@ -12,6 +12,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
+import com.ourpos.api.order.dto.response.MealTimeResponseDto;
 import com.ourpos.api.order.dto.response.MealTypeResponseDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
@@ -182,5 +183,19 @@ public class OrderQueryRepository {
         dtos.add(deliveryDto);
 
         return dtos;
+    }
+
+    // 시간대별 매출 발생 추이
+    public List<MealTimeResponseDto> mealTime(Long storeId) {
+
+        return queryFactory
+            .select(Projections.constructor(MealTimeResponseDto.class,
+                order.createdDateTime.hour().as("hour"),
+                order.price.sum().as("total")))
+            .from(order)
+            .groupBy(order.createdDateTime.hour())
+            .join(order.store)
+            .where(order.store.id.eq(storeId))
+            .fetch();
     }
 }

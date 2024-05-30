@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
+import com.ourpos.api.order.dto.response.MealTimeResponseDto;
 import com.ourpos.api.order.dto.response.MealTypeResponseDto;
 import com.ourpos.domain.order.DeliveryOrder;
 import com.ourpos.domain.order.HallOrder;
@@ -51,9 +52,9 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
     public List<CountMonthlyResponseDto> countMonthly(Long storeId) {
         log.info("월 매출 확인 서비스 {}", storeId);
 
-        List<CountMonthlyResponseDto> dto = orderQueryRepository.countMonthly(storeId);
+        List<CountMonthlyResponseDto> dtos = orderQueryRepository.countMonthly(storeId);
 
-        return dto;
+        return dtos;
     }
 
     // 식사 유형에 따른 매출액 비중
@@ -61,7 +62,22 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
     public List<MealTypeResponseDto> mealType(Long storeId) {
         log.info("식사 유형에 따른 매출액 비중 서비스 {} ", storeId);
 
-        List<MealTypeResponseDto> list = orderQueryRepository.mealType(storeId);
-        return list;
+        List<MealTypeResponseDto> dtos = orderQueryRepository.mealType(storeId);
+        return dtos;
+    }
+
+    // // 각 메뉴별 주문 비중
+    // public void menuPrefer(Long storeId){
+    //     log.info("각 메뉴별 주문 비중 {}", storeId);
+    //     orderQueryRepository.
+    // }
+
+    // 시간대별 매출 발생 추이
+    @Override
+    public List<MealTimeResponseDto> mealTime(Long storeId) {
+        log.info("시간대별 매출 발생 추이 {}", storeId);
+        List<MealTimeResponseDto> dtos = orderQueryRepository.mealTime(storeId);
+
+        return dtos;
     }
 }
