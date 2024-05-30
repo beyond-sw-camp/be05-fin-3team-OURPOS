@@ -5,12 +5,14 @@ import static com.ourpos.domain.order.QHallOrder.*;
 import static com.ourpos.domain.order.QOrder.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
 import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
+import com.ourpos.api.order.dto.response.MealTypeResponseDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -151,5 +153,34 @@ public class OrderQueryRepository {
             .join(order.store)
             .where(order.store.id.eq(storeId))
             .fetch();
+    }
+
+    // 식사 유형에 따른 매출액 비중
+    public List<MealTypeResponseDto> mealType(Long storeId) {
+
+        Integer hallTotal = queryFactory
+            .select(hallOrder.price.sum())
+            .from(hallOrder)
+            .join(hallOrder.store)
+            .groupBy(hallOrder.store.id)
+            .where(hallOrder.store.id.eq(storeId))
+            .fetchOne();
+
+        Integer deliveryTotal = queryFactory
+            .select(deliveryOrder.price.sum())
+            .from(deliveryOrder)
+            .join(deliveryOrder.store)
+            .groupBy(deliveryOrder.store.id)
+            .where(deliveryOrder.store.id.eq(storeId))
+            .fetchOne();
+
+        MealTypeResponseDto hallDto = new MealTypeResponseDto("hall", hallTotal);
+        MealTypeResponseDto deliveryDto = new MealTypeResponseDto("delivery", deliveryTotal);
+
+        List<MealTypeResponseDto> dtos = new ArrayList<>();
+        dtos.add(hallDto);
+        dtos.add(deliveryDto);
+
+        return dtos;
     }
 }

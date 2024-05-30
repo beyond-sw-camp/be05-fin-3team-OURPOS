@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
+import com.ourpos.api.order.dto.response.MealTypeResponseDto;
 import com.ourpos.domain.order.DeliveryOrder;
 import com.ourpos.domain.order.HallOrder;
 import com.ourpos.domain.order.OrderQueryRepository;
@@ -55,4 +56,12 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
         return dto;
     }
 
+    // 식사 유형에 따른 매출액 비중
+    @Override
+    public List<MealTypeResponseDto> mealType(Long storeId) {
+        log.info("식사 유형에 따른 매출액 비중 서비스 {} ", storeId);
+
+        List<MealTypeResponseDto> list = orderQueryRepository.mealType(storeId);
+        return list;
+    }
 }

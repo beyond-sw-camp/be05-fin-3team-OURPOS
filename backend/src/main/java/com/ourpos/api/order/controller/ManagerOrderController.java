@@ -15,6 +15,7 @@ import com.ourpos.api.Result;
 import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
+import com.ourpos.api.order.dto.response.MealTypeResponseDto;
 import com.ourpos.api.order.service.ManagerOrderService;
 import com.ourpos.api.order.service.OrderQueryService;
 import com.ourpos.api.order.service.OrderService;
@@ -149,6 +150,14 @@ public class ManagerOrderController {
     public Result<List<CountMonthlyResponseDto>> countMouthly(@RequestParam Long storeId) {
         List<CountMonthlyResponseDto> dto = managerOrderService.countMonthly(storeId);
         return new Result<>(HttpStatus.OK.value(), "월 매출 확인 되었습니다.", dto);
+    }
+
+    @GetMapping("orders/meal-type")
+    public Result<List<MealTypeResponseDto>> mealType(@RequestParam Long storeId) {
+        log.info("식사 유형에 따른 매출액 비율 컨트롤러 {} ", storeId);
+        List<MealTypeResponseDto> dtos = managerOrderService.mealType(storeId);
+
+        return new Result<>(HttpStatus.OK.value(), "식사 유형 매출액 비율이 확인 되었습니다.", dtos);
     }
 
 }
