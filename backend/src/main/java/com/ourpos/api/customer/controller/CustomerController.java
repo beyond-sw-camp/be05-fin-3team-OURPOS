@@ -70,7 +70,7 @@ public class CustomerController {
 
     // 마이페이지-개인정보 변경(주소 변경)
     @PutMapping("/addresses/{addressId}")
-    public Result<Void> updateAddress(@PathVariable Long addressId, @RequestBody CustomerAddressUpdateDto addressDto) {
+    public Result<Void> updateAddress(@Valid @PathVariable Long addressId, @RequestBody CustomerAddressUpdateDto addressDto) {
         customerServiceImpl.updateAddress(addressId, addressDto);
         log.info("주소 변경: {}", addressId);
 

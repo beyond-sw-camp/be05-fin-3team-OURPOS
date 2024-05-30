@@ -2,6 +2,7 @@ package com.ourpos.api.customer.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CustomerAddressRequestDto {
+
 
     @NotBlank(message = "이름을 입력해주세요.")
     private String name;
@@ -26,6 +28,7 @@ public class CustomerAddressRequestDto {
     private String addressDetail;
 
     @NotBlank(message = "우편번호를 입력해주세요.")
+
     private String zipcode;
 
     @Builder

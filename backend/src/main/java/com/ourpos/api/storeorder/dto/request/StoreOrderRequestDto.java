@@ -5,6 +5,9 @@ import com.ourpos.domain.storeorder.StoreComm;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderStatus;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +20,21 @@ import lombok.Setter;
 public class StoreOrderRequestDto {
 
     //order_detail_id, store_order_detail_quantity
+    @NotNull(message = "가게 물품 Id를 입력해주세요")
+    @Positive(message = "1 이상의 상수를 입력해주세요")
     private Long storeCommId;
+
+    @NotNull(message = "가게 Id를 입력해주세요")
+    @Positive(message = "1 이상의 상수를 입력해주세요")
     private Long storeId;
+
+    @NotNull(message = "주문 상세 수량을 입력해주세요")
     private Integer storeOrderDetailQuantity;
+
     private StoreOrderStatus storeOrderStatus;
+
+    @NotNull(message = "가게 물품의 가격을 입력해주세요")
+    @PositiveOrZero(message = "메뉴 가격은 0이상의 숫자만 가능합니다.")
     private Integer storeCommPrice;
 
 
