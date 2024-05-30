@@ -26,6 +26,7 @@ import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderDetailRepository;
 import com.ourpos.domain.storeorder.StoreOrderRepository;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,7 +54,7 @@ public class StoreOrderController {
 
     // 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영) ?-> price가 반영 안됨
     @PostMapping("/storecommorder")
-    public Result<Void> createStoreOrder(@RequestBody StoreOrderRequestDto storeOrderRequestDto) {
+    public Result<Void> createStoreOrder(@Valid @RequestBody StoreOrderRequestDto storeOrderRequestDto) {
         log.info("가게 식자재, 비품 주문: {}", storeOrderRequestDto);
         storeOrderService.createStoreOrder(storeOrderRequestDto);
         return new Result<>(HttpStatus.CREATED.value(), "식자재, 비품 주문이 완료되었습니다.", null);
@@ -70,7 +71,7 @@ public class StoreOrderController {
 
     // 비품, 식자재 주문 수정
     @PutMapping("/{orderdetailId}")
-    public Result<Void> updateStoreOrder(@PathVariable Long orderdetailId,
+    public Result<Void> updateStoreOrder(@Valid @PathVariable Long orderdetailId,
         @RequestBody StoreOrderRequestDto requestDto) {
         log.info("가게 식자재, 비품 주문 수정: {}", orderdetailId);
         storeOrderService.updateStoreOrder(orderdetailId, requestDto);

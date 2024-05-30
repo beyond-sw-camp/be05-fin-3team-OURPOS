@@ -17,6 +17,7 @@ import com.ourpos.api.storeorder.dto.response.StoreCommResponseDto;
 import com.ourpos.api.storeorder.service.StoreCommService;
 import com.ourpos.api.storeorder.service.StoreCommServiceImpl;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +32,7 @@ public class StoreCommController {
 
     // 새로운 비품,식자재를 추가하는 코드
     @PostMapping("/addstorecomm")
-    public Result<Void> addStoreComm(@RequestBody StoreCommRequestDto storeCommRequestDto) {
+    public Result<Void> addStoreComm(@Valid @RequestBody StoreCommRequestDto storeCommRequestDto) {
         log.info("비품/식자재추가 : {}", storeCommRequestDto);
         storeCommService.addStoreComm(storeCommRequestDto);
         return new Result<>(HttpStatus.OK.value(), "비품/식자재 주문이 완료되었습니다.", null);
@@ -47,7 +48,7 @@ public class StoreCommController {
 
     // 비품,식자재 수정
     @PutMapping("/modifystorecomm/{storeCommId}")
-    public Result<Void> updateStoreComm(@PathVariable Long StoreCommId,
+    public Result<Void> updateStoreComm(@Valid @PathVariable Long StoreCommId,
         @RequestBody StoreCommRequestDto storeCommRequestDto) {
         log.info("제품 인덱스로 비품/식자재 정보 수정");
         storeCommService.updateStoreComm(StoreCommId, storeCommRequestDto);
