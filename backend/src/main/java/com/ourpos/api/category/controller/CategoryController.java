@@ -60,7 +60,7 @@ public class CategoryController {
 
 		categoryServiceImpl.addCategory(categoryRequestDto);
 
-		return new Result<>(HttpStatus.OK.value(), "카테고리 추가 완료", null);
+		return new Result<>(HttpStatus.OK.value(), "카테고리 추가 성공", null);
 	}
 
 	@PostMapping("/add/menuOptionGroup")

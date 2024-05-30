@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryResponseDto {
 
-	private Long categoryId;
-	private String categoryName;
+	private Long id;
+	private String name;
 	private List<MenuOptionGroupResponseDto> menuOptionGroupResponseDtos;
 
 	public CategoryResponseDto(Category category) {
-		this.categoryId = category.getId();
-		this.categoryName = category.getName();
+		this.id = category.getId();
+		this.name = category.getName();
 		this.menuOptionGroupResponseDtos = category.getMenuOptionGroups().stream()
 			.map(MenuOptionGroupResponseDto::new)
 			.toList();

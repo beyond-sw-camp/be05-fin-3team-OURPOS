@@ -1,5 +1,6 @@
 package com.ourpos.domain.menu;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,12 @@ public class MenuOptionGroup {
 	@Column(name = "menu_option_group_description")
 	private String description;
 
+	@Column(name = "menu_option_group_deleted_yn")
+	private Boolean deletedYn;
+
+	@Column(name = "menu_option_group_deleted_datetime")
+	private LocalDateTime deletedDateTime;
+
 	@OneToMany(mappedBy = "menuOptionGroup", cascade = CascadeType.ALL)
 	private List<MenuOption> menuOptions = new ArrayList<>();
 
@@ -57,6 +64,7 @@ public class MenuOptionGroup {
 		this.name = name;
 		this.exclusiveYn = exclusiveYn;
 		this.description = description;
+		this.deletedYn = false;
 		for (MenuOption menuOption : menuOptions) {
 			addMenuOption(menuOption);
 		}
@@ -73,5 +81,10 @@ public class MenuOptionGroup {
 		this.name = name;
 		this.exclusiveYn = exclusiveYn;
 		this.description = description;
+	}
+
+	public void delete(LocalDateTime deletedDateTime) {
+		this.deletedYn = true;
+		this.deletedDateTime = deletedDateTime;
 	}
 }
