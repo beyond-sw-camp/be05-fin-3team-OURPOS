@@ -29,6 +29,11 @@ spring:
     console:
       enabled: true
 
+  data:
+    web:
+      pageable:
+        default-page-size: 5
+
 logging.level:
   org.hibernate.SQL: debug
   # org.hibernate.orm.jdbc.bind: trace

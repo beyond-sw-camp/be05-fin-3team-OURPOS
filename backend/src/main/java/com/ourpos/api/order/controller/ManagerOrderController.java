@@ -1,7 +1,7 @@
 package com.ourpos.api.order.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,13 +35,13 @@ public class ManagerOrderController {
 
     // 홀 -> 상태에 따른 주문 목록 확인
     @GetMapping("/orders/hall")
-    public Result<List<HallOrderResponseDto>> findHallOrder(@RequestParam Long storeId,
-        @RequestParam(required = false) String status) {
+    public Result<Page<HallOrderResponseDto>> findHallOrder(@RequestParam Long storeId,
+        @RequestParam(required = false) String status, Pageable pageable) {
 
         log.info("주문 상태에 따른 주문 목록 확인 {} {}", storeId, status);
-        List<HallOrderResponseDto> list = managerOrderService.findHallOrder(storeId, status);
+        Page<HallOrderResponseDto> hallOrders = managerOrderService.findHallOrder(storeId, status, pageable);
 
-        return new Result<>(HttpStatus.OK.value(), "홀  주문 상태에 따른 주문(전체, 대기, 조리, 완료)를 조회할 수 있다.", list);
+        return new Result<>(HttpStatus.OK.value(), "홀  주문 상태에 따른 주문(전체, 대기, 조리, 완료)를 조회할 수 있다.", hallOrders);
     }
 
     // 홀 주문 상세 확인
@@ -85,12 +85,13 @@ public class ManagerOrderController {
 
     // 배달 주문 목록 확인 ( 전체, 대기, 조리중, 배달중, 완료 )
     @GetMapping("orders/delivery")
-    public Result<List<DeliveryOrderResponseDto>> findDeliveryOrder(@RequestParam Long storeId,
-        @RequestParam(required = false) String status) {
+    public Result<Page<DeliveryOrderResponseDto>> findDeliveryOrder(@RequestParam Long storeId,
+        @RequestParam(required = false) String status, Pageable pageable) {
         log.info("배달 상태에 따른 목록 조회  {} {}", storeId, status);
-        List<DeliveryOrderResponseDto> list = managerOrderService.findDeliveryOrder(storeId, status);
+        Page<DeliveryOrderResponseDto> deliveryOrders = managerOrderService.findDeliveryOrder(storeId, status,
+            pageable);
 
-        return new Result<>(HttpStatus.OK.value(), "배달 주문 목록(전체, 대기, 조리, 배달중, 완료)를 조회할 수 있다.", list);
+        return new Result<>(HttpStatus.OK.value(), "배달 주문 목록(전체, 대기, 조리, 배달중, 완료)를 조회할 수 있다.", deliveryOrders);
     }
 
     // 배달 각 주문 상세 확인

@@ -1,8 +1,7 @@
 package com.ourpos.api.order.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
@@ -23,25 +22,20 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
 
     // 홀 상태 주문 목록 조회
     @Override
-    public List<HallOrderResponseDto> findHallOrder(Long storeId, String status) {
+    public Page<HallOrderResponseDto> findHallOrder(Long storeId, String status, Pageable pageable) {
         log.info("홀 상태 주문 목록 조회 서비스 {} {}", storeId, status);
-        List<HallOrder> hallOrders = orderQueryRepository.findHallOrder(storeId, status);
+        Page<HallOrder> hallOrders = orderQueryRepository.findHallOrder(storeId, status, pageable);
 
-        return hallOrders.stream()
-            .map(HallOrderResponseDto::new)
-            .collect(Collectors.toList());
+        return hallOrders.map(HallOrderResponseDto::new);
     }
 
     // 배달 상태에 따른 목록 조회
     @Override
-    public List<DeliveryOrderResponseDto> findDeliveryOrder(Long storeId, String status) {
+    public Page<DeliveryOrderResponseDto> findDeliveryOrder(Long storeId, String status, Pageable pageable) {
         log.info("배달 대기 주문 조회 서비스 {} {} ", storeId, status);
+        Page<DeliveryOrder> deliveryOrders = orderQueryRepository.findDeliveryOrder(storeId, status, pageable);
 
-        List<DeliveryOrder> deliveryOrders = orderQueryRepository.findDeliveryOrder(storeId, status);
-
-        return deliveryOrders.stream()
-            .map(DeliveryOrderResponseDto::new)
-            .collect(Collectors.toList());
+        return deliveryOrders.map(DeliveryOrderResponseDto::new);
     }
 
 }
