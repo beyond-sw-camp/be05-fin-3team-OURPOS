@@ -82,10 +82,10 @@ class CustomerServiceImplTest {
             .loginId(loginId)
             .build();
         customerRepository.save(customer);
+
         CustomerAddressRequestDto customerAddressRequest1 = CustomerAddressRequestDto.builder()
             .name("집")
             .build();
-
         CustomerAddressRequestDto customerAddressRequest2 = CustomerAddressRequestDto.builder()
             .name("회사")
             .build();

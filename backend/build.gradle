@@ -58,6 +58,9 @@ dependencies {
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
     // SMS service
     implementation 'net.nurigo:sdk:4.3.0'
 
