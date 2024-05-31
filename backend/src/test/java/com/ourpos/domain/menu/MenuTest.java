@@ -75,7 +75,7 @@ class MenuTest {
 
         // when
         assertThat(menu.getDeletedYn()).isFalse();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
         menu.delete(now);
 
         // then

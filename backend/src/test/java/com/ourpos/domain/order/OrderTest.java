@@ -111,7 +111,7 @@ class OrderTest {
         // when
         assertThat(order.getCompletedDateTime()).isNull();
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
         order.setCompleteOrderTime(now);
 
         // then
