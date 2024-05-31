@@ -24,14 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/storeorder")
-public class StoreCommController {
+@RequestMapping("/api/v1")
+public class StoreCommController implements StoreCommControllerDocs {
 
     private final StoreCommService storeCommService;
     private final StoreCommServiceImpl storeCommServiceImpl;
 
     // 새로운 비품,식자재를 추가하는 코드
-    @PostMapping("/addstorecomm")
+    @PostMapping("/storecomms")
     public Result<Void> addStoreComm(@RequestBody StoreCommRequestDto storeCommRequestDto) {
         log.info("비품/식자재추가 : {}", storeCommRequestDto);
         storeCommService.addStoreComm(storeCommRequestDto);
@@ -48,7 +48,7 @@ public class StoreCommController {
      */
 
     // 비품,식자재 수정
-    @PutMapping("/modifystorecomm/{storeCommId}")
+    @PutMapping("/storecomms/{storeCommId}")
     public Result<Void> updateStoreComm(@Valid @PathVariable Long storeCommId,
         @RequestBody StoreCommRequestDto storeCommRequestDto) {
         log.info("제품 인덱스로 비품/식자재 정보 수정");
@@ -57,7 +57,7 @@ public class StoreCommController {
     }
 
     // 비품 식자재 삭제
-    @PutMapping("/deletestorecomm/{storeCommId}")
+    @PutMapping("/storecomms/{storeCommId}/delete")
     public Result<Void> restoreStoreComm(@PathVariable Long storeCommId) {
         log.info("비품/식자재 삭제 : {}", storeCommId);
         storeCommService.deletetStoreComm(storeCommId);

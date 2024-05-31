@@ -2,6 +2,8 @@ package com.ourpos.api.customer.controller;
 
 import java.util.List;
 
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -35,8 +37,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+
 @RequestMapping("api/v1/customers")
-public class CustomerController {
+public class CustomerController implements CustomerControllerDocs {
 
     private final CustomerServiceImpl customerServiceImpl;
     private final OrderQueryService orderQueryService;
@@ -71,7 +74,7 @@ public class CustomerController {
         return new Result<>(HttpStatus.OK.value(), "서브주소 추가가 완료되었습니다.", null);
     }
 
-    // 마이페이지-개인정보 변경(주소 변경)
+    // 마이페이지-개인정보 변경(서브주소 변경)
     @PutMapping("/addresses/{addressId}")
     public Result<Void> updateAddress(@Valid @PathVariable Long addressId,
         @RequestBody CustomerAddressUpdateDto addressDto) {
