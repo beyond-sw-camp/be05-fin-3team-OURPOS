@@ -26,10 +26,36 @@ public class CategoryQueryRepository {
 			.fetch();
 	}
 
+	// public Optional<Category> findOne(Long categoryId) {
+	// 	return Optional.ofNullable(queryFactory
+	// 		.selectFrom(category)
+	// 		.where(categoryIdEq(categoryId), category.deletedYn.eq(false))
+	//
+	// 		.fetchFirst());
+	// }
+
+	// public Optional<Category> findOne(Long categoryId) {
+	// 	return Optional.ofNullable(queryFactory
+	// 		.selectFrom(category)
+	// 		.where(categoryIdEq(categoryId), category.deletedYn.eq(false))
+	//
+	// 		.fetchFirst());
+	// }
+
 	public Optional<Category> findOne(Long categoryId) {
+		QCategory category = QCategory.category;
+		QMenuOptionGroup menuOptionGroup = QMenuOptionGroup.menuOptionGroup;
+		QMenuOption menuOption = QMenuOption.menuOption;
+
 		return Optional.ofNullable(queryFactory
 			.selectFrom(category)
-			.where(categoryIdEq(categoryId), category.deletedYn.eq(false))
+			.leftJoin(category.menuOptionGroups, menuOptionGroup)
+			.leftJoin(menuOptionGroup.menuOptions, menuOption)
+			.where(category.id.eq(categoryId)
+				.and(category.deletedYn.eq(false))
+				.and(menuOptionGroup.deletedYn.eq(false))
+				.and(menuOption.deletedYn.eq(false))
+			)
 			.fetchFirst());
 	}
 
