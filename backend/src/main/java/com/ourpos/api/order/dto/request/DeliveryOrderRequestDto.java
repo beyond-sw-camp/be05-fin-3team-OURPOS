@@ -14,8 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DeliveryOrderRequestDto {
-
-    private Long customerId;
+    
     private Long storeId;
     private OrderAddressRequestDto orderAddressRequestDto;
     private String ownerMessage;

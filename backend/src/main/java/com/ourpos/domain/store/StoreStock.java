@@ -53,5 +53,10 @@ public class StoreStock {
         this.quantity -= quantity;
     }
 
+    public void increaseQuantity(Integer quantity) {
+
+        this.quantity +=quantity ;
+    }
+
 }
 

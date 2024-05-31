@@ -12,6 +12,7 @@ import lombok.Setter;
 public class CustomerResponseDto {
 
     private Long customerId;
+    private String loginId;
     private String nickname;
     private String phone;
     private String gender;
@@ -20,6 +21,7 @@ public class CustomerResponseDto {
 
     public CustomerResponseDto(Customer customer) {
         this.customerId = customer.getId();
+        this.loginId = customer.getLoginId();
         this.nickname = customer.getNickname();
         this.phone = customer.getPhone();
         this.gender = customer.getGender();

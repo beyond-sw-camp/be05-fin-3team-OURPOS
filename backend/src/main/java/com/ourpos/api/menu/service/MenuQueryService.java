@@ -10,10 +10,12 @@ import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.menu.MenuQueryRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class MenuQueryService {
 
     private final MenuQueryRepository menuQueryRepository;
@@ -28,8 +30,6 @@ public class MenuQueryService {
     public List<MenuResponseDto> findMenusByCategory(String category) {
         List<Menu> menus = menuQueryRepository.findAllWithCategory(category);
 
-        return menus.stream()
-            .map(MenuResponseDto::new)
-            .toList();
+        return menus.stream().map(MenuResponseDto::new).toList();
     }
 }

@@ -2,7 +2,7 @@
 
 POST http://localhost:8080/api/v1/orders/hall
 content-type: application/json
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3ODAzNTcsImV4cCI6MTcxNzM4NTE1N30.OHIBv0VEGgkp7RJPbGKKf5ayhLvi_InqgsS_ObjltRw
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfWUZmUnA4ZW94TEU2SGlabGpCUUpCR2tQMjZjZHRPa09qbzdwUEJEbEgycyIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcxMTYyOTMsImV4cCI6MTcxNzcyMTA5M30.63jJpEBwzB4aDudlcQMbjzrVa_KdHxPGG_68ue1u1-I
 
 {
   "customerId": 1,
@@ -50,10 +50,10 @@ GET http://localhost:8080/api/v1/orders/hall/1
 
 POST http://localhost:8080/api/v1/orders/delivery
 content-type: application/json
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY3ODExMzQsImV4cCI6MTcxNzM4NTkzNH0.fBiIVY36IzpToBW7iynOymcI5Mb55o_dzdAeGYVAFho
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfWUZmUnA4ZW94TEU2SGlabGpCUUpCR2tQMjZjZHRPa09qbzdwUEJEbEgycyIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcxMTYyOTMsImV4cCI6MTcxNzcyMTA5M30.63jJpEBwzB4aDudlcQMbjzrVa_KdHxPGG_68ue1u1-I
 
 {
-  "customerId": 2,
+  "customerId": 1,
   "storeId": 1,
   "orderAddressRequestDto": {
     "receiverName": "홍길동",
@@ -108,3 +108,7 @@ GET http://localhost:8080/api/v1/orders/delivery/2
 ### 점주 홀주문 주문 상세 조회
 
 GET http://localhost:8080/api/v1/manager/orders/hall/1
+
+### 가게에서 홀 주문 조회
+GET http://localhost:8080/api/v1/orders/hall?storeId=1&page=1&sort=orderCreatedDateTime,desc
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcwMjkzNjgsImV4cCI6MTcxNzYzNDE2OH0.MrFYNxvUHrN4jIp23PWmtfJkPfxrARzIsoXBhYUsMzI

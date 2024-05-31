@@ -44,4 +44,8 @@ public class Recipe {
         this.menu = menu;
         this.content = content;
     }
+
+    public void setContent(Integer content) {
+        this.content += content;
+    }
 }

@@ -2,6 +2,8 @@ package com.ourpos.api.menu.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ourpos.api.Result;
-import com.ourpos.api.menu.dto.request.MenuOptionUpdateDto;
 import com.ourpos.api.menu.dto.request.MenuRequestDto;
 import com.ourpos.api.menu.dto.request.MenuUpdateDto;
 import com.ourpos.api.menu.dto.response.MenuResponseDto;
@@ -46,14 +47,14 @@ public class MenuController {
     @GetMapping
     public Result<List<MenuResponseDto>> findAllMenus(
         @RequestParam(value = "category", required = false) String category) {
-        log.info("카테고리 별 메뉴 조회");
-        List<MenuResponseDto> menus = menuQueryService.findMenusByCategory(category);
+        log.info("MenuController.findAllMenus() called");
 
+        List<MenuResponseDto> menus = menuQueryService.findMenusByCategory(category);
         return new Result<>(HttpStatus.OK.value(), "카테고리별 메뉴 조회가 완료되었습니다.", menus);
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public Result<Void> addMenu(@RequestPart MenuRequestDto menuRequestDto,
+    public Result<Void> addMenu(@RequestPart @Valid MenuRequestDto menuRequestDto,
         @RequestPart(required = false) MultipartFile multipartFile) {
         log.info("MenuController.addMenu() called");
 
@@ -62,27 +63,11 @@ public class MenuController {
     }
 
     @PutMapping("/{menuId}")
-    public Result<Void> updateMenu(@PathVariable Long menuId, @RequestBody MenuUpdateDto menuUpdateDto) {
+    public Result<Void> updateMenu(@PathVariable Long menuId, @RequestBody @Valid MenuUpdateDto menuUpdateDto) {
         log.info("MenuController.updateMenu() called");
 
         menuServiceImpl.updateMenu(menuId, menuUpdateDto);
         return new Result<>(HttpStatus.OK.value(), "메뉴 수정 성공", null);
-    }
-
-    // @PutMapping("/menuOptionGroups/{menuOptionGroupId}")
-    // public Result<Void> updateMenuOptionGroup(@PathVariable Long menuOptionGroupId,
-    // 	@RequestBody MenuOptionGroupUpdateDto menuOptionGroupUpdateDto) {
-    // 	log.info("MenuController.updateMenuOptionGroup() called");
-    // 	menuServiceImpl.updateMenuOptionGroup(menuOptionGroupId, menuOptionGroupUpdateDto);
-    // 	return new Result<>(HttpStatus.OK.value(), "메뉴 옵션 그룹 수정 성공", null);
-    // }
-
-    @PutMapping("/menuOptions/{menuOptionId}")
-    public Result<Void> updateMenuOption(@PathVariable Long menuOptionId,
-        @RequestBody MenuOptionUpdateDto menuOptionUpdateDto) {
-        log.info("MenuController.updateMenuOption() called");
-        menuServiceImpl.updateMenuOption(menuOptionId, menuOptionUpdateDto);
-        return new Result<>(HttpStatus.OK.value(), "메뉴 옵션 그룹 수정 성공", null);
     }
 
     @DeleteMapping("/{menuId}")

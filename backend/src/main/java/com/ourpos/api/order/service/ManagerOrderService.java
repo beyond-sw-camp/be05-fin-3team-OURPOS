@@ -2,6 +2,8 @@ package com.ourpos.api.order.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
@@ -15,9 +17,9 @@ import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 public interface ManagerOrderService {
 
     // 홀 주문 목록 확인
-    List<HallOrderResponseDto> findHallOrder(Long storeId, String status);
+    Page<HallOrderResponseDto> findHallOrder(Long storeId, String status, Pageable pageable);
 
-    List<DeliveryOrderResponseDto> findDeliveryOrder(Long storeId, String status);
+    Page<DeliveryOrderResponseDto> findDeliveryOrder(Long storeId, String status, Pageable pageable);
 
     List<CountMonthlyResponseDto> countMonthly(Long storeId);
 

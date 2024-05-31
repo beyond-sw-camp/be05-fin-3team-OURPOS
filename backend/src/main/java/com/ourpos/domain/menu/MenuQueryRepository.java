@@ -11,20 +11,21 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Repository
+@Slf4j
 public class MenuQueryRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    // TODO: Category가 null일 때 처리
     public List<Menu> findAllWithCategory(String category) {
+
         return queryFactory
             .selectFrom(menu)
-            .join(menu.category)
-            .where(categoryEq(category))
-            .where(isNotDelete())
+            .join(menu.category).fetchJoin()
+            .where(categoryEq(category), isNotDelete())
             .fetch();
     }
 
@@ -36,7 +37,7 @@ public class MenuQueryRepository {
     }
 
     private static BooleanExpression categoryEq(String category) {
-        return menu.category.name.eq(category);
+        return category != null ? menu.category.name.eq(category) : null;
     }
 
     private static BooleanExpression isNotDelete() {
