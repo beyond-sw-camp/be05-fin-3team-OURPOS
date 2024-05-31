@@ -1,16 +1,16 @@
 package com.ourpos.domain.menu;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,33 +22,46 @@ import lombok.Singular;
 @Entity
 public class Category {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "category_id")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
+    private Long id;
 
-	@Column(name = "category_name")
-	private String name;
+    @Column(name = "category_name")
+    private String name;
 
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-	private List<MenuOptionGroup> menuOptionGroups = new ArrayList<>();
+    @Column(name = "category_deleted_yn")
+    private Boolean deletedYn;
 
-	@Builder
-	private Category(String name, @Singular List<MenuOptionGroup> menuOptionGroups) {
-		this.name = name;
-		for (MenuOptionGroup menuOptionGroup : menuOptionGroups) {
-			addMenuOptionGroup(menuOptionGroup);
-		}
-	}
+    @Column(name = "category_deleted_date_time")
+    private LocalDateTime deletedDateTime;
 
-	// 연관관계 편의 메서드
-	public void addMenuOptionGroup(MenuOptionGroup menuOptionGroup) {
-		menuOptionGroups.add(menuOptionGroup);
-		menuOptionGroup.setCategory(this);
-	}
+    @OneToMany(mappedBy = "category")
+    private List<MenuOptionGroup> menuOptionGroups = new ArrayList<>();
 
-	public void update(String name) {
-		this.name = name;
-	}
+    @Builder
+    private Category(String name, @Singular List<MenuOptionGroup> menuOptionGroups) {
+        this.name = name;
+        this.deletedYn = false;
+        for (MenuOptionGroup menuOptionGroup : menuOptionGroups) {
+            addMenuOptionGroup(menuOptionGroup);
+        }
+    }
+
+    // 연관관계 편의 메서드
+    public void addMenuOptionGroup(MenuOptionGroup menuOptionGroup) {
+        menuOptionGroups.add(menuOptionGroup);
+        menuOptionGroup.setCategory(this);
+    }
+
+    public void update(String name) {
+        this.name = name;
+    }
+
+    public void delete(LocalDateTime deletedDateTime) {
+        this.deletedYn = true;
+        this.deletedDateTime = deletedDateTime;
+        menuOptionGroups.forEach(menuOptionGroup -> menuOptionGroup.delete(deletedDateTime));
+    }
 }
 

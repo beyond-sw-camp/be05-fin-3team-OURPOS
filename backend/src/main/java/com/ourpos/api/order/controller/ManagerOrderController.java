@@ -23,6 +23,7 @@ import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 import com.ourpos.api.order.service.ManagerOrderService;
 import com.ourpos.api.order.service.OrderQueryService;
 import com.ourpos.api.order.service.OrderService;
+import com.ourpos.api.store.Location;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -183,4 +184,10 @@ public class ManagerOrderController {
         return new Result<>(HttpStatus.OK.value(), "시간대별 매출 발생 추이", dtos);
     }
 
+    // 지역별 배달 빈도
+    @GetMapping("orders/delivery/frequency")
+    public Result<List<Location>> deliveryFrequency(@RequestParam Long storeId) {
+        log.info("지역별 배달 빈도 컨트롤러 {} ", storeId);
+        return new Result<>(HttpStatus.OK.value(), "지역별 배달 빈도수 위도 경도", managerOrderService.deliveryFrequency(storeId));
+    }
 }

@@ -35,21 +35,6 @@ public class OrderQueryRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<HallOrder> findHallOrderByStoreId(Long storeId, String status, int offset, int limit) {
-        return queryFactory
-            .selectFrom(hallOrder)
-            .join(hallOrder.customer)
-            .fetchJoin()
-            .join(hallOrder.store)
-            .fetchJoin()
-            .where(hallOrder.store.id.eq(storeId), hallOrder.status.eq(HallStatus.valueOf(status)))
-            .where(hallOrder.store.id.eq(storeId), hallOrder.status.eq(HallStatus.valueOf(status)))
-
-            .offset(offset)
-            .limit(limit)
-            .fetch();
-    }
-
     // 상태 홀 주문 확인
     public Page<HallOrder> findHallOrder(Long storeId, String status, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
@@ -101,12 +86,9 @@ public class OrderQueryRepository {
     public Optional<DeliveryOrder> findOneDeliveryOrder(Long orderId) {
         return Optional.ofNullable(queryFactory
             .selectFrom(deliveryOrder)
-            .join(deliveryOrder.customer)
-            .fetchJoin()
-            .join(deliveryOrder.store)
-            .fetchJoin()
-            .join(deliveryOrder.orderAddress)
-            .fetchJoin()
+            .join(deliveryOrder.customer).fetchJoin()
+            .join(deliveryOrder.store).fetchJoin()
+            .join(deliveryOrder.orderAddress).fetchJoin()
             .where(deliveryOrderEq(orderId))
             .fetchFirst());
     }
@@ -147,23 +129,48 @@ public class OrderQueryRepository {
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
-    public List<HallOrder> findOneHallOrderByLoginId(String loginId) {
-        return queryFactory
+    public Page<HallOrder> findOneHallOrderByLoginId(String loginId, Pageable pageable) {
+        List<HallOrder> content = queryFactory
             .selectFrom(hallOrder)
             .join(hallOrder.customer).fetchJoin()
             .join(hallOrder.store).fetchJoin()
             .where(hallOrder.customer.loginId.eq(loginId))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .orderBy(hallOrder.createdDateTime.desc())
             .fetch();
+
+        // count query
+        JPAQuery<HallOrder> countQuery = queryFactory
+            .selectFrom(hallOrder)
+            .join(hallOrder.customer).fetchJoin()
+            .join(hallOrder.store).fetchJoin()
+            .where(hallOrder.customer.loginId.eq(loginId));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
-    public List<DeliveryOrder> findOneDeliveryOrderByLoginId(String loginId) {
-        return queryFactory
+    public Page<DeliveryOrder> findOneDeliveryOrderByLoginId(String loginId, Pageable pageable) {
+        List<DeliveryOrder> content = queryFactory
             .selectFrom(deliveryOrder)
             .join(deliveryOrder.customer).fetchJoin()
             .join(deliveryOrder.store).fetchJoin()
             .join(deliveryOrder.orderAddress).fetchJoin()
             .where(deliveryOrder.customer.loginId.eq(loginId))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .orderBy(deliveryOrder.createdDateTime.desc())
             .fetch();
+
+        // count query
+        JPAQuery<DeliveryOrder> countQuery = queryFactory
+            .selectFrom(deliveryOrder)
+            .join(deliveryOrder.customer).fetchJoin()
+            .join(deliveryOrder.store).fetchJoin()
+            .join(deliveryOrder.orderAddress).fetchJoin()
+            .where(deliveryOrder.customer.loginId.eq(loginId));
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
     private static BooleanExpression deliveryOrderEq(Long orderId) {
@@ -245,6 +252,17 @@ public class OrderQueryRepository {
             .where(orderDetail.order.store.id.eq(storeId))
             .fetch();
 
+    }
+
+    // 배달 주소 검색
+    public List<String> deliveryFrequency(Long storeId) {
+        return queryFactory
+            .select(deliveryOrder.orderAddress.addressBase)
+            .from(deliveryOrder)
+            .join(deliveryOrder.orderAddress)
+            .join(deliveryOrder.store)
+            .where(deliveryOrder.store.id.eq(storeId))
+            .fetch();
     }
 
 }

@@ -40,6 +40,9 @@ public class Customer extends BaseEntity {
     @Column(name = "customer_phone")
     private String phone;
 
+    @Column(name = "customer_email")
+    private String email;
+
     @Column(name = "customer_role")
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -92,10 +95,6 @@ public class Customer extends BaseEntity {
         addCustomerAddress(customerAddress);
     }
 
-    private boolean isDefaultAddress() {
-        return customerAddresses.stream().noneMatch(CustomerAddress::getDefaultYn);
-    }
-
     public void update(String name, String nickname, String phone, String gender, String age, String profileImage) {
         this.name = name;
         this.nickname = nickname;
@@ -117,6 +116,10 @@ public class Customer extends BaseEntity {
                 throw new IllegalStateException("기본 주소가 없습니다.");
             });
         customerAddress.updateDefaultYn(true);
+    }
+
+    private boolean isDefaultAddress() {
+        return customerAddresses.stream().noneMatch(CustomerAddress::getDefaultYn);
     }
 
     public void enrollUser() {

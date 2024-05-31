@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 import com.ourpos.domain.BaseEntity;
+import com.ourpos.domain.customer.Customer;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,6 +30,10 @@ public class Store extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "store_id")
     private Long id;
+
+    @JoinColumn(name = "customer_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Customer customer;
 
     @JoinColumn(name = "store_address_id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -59,8 +64,9 @@ public class Store extends BaseEntity {
     private LocalDateTime closedDateTime;
 
     @Builder
-    private Store(StoreAddress address, String name, String phone, LocalTime openTime, LocalTime closeTime,
-        Integer minimumOrderPrice, String pictureUrl) {
+    private Store(Customer customer, StoreAddress address, String name, String phone, LocalTime openTime,
+        LocalTime closeTime, Integer minimumOrderPrice, String pictureUrl) {
+        this.customer = customer;
         this.address = address;
         this.name = name;
         this.phone = phone;

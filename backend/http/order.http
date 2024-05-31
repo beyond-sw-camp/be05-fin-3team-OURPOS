@@ -2,7 +2,7 @@
 
 POST http://localhost:8080/api/v1/orders/hall
 content-type: application/json
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfWUZmUnA4ZW94TEU2SGlabGpCUUpCR2tQMjZjZHRPa09qbzdwUEJEbEgycyIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcxMTYyOTMsImV4cCI6MTcxNzcyMTA5M30.63jJpEBwzB4aDudlcQMbjzrVa_KdHxPGG_68ue1u1-I
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfWUZmUnA4ZW94TEU2SGlabGpCUUpCR2tQMjZjZHRPa09qbzdwUEJEbEgycyIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcxMTg1NzUsImV4cCI6MTcxNzcyMzM3NX0.04s3IkJ54K6kzXI85ojP37vFgdS6jreGfRf1EVzrB0Y
 
 {
   "customerId": 1,
@@ -50,7 +50,7 @@ GET http://localhost:8080/api/v1/orders/hall/1
 
 POST http://localhost:8080/api/v1/orders/delivery
 content-type: application/json
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfWUZmUnA4ZW94TEU2SGlabGpCUUpCR2tQMjZjZHRPa09qbzdwUEJEbEgycyIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcxMTYyOTMsImV4cCI6MTcxNzcyMTA5M30.63jJpEBwzB4aDudlcQMbjzrVa_KdHxPGG_68ue1u1-I
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfWUZmUnA4ZW94TEU2SGlabGpCUUpCR2tQMjZjZHRPa09qbzdwUEJEbEgycyIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcxMjI4MDksImV4cCI6MTcxNzcyNzYwOX0.V55lYRd8rXzXRVKMP4fW2amm7ybxyMuM0Rx1WhV9q1k
 
 {
   "customerId": 1,
@@ -59,7 +59,8 @@ Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfWUZmUnA4ZW94T
     "receiverName": "홍길동",
     "telNo": "010-1234-5678",
     "addressBase": "서울시 강남구 2로",
-    "addressDetail": "아파트 101동 101호"
+    "addressDetail": "아파트 101동 101호",
+    "zipcode": "12345"
   },
   "ownerMessage": "문 앞에 놔주세요",
   "riderMessage": "빨리 와주세요",
@@ -110,5 +111,8 @@ GET http://localhost:8080/api/v1/orders/delivery/2
 GET http://localhost:8080/api/v1/manager/orders/hall/1
 
 ### 가게에서 홀 주문 조회
-GET http://localhost:8080/api/v1/orders/hall?storeId=1&page=1&sort=orderCreatedDateTime,desc
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcwMjkzNjgsImV4cCI6MTcxNzYzNDE2OH0.MrFYNxvUHrN4jIp23PWmtfJkPfxrARzIsoXBhYUsMzI
+GET http://localhost:8080/api/v1/orders/hall?storeId=1
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcwNTc0MDYsImV4cCI6MTcxNzY2MjIwNn0.-5K2XwBhob9cSoyDuZd-lB_emHThRBKE9P1KOahny2I
+
+### 가게에서 배달 주문 조회
+GET http://localhost:8080/api/v1/orders/delivery?storeId=1&page=1

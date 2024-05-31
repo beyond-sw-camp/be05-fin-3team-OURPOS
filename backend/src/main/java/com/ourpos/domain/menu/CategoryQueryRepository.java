@@ -22,13 +22,14 @@ public class CategoryQueryRepository {
 	public List<Category> findAllCategories() {
 		return queryFactory
 			.selectFrom(category)
+			.where(category.deletedYn.eq(false))
 			.fetch();
 	}
 
 	public Optional<Category> findOne(Long categoryId) {
 		return Optional.ofNullable(queryFactory
 			.selectFrom(category)
-			.where(categoryIdEq(categoryId))
+			.where(categoryIdEq(categoryId), category.deletedYn.eq(false))
 			.fetchFirst());
 	}
 

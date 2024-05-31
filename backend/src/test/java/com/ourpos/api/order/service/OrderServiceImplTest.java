@@ -70,10 +70,10 @@ class OrderServiceImplTest {
         Menu hamburger = createMenu("햄버거", 5000);
         Menu coke = createMenu("콜라", 1000);
 
-        StoreComm pt = createStoreComm();
-        createRecipe(pt, hamburger, 2);
-        createRecipe(pt, coke, 1);
-        StoreStock storeStock = createStoreStock(store, pt, 10);
+        StoreComm storeComm = createStoreComm();
+        createRecipe(storeComm, hamburger, 2);
+        createRecipe(storeComm, coke, 1);
+        StoreStock storeStock = createStoreStock(store, storeComm, 10);
 
         OrderOptionRequestDto orderOption1 = createOrderOption();
         OrderOptionRequestDto orderOption2 = createOrderOption();
