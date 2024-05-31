@@ -32,12 +32,12 @@ public class StoreCommController {
 
     // 새로운 비품,식자재를 추가하는 코드
     @PostMapping("/addstorecomm")
-    public Result<Void> addStoreComm(@Valid @RequestBody StoreCommRequestDto storeCommRequestDto) {
+    public Result<Void> addStoreComm(@RequestBody StoreCommRequestDto storeCommRequestDto) {
         log.info("비품/식자재추가 : {}", storeCommRequestDto);
         storeCommService.addStoreComm(storeCommRequestDto);
-        return new Result<>(HttpStatus.OK.value(), "비품/식자재 주문이 완료되었습니다.", null);
+        return new Result<>(HttpStatus.OK.value(), "비품/식자재 추가가 완료되었습니다.", null);
     }
-
+    /*
     //  비품,식자재 조회
     @GetMapping("/getstorecomms")
     public Result<List<StoreCommResponseDto>> getStoreComms() {
@@ -45,13 +45,14 @@ public class StoreCommController {
         List<StoreCommResponseDto> storeCommsList = storeCommService.getStoreComms();
         return new Result<>(HttpStatus.OK.value(), "전체 비품/식자재 목록을 불러옵니다.", storeCommsList);
     }
+     */
 
     // 비품,식자재 수정
     @PutMapping("/modifystorecomm/{storeCommId}")
-    public Result<Void> updateStoreComm(@Valid @PathVariable Long StoreCommId,
+    public Result<Void> updateStoreComm(@Valid @PathVariable Long storeCommId,
         @RequestBody StoreCommRequestDto storeCommRequestDto) {
         log.info("제품 인덱스로 비품/식자재 정보 수정");
-        storeCommService.updateStoreComm(StoreCommId, storeCommRequestDto);
+        storeCommService.updateStoreComm(storeCommId, storeCommRequestDto);
         return new Result<>(HttpStatus.OK.value(), "비품/식자재 정보 수정이 완료되었습니다.", null);
     }
 

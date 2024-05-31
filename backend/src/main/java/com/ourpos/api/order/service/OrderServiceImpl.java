@@ -3,6 +3,8 @@ package com.ourpos.api.order.service;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +47,7 @@ public class OrderServiceImpl implements OrderService {
     private final StoreStockRepository storeStockRepository;
     private final StoreRestrictedMenuRepository storeRestrictedMenuRepository;
 
+
     @Override
     public void createHallOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
         HallOrder hallOrder = createOrder(loginId, hallOrderRequestDto);
@@ -52,6 +55,7 @@ public class OrderServiceImpl implements OrderService {
         storeStockCalculate(hallOrder);
         hallOrderRepository.save(hallOrder);
     }
+
 
     @Override
     public void createDeliveryOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto) {
@@ -76,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
     }
-
+    //메뉴 비활성화
     private void disabledStoreMenu(Menu menu, Store store) {
         StoreRestrictedMenu storeRestrictedMenu = StoreRestrictedMenu.builder()
             .store(store)
@@ -93,6 +97,24 @@ public class OrderServiceImpl implements OrderService {
                 .forEach(storeStock -> storeStock.decreaseQuantity(recipe.getContent() * quantity));
         }
     }
+
+    //비활성화 된 메뉴 재활성화
+    /*
+    public void enableMenu(Menu menu, Store store) {
+        List<StoreRestrictedMenu> restrictedMenus = storeRestrictedMenuRepository.findByStore(store);
+        StoreRestrictedMenu restrictedMenuToRemove = null;
+        for (StoreRestrictedMenu restrictedMenu : restrictedMenus) {
+            if (restrictedMenu.getMenu().equals(menu)) {
+                restrictedMenuToRemove = restrictedMenu;
+                break;
+            }
+        }
+        if (restrictedMenuToRemove != null) {
+            storeRestrictedMenuRepository.delete(restrictedMenuToRemove);
+        }
+    }
+
+     */
 
     @Override
     public void cancelHallOrder(Long orderId) {

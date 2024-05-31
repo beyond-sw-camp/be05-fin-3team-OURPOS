@@ -33,8 +33,7 @@ public class StoreOrderRequestDto {
 
     private StoreOrderStatus storeOrderStatus;
 
-    @NotNull(message = "가게 물품의 가격을 입력해주세요")
-    @PositiveOrZero(message = "메뉴 가격은 0이상의 숫자만 가능합니다.")
+
     private Integer storeCommPrice;
 
 

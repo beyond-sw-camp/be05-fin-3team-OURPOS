@@ -39,8 +39,6 @@ public class StoreOrderServiceImpl {
 	private final RecipeRepository recipeRepository;
 	private final StoreStockServiceImpl storeStockService;
 
-
-
 	// 판매 비품, 식자재 목록 확인
 	public List<StoreCommResponseDto> checkStoreComms() {
 		System.out.println("StoreCommServiceImplServiceImpl.getStoreComms");
@@ -110,6 +108,7 @@ public class StoreOrderServiceImpl {
 	}
 
 	//비품, 식자재 주문 확인(본사)
+	/*
 	public StoreOrderCheckResponseDto getStoreOrdercheck(Long storeId) {
 		Store store = storeRepository.findById(storeId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
@@ -118,42 +117,75 @@ public class StoreOrderServiceImpl {
 
 	}
 
-	//비품, 식자재 주문 상태 변경
+	 */
 
-	// 1. WAITING -> ACCEPTED
-	public void acceptedStoreOrder(Long storeOrderId) {
-		StoreOrder order = storeOrderRepository.findById(storeOrderId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+	public List<StoreOrderCheckResponseDto> getStoreOrdercheck(Long storeId) {
+		System.out.println("StoreOrderService.getStoreOrdercheck");
 
-		order.acceptedOrder();
-		storeOrderRepository.save(order);
+		Store store = storeRepository.findById(storeId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
+
+		List<StoreOrder> storeOrders = storeOrderRepository.findByStoreId(storeId);
+		if (storeOrders.isEmpty()) {
+			throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
+		}
+
+		List<StoreOrderCheckResponseDto> storeOrderCheckResponseDtos = new ArrayList<>();
+
+		for (StoreOrder storeOrder : storeOrders) {
+			List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(
+				storeOrder.getId());
+			for (StoreOrderDetail storeOrderDetail : storeOrderDetails) {
+				StoreOrderCheckResponseDto dto = new StoreOrderCheckResponseDto(
+					store.getId(),
+					storeOrderDetail.getStoreMenu().getName(),
+					storeOrder.getPrice(),
+					storeOrderDetail.getStoreMenu().getArticleUnit(),
+					storeOrderDetail.getStoreMenu().getPictureUrl(),
+					storeOrder.getQuantity(),
+					storeOrderDetail.getStoreMenu().getPrice()
+				);
+				storeOrderCheckResponseDtos.add(dto);
+			}
+		}
+
+		return storeOrderCheckResponseDtos;
+	}
+
+		//비품, 식자재 주문 상태 변경
+
+		// 1. WAITING -> ACCEPTED
+		public void acceptedStoreOrder (Long storeOrderId){
+			StoreOrder order = storeOrderRepository.findById(storeOrderId)
+				.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+
+			order.acceptedOrder();
+			storeOrderRepository.save(order);
+
+		}
+
+		// 2.ACCEPTED -> DELIVERING
+		public void deliveringStoreOrder (Long storeOrderId){
+			StoreOrder order = storeOrderRepository.findById(storeOrderId)
+				.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+
+			order.deliveringOrder();
+			storeOrderRepository.save(order);
+
+		}
+
+		// 3. DELIVERING -> COMPLETED
+
+		public void completeStoreOrder (Long storeOrderId){
+			StoreOrder order = storeOrderRepository.findById(storeOrderId)
+				.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+			order.completeOrder();
+			storeStockService.increaseStockOnOrder(order);
+
+		}
 
 	}
 
-	// 2.ACCEPTED -> DELIVERING
-	public void deliveringStoreOrder(Long storeOrderId) {
-		StoreOrder order = storeOrderRepository.findById(storeOrderId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
-
-		order.deliveringOrder();
-		storeOrderRepository.save(order);
-
-	}
-
-	// 3. DELIVERING -> COMPLETED
-
-	public void completeStoreOrder(Long storeOrderId) {
-		StoreOrder order = storeOrderRepository.findById(storeOrderId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
-		order.completeOrder();
-		storeStockService.increaseStockOnOrder(order);
-
-
-
-
-	}
-
-}
 
 
 

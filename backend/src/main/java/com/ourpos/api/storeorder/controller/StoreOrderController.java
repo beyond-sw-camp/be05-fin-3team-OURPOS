@@ -57,7 +57,7 @@ public class StoreOrderController {
 
     // 비품, 식자재 주문 내역 확인 ? 주문 내역  개별 조회 o
 
-    @GetMapping("/{orderDetailId}")
+    @GetMapping("/check/{orderDetailId}")
     public Result<StoreOrderResponseDto> getStoreOrder(@PathVariable Long orderDetailId) {
         log.info("가게 식자재, 비품 주문: {}", orderDetailId);
         StoreOrderResponseDto storeOrderResponseDto = storeOrderService.getStoreOrder(orderDetailId);
@@ -91,12 +91,16 @@ public class StoreOrderController {
 
     //비품, 식자재 주문 확인 (본사)
 
+
     @GetMapping("/{storeId}")
-    public Result<StoreOrderCheckResponseDto> getStoreOrderCheck(@PathVariable Long storeId) {
+    public Result<List<StoreOrderCheckResponseDto>> getStoreOrderCheck(@PathVariable Long storeId) {
         log.info("가게 식자재, 비품 주문: {}", storeId);
-        StoreOrderCheckResponseDto storeOrderCheckResponseDto = storeOrderService.getStoreOrdercheck(storeId);
-        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문이 완료되었습니다.", storeOrderCheckResponseDto);
+        List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheck(storeId);
+        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", storeOrderList );
     }
+
+
+
     //비품, 식자재 주문 상태 변경
 
     // 1. WAITING -> ACCEPTED

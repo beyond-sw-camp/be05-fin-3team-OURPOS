@@ -19,27 +19,27 @@ public class StoreCommResponseDto {
     private String storeCommName;
     private Integer storeCommPrice;
     private String storeCommArticleUnit;
-    private StoreCommStatus storeCommStatus;
+    //private StoreCommStatus storeCommStatus;
     private String storeCommDescription;
     private StoreCommCategory storeCommCategory;
     private String storeCommPictureUrl;
-    private LocalDateTime storeCommCreatedDateTime;
-    private LocalDateTime storeCommModifiedDateTime;
+    //private LocalDateTime storeCommCreatedDateTime;
+    //private LocalDateTime storeCommModifiedDateTime;
     private Boolean storeCommDeleteYn;
-    private LocalDateTime storeCommDeletedDateTime;
+    //private LocalDateTime storeCommDeletedDateTime;
 
     public StoreCommResponseDto(StoreComm storeComm) {
         this.storeCommId = storeComm.getId();
         this.storeCommName = storeComm.getName();
         this.storeCommPrice = storeComm.getPrice();
         this.storeCommArticleUnit = storeComm.getArticleUnit();
-        this.storeCommStatus = storeComm.getStatus();
+        //this.storeCommStatus = storeComm.getStatus();
         this.storeCommDescription = storeComm.getDescription();
         this.storeCommCategory = storeComm.getCategory();
         this.storeCommPictureUrl = storeComm.getPictureUrl();
-        this.storeCommCreatedDateTime = storeComm.getCreatedDateTime();
-        this.storeCommModifiedDateTime = storeComm.getModifiedDateTime();
+        //this.storeCommCreatedDateTime = storeComm.getCreatedDateTime();
+        //this.storeCommModifiedDateTime = storeComm.getModifiedDateTime();
         this.storeCommDeleteYn = storeComm.getDeletedYn();
-        this.storeCommDeletedDateTime = storeComm.getDeletedDatetime();
+        //this.storeCommDeletedDateTime = storeComm.getDeletedDatetime();
     }
 }
