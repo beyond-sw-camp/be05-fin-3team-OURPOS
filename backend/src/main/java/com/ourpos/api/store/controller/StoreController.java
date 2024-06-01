@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ourpos.api.Result;
+import com.ourpos.api.store.Location;
 import com.ourpos.api.store.dto.request.StoreRequestDto;
 import com.ourpos.api.store.dto.response.StoreResponseDto;
 import com.ourpos.api.store.service.StoreService;
@@ -40,7 +41,7 @@ public class StoreController {
     public Result<List<StoreResponseDto>> findStoresOrderByDistance(@RequestParam Double latitude,
         @RequestParam Double longitude) {
         log.info("현재 위치에서 가장 가까운 매장 정렬 조회");
-        List<StoreResponseDto> stores = storeService.findStoresOrderBy(latitude, longitude);
+        List<StoreResponseDto> stores = storeService.findStoresOrderBy(new Location(latitude, longitude));
 
         return new Result<>(HttpStatus.OK.value(), "매장 조회가 완료되었습니다.", stores);
     }

@@ -1,11 +1,14 @@
 package com.ourpos.api.order.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ourpos.api.map.MapResponseDto;
+import com.ourpos.api.map.MapService;
 import com.ourpos.api.order.dto.request.DeliveryOrderRequestDto;
 import com.ourpos.api.order.dto.request.HallOrderRequestDto;
 import com.ourpos.api.order.dto.request.OrderDetailRequestDto;
@@ -15,9 +18,12 @@ import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.menu.MenuRepository;
 import com.ourpos.domain.menu.StoreRestrictedMenu;
 import com.ourpos.domain.menu.StoreRestrictedMenuRepository;
+import com.ourpos.domain.order.AdministrativeBuildingAddress;
+import com.ourpos.domain.order.AdministrativeBuildingAddressRepository;
 import com.ourpos.domain.order.DeliveryOrder;
 import com.ourpos.domain.order.HallOrder;
 import com.ourpos.domain.order.Order;
+import com.ourpos.domain.order.OrderAddress;
 import com.ourpos.domain.order.OrderRepository;
 import com.ourpos.domain.orderdetail.OrderDetail;
 import com.ourpos.domain.recipe.Recipe;
@@ -44,6 +50,8 @@ public class OrderServiceImpl implements OrderService {
     private final RecipeRepository recipeRepository;
     private final StoreStockRepository storeStockRepository;
     private final StoreRestrictedMenuRepository storeRestrictedMenuRepository;
+    private final MapService mapService;
+    private final AdministrativeBuildingAddressRepository administrativeBuildingAddressRepository;
 
     @Override
     public void createHallOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
@@ -62,6 +70,23 @@ public class OrderServiceImpl implements OrderService {
 
         storeStockCalculate(deliveryOrder);
         deliveryOrderRepository.save(deliveryOrder);
+
+        addAdministrativeBuildingAddress(deliveryOrder);
+    }
+
+    private void addAdministrativeBuildingAddress(DeliveryOrder deliveryOrder) {
+        OrderAddress orderAddress = deliveryOrder.getOrderAddress();
+        List<MapResponseDto> mapResponseDtos = mapService.searchAddress(
+            orderAddress.getAddressBase());
+
+        for (MapResponseDto mapResponseDto : mapResponseDtos) {
+            if (mapResponseDto.getRegion_type().equals("H")) {
+                String code = mapResponseDto.getCode();
+                AdministrativeBuildingAddress administrativeBuildingAddress = administrativeBuildingAddressRepository.findById(
+                    code).orElseThrow(() -> new IllegalArgumentException("해당 건물이 존재하지 않습니다."));
+                orderAddress.addAdministrativeBuildingAddress(administrativeBuildingAddress);
+            }
+        }
     }
 
     private void storeStockCalculate(Order order) {
@@ -115,7 +140,7 @@ public class OrderServiceImpl implements OrderService {
         HallOrder order = hallOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
-        order.completeOrder();
+        order.completeOrder(LocalDateTime.now());
     }
 
     @Override
@@ -147,7 +172,7 @@ public class OrderServiceImpl implements OrderService {
         DeliveryOrder order = deliveryOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
-        order.completeOrder();
+        order.completeOrder(LocalDateTime.now());
     }
 
     private HallOrder createOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {

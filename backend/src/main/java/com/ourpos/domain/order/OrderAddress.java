@@ -2,9 +2,12 @@ package com.ourpos.domain.order;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
@@ -22,6 +25,10 @@ public class OrderAddress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_address_id")
     private Long id;
+
+    @JoinColumn(name = "administrative_building_address_code")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private AdministrativeBuildingAddress administrativeBuildingAddress;
 
     @Column(name = "order_address_receiver_name")
     private String receiverName;
@@ -45,5 +52,9 @@ public class OrderAddress {
         this.addressBase = addressBase;
         this.addressDetail = addressDetail;
         this.zipcode = zipcode;
+    }
+
+    public void addAdministrativeBuildingAddress(AdministrativeBuildingAddress administrativeBuildingAddress) {
+        this.administrativeBuildingAddress = administrativeBuildingAddress;
     }
 }

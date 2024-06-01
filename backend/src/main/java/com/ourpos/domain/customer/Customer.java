@@ -63,11 +63,12 @@ public class Customer extends BaseEntity {
     private List<CustomerAddress> customerAddresses = new ArrayList<>();
 
     @Builder
-    private Customer(String loginId, String name, String phone, Role role, String nickname, String gender,
+    private Customer(String loginId, String name, String phone, String email, Role role, String nickname, String gender,
         String ageRange, String profileImage, @Singular List<CustomerAddress> customerAddresses) {
         this.loginId = loginId;
         this.name = name;
         this.phone = phone;
+        this.email = email;
         this.role = role;
         this.nickname = nickname;
         this.gender = gender;

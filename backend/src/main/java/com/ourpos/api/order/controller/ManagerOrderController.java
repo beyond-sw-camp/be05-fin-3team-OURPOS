@@ -21,8 +21,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController
 @RequiredArgsConstructor
+@RestController
 @RequestMapping("/api/v1")
 public class ManagerOrderController {
 
@@ -144,3 +144,4 @@ public class ManagerOrderController {
     }
 
 }
+
