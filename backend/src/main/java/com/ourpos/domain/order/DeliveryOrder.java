@@ -94,12 +94,12 @@ public class DeliveryOrder extends Order {
         this.status = DeliveryStatus.DELIVERING;
     }
 
-    public void completeOrder() {
+    public void completeOrder(LocalDateTime completeOrderTime) {
         if (this.status != DeliveryStatus.DELIVERING) {
             throw new IllegalArgumentException("배달중인 주문만 완료할 수 있습니다.");
         }
         this.status = DeliveryStatus.COMPLETED;
-        super.setCompleteOrderTime(LocalDateTime.now());
+        super.setCompleteOrderTime(completeOrderTime);
     }
 
     // 라이더 배정

@@ -24,7 +24,7 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
     @Override
     public Page<HallOrderResponseDto> findHallOrder(Long storeId, String status, Pageable pageable) {
         log.info("홀 상태 주문 목록 조회 서비스 {} {}", storeId, status);
-        Page<HallOrder> hallOrders = orderQueryRepository.findHallOrder(storeId, status, pageable);
+        Page<HallOrder> hallOrders = orderQueryRepository.findHallOrders(storeId, status, pageable);
 
         return hallOrders.map(HallOrderResponseDto::new);
     }
@@ -33,7 +33,7 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
     @Override
     public Page<DeliveryOrderResponseDto> findDeliveryOrder(Long storeId, String status, Pageable pageable) {
         log.info("배달 대기 주문 조회 서비스 {} {} ", storeId, status);
-        Page<DeliveryOrder> deliveryOrders = orderQueryRepository.findDeliveryOrder(storeId, status, pageable);
+        Page<DeliveryOrder> deliveryOrders = orderQueryRepository.findDeliveryOrders(storeId, status, pageable);
 
         return deliveryOrders.map(DeliveryOrderResponseDto::new);
     }

@@ -26,7 +26,7 @@ public class OrderQueryRepository {
     private final JPAQueryFactory queryFactory;
 
     // 상태 홀 주문 확인
-    public Page<HallOrder> findHallOrder(Long storeId, String status, Pageable pageable) {
+    public Page<HallOrder> findHallOrders(Long storeId, String status, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(hallOrder.store.id.eq(storeId));
 
@@ -61,16 +61,10 @@ public class OrderQueryRepository {
     public Optional<HallOrder> findOneHallOrder(Long orderId) {
         return Optional.ofNullable(queryFactory
             .selectFrom(hallOrder)
-            .join(hallOrder.customer)
-            .fetchJoin()
-            .join(hallOrder.store)
-            .fetchJoin()
+            .join(hallOrder.customer).fetchJoin()
+            .join(hallOrder.store).fetchJoin()
             .where(hallOrderEq(orderId))
             .fetchFirst());
-    }
-
-    private static BooleanExpression hallOrderEq(Long orderId) {
-        return hallOrder.id.eq(orderId);
     }
 
     public Optional<DeliveryOrder> findOneDeliveryOrder(Long orderId) {
@@ -84,13 +78,12 @@ public class OrderQueryRepository {
     }
 
     // 상태에 따른 배달 목록 확인
-    public Page<DeliveryOrder> findDeliveryOrder(Long storeId, String status, Pageable pageable) {
-
+    public Page<DeliveryOrder> findDeliveryOrders(Long storeId, String status, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(deliveryOrder.store.id.eq(storeId));
 
         if (status != null && !status.isEmpty()) {
-            builder.and(deliveryOrder.status.eq(DeliveryStatus.valueOf(status)));
+            builder.and(deliveryStatusEq(status));
 
             if (DeliveryStatus.valueOf(status) == DeliveryStatus.COMPLETED) {
                 LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
@@ -119,15 +112,15 @@ public class OrderQueryRepository {
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
-    public Page<HallOrder> findOneHallOrderByLoginId(String loginId, Pageable pageable) {
+    public Page<HallOrder> findHallOrdersByLoginId(String loginId, Pageable pageable) {
         List<HallOrder> content = queryFactory
             .selectFrom(hallOrder)
             .join(hallOrder.customer).fetchJoin()
             .join(hallOrder.store).fetchJoin()
             .where(hallOrder.customer.loginId.eq(loginId))
+            .orderBy(hallOrder.createdDateTime.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
-            .orderBy(hallOrder.createdDateTime.desc())
             .fetch();
 
         // count query
@@ -140,16 +133,16 @@ public class OrderQueryRepository {
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
-    public Page<DeliveryOrder> findOneDeliveryOrderByLoginId(String loginId, Pageable pageable) {
+    public Page<DeliveryOrder> findDeliveryOrdersByLoginId(String loginId, String status, Pageable pageable) {
         List<DeliveryOrder> content = queryFactory
             .selectFrom(deliveryOrder)
             .join(deliveryOrder.customer).fetchJoin()
             .join(deliveryOrder.store).fetchJoin()
             .join(deliveryOrder.orderAddress).fetchJoin()
-            .where(deliveryOrder.customer.loginId.eq(loginId))
+            .where(deliveryLoginIdEq(loginId), deliveryStatusEq(status))
+            .orderBy(deliveryOrder.createdDateTime.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
-            .orderBy(deliveryOrder.createdDateTime.desc())
             .fetch();
 
         // count query
@@ -158,9 +151,21 @@ public class OrderQueryRepository {
             .join(deliveryOrder.customer).fetchJoin()
             .join(deliveryOrder.store).fetchJoin()
             .join(deliveryOrder.orderAddress).fetchJoin()
-            .where(deliveryOrder.customer.loginId.eq(loginId));
+            .where(deliveryLoginIdEq(loginId));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
+    }
+
+    private static BooleanExpression deliveryStatusEq(String status) {
+        return status != null ? deliveryOrder.status.eq(DeliveryStatus.valueOf(status)) : null;
+    }
+
+    private static BooleanExpression deliveryLoginIdEq(String loginId) {
+        return deliveryOrder.customer.loginId.eq(loginId);
+    }
+
+    private static BooleanExpression hallOrderEq(Long orderId) {
+        return hallOrder.id.eq(orderId);
     }
 
     private static BooleanExpression deliveryOrderEq(Long orderId) {
