@@ -27,7 +27,7 @@ class CategoryQueryRepositoryTest {
 
     @DisplayName("삭제 처리가 되지 않은 모든 카테고리를 조회할 수 있다.")
     @Test
-    void test() {
+    void findAllCategories() {
         // given
         Category category1 = Category.builder()
             .name("치킨")
@@ -58,7 +58,7 @@ class CategoryQueryRepositoryTest {
 
     @DisplayName("삭제 처리가 되지 않은 카테고리 하나를 조회할 수 있다.")
     @Test
-    void test2() {
+    void findOne() {
         // given
         Category category1 = Category.builder()
             .name("치킨")

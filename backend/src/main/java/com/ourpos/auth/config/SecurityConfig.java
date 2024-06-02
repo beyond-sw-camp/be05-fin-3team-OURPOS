@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -26,6 +27,10 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
+    private static final String[] hasRoleSuperAdmin_GET = {};
+    private static final String[] hasRoleSuperAdmin_POST = {};
+    private static final String[] hasRoleSuperAdmin_PUT = {};
 
     private final CustomOAuth2CustomerService customOAuth2CustomerService;
     private final CustomSuccessHandler customSuccessHandler;
@@ -76,6 +81,9 @@ public class SecurityConfig {
 
         http
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.GET, hasRoleSuperAdmin_GET).hasRole("SUPER_ADMIN")
+                .requestMatchers(HttpMethod.POST, hasRoleSuperAdmin_POST).hasRole("SUPER_ADMIN")
+                .requestMatchers(HttpMethod.PUT, hasRoleSuperAdmin_PUT).hasRole("SUPER_ADMIN")
                 .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated());
 
@@ -86,3 +94,4 @@ public class SecurityConfig {
         return http.build();
     }
 }
+

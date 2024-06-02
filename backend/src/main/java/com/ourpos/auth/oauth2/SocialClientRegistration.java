@@ -46,8 +46,8 @@ public class SocialClientRegistration {
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
             .redirectUri("http://localhost:8080/login/oauth2/code/kakao")
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-            .scope("name", "profile_nickname", "gender", "age_range", "shipping_address", "phone_number", "email",
-                "profile_image", "talk_message")
+            .scope("name", "profile_nickname", "gender", "age_range", "shipping_address", "phone_number",
+                "account_email", "profile_image", "talk_message")
             .authorizationUri("https://kauth.kakao.com/oauth/authorize")
             .tokenUri("https://kauth.kakao.com/oauth/token")
             .userInfoUri("https://kapi.kakao.com/v2/user/me")

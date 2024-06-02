@@ -50,4 +50,9 @@ public class NaverOAuth2Response implements OAuth2Response {
         return attributes.get("mobile").toString();
     }
 
+    @Override
+    public String getEmail() {
+        return attributes.get("email").toString();
+    }
+
 }

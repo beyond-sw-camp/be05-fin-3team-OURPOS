@@ -36,7 +36,7 @@ class CategoryTest {
         // when
         assertThat(category.getDeletedYn()).isFalse();
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
         category.delete(now);
 
         // then
@@ -77,7 +77,7 @@ class CategoryTest {
 
         // when
         assertThat(menuOptionGroup.getDeletedYn()).isFalse();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
         category.delete(now);
 
         // then

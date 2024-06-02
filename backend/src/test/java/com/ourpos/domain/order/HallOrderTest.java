@@ -2,6 +2,8 @@ package com.ourpos.domain.order;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +30,8 @@ class HallOrderTest {
         hallOrder.acceptOrder();
 
         // when
-        hallOrder.completeOrder();
+        LocalDateTime now = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
+        hallOrder.completeOrder(now);
 
         // then
         assertThat(hallOrder.getStatus()).isEqualTo(HallStatus.COMPLETED);
@@ -86,7 +89,10 @@ class HallOrderTest {
         // when
 
         // then
-        assertThatThrownBy(hallOrder::completeOrder)
+        LocalDateTime now = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
+        assertThatThrownBy(() -> {
+            hallOrder.completeOrder(now);
+        })
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("조리중인 주문만 완료할 수 있습니다.");
     }
