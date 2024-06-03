@@ -33,13 +33,14 @@ public class OrderQueryService {
     }
 
     public Page<HallOrderResponseDto> findHallOrderByLoginId(String loginId, Pageable pageable) {
-        Page<HallOrder> hallOrders = orderQueryRepository.findOneHallOrderByLoginId(loginId, pageable);
+        Page<HallOrder> hallOrders = orderQueryRepository.findHallOrdersByLoginId(loginId, pageable);
 
         return hallOrders.map(HallOrderResponseDto::new);
     }
 
-    public Page<DeliveryOrderResponseDto> findDeliveryOrderByLoginId(String loginId, Pageable pageable) {
-        Page<DeliveryOrder> deliveryOrders = orderQueryRepository.findOneDeliveryOrderByLoginId(loginId, pageable);
+    public Page<DeliveryOrderResponseDto> findDeliveryOrderByLoginId(String loginId, String status, Pageable pageable) {
+        Page<DeliveryOrder> deliveryOrders = orderQueryRepository.findDeliveryOrdersByLoginId(loginId, status,
+            pageable);
 
         return deliveryOrders.map(DeliveryOrderResponseDto::new);
     }

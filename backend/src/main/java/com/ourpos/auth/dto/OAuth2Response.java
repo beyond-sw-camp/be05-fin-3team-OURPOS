@@ -18,4 +18,5 @@ public interface OAuth2Response {
 
     String getPhone();
 
+    String getEmail();
 }

@@ -57,7 +57,7 @@ class MenuOptionGroupTest {
         assertThat(menuOptionGroup.getDeletedYn()).isFalse();
         assertThat(menuOptionGroup.getDeletedDateTime()).isNull();
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
         menuOptionGroup.delete(now);
 
         // then

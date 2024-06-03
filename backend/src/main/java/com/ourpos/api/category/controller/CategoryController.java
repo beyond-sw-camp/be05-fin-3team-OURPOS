@@ -31,13 +31,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/api/v1")
 public class CategoryController implements CategoryControllerDocs {
 
     private final CategoryQueryService categoryQueryService;
     private final CategoryServiceImpl categoryServiceImpl;
 
-    @GetMapping("/{categoryId}")
+    @GetMapping("/categories/{categoryId}")
     public Result<CategoryResponseDto> findCategory(@PathVariable Long categoryId) {
         System.out.println("개별 카테고리 조회 컨트롤러 가동");
         log.info("카테고리 조회: {}", categoryId);
@@ -45,7 +45,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "카테고리 조회가 완료되었습니다.", categoryQueryService.findCategory(categoryId));
     }
 
-    @GetMapping
+    @GetMapping("/categories")
     public Result<List<CategoryResponseDto>> findAllCategories() {
         System.out.println("전체 카테고리 조회 컨트롤러 가동");
         log.info("전체 카테고리 조회");
@@ -54,7 +54,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "전체 카테고리 조회완료.", categoryQueryService.findAllCategories());
     }
 
-    @PostMapping("/add/category")
+    @PostMapping("/categories")
     public Result<Void> addCategory(@RequestBody @Valid CategoryRequestDto categoryRequestDto) {
         log.info("CategoryController.addCategory() called");
 

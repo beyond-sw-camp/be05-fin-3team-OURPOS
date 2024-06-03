@@ -61,6 +61,7 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
                 .loginId(loginId)
                 .name(oAuth2Response.getName())
                 .nickname(oAuth2Response.getNickname())
+                .email(oAuth2Response.getEmail())
                 .role(Role.ROLE_USER)
                 .phone(oAuth2Response.getPhone())
                 .gender(oAuth2Response.getGender())

@@ -2,6 +2,7 @@ package com.ourpos.domain.order;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -89,7 +90,8 @@ class DeliveryOrderTest {
         deliveryOrder.startDelivery();
 
         // when
-        deliveryOrder.completeOrder();
+        LocalDateTime now = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
+        deliveryOrder.completeOrder(now);
 
         // then
         assertThat(deliveryOrder.getStatus()).isEqualTo(DeliveryStatus.COMPLETED);
@@ -133,7 +135,10 @@ class DeliveryOrderTest {
         deliveryOrder.acceptOrder();
 
         // then
-        assertThatThrownBy(deliveryOrder::completeOrder)
+        LocalDateTime now = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
+        assertThatThrownBy(() -> {
+            deliveryOrder.completeOrder(now);
+        })
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("배달중인 주문만 완료할 수 있습니다.");
     }
@@ -178,10 +183,12 @@ class DeliveryOrderTest {
         deliveryOrder.assignRider(Rider.builder().name("라이더1").phone("010-1234-5678").build());
 
         // when
-        deliveryOrder.setEstimatedTime(LocalTime.now().plusMinutes(30));
+        LocalTime now = LocalTime.of(12, 0, 0);
+        LocalTime estimatedTime = now.plusMinutes(30);
+        deliveryOrder.setEstimatedTime(estimatedTime);
 
         // then
-        assertThat(deliveryOrder.getEstimatedTime()).isEqualToIgnoringSeconds(LocalTime.now().plusMinutes(30));
+        assertThat(deliveryOrder.getEstimatedTime()).isEqualToIgnoringSeconds(estimatedTime);
     }
 
     private static DeliveryOrder createDeliveryOrder(Customer customer, Store store, OrderAddress orderAddress,
