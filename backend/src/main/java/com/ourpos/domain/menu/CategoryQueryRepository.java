@@ -43,19 +43,12 @@ public class CategoryQueryRepository {
 	// }
 
 	public Optional<Category> findOne(Long categoryId) {
-		QCategory category = QCategory.category;
-		QMenuOptionGroup menuOptionGroup = QMenuOptionGroup.menuOptionGroup;
-		QMenuOption menuOption = QMenuOption.menuOption;
-
 		return Optional.ofNullable(queryFactory
 			.selectFrom(category)
-			.leftJoin(category.menuOptionGroups, menuOptionGroup)
-			.leftJoin(menuOptionGroup.menuOptions, menuOption)
-			.where(category.id.eq(categoryId)
-				.and(category.deletedYn.eq(false))
-				.and(menuOptionGroup.deletedYn.eq(false))
-				.and(menuOption.deletedYn.eq(false))
-			)
+			// .leftJoin(category.menuOptionGroups, menuOptionGroup)
+			// .leftJoin(menuOptionGroup.menuOptions, menuOption)
+			.where(category.id.eq(categoryId))
+			// .distinct()
 			.fetchFirst());
 	}
 
