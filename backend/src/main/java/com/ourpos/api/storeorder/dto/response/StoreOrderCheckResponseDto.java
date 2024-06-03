@@ -1,6 +1,7 @@
 package com.ourpos.api.storeorder.dto.response;
 
 import com.ourpos.domain.store.Store;
+import com.ourpos.domain.storeorder.StoreCommStatus;
 import com.ourpos.domain.storeorder.StoreOrder;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 
@@ -23,6 +24,7 @@ public class StoreOrderCheckResponseDto {
 
 
 
+
 	public void StoreOrderCheckResponseDto(StoreOrder storeOrder, StoreOrderDetail storeOrderDetail){
 		this.storeId = storeOrder.getStore().getId();
 		this.storeCommName= storeOrderDetail.getStoreMenu().getName();
@@ -31,6 +33,7 @@ public class StoreOrderCheckResponseDto {
 		this.storeCommPictureUrl = storeOrderDetail.getStoreMenu().getPictureUrl();
 		this.storeCommPrice = storeOrderDetail.getStoreOrder().getQuantity();
 		this.storeOrderDetailPrice = storeOrderDetail.getStoreOrder().getPrice();
+
 
 	}
 }

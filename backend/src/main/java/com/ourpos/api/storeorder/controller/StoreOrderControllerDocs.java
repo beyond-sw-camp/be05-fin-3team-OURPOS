@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-@Tag(name = "비품/식자재 주문 API")
+@Tag(name = "비품/식자재 주문 ", description = "비품/식자재 주문 관련 API")
 @RequestMapping("/api/v1/storeorder")
 public interface StoreOrderControllerDocs {
 

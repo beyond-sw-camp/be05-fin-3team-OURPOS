@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-@Tag(name = "마이페이지 API")
+@Tag(name = "마이페이지", description = "마이페이지 관련 API")
 @RequestMapping("api/v1/customers")
 public interface CustomerControllerDocs {
 

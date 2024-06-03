@@ -23,6 +23,7 @@ import com.ourpos.domain.storeorder.StoreOrder;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderDetailRepository;
 import com.ourpos.domain.storeorder.StoreOrderRepository;
+import com.ourpos.domain.storeorder.StoreOrderStatus;
 
 import lombok.RequiredArgsConstructor;
 
@@ -118,7 +119,7 @@ public class StoreOrderServiceImpl {
 	}
 
 	 */
-
+	/*
 	public List<StoreOrderCheckResponseDto> getStoreOrdercheck(Long storeId) {
 		System.out.println("StoreOrderService.getStoreOrdercheck");
 
@@ -133,6 +134,7 @@ public class StoreOrderServiceImpl {
 		List<StoreOrderCheckResponseDto> storeOrderCheckResponseDtos = new ArrayList<>();
 
 		for (StoreOrder storeOrder : storeOrders) {
+
 			List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(
 				storeOrder.getId());
 			for (StoreOrderDetail storeOrderDetail : storeOrderDetails) {
@@ -151,6 +153,41 @@ public class StoreOrderServiceImpl {
 
 		return storeOrderCheckResponseDtos;
 	}
+
+	 */
+	public List<StoreOrderCheckResponseDto>getStoreOrdercheck(Long storeId){
+		System.out.println("StoreOrderService.getStoreOrdercheck");
+
+		Store store= storeRepository.findById(storeId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
+		List<StoreOrder> storeOrders= storeOrderRepository.findByStoreId(storeId);
+		if(storeOrders.isEmpty()){
+			throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
+		}
+		List<StoreOrderCheckResponseDto> storeOrderCheckResponseDtos = new ArrayList<>();
+		for (StoreOrder storeOrder : storeOrders){
+			if(storeOrder.getStatus() != StoreOrderStatus.COMPLETED){
+				List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(storeOrder.getId());
+				for (StoreOrderDetail storeOrderDetail : storeOrderDetails){
+					StoreOrderCheckResponseDto dto = new StoreOrderCheckResponseDto(
+						store.getId(),
+						storeOrderDetail.getStoreMenu().getName(),
+						storeOrder.getPrice(),
+						storeOrderDetail.getStoreMenu().getArticleUnit(),
+						storeOrderDetail.getStoreMenu().getPictureUrl(),
+						storeOrder.getQuantity(),
+						storeOrderDetail.getStoreMenu().getPrice()
+					);
+					storeOrderCheckResponseDtos.add(dto);
+
+				}
+			}
+		}
+		return storeOrderCheckResponseDtos;
+	}
+
+
+
 
 		//비품, 식자재 주문 상태 변경
 
