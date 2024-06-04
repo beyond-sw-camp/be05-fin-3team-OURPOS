@@ -200,19 +200,6 @@ public class OrderQueryRepository {
                 )
         );
 
-        // return queryFactory
-        //     .select(Projections.constructor(MealTimeResponseDto.class,
-        //         order.store.id, order.store.name,
-        //         order.createdDateTime.hour().as("hour"),
-        //         order.price.sum().as("total")))
-        //     .from(order)
-        //     .join(order.store)
-        //     .leftJoin(deliveryOrder).on(order.id.eq(deliveryOrder.id))
-        //     .leftJoin(hallOrder).on(order.id.eq(hallOrder.id))
-        //     .where(builder)
-        //     .groupBy(order.createdDateTime.hour(), order.store.id, order.store.name)
-        //     .fetch();
-
         return queryFactory
             .select(Projections.constructor(CountMonthlyResponseDto.class,
                 order.store.id, order.store.name,
@@ -320,6 +307,33 @@ public class OrderQueryRepository {
             .join(deliveryOrder.store)
             .where(deliveryOrder.store.id.eq(storeId))
             .fetch();
+    }
+
+    public List<MealTypeResponseDto> mealTypeAll() {
+
+        Integer hallTotal = queryFactory
+            .select(hallOrder.price.sum())
+            .from(hallOrder)
+            .where(hallOrder.status.ne(HallStatus.WAITING)
+                .and(hallOrder.status.ne(HallStatus.CANCELED)))
+            .fetchOne();
+
+        Integer deliveryTotal = queryFactory
+            .select(deliveryOrder.price.sum())
+            .from(deliveryOrder)
+            .where(
+                deliveryOrder.status.ne(DeliveryStatus.WAITING)
+                    .and(deliveryOrder.status.ne(DeliveryStatus.CANCELED)))
+            .fetchOne();
+
+        MealTypeResponseDto hallDto = new MealTypeResponseDto("hall", hallTotal);
+        MealTypeResponseDto deliveryDto = new MealTypeResponseDto("delivery", deliveryTotal);
+
+        List<MealTypeResponseDto> list = new ArrayList<>();
+        list.add(hallDto);
+        list.add(deliveryDto);
+        return list;
+
     }
 
 }

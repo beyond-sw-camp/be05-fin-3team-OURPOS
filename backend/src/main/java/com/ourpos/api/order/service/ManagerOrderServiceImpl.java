@@ -71,8 +71,12 @@ public class ManagerOrderServiceImpl implements ManagerOrderService {
     @Override
     public List<MealTypeResponseDto> mealType(Long storeId) {
         log.info("식사 유형에 따른 매출액 비중 서비스 {} ", storeId);
-
-        List<MealTypeResponseDto> dtos = orderQueryRepository.mealType(storeId);
+        List<MealTypeResponseDto> dtos = new ArrayList<MealTypeResponseDto>();
+        if (storeId != null) {
+            dtos = orderQueryRepository.mealType(storeId);
+        } else {
+            dtos = orderQueryRepository.mealTypeAll();
+        }
         return dtos;
     }
 

@@ -159,7 +159,7 @@ public class ManagerOrderController {
     }
 
     @GetMapping("orders/meal-type")
-    public Result<List<MealTypeResponseDto>> mealType(@RequestParam Long storeId) {
+    public Result<List<MealTypeResponseDto>> mealType(@RequestParam(required = false) Long storeId) {
         log.info("식사 유형에 따른 매출액 비율 컨트롤러 {} ", storeId);
         List<MealTypeResponseDto> dtos = managerOrderService.mealType(storeId);
 
@@ -168,7 +168,7 @@ public class ManagerOrderController {
 
     //각 메뉴별 주문 비중
     @GetMapping("orders/menu-prefer")
-    public Result<List<MenuPreferResponseDto>> menuPrefer(@RequestParam Long storeId) {
+    public Result<List<MenuPreferResponseDto>> menuPrefer(@RequestParam(required = false) Long storeId) {
         log.info("각 메뉴별 주문 비중 컨트롤러 {} ", storeId);
         List<MenuPreferResponseDto> dtos = managerOrderService.menuPrefer(storeId);
 
