@@ -185,22 +185,48 @@ public class OrderQueryRepository {
     // 월별 매출량
     public List<CountMonthlyResponseDto> countMonthly(Long storeId) {
 
+        BooleanBuilder builder = new BooleanBuilder();
+
+        // builder에 조건 담기
+        if (storeId != null) {
+            builder.and(order.store.id.eq(storeId));
+        }
+        builder.and(
+            (deliveryOrder.status.ne(DeliveryStatus.WAITING)
+                .and(deliveryOrder.status.ne(DeliveryStatus.CANCELED)))
+                .or(
+                    hallOrder.status.ne(HallStatus.WAITING)
+                        .and(hallOrder.status.ne(HallStatus.CANCELED))
+                )
+        );
+
+        // return queryFactory
+        //     .select(Projections.constructor(MealTimeResponseDto.class,
+        //         order.store.id, order.store.name,
+        //         order.createdDateTime.hour().as("hour"),
+        //         order.price.sum().as("total")))
+        //     .from(order)
+        //     .join(order.store)
+        //     .leftJoin(deliveryOrder).on(order.id.eq(deliveryOrder.id))
+        //     .leftJoin(hallOrder).on(order.id.eq(hallOrder.id))
+        //     .where(builder)
+        //     .groupBy(order.createdDateTime.hour(), order.store.id, order.store.name)
+        //     .fetch();
+
         return queryFactory
             .select(Projections.constructor(CountMonthlyResponseDto.class,
+                order.store.id, order.store.name,
                 order.createdDateTime.year().as("year"),
                 order.createdDateTime.month().as("month"),
                 order.price.sum().as("total")))
             .from(order)
-            .groupBy(order.createdDateTime.year(), order.createdDateTime.month())
+            .groupBy(order.createdDateTime.year(), order.createdDateTime.month(), order.store.id, order.store.name)
             .join(order.store)
             .leftJoin(deliveryOrder)
             .on(order.id.eq(deliveryOrder.id))
             .leftJoin(hallOrder)
             .on(order.id.eq(hallOrder.id))
-            .where(order.store.id.eq(storeId)
-                .and((deliveryOrder.status.ne(DeliveryStatus.WAITING)
-                    .and(deliveryOrder.status.ne(DeliveryStatus.CANCELED))
-                    .or((hallOrder.status.ne(HallStatus.WAITING)).and(hallOrder.status.ne(HallStatus.CANCELED))))))
+            .where(builder)
             .fetch();
     }
 

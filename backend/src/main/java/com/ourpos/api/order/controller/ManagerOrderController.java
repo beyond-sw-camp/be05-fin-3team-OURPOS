@@ -153,7 +153,7 @@ public class ManagerOrderController {
     }
 
     @GetMapping("orders/monthly")
-    public Result<List<CountMonthlyResponseDto>> countMouthly(@RequestParam Long storeId) {
+    public Result<List<CountMonthlyResponseDto>> countMouthly(@RequestParam(required = false) Long storeId) {
         List<CountMonthlyResponseDto> dto = managerOrderService.countMonthly(storeId);
         return new Result<>(HttpStatus.OK.value(), "월 매출 확인 되었습니다.", dto);
     }

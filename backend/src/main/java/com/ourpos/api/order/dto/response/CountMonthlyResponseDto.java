@@ -7,11 +7,15 @@ import lombok.Setter;
 @Setter
 public class CountMonthlyResponseDto {
 
+    private Long storeId;
+    private String storeName;
     private Integer year;
     private Integer month;
     private Integer total;
 
-    public CountMonthlyResponseDto(Integer year, Integer month, Integer total) {
+    public CountMonthlyResponseDto(Long storeId, String storeName, Integer year, Integer month, Integer total) {
+        this.storeId = storeId;
+        this.storeName = storeName;
         this.total = total;
         this.month = month;
         this.year = year;
