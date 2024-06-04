@@ -236,22 +236,44 @@ public class OrderQueryRepository {
     // 시간대별 매출 발생 추이
     public List<MealTimeResponseDto> mealTime(Long storeId) {
 
-        return queryFactory
-            .select(Projections.constructor(MealTimeResponseDto.class,
-                order.createdDateTime.hour().as("hour"),
-                order.price.sum().as("total")))
-            .from(order)
-            .groupBy(order.createdDateTime.hour())
-            .join(order.store)
-            .leftJoin(deliveryOrder)
-            .on(order.id.eq(deliveryOrder.id))
-            .leftJoin(hallOrder)
-            .on(order.id.eq(hallOrder.id))
-            .where(order.store.id.eq(storeId)
-                .and((deliveryOrder.status.ne(DeliveryStatus.WAITING)
-                    .and(deliveryOrder.status.ne(DeliveryStatus.CANCELED))
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (storeId != null) {
+            builder.and(order.store.id.eq(storeId));
+            return queryFactory
+                .select(Projections.constructor(MealTimeResponseDto.class,
+                    order.store.id, order.store.name,
+                    order.createdDateTime.hour().as("hour"),
+                    order.price.sum().as("total")))
+                .from(order)
+                .groupBy(order.createdDateTime.hour())
+                .join(order.store)
+                .leftJoin(deliveryOrder)
+                .on(order.id.eq(deliveryOrder.id))
+                .leftJoin(hallOrder)
+                .on(order.id.eq(hallOrder.id))
+                .where((order.store.id.eq(storeId).and((deliveryOrder.status.ne(DeliveryStatus.WAITING)
+                    .and(deliveryOrder.status.ne(DeliveryStatus.CANCELED)))
                     .or((hallOrder.status.ne(HallStatus.WAITING)).and(hallOrder.status.ne(HallStatus.CANCELED))))))
-            .fetch();
+                .fetch();
+        } else {
+            return queryFactory
+                .select(Projections.constructor(MealTimeResponseDto.class,
+                    order.store.id, order.store.name,
+                    order.createdDateTime.hour().as("hour"),
+                    order.price.sum().as("total")))
+                .from(order)
+                .groupBy(order.createdDateTime.hour(), order.store.id)
+                .join(order.store)
+                .leftJoin(deliveryOrder)
+                .on(order.id.eq(deliveryOrder.id))
+                .leftJoin(hallOrder)
+                .on(order.id.eq(hallOrder.id))
+                .where((deliveryOrder.status.ne(DeliveryStatus.WAITING)
+                    .and(deliveryOrder.status.ne(DeliveryStatus.CANCELED))
+                    .or((hallOrder.status.ne(HallStatus.WAITING)).and(hallOrder.status.ne(HallStatus.CANCELED)))))
+                .fetch();
+        }
     }
 
     // 메뉴별 주문 비중 ->

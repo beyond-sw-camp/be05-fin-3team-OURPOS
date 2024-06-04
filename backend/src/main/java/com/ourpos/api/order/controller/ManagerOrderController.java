@@ -177,7 +177,7 @@ public class ManagerOrderController {
 
     // 시간대별 매출 발생 추이
     @GetMapping("orders/meal-time")
-    public Result<List<MealTimeResponseDto>> mealTime(@RequestParam Long storeId) {
+    public Result<List<MealTimeResponseDto>> mealTime(@RequestParam(required = false) Long storeId) {
         log.info("시간대별 매출 발생 추이 컨트롤러 {} ", storeId);
         List<MealTimeResponseDto> dtos = managerOrderService.mealTime(storeId);
 
