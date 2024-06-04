@@ -68,4 +68,11 @@ public class KakaoOAuth2Response implements OAuth2Response {
         return phoneNumber.replace("+82", "").replace(" ", "0");
     }
 
+    @Override
+    public String getEmail() {
+        Object kakaoAccount = attributes.get("kakao_account");
+        Map<String, Object> kakaoAccountMap = (Map<String, Object>)kakaoAccount;
+        return kakaoAccountMap.get("email").toString();
+    }
+
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ourpos.api.Result;
@@ -112,11 +113,13 @@ public class CustomerController {
 
     // 마이페이지 - 내가 주문한 배달 주문 내역 조회
     @GetMapping("/my/orders/delivery")
-    public Result<Page<DeliveryOrderResponseDto>> getMyDeliveryOrders(@PageableDefault(size = 10) Pageable pageable) {
+    public Result<Page<DeliveryOrderResponseDto>> getMyDeliveryOrders(@PageableDefault(size = 10) Pageable pageable,
+        @RequestParam(required = false) String status) {
         String loginId = getLoginCustomerLoginId();
         log.info("나의 배달 주문 내역 조회: {}", loginId);
 
-        Page<DeliveryOrderResponseDto> deliveryOrders = orderQueryService.findDeliveryOrderByLoginId(loginId, pageable);
+        Page<DeliveryOrderResponseDto> deliveryOrders = orderQueryService.findDeliveryOrderByLoginId(loginId, status,
+            pageable);
         return new Result<>(HttpStatus.OK.value(), "나의 배달 주문 내역 조회가 완료되었습니다.", deliveryOrders);
     }
 

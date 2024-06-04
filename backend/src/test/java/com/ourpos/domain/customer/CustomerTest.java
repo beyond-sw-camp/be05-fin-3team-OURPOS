@@ -130,7 +130,7 @@ class CustomerTest {
             .containsExactly(true, false);
     }
 
-    @DisplayName("슈퍼관리자는 가게 사장님 역할을 관리자(ROLE_ADMIN)로 등록/변경 할 수 있다.")
+    @DisplayName("본사 관리자는 가게 사장님 역할을 관리자(ROLE_ADMIN)로 등록/변경 할 수 있다.")
     @Test
     void enrollAdmin() {
         // given
@@ -143,7 +143,7 @@ class CustomerTest {
         assertThat(customer.getRole()).isEqualTo(Role.ROLE_ADMIN);
     }
 
-    @DisplayName("슈퍼관리자는 라이더 검증이 끝난 라이더의 역할을 라이더(ROLE_RIDER)로 등록/변경 할 수 있다.")
+    @DisplayName("본사 관리자는 라이더 검증이 끝난 라이더의 역할을 라이더(ROLE_RIDER)로 등록/변경 할 수 있다.")
     @Test
     void enrollRider() {
         // given
@@ -156,7 +156,7 @@ class CustomerTest {
         assertThat(customer.getRole()).isEqualTo(Role.ROLE_RIDER);
     }
 
-    @DisplayName("슈퍼관리자는 일반 사용자의 역할을 사용자(ROLE_USER)로 등록/변경 할 수 있다.")
+    @DisplayName("본사 관리자는 일반 사용자의 역할을 사용자(ROLE_USER)로 등록/변경 할 수 있다.")
     @Test
     void enrollUser() {
         // given

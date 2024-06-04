@@ -56,12 +56,12 @@ public class HallOrder extends Order {
         this.status = HallStatus.COOKING;
     }
 
-    public void completeOrder() {
+    public void completeOrder(LocalDateTime completeOrderTime) {
         if (this.status != HallStatus.COOKING) {
             throw new IllegalArgumentException("조리중인 주문만 완료할 수 있습니다.");
         }
         this.status = HallStatus.COMPLETED;
-        super.setCompleteOrderTime(LocalDateTime.now());
+        super.setCompleteOrderTime(completeOrderTime);
     }
 
 }
