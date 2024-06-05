@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,8 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/storeorder")
-public class StoreOrderController {
+@RequestMapping("/api/v1")
+public class StoreOrderController implements StoreOrderControllerDocs {
 
     private final StoreCommServiceImpl storeCommService;
     private final StoreOrderDetailRepository storeOrderDetailRepository;
@@ -40,7 +41,8 @@ public class StoreOrderController {
     private final StoreOrderServiceImpl storeOrderService;
 
     // 판매 비품, 식자재 목록 확인
-    @GetMapping("/checkstorecomms")
+
+    @GetMapping("/storecomms")
     public Result<List<StoreCommResponseDto>> checkStoreComms() {
         log.info("비품/식자재 목록 출력");
         List<StoreCommResponseDto> storeCommsList = storeCommService.getStoreComms();
@@ -48,7 +50,7 @@ public class StoreOrderController {
     }
 
     // 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영) ?-> price가 반영 안됨
-    @PostMapping("/storecommorder")
+    @PostMapping("/storecomms/order")
     public Result<Void> createStoreOrder(@Valid @RequestBody StoreOrderRequestDto storeOrderRequestDto) {
         log.info("가게 식자재, 비품 주문: {}", storeOrderRequestDto);
         storeOrderService.createStoreOrder(storeOrderRequestDto);
@@ -57,15 +59,16 @@ public class StoreOrderController {
 
     // 비품, 식자재 주문 내역 확인 ? 주문 내역  개별 조회 o
 
-    @GetMapping("/{orderDetailId}")
+    @GetMapping("/storeorder/{orderDetailId}")
     public Result<StoreOrderResponseDto> getStoreOrder(@PathVariable Long orderDetailId) {
         log.info("가게 식자재, 비품 주문: {}", orderDetailId);
         StoreOrderResponseDto storeOrderResponseDto = storeOrderService.getStoreOrder(orderDetailId);
         return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문이 완료되었습니다.", storeOrderResponseDto);
     }
 
+    /*
     // 비품, 식자재 주문 수정
-    @PutMapping("/{orderdetailId}")
+    @PutMapping("/storeorder/{orderdetailId}")
     public Result<Void> updateStoreOrder(@Valid @PathVariable Long orderdetailId,
         @RequestBody StoreOrderRequestDto requestDto) {
         log.info("가게 식자재, 비품 주문 수정: {}", orderdetailId);
@@ -73,8 +76,10 @@ public class StoreOrderController {
         return new Result<>(HttpStatus.OK.value(), "주문 수정 성공", null);
     }
 
+     */
+
     // 비품, 식자재 주문 삭제
-    @DeleteMapping("/{orderdetailId}")
+    @DeleteMapping("/storeorder/{orderdetailId}")
     public Result<Void> deleteStoreOrder(@PathVariable Long orderdetailId) {
 
         log.info("비품/식자재 삭제 : {}", orderdetailId);
@@ -91,16 +96,20 @@ public class StoreOrderController {
 
     //비품, 식자재 주문 확인 (본사)
 
-    @GetMapping("/{storeId}")
-    public Result<StoreOrderCheckResponseDto> getStoreOrderCheck(@PathVariable Long storeId) {
+
+    @GetMapping("/storeorder/{storeId}/check")
+    public Result<List<StoreOrderCheckResponseDto>> getStoreOrderCheck(@PathVariable Long storeId) {
         log.info("가게 식자재, 비품 주문: {}", storeId);
-        StoreOrderCheckResponseDto storeOrderCheckResponseDto = storeOrderService.getStoreOrdercheck(storeId);
-        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문이 완료되었습니다.", storeOrderCheckResponseDto);
+        List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheck(storeId);
+        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", storeOrderList );
     }
+
+
+
     //비품, 식자재 주문 상태 변경
 
     // 1. WAITING -> ACCEPTED
-    @PutMapping("/accepted/{storeOrderId}")
+    @PutMapping("/storeorder/{storeOrderId}/accepted")
     public Result<Void> acceptedStoreOrder(@PathVariable Long storeOrderId) {
         log.info("가게 식자재, 비품 주문 수정: {}", storeOrderId);
         storeOrderService.acceptedStoreOrder(storeOrderId);
@@ -108,7 +117,7 @@ public class StoreOrderController {
     }
 
     // 2. ACCEPTED -> DELIVERING
-    @PutMapping("/delivering/{storeOrderId}")
+    @PutMapping("/storeorder/{storeOrderId}/delivering")
     public Result<Void> deliveringStoreOrder(@PathVariable Long storeOrderId) {
         log.info("가게 식자재, 비품 주문 수정: {}", storeOrderId);
         storeOrderService.deliveringStoreOrder(storeOrderId);
@@ -117,7 +126,7 @@ public class StoreOrderController {
 
     // 3. DELIVERING -> COMPLETED
 
-    @PutMapping("/complete/{storeOrderId}")
+    @PutMapping("/storeorder/{storeOrderId}/complete")
     public Result<Void> completeStoreOrder(@PathVariable Long storeOrderId) {
         log.info("가게 식자재, 비품 주문 수정: {}", storeOrderId);
         storeOrderService.completeStoreOrder(storeOrderId);

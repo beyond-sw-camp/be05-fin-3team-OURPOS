@@ -25,6 +25,7 @@ public class StoreCommServiceImpl implements StoreCommService {
         saveStoreComm(storeCommRequestDto);
     }
 
+
     @Override
     public List<StoreCommResponseDto> getStoreComms() {
         System.out.println("StoreCommServiceImplServiceImpl.getStoreComms");
@@ -40,7 +41,7 @@ public class StoreCommServiceImpl implements StoreCommService {
     @Override
     public void updateStoreComm(Long storeCommId, StoreCommRequestDto storeCommRequestDto) {
         StoreComm existingStoreComm = storeCommRepository.findById(storeCommId)
-            .orElseThrow(() -> new RuntimeException("StoreComm not found with id: " + storeCommId));
+            .orElseThrow(() -> new IllegalArgumentException("StoreComm not found with id: " + storeCommId));
         existingStoreComm.updateFromDto(storeCommRequestDto);
         storeCommRepository.save(existingStoreComm);
     }
@@ -54,7 +55,7 @@ public class StoreCommServiceImpl implements StoreCommService {
     @Transactional
     public void deletetStoreComm(Long storeCommId) {
         StoreComm storeComm = storeCommRepository.findById(storeCommId)
-            .orElseThrow(() -> new RuntimeException("StoreComm not found with id: " + storeCommId));
+            .orElseThrow(() -> new IllegalArgumentException("StoreComm not found with id: " + storeCommId));
         storeComm.delete();
         storeCommRepository.save(storeComm);
     }
