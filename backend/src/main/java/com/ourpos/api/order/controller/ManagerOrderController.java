@@ -29,8 +29,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ManagerOrderController {
@@ -191,4 +191,3 @@ public class ManagerOrderController {
         return new Result<>(HttpStatus.OK.value(), "지역별 배달 빈도수 위도 경도", managerOrderService.deliveryFrequency(storeId));
     }
 }
-

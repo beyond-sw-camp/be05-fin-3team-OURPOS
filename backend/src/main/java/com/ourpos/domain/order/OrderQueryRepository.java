@@ -282,6 +282,13 @@ public class OrderQueryRepository {
     // 메뉴별 주문 비중 ->
     public List<MenuPreferResponseDto> menuPrefer(Long storeId) {
 
+        BooleanBuilder builder = new BooleanBuilder();
+
+        // builder에 조건 담기
+        if (storeId != null) {
+            builder.and(order.store.id.eq(storeId));
+        }
+
         return queryFactory
             .select(Projections.constructor(MenuPreferResponseDto.class,
                 orderDetail.menu.id,
@@ -293,7 +300,7 @@ public class OrderQueryRepository {
             .join(orderDetail.order)
             .join(orderDetail.menu)
             .join(orderDetail.menu.category)
-            .where(orderDetail.order.store.id.eq(storeId))
+            .where(builder)
             .fetch();
 
     }
