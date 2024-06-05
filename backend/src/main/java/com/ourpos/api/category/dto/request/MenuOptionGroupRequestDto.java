@@ -20,7 +20,7 @@ public class MenuOptionGroupRequestDto {
 	@NotBlank(message = "메뉴옵션그룹 이름을 입력해 주세요")
 	private String name;
 
-	@NotBlank(message = "배타선택여부(다중선택 가능 여부)를 입력해 주세요")
+	@NotNull(message = "배타선택여부(다중선택 가능 여부)를 입력해 주세요")
 	private Boolean exclusiveYn;
 
 	private String description;
