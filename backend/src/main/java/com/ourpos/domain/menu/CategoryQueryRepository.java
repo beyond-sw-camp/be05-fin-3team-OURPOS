@@ -29,9 +29,22 @@ public class CategoryQueryRepository {
 	public Optional<Category> findOne(Long categoryId) {
 		return Optional.ofNullable(queryFactory
 			.selectFrom(category)
-			.where(categoryIdEq(categoryId), category.deletedYn.eq(false))
+			.where(category.id.eq(categoryId))
+			.distinct()
 			.fetchFirst());
 	}
+
+	// public Optional<Category> findOne(Long categoryId) {
+	// 	return Optional.ofNullable(queryFactory
+	// 		.selectFrom(category)
+	// 		.leftJoin(category.menuOptionGroups, menuOptionGroup).fetchJoin()
+	// 		.leftJoin(menuOptionGroup.menuOptions, menuOption).fetchJoin()
+	// 		.where(category.id.eq(categoryId)
+	// 			.and(menuOptionGroup.deletedYn.eq(false))
+	// 			.and(menuOption.deletedYn.eq(false)))
+	// 		.distinct()
+	// 		.fetchFirst());
+	// }
 
 	private static BooleanExpression categoryIdEq(Long categoryId) {
 		return category.id.eq(categoryId);
