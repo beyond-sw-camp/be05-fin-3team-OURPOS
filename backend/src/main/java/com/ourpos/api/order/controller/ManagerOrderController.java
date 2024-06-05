@@ -1,8 +1,11 @@
 package com.ourpos.api.order.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,19 +14,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ourpos.api.Result;
+import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
+import com.ourpos.api.order.dto.response.MealTimeResponseDto;
+import com.ourpos.api.order.dto.response.MealTypeResponseDto;
+import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 import com.ourpos.api.order.service.ManagerOrderService;
 import com.ourpos.api.order.service.OrderQueryService;
 import com.ourpos.api.order.service.OrderService;
+import com.ourpos.api.store.Location;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ManagerOrderController {
 
     // 주문 상세는 OrderQueryService
@@ -143,5 +152,42 @@ public class ManagerOrderController {
         return new Result<>(HttpStatus.OK.value(), "배달 완료 되었습니다.", null);
     }
 
-}
+    @GetMapping("orders/monthly")
+    public Result<List<CountMonthlyResponseDto>> countMouthly(@RequestParam(required = false) Long storeId) {
+        List<CountMonthlyResponseDto> dto = managerOrderService.countMonthly(storeId);
+        return new Result<>(HttpStatus.OK.value(), "월 매출 확인 되었습니다.", dto);
+    }
 
+    @GetMapping("orders/meal-type")
+    public Result<List<MealTypeResponseDto>> mealType(@RequestParam(required = false) Long storeId) {
+        log.info("식사 유형에 따른 매출액 비율 컨트롤러 {} ", storeId);
+        List<MealTypeResponseDto> dtos = managerOrderService.mealType(storeId);
+
+        return new Result<>(HttpStatus.OK.value(), "식사 유형 매출액 비율이 확인 되었습니다.", dtos);
+    }
+
+    //각 메뉴별 주문 비중
+    @GetMapping("orders/menu-prefer")
+    public Result<List<MenuPreferResponseDto>> menuPrefer(@RequestParam(required = false) Long storeId) {
+        log.info("각 메뉴별 주문 비중 컨트롤러 {} ", storeId);
+        List<MenuPreferResponseDto> dtos = managerOrderService.menuPrefer(storeId);
+
+        return new Result<>(HttpStatus.OK.value(), "각 메뉴별 주문 비중", dtos);
+    }
+
+    // 시간대별 매출 발생 추이
+    @GetMapping("orders/meal-time")
+    public Result<List<MealTimeResponseDto>> mealTime(@RequestParam(required = false) Long storeId) {
+        log.info("시간대별 매출 발생 추이 컨트롤러 {} ", storeId);
+        List<MealTimeResponseDto> dtos = managerOrderService.mealTime(storeId);
+
+        return new Result<>(HttpStatus.OK.value(), "시간대별 매출 발생 추이", dtos);
+    }
+
+    // 지역별 배달 빈도
+    @GetMapping("orders/delivery/frequency")
+    public Result<List<Location>> deliveryFrequency(@RequestParam Long storeId) {
+        log.info("지역별 배달 빈도 컨트롤러 {} ", storeId);
+        return new Result<>(HttpStatus.OK.value(), "지역별 배달 빈도수 위도 경도", managerOrderService.deliveryFrequency(storeId));
+    }
+}

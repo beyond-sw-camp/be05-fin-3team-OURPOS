@@ -2,8 +2,11 @@ package com.ourpos.domain.order;
 
 import static com.ourpos.domain.order.QDeliveryOrder.*;
 import static com.ourpos.domain.order.QHallOrder.*;
+import static com.ourpos.domain.order.QOrder.*;
+import static com.ourpos.domain.orderdetail.QOrderDetail.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,15 +15,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
+import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
+import com.ourpos.api.order.dto.response.MealTimeResponseDto;
+import com.ourpos.api.order.dto.response.MealTypeResponseDto;
+import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Repository
+@Slf4j
 public class OrderQueryRepository {
 
     private final JPAQueryFactory queryFactory;
@@ -171,4 +181,166 @@ public class OrderQueryRepository {
     private static BooleanExpression deliveryOrderEq(Long orderId) {
         return deliveryOrder.id.eq(orderId);
     }
+
+    // 월별 매출량
+    public List<CountMonthlyResponseDto> countMonthly(Long storeId) {
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        // builder에 조건 담기
+        if (storeId != null) {
+            builder.and(order.store.id.eq(storeId));
+        }
+        builder.and(
+            (deliveryOrder.status.ne(DeliveryStatus.WAITING)
+                .and(deliveryOrder.status.ne(DeliveryStatus.CANCELED)))
+                .or(
+                    hallOrder.status.ne(HallStatus.WAITING)
+                        .and(hallOrder.status.ne(HallStatus.CANCELED))
+                )
+        );
+
+        return queryFactory
+            .select(Projections.constructor(CountMonthlyResponseDto.class,
+                order.store.id, order.store.name,
+                order.createdDateTime.year().as("year"),
+                order.createdDateTime.month().as("month"),
+                order.price.sum().as("total")))
+            .from(order)
+            .groupBy(order.createdDateTime.year(), order.createdDateTime.month(), order.store.id, order.store.name)
+            .join(order.store)
+            .leftJoin(deliveryOrder)
+            .on(order.id.eq(deliveryOrder.id))
+            .leftJoin(hallOrder)
+            .on(order.id.eq(hallOrder.id))
+            .where(builder)
+            .fetch();
+    }
+
+    // 식사 유형에 따른 매출액 비중
+    public List<MealTypeResponseDto> mealType(Long storeId) {
+
+        Integer hallTotal = queryFactory
+            .select(hallOrder.price.sum())
+            .from(hallOrder)
+            .join(hallOrder.store)
+            .groupBy(hallOrder.store.id)
+            .where(hallOrder.store.id.eq(storeId), hallOrder.status.ne(HallStatus.WAITING))
+            .fetchOne();
+
+        Integer deliveryTotal = queryFactory
+            .select(deliveryOrder.price.sum())
+            .from(deliveryOrder)
+            .join(deliveryOrder.store)
+            .groupBy(deliveryOrder.store.id)
+            .where(deliveryOrder.store.id.eq(storeId), deliveryOrder.status.ne(DeliveryStatus.WAITING))
+            .fetchOne();
+
+        MealTypeResponseDto hallDto = new MealTypeResponseDto("hall", hallTotal);
+        MealTypeResponseDto deliveryDto = new MealTypeResponseDto("delivery", deliveryTotal);
+
+        List<MealTypeResponseDto> dtos = new ArrayList<>();
+        dtos.add(hallDto);
+        dtos.add(deliveryDto);
+
+        return dtos;
+    }
+
+    // 시간대별 매출 발생 추이
+    public List<MealTimeResponseDto> mealTime(Long storeId) {
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        // builder에 조건 담기
+        if (storeId != null) {
+            builder.and(order.store.id.eq(storeId));
+        }
+
+        builder.and(
+            (deliveryOrder.status.ne(DeliveryStatus.WAITING)
+                .and(deliveryOrder.status.ne(DeliveryStatus.CANCELED)))
+                .or(
+                    hallOrder.status.ne(HallStatus.WAITING)
+                        .and(hallOrder.status.ne(HallStatus.CANCELED))
+                )
+        );
+
+        return queryFactory
+            .select(Projections.constructor(MealTimeResponseDto.class,
+                order.store.id, order.store.name,
+                order.createdDateTime.hour().as("hour"),
+                order.price.sum().as("total")))
+            .from(order)
+            .join(order.store)
+            .leftJoin(deliveryOrder).on(order.id.eq(deliveryOrder.id))
+            .leftJoin(hallOrder).on(order.id.eq(hallOrder.id))
+            .where(builder)
+            .groupBy(order.createdDateTime.hour(), order.store.id, order.store.name)
+            .fetch();
+    }
+
+    // 메뉴별 주문 비중 ->
+    public List<MenuPreferResponseDto> menuPrefer(Long storeId) {
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        // builder에 조건 담기
+        if (storeId != null) {
+            builder.and(order.store.id.eq(storeId));
+        }
+
+        return queryFactory
+            .select(Projections.constructor(MenuPreferResponseDto.class,
+                orderDetail.menu.id,
+                orderDetail.menu.name,
+                orderDetail.menu.category.name,
+                orderDetail.order.countDistinct().as("quantity")))
+            .from(orderDetail)
+            .groupBy(orderDetail.menu.id, orderDetail.menu.name)
+            .join(orderDetail.order)
+            .join(orderDetail.menu)
+            .join(orderDetail.menu.category)
+            .where(builder)
+            .fetch();
+
+    }
+
+    // 배달 주소 검색
+    public List<String> deliveryFrequency(Long storeId) {
+        return queryFactory
+            .select(deliveryOrder.orderAddress.addressBase)
+            .from(deliveryOrder)
+            .join(deliveryOrder.orderAddress)
+            .join(deliveryOrder.store)
+            .where(deliveryOrder.store.id.eq(storeId))
+            .fetch();
+    }
+
+    public List<MealTypeResponseDto> mealTypeAll() {
+
+        Integer hallTotal = queryFactory
+            .select(hallOrder.price.sum())
+            .from(hallOrder)
+            .where(hallOrder.status.ne(HallStatus.WAITING)
+                .and(hallOrder.status.ne(HallStatus.CANCELED)))
+            .fetchOne();
+
+        Integer deliveryTotal = queryFactory
+            .select(deliveryOrder.price.sum())
+            .from(deliveryOrder)
+            .where(
+                deliveryOrder.status.ne(DeliveryStatus.WAITING)
+                    .and(deliveryOrder.status.ne(DeliveryStatus.CANCELED)))
+            .fetchOne();
+
+        MealTypeResponseDto hallDto = new MealTypeResponseDto("hall", hallTotal);
+        MealTypeResponseDto deliveryDto = new MealTypeResponseDto("delivery", deliveryTotal);
+
+        List<MealTypeResponseDto> list = new ArrayList<>();
+        list.add(hallDto);
+        list.add(deliveryDto);
+        return list;
+
+    }
+
 }
