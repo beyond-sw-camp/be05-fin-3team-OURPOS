@@ -1,0 +1,51 @@
+### 로그인 한 고객의 정보 조회
+GET http://localhost:8080/api/v1/customers/my
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NTA4MzUsImV4cCI6MTcxNzU1NTYzNX0.1OJ3pqlMCA4nXp-Rt3AUx-5mY4Jhmb7Ds-7ngr1gyxk
+
+### 로그인 한 고객의 주소 목록 조회
+GET http://localhost:8080/api/v1/customers/my/addresses
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NTA4MzUsImV4cCI6MTcxNzU1NTYzNX0.1OJ3pqlMCA4nXp-Rt3AUx-5mY4Jhmb7Ds-7ngr1gyxk
+
+### 주소 추가
+POST http://localhost:8080/api/v1/customers/addresses
+Content-Type: application/json
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NTA4MzUsImV4cCI6MTcxNzU1NTYzNX0.1OJ3pqlMCA4nXp-Rt3AUx-5mY4Jhmb7Ds-7ngr1gyxk
+
+{
+  "name": "집",
+  "receiverName": "김철수",
+  "telNo": "010-1234-5678",
+  "addressBase": "서울시 강남구 역삼동 3번길 12",
+  "addressDetail": "아파트 1동 101호",
+  "zipcode": "12345"
+}
+
+### 주소 수정
+PUT http://localhost:8080/api/v1/customers/addresses/2
+Content-Type: application/json
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NTA4MzUsImV4cCI6MTcxNzU1NTYzNX0.1OJ3pqlMCA4nXp-Rt3AUx-5mY4Jhmb7Ds-7ngr1gyxk
+
+{
+  "name": "회사",
+  "receiverName": "홍길동",
+  "telNo": "010-1234-5678",
+  "addressBase": "서울시 강남구 역삼동 3번길 13",
+  "addressDetail": "아파트 2동 201호",
+  "zipcode": "12312"
+}
+
+### 기본 주소 수정
+PUT http://localhost:8080/api/v1/customers/addresses/2/default
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcwNTkwODAsImV4cCI6MTcxNzY2Mzg4MH0.HX2J2W__UdZ6J4d7iO9j-sMJlDlFSKZ8jlN_4TxvHvw
+
+### 주소 삭제
+DELETE http://localhost:8080/api/v1/customers/addresses/2
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTY5NTA4MzUsImV4cCI6MTcxNzU1NTYzNX0.1OJ3pqlMCA4nXp-Rt3AUx-5mY4Jhmb7Ds-7ngr1gyxk
+
+### 로그인 고객의 홀/포장 주문 내역 조회
+GET http://localhost:8080/api/v1/customers/my/orders/hall?page=0
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcwNTM4MzYsImV4cCI6MTcxNzY1ODYzNn0.CJYIaEP4YDOOzSJM9b9VJSV5-dinvkFIxQ0r_nOYaa4
+
+### 로그인 고객의 배달 주문 내역 조회
+GET http://localhost:8080/api/v1/customers/my/orders/delivery?page=0
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcwNTM4MzYsImV4cCI6MTcxNzY1ODYzNn0.CJYIaEP4YDOOzSJM9b9VJSV5-dinvkFIxQ0r_nOYaa4

@@ -2,6 +2,8 @@ package com.ourpos.domain.order;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +51,6 @@ class OrderTest {
 
         Menu menu = Menu.builder()
             .name("햄버거")
-            .store(store)
             .price(5000)
             .build();
 
@@ -66,8 +67,55 @@ class OrderTest {
             .orderDetail(orderDetail)
             .build();
 
-        // then
+        // when then
         assertThat(order.getPrice()).isEqualTo(5000 * 2 + 500 + 1000 + 700);
+    }
+
+    @DisplayName("최소 주문 금액을 충족하지 못한 경우 에러 발생")
+    @Test
+    void checkMinimumOrderPrice() {
+        // given
+        Store store = Store.builder()
+            .name("강남점")
+            .minimumOrderPrice(20000)
+            .build();
+
+        Menu menu = Menu.builder()
+            .name("햄버거")
+            .price(5000)
+            .build();
+
+        OrderDetail orderDetail = OrderDetail.builder()
+            .menu(menu)
+            .quantity(2)
+            .build();
+
+        Order order = DeliveryOrder.builder()
+            .store(store)
+            .orderDetail(orderDetail)
+            .build();
+
+        // when then
+        assertThatThrownBy(order::checkMinimumOrderPrice)
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("최소 주문 금액을 충족하지 못했습니다.");
+    }
+
+    @DisplayName("주문 완료 시간 설정")
+    @Test
+    void setCompleteOrderTime() {
+        // given
+        Order order = HallOrder.builder()
+            .build();
+
+        // when
+        assertThat(order.getCompletedDateTime()).isNull();
+
+        LocalDateTime now = LocalDateTime.of(2024, 1, 1, 12, 0, 0);
+        order.setCompleteOrderTime(now);
+
+        // then
+        assertThat(order.getCompletedDateTime()).isEqualTo(now);
     }
 
 }

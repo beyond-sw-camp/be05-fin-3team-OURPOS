@@ -38,3 +38,4 @@ out/
 
 ### Querydsl ###
 /src/main/generated/
+/src/main/resources/config.properties

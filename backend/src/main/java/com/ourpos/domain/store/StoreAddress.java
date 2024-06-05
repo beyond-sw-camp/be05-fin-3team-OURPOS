@@ -23,23 +23,27 @@ public class StoreAddress {
     @Column(name = "store_address_id")
     private Long id;
 
-    @Column(name = "store_address_si")
-    private String addressSi;
-
-    @Column(name = "store_address_gu")
-    private String addressGu;
-
-    @Column(name = "store_address_street_name")
-    private String addressStreetName;
+    @Column(name = "store_address_base")
+    private String addressBase;
 
     @Column(name = "store_address_detail")
     private String addressDetail;
 
+    @Column(name = "store_address_zipcode")
+    private String zipcode;
+
+    @Column(name = "store_address_latitude")
+    private Double latitude;
+
+    @Column(name = "store_address_longitude")
+    private Double longitude;
+
     @Builder
-    private StoreAddress(String addressSi, String addressGu, String addressStreetName, String addressDetail) {
-        this.addressSi = addressSi;
-        this.addressGu = addressGu;
-        this.addressStreetName = addressStreetName;
+    private StoreAddress(String addressBase, String addressDetail, String zipcode, Double latitude, Double longitude) {
+        this.addressBase = addressBase;
         this.addressDetail = addressDetail;
+        this.zipcode = zipcode;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }

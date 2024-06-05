@@ -2,9 +2,12 @@ package com.ourpos.domain.order;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
@@ -23,23 +26,35 @@ public class OrderAddress {
     @Column(name = "order_address_id")
     private Long id;
 
-    @Column(name = "order_address_si")
-    private String addressSi;
+    @JoinColumn(name = "administrative_building_address_code")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private AdministrativeBuildingAddress administrativeBuildingAddress;
 
-    @Column(name = "order_address_gu")
-    private String addressGu;
+    @Column(name = "order_address_receiver_name")
+    private String receiverName;
 
-    @Column(name = "order_address_street_name")
-    private String addressStreetName;
+    @Column(name = "order_address_tel_no")
+    private String telNo;
+
+    @Column(name = "order_address_base")
+    private String addressBase;
 
     @Column(name = "order_address_detail")
     private String addressDetail;
 
+    @Column(name = "order_address_zipcode")
+    private String zipcode;
+
     @Builder
-    private OrderAddress(String addressSi, String addressGu, String addressStreetName, String addressDetail) {
-        this.addressSi = addressSi;
-        this.addressGu = addressGu;
-        this.addressStreetName = addressStreetName;
+    private OrderAddress(String receiverName, String telNo, String addressBase, String addressDetail, String zipcode) {
+        this.receiverName = receiverName;
+        this.telNo = telNo;
+        this.addressBase = addressBase;
         this.addressDetail = addressDetail;
+        this.zipcode = zipcode;
+    }
+
+    public void addAdministrativeBuildingAddress(AdministrativeBuildingAddress administrativeBuildingAddress) {
+        this.administrativeBuildingAddress = administrativeBuildingAddress;
     }
 }

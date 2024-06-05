@@ -18,6 +18,26 @@ spring:
         default_batch_fetch_size: 100
     defer-datasource-initialization: true
 
+  sql:
+    init:
+      platform: h2
+      data-locations: classpath:/db/data.sql
+      mode: always
+      encoding: utf-8
+
+  h2:
+    console:
+      enabled: true
+
+  data:
+    web:
+      pageable:
+        default-page-size: 5
+
 logging.level:
   org.hibernate.SQL: debug
-  org.hibernate.orm.jdbc.bind: trace
+  # org.hibernate.orm.jdbc.bind: trace
+
+# 프로필 사진이 저장되는 위치 설정
+file:
+  dir: C:\Users\user\Desktop\한화 PLAYDATA SW캠프\팀프로젝트\최종\메뉴추가\

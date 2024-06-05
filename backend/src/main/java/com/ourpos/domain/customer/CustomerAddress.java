@@ -35,29 +35,47 @@ public class CustomerAddress {
     @Column(name = "customer_address_name")
     private String name;
 
-    @Column(name = "customer_address_si")
-    private String addressSi;
+    @Column(name = "customer_adrress_receiver_name")
+    private String receiverName;
 
-    @Column(name = "customer_address_gu")
-    private String addressGu;
+    @Column(name = "customer_address_tel_no")
+    private String telNo;
 
-    @Column(name = "customer_address_street_name")
-    private String streetName;
+    @Column(name = "customer_address_base")
+    private String addressBase;
 
     @Column(name = "customer_address_detail")
     private String addressDetail;
+
+    @Column(name = "customer_address_zipcode")
+    private String zipcode;
 
     @Column(name = "customer_address_default_yn")
     private Boolean defaultYn;
 
     @Builder
-    private CustomerAddress(String name, String addressSi, String addressGu, String streetName, String addressDetail,
-        Boolean defaultYn) {
+    private CustomerAddress(String name, String receiverName, String telNo, String addressBase,
+        String addressDetail, String zipcode) {
         this.name = name;
-        this.addressSi = addressSi;
-        this.addressGu = addressGu;
-        this.streetName = streetName;
+        this.receiverName = receiverName;
+        this.telNo = telNo;
+        this.addressBase = addressBase;
         this.addressDetail = addressDetail;
+        this.zipcode = zipcode;
+        this.defaultYn = false;
+    }
+
+    public void update(String name, String receiverName, String telNo, String addressBase, String addressDetail,
+        String zipcode) {
+        this.name = name;
+        this.receiverName = receiverName;
+        this.telNo = telNo;
+        this.addressBase = addressBase;
+        this.addressDetail = addressDetail;
+        this.zipcode = zipcode;
+    }
+
+    public void updateDefaultYn(Boolean defaultYn) {
         this.defaultYn = defaultYn;
     }
 }

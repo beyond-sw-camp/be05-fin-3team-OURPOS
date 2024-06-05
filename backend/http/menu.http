@@ -1,0 +1,68 @@
+### 메뉴 단건 조회
+GET http://localhost:8080/api/v1/menus/1
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzE3MTIyODk1LCJleHAiOjE3MTc3Mjc2OTV9.xVFinS_-M3DSRGRY1qyzf5ZjGodFbvaSYU4vrctLPVU
+
+### 카테고리 별 메뉴 조회
+GET http://localhost:8080/api/v1/menus
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTcxMjI4NDYsImV4cCI6MTcxNzcyNzY0Nn0.hshY69zNS5-hdnxGSzAJlijY_SUkQlZQ7KPSRwnAxos
+
+### 메뉴 추가
+POST http://localhost:8080/api/v1/menus
+content-type: application/json
+
+{
+  "storeId": 1,
+  "categoryId": 1,
+  "name": "싸이버거",
+  "price": 8000,
+  "availableYn": true,
+  "description": "맘스터치싸이버거",
+  "pictureUrl": null,
+  "menuOptionGroups": [
+    {
+      "menuId": 7,
+      "name": "토핑",
+      "exclusiveYn": false,
+      "description": null,
+      "menuOptions": [
+        {
+          "name": "올더웨이",
+          "price": 0
+        }
+      ]
+    }
+  ]
+}
+
+### 메뉴 수정
+PUT http://localhost:8080/api/v1/menus/1
+content-type: application/json
+
+{
+  "categoryId": 1,
+  "name": "와퍼",
+  "price": 7100,
+  "description": "버거킹와퍼",
+  "pictureUrl": null
+}
+
+### 메뉴옵션그룹 수정
+PUT http://localhost:8080/api/v1/menus/menuOptionGroups/1
+content-type: application/json
+
+{
+  "menuId": 2,
+  "name": "와퍼용토핑",
+  "exclusiveYn": false,
+  "description": null
+}
+
+### 메뉴옵션 수정
+PUT http://localhost:8080/api/v1/menus/menuOptions/3
+content-type: application/json
+
+{
+  "menuOptionGroupId": 1,
+  "name": "하인즈케첩",
+  "price": 0
+}

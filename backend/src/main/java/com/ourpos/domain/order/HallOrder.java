@@ -1,5 +1,6 @@
 package com.ourpos.domain.order;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -34,9 +35,33 @@ public class HallOrder extends Order {
     private Boolean orderTakeoutYn;
 
     @Builder
-    public HallOrder(Customer customer, Store store, Boolean orderTakeoutYn, @Singular List<OrderDetail> orderDetails) {
+    private HallOrder(Customer customer, Store store, Boolean orderTakeoutYn,
+        @Singular List<OrderDetail> orderDetails) {
         super(customer, store, orderDetails);
         this.status = HallStatus.WAITING;
         this.orderTakeoutYn = orderTakeoutYn;
     }
+
+    public void cancelOrder() {
+        if (this.status != HallStatus.WAITING) {
+            throw new IllegalArgumentException("대기중인 주문만 취소할 수 있습니다.");
+        }
+        this.status = HallStatus.CANCELED;
+    }
+
+    public void acceptOrder() {
+        if (this.status != HallStatus.WAITING) {
+            throw new IllegalArgumentException("대기중인 주문만 접수할 수 있습니다.");
+        }
+        this.status = HallStatus.COOKING;
+    }
+
+    public void completeOrder(LocalDateTime completeOrderTime) {
+        if (this.status != HallStatus.COOKING) {
+            throw new IllegalArgumentException("조리중인 주문만 완료할 수 있습니다.");
+        }
+        this.status = HallStatus.COMPLETED;
+        super.setCompleteOrderTime(completeOrderTime);
+    }
+
 }

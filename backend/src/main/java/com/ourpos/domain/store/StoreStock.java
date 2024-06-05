@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-import com.ourpos.domain.storeorder.StoreMenu;
+import com.ourpos.domain.storeorder.StoreComm;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -34,15 +34,29 @@ public class StoreStock {
 
     @JoinColumn(name = "store_menu_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private StoreMenu storeMenu;
+    private StoreComm storeComm;
 
     @Column(name = "store_stock_quantity")
     private Integer quantity;
 
     @Builder
-    private StoreStock(Store store, StoreMenu storeMenu, Integer quantity) {
+    private StoreStock(Store store, StoreComm storeComm, Integer quantity) {
         this.store = store;
-        this.storeMenu = storeMenu;
+        this.storeComm = storeComm;
         this.quantity = quantity;
     }
+
+    public void decreaseQuantity(Integer quantity) {
+        if (this.quantity < quantity) {
+            throw new IllegalArgumentException("재고가 부족합니다.");
+        }
+        this.quantity -= quantity;
+    }
+
+    public void increaseQuantity(Integer quantity) {
+
+        this.quantity +=quantity ;
+    }
+
 }
+

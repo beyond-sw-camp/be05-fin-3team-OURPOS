@@ -79,4 +79,15 @@ public abstract class Order extends BaseEntity {
             .mapToInt(OrderDetail::getPrice)
             .sum();
     }
+
+    // 주문 완료 시간 설정
+    public void setCompleteOrderTime(LocalDateTime completedDateTime) {
+        this.completedDateTime = completedDateTime;
+    }
+
+    public void checkMinimumOrderPrice() {
+        if (price < store.getMinimumOrderPrice()) {
+            throw new IllegalArgumentException("최소 주문 금액을 충족하지 못했습니다.");
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.ourpos.domain.store;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 import com.ourpos.domain.BaseEntity;
+import com.ourpos.domain.customer.Customer;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,6 +31,10 @@ public class Store extends BaseEntity {
     @Column(name = "store_id")
     private Long id;
 
+    @JoinColumn(name = "customer_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Customer customer;
+
     @JoinColumn(name = "store_address_id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private StoreAddress address;
@@ -40,10 +46,10 @@ public class Store extends BaseEntity {
     private String phone;
 
     @Column(name = "store_open_time")
-    private LocalDateTime openTime;
+    private LocalTime openTime;
 
     @Column(name = "store_close_time")
-    private LocalDateTime closeTime;
+    private LocalTime closeTime;
 
     @Column(name = "store_minimum_order_price")
     private Integer minimumOrderPrice;
@@ -58,8 +64,9 @@ public class Store extends BaseEntity {
     private LocalDateTime closedDateTime;
 
     @Builder
-    private Store(StoreAddress address, String name, String phone, LocalDateTime openTime, LocalDateTime closeTime,
-        Integer minimumOrderPrice, String pictureUrl) {
+    private Store(Customer customer, StoreAddress address, String name, String phone, LocalTime openTime,
+        LocalTime closeTime, Integer minimumOrderPrice, String pictureUrl) {
+        this.customer = customer;
         this.address = address;
         this.name = name;
         this.phone = phone;

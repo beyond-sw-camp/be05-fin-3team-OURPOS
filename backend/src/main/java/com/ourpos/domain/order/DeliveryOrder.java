@@ -1,5 +1,6 @@
 package com.ourpos.domain.order;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -70,5 +71,50 @@ public class DeliveryOrder extends Order {
         this.tip = tip;
         this.disposableYn = disposableYn;
         this.status = DeliveryStatus.WAITING;
+    }
+
+    public void cancelOrder() {
+        if (this.status != DeliveryStatus.WAITING) {
+            throw new IllegalArgumentException("대기중인 주문만 취소할 수 있습니다.");
+        }
+        this.status = DeliveryStatus.CANCELED;
+    }
+
+    public void acceptOrder() {
+        if (this.status != DeliveryStatus.WAITING) {
+            throw new IllegalArgumentException("대기중인 주문만 접수할 수 있습니다.");
+        }
+        this.status = DeliveryStatus.COOKING;
+    }
+
+    public void startDelivery() {
+        if (this.status != DeliveryStatus.COOKING) {
+            throw new IllegalArgumentException("조리중인 주문만 배달을 시작할 수 있습니다.");
+        }
+        this.status = DeliveryStatus.DELIVERING;
+    }
+
+    public void completeOrder(LocalDateTime completeOrderTime) {
+        if (this.status != DeliveryStatus.DELIVERING) {
+            throw new IllegalArgumentException("배달중인 주문만 완료할 수 있습니다.");
+        }
+        this.status = DeliveryStatus.COMPLETED;
+        super.setCompleteOrderTime(completeOrderTime);
+    }
+
+    // 라이더 배정
+    public void assignRider(Rider rider) {
+        if (this.status != DeliveryStatus.WAITING && this.status != DeliveryStatus.COOKING) {
+            throw new IllegalArgumentException("대기중 또는 조리중인 주문만 라이더를 배정할 수 있습니다.");
+        }
+        this.rider = rider;
+    }
+
+    // 배달 예상 시간 설정
+    public void setEstimatedTime(LocalTime estimatedTime) {
+        if (this.status != DeliveryStatus.WAITING && this.status != DeliveryStatus.COOKING) {
+            throw new IllegalArgumentException("대기중 또는 조리중인 주문만 배달 예상 시간을 설정할 수 있습니다.");
+        }
+        this.estimatedTime = estimatedTime;
     }
 }
