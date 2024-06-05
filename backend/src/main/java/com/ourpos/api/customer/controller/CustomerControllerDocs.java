@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ourpos.api.Result;
 import com.ourpos.api.customer.dto.request.CustomerAddressRequestDto;
@@ -74,5 +75,7 @@ public interface CustomerControllerDocs {
 
 	@Operation(summary = "마이페이지- 배달 주문 내역 조회", description = "사용자는 마이페이지에서 배달 주문 내역을 조회 할 수 있습니다.")
 	@GetMapping("/my/orders/delivery")
-	public Result<Page<DeliveryOrderResponseDto>> getMyDeliveryOrders(@PageableDefault(size = 10) Pageable pageable);
+	public Result<Page<DeliveryOrderResponseDto>> getMyDeliveryOrders(@PageableDefault(size = 10) Pageable pageable,
+		@RequestParam(required = false) String status);
+	//public Result<Page<DeliveryOrderResponseDto>> getMyDeliveryOrders(@PageableDefault(size = 10) Pageable pageable);
 }
