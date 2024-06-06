@@ -2,13 +2,23 @@
 --                      customer_phone, customer_role)
 --VALUES ('test', '테스트', '닉네임', 'M', '20', '010-1234-1234', 'ROLE_USER');
 --
-INSERT INTO store_address(store_address_detail, store_address_base, store_address_zipcode)
-VALUES ('서울시 강남구 역삼동 123-4', '서울시 강남구 역삼동', '123-4');
+INSERT INTO store_address(store_address_detail, store_address_base, store_address_zipcode, store_address_latitude,
+                          store_address_longitude)
+VALUES ('서울시 강남구 역삼동 123-4', '서울시 강남구 역삼동', '123-4', '37.123456', '127.123456');
 --
 --
 INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time, modified_date_time, store_address_id,
                    store_close_time, store_closed_datetime, store_open_time, store_name, store_phone, store_picture_url)
-VALUES (FALSE, 10000, NULL, NULL, 1, '22:00', NULL, '10:00', '맛집', '010-1234-1234', 'https://www.google.com');
+VALUES (FALSE, 10000, NULL, NULL, 1, '22:00', NULL, '10:00', '강남점', '010-1111-1234', 'https://picsum.photos/200/300');
+
+INSERT INTO store_address(store_address_detail, store_address_base, store_address_zipcode, store_address_latitude,
+                          store_address_longitude)
+VALUES ('서울시 강남구 역삼동 123-4', '서울시 강남구 역삼동', '123-4', '36.123456', '127.123456');
+--
+--
+INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time, modified_date_time, store_address_id,
+                   store_close_time, store_closed_datetime, store_open_time, store_name, store_phone, store_picture_url)
+VALUES (FALSE, 20000, NULL, NULL, 2, '22:00', NULL, '10:00', '신대방삼거리점', '010-2222-1234', 'https://picsum.photos/200');
 --
 --
 INSERT INTO category(category_name, category_deleted_yn)
