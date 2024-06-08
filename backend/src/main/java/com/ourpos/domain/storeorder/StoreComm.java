@@ -84,9 +84,9 @@ public class StoreComm extends BaseEntity {
         // 필요한 경우 status와 deletedYn 등의 필드도 업데이트할 수 있습니다.
     }
 
-    public void delete() {
+    public void delete(LocalDateTime deletedDatetime) {
         this.deletedYn = false;
-        this.deletedDatetime = LocalDateTime.now();
+        this.deletedDatetime = deletedDatetime;
     }
 
 }
