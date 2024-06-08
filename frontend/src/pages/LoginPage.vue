@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <HeaderPage title="로그인"/>
     <v-card-text
       class="mx-auto pl-12 pr-12"
       max-width="400"
@@ -45,6 +46,7 @@
 
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faCircleExclamation} from "@fortawesome/free-solid-svg-icons";
+import HeaderPage from "@/components/HeaderPage.vue";
 
 const onNaverLogin = () => {
   console.log('onNaverLogin')
