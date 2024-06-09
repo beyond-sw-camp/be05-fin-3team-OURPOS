@@ -66,6 +66,16 @@ public class StoreOrderController implements StoreOrderControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문이 완료되었습니다.", storeOrderResponseDto);
     }
 
+    //비품, 식자재 주문 확인 (직영점)
+
+    @GetMapping("/storeorder/{storeId}/checkforstore")
+    public Result<List<StoreOrderCheckResponseDto>> getStoreOrdercheckforstore(@PathVariable Long storeId) {
+        log.info("가게 식자재, 비품 주문: {}", storeId);
+        List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheck(storeId);
+        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", storeOrderList );
+    }
+
+
     /*
     // 비품, 식자재 주문 수정
     @PutMapping("/storeorder/{orderdetailId}")

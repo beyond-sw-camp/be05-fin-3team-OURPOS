@@ -58,8 +58,8 @@ public class StoreOrderServiceImpl {
 		// StoreOrder 생성
 		Store store = storeRepository.findById(requestDto.getStoreId())
 			.orElseThrow(() -> new IllegalArgumentException("해당 store를 찾을 수 없습니다."));
-
-		StoreOrder storeOrder = StoreOrder.builder()
+		// StoreOrder 생성
+			StoreOrder storeOrder = StoreOrder.builder()
 			.price(0)
 			.store(store)
 			.quantity(requestDto.getStoreOrderDetailQuantity())
@@ -119,7 +119,7 @@ public class StoreOrderServiceImpl {
 	}
 
 	 */
-	/*
+	
 	public List<StoreOrderCheckResponseDto> getStoreOrdercheck(Long storeId) {
 		System.out.println("StoreOrderService.getStoreOrdercheck");
 
@@ -139,13 +139,22 @@ public class StoreOrderServiceImpl {
 				storeOrder.getId());
 			for (StoreOrderDetail storeOrderDetail : storeOrderDetails) {
 				StoreOrderCheckResponseDto dto = new StoreOrderCheckResponseDto(
-					store.getId(),
-					storeOrderDetail.getStoreMenu().getName(),
-					storeOrder.getPrice(),
-					storeOrderDetail.getStoreMenu().getArticleUnit(),
-					storeOrderDetail.getStoreMenu().getPictureUrl(),
-					storeOrder.getQuantity(),
-					storeOrderDetail.getStoreMenu().getPrice()
+						storeOrder.getId(),
+						storeOrder.getCreatedDateTime().toString(),
+						storeOrder.getPrice(),
+						storeOrder.getStatus(),
+						store.getAddress().getAddressBase(),
+						storeOrder.getStore().getAddress().getAddressDetail(),
+						storeOrder.getStore().getAddress().getZipcode(),
+						storeOrder.getStore().getName(),
+						storeOrder.getStore().getPhone(),
+						store.getId(),
+						storeOrderDetail.getStoreMenu().getName(),
+						storeOrder.getPrice(),
+						storeOrderDetail.getStoreMenu().getArticleUnit(),
+						storeOrderDetail.getStoreMenu().getPictureUrl(),
+						storeOrder.getQuantity(),
+						storeOrderDetail.getStoreMenu().getPrice()	
 				);
 				storeOrderCheckResponseDtos.add(dto);
 			}
@@ -154,7 +163,8 @@ public class StoreOrderServiceImpl {
 		return storeOrderCheckResponseDtos;
 	}
 
-	 */
+	 
+	/* 
 	public List<StoreOrderCheckResponseDto>getStoreOrdercheck(Long storeId){
 		System.out.println("StoreOrderService.getStoreOrdercheck");
 
@@ -170,6 +180,53 @@ public class StoreOrderServiceImpl {
 				List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(storeOrder.getId());
 				for (StoreOrderDetail storeOrderDetail : storeOrderDetails){
 					StoreOrderCheckResponseDto dto = new StoreOrderCheckResponseDto(
+						storeOrder.getId(),
+						storeOrder.getCreatedDateTime().toString(),
+						storeOrder.getPrice(),
+						storeOrder.getStatus(),
+						store.getId(),
+						storeOrderDetail.getStoreMenu().getName(),
+						storeOrder.getPrice(),
+						storeOrderDetail.getStoreMenu().getArticleUnit(),
+						storeOrderDetail.getStoreMenu().getPictureUrl(),
+						storeOrder.getQuantity(),
+						storeOrderDetail.getStoreMenu().getPrice()
+						
+					);
+					storeOrderCheckResponseDtos.add(dto);
+
+				}
+			}
+		}
+		return storeOrderCheckResponseDtos;
+	}
+	*/
+	
+	//비품, 식자재 주문 확인(직영점)
+	public List<StoreOrderCheckResponseDto>getStoreOrdercheckforstore(Long storeId){
+		System.out.println("StoreOrderService.getStoreOrdercheck");
+
+		Store store= storeRepository.findById(storeId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
+		List<StoreOrder> storeOrders= storeOrderRepository.findByStoreId(storeId);
+		if(storeOrders.isEmpty()){
+			throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
+		}
+		List<StoreOrderCheckResponseDto> storeOrderCheckResponseDtos = new ArrayList<>();
+		for (StoreOrder storeOrder : storeOrders){
+			if(storeOrder.getStatus() != StoreOrderStatus.COMPLETED){
+				List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(storeOrder.getId());
+				for (StoreOrderDetail storeOrderDetail : storeOrderDetails){
+					StoreOrderCheckResponseDto dto = new StoreOrderCheckResponseDto(
+						storeOrder.getId(),
+						storeOrder.getCreatedDateTime().toString(),
+						storeOrder.getPrice(),
+						storeOrder.getStatus(),
+						store.getAddress().getAddressBase(),
+						storeOrder.getStore().getAddress().getAddressDetail(),
+						storeOrder.getStore().getAddress().getZipcode(),
+						storeOrder.getStore().getName(),
+						storeOrder.getStore().getPhone(),
 						store.getId(),
 						storeOrderDetail.getStoreMenu().getName(),
 						storeOrder.getPrice(),
