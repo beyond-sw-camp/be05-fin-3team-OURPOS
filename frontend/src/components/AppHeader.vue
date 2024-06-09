@@ -4,28 +4,35 @@
       <v-icon>mdi-arrow-left</v-icon>
     </v-btn>
     <v-toolbar-title>{{ title }}</v-toolbar-title>
+    <v-toolbar-items>
+      <v-btn icon>
+        <FontAwesomeIcon :icon="faShoppingCart" @click="goToCart"/>
+      </v-btn>
+    </v-toolbar-items>
   </v-app-bar>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {faShoppingCart} from "@fortawesome/free-solid-svg-icons";
+import { defineProps } from 'vue';
 
 // Setup router
 const router = useRouter();
 
 // Create a reactive title property
-const title = ref('');
+defineProps(['title']);
+
+const goToCart = () => {
+  router.push('/cart');
+};
 
 // Method to go back to the previous page
 const goBack = () => {
   router.back();
 };
 
-// Accept title as a prop
-defineProps({
-  title: String
-});
 </script>
 
 <style scoped>
