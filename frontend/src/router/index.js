@@ -14,6 +14,7 @@ import CartPage from "@/pages/CartPage.vue";
 import StoreLandingPage from '@/pages/StoreLandingPage.vue';
 import HallOrderManagePage from '@/pages/HallOrderManagePage.vue';
 import DeliveryOrderManagePage from '@/pages/DeliveryOrderManagePage.vue';
+import MenuStatusManagePage from '@/pages/MenuStatusManagePage.vue';
 
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
@@ -78,6 +79,11 @@ const router = createRouter({
       name: 'deliveryOrderManage',
       path : '/storeLanding/deliveryOrderManage',
       component : DeliveryOrderManagePage
+    },
+    {
+      name: 'menuStatusManage',
+      path : '/storeLanding/menuStatusManage',
+      component : MenuStatusManagePage
     }
   ]
 });
