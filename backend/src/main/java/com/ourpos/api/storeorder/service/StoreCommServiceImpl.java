@@ -1,5 +1,6 @@
 package com.ourpos.api.storeorder.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,6 @@ public class StoreCommServiceImpl implements StoreCommService {
     public void addStoreComm(StoreCommRequestDto storeCommRequestDto) {
         saveStoreComm(storeCommRequestDto);
     }
-
 
     @Override
     public List<StoreCommResponseDto> getStoreComms() {
@@ -56,7 +56,7 @@ public class StoreCommServiceImpl implements StoreCommService {
     public void deletetStoreComm(Long storeCommId) {
         StoreComm storeComm = storeCommRepository.findById(storeCommId)
             .orElseThrow(() -> new IllegalArgumentException("StoreComm not found with id: " + storeCommId));
-        storeComm.delete();
+        storeComm.delete(LocalDateTime.now());
         storeCommRepository.save(storeComm);
     }
 

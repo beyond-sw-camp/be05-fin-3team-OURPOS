@@ -101,11 +101,6 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
                 .role(customer.getRole())
                 .build();
 
-            if (registrationId.equals(KAKAO)) {
-                // String accessToken = getAccessToken(userRequest);
-                // kakaoService.sendKakaoMessage(accessToken, LocalDateTime.now() + "로그인 시도");
-            }
-
             return new CustomOAuth2Customer(customerLoginDto);
         }
 

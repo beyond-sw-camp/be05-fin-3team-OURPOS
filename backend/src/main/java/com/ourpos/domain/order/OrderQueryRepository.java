@@ -54,6 +54,7 @@ public class OrderQueryRepository {
             .join(hallOrder.customer).fetchJoin()
             .join(hallOrder.store).fetchJoin()
             .where(builder)
+            .orderBy(hallOrder.createdDateTime.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
@@ -107,6 +108,7 @@ public class OrderQueryRepository {
             .join(deliveryOrder.store).fetchJoin()
             .join(deliveryOrder.orderAddress).fetchJoin()
             .where(builder)
+            .orderBy(deliveryOrder.createdDateTime.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
@@ -149,8 +151,8 @@ public class OrderQueryRepository {
             .join(deliveryOrder.customer).fetchJoin()
             .join(deliveryOrder.store).fetchJoin()
             .join(deliveryOrder.orderAddress).fetchJoin()
-            .where(deliveryLoginIdEq(loginId), deliveryStatusEq(status))
             .orderBy(deliveryOrder.createdDateTime.desc())
+            .where(deliveryLoginIdEq(loginId), deliveryStatusEq(status))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();

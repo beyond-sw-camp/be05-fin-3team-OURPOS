@@ -40,4 +40,4 @@ logging.level:
 
 # 프로필 사진이 저장되는 위치 설정
 file:
-  dir: C:\Users\user\Desktop\한화 PLAYDATA SW캠프\팀프로젝트\최종\메뉴추가\
+  dir: /Users/sangcheol/image/
