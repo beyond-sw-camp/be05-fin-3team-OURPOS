@@ -10,6 +10,7 @@ import FindStoreHallPage from "@/pages/FindStoreHallPage.vue";
 import MenuPage from "@/pages/MenuPage.vue";
 import MenuOnePage from "@/pages/MenuOnePage.vue";
 import MainPage from "@/pages/MainPage.vue";
+import CartPage from "@/pages/CartPage.vue";
 
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
@@ -54,6 +55,11 @@ const router = createRouter({
       name: 'storeMenu',
       path: '/stores/:storeId/menus/:menuId',
       component: MenuOnePage,
+    },
+    {
+      name: 'cart',
+      path: '/cart',
+      component: CartPage
     }
   ]
 });

@@ -46,7 +46,7 @@
 
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faCircleExclamation} from "@fortawesome/free-solid-svg-icons";
-import HeaderPage from "@/components/HeaderPage.vue";
+import HeaderPage from "@/components/AppHeader.vue";
 
 const onNaverLogin = () => {
   console.log('onNaverLogin')

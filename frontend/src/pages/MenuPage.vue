@@ -44,16 +44,17 @@
       </v-col>
     </v-row>
   </v-container>
-  <BottomButton />
+
+<!--  <BottomButton/>-->
+
 </template>
 
 <script setup>
 import axios from "axios";
 import {ref} from "vue";
 import router from "@/router";
-import BottomButton from "@/components/BottomButton.vue";
 import {useRoute} from "vue-router";
-import HeaderPage from "@/components/HeaderPage.vue";
+import HeaderPage from "@/components/AppHeader.vue";
 
 const route = useRoute();
 const id = route.params.id;

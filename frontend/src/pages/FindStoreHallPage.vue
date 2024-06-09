@@ -53,7 +53,7 @@ import BottomNav from "@/components/BottomNav.vue";
 import {ref} from "vue";
 import axios from "axios";
 import {useRouter} from "vue-router";
-import HeaderPage from "@/components/HeaderPage.vue";
+import HeaderPage from "@/components/AppHeader.vue";
 
 const stores = ref([]);
 const router = useRouter();
