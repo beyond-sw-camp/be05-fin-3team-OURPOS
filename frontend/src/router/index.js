@@ -13,6 +13,9 @@ import MyPage from "@/pages/MyPage.vue";
 import StoreOrder from "@/pages/StoreOrder.vue";
 import StoreOrderCheck_company from "@/pages/StoreOrderCheck_company.vue";
 import StoreOrderCheck_store from "@/pages/StoreOrderCheck_store.vue";
+import CustomerMainPage from "@/pages/CustomerMainPage.vue";
+import CustomerAddressManage from "@/pages/CustomerAddressManage.vue";
+import CustomerOrderCheckPage from "@/pages/CustomerOrderCheckPage.vue";
 
 
 const router = createRouter({
@@ -47,7 +50,23 @@ const router = createRouter({
       name: 'storeordercheck_company',
       path: '/storeorder/:storeId/check',
       component: StoreOrderCheck_company
-    }
+    },
+    {
+      name: 'nfhome',
+      path: '/nfhome',
+      component: CustomerMainPage
+    },
+    {
+      name: 'addressmanage',
+      path: '/change-address',
+      component: CustomerAddressManage
+    },
+    {
+      name: 'ordercheck',
+      path: '/order-check',
+      component: CustomerOrderCheckPage
+    },
+
   ]
 })
 
