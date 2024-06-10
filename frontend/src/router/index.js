@@ -65,25 +65,25 @@ const router = createRouter({
       name: 'storeLanding',
       path: '/admin/storeLanding',
       component: StoreLandingPage,
-      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+      // meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'hallOrderManage',
       path: '/admin/storeLanding/hallOrderManage',
       component: HallOrderManagePage,
-      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+      // meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'deliveryOrderManage',
       path : '/admin/storeLanding/deliveryOrderManage',
       component: DeliveryOrderManagePage,
-      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+      // meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'menuStatusManage',
       path : '/admin/storeLanding/menuStatusManage',
       component: MenuStatusManagePage,
-      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+      // meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'admin-login',

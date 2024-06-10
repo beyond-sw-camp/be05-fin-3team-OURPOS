@@ -26,7 +26,7 @@
             <v-btn @click="openDialog('addCategory')" class="action-button">카테고리 추가</v-btn>
             <v-btn @click="openDialog('editCategory')" class="action-button">카테고리 수정</v-btn>
             <v-btn @click="openDialog('deleteCategory')" class="action-button">카테고리 삭제</v-btn>
-            <v-btn class="action-button">메뉴 추가</v-btn>
+            <v-btn @click="openDialog('addMenu')" class="action-button">메뉴 추가</v-btn>
           </div>
         </v-col>
         <v-col cols="9">
@@ -89,6 +89,33 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- Add Menu Dialog -->
+    <v-dialog v-model="dialog.addMenu" max-width="800px">
+      <v-card>
+        <v-card-title>메뉴 추가</v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="6">
+                <v-img :src="newMenu.image" height="200px"></v-img>
+                <v-text-field v-model="newMenu.name" label="제품명"></v-text-field>
+                <v-select v-model="newMenu.category" :items="categories" label="카테고리"></v-select>
+                <v-text-field v-model="newMenu.price" label="가격"></v-text-field>
+                <v-text-field v-model="newMenu.image" label="사진 URL"></v-text-field>
+                <input type="file" ref="fileInput" style="display: none" @change="handleFileChange">
+                <v-btn @click="triggerFileInput">Browse</v-btn>
+                <v-textarea v-model="newMenu.description" label="메뉴 설명"></v-textarea>
+              </v-col>
+              <v-col cols="6">
+                <v-btn color="blue darken-1" block @click="addMenu">메뉴 추가</v-btn>
+                <v-btn color="grey" block @click="closeDialog">취소</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -122,12 +149,20 @@ const dialog = ref({
   addCategory: false,
   editCategory: false,
   deleteCategory: false,
+  addMenu: false,
 });
 
 const newCategory = ref('');
 const selectedEditCategory = ref(null);
 const updatedCategoryName = ref('');
 const selectedDeleteCategory = ref(null);
+const newMenu = ref({
+  name: '',
+  category: '',
+  price: '',
+  image: '',
+  description: ''
+});
 
 const openDialog = (type) => {
   dialog.value[type] = true;
@@ -137,6 +172,7 @@ const closeDialog = () => {
   dialog.value.addCategory = false;
   dialog.value.editCategory = false;
   dialog.value.deleteCategory = false;
+  dialog.value.addMenu = false;
 };
 
 const addCategory = () => {
@@ -163,6 +199,43 @@ const deleteCategory = () => {
     categories.value.splice(index, 1);
     selectedDeleteCategory.value = null;
     closeDialog();
+  }
+};
+
+const addMenu = () => {
+  if (newMenu.value.name && newMenu.value.category && newMenu.value.price) {
+    menus.value.push({
+      id: menus.value.length + 1,
+      name: newMenu.value.name,
+      category: newMenu.value.category,
+      price: newMenu.value.price,
+      image: newMenu.value.image,
+      description: newMenu.value.description
+    });
+    newMenu.value = {
+      name: '',
+      category: '',
+      price: '',
+      image: '',
+      description: ''
+    };
+    filterMenus(selectedCategory.value);
+    closeDialog();
+  }
+};
+
+const triggerFileInput = () => {
+  document.querySelector('input[type="file"]').click();
+};
+
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      newMenu.value.image = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 };
 </script>
