@@ -19,6 +19,7 @@ import HeadOfficeLandingPage from '@/pages/HeadOfficeLandingPage.vue';
 import AdminPage from "@/pages/AdminPage.vue";
 import {checkUserRole} from "@/utils/auth";
 import AdminLoginPage from "@/pages/AdminLoginPage.vue";
+import SignupSuccess from "@/pages/SignupSuccess.vue";
 import MenuManagePage from '@/pages/MenuManagePage.vue';
 
 
@@ -95,6 +96,11 @@ const router = createRouter({
       path: '/admin',
       component: AdminPage,
       meta: { requiredRoles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+    },
+    {
+      name: 'signup-success',
+      path: '/signup-success',
+      component: SignupSuccess
     },
     {
       name: 'headOfficeLanding',
