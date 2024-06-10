@@ -130,15 +130,5 @@ console.log(orderDetailDtos.value);
 </script>
 
 <style scoped>
-.menu-img {
-  width: 64px;
-  height: 64px;
-  margin-right: 16px;
-}
 
-.menu-title {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 </style>
