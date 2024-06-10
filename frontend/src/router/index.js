@@ -68,27 +68,27 @@ const router = createRouter({
     },
     {
       name: 'storeLanding',
-      path: '/storeLanding',
+      path: '/admin/storeLanding',
       component: StoreLandingPage
     },
     {
       name: 'hallOrderManage',
-      path: '/storeLanding/hallOrderManage',
+      path: '/admin/storeLanding/hallOrderManage',
       component: HallOrderManagePage
     },
     {
       name: 'deliveryOrderManage',
-      path : '/storeLanding/deliveryOrderManage',
+      path : '/admin/storeLanding/deliveryOrderManage',
       component : DeliveryOrderManagePage
     },
     {
       name: 'menuStatusManage',
-      path : '/storeLanding/menuStatusManage',
+      path : '/admin/storeLanding/menuStatusManage',
       component : MenuStatusManagePage
     },
     {
       name: 'headOfficeLanding',
-      path : '/headOfficeLanding',
+      path : '/super-admin/headOfficeLanding',
       component : HeadOfficeLandingPage
     }
   ]
