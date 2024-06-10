@@ -3,16 +3,19 @@ package com.ourpos.api.storeorder.service;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ourpos.api.store.service.StoreStockServiceImpl;
 import com.ourpos.api.storeorder.dto.request.StoreOrderRequestDto;
 import com.ourpos.api.storeorder.dto.response.StoreCommResponseDto;
+import com.ourpos.api.storeorder.dto.response.StoreOrderCheckResponseDto;
 import com.ourpos.api.storeorder.dto.response.StoreOrderResponseDto;
 import com.ourpos.domain.recipe.RecipeRepository;
 import com.ourpos.domain.store.Store;
 import com.ourpos.domain.store.StoreRepository;
+import com.ourpos.domain.store.StoreStock;
 import com.ourpos.domain.store.StoreStockRepository;
 import com.ourpos.domain.storeorder.StoreComm;
 import com.ourpos.domain.storeorder.StoreCommRepository;
@@ -20,6 +23,7 @@ import com.ourpos.domain.storeorder.StoreOrder;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderDetailRepository;
 import com.ourpos.domain.storeorder.StoreOrderRepository;
+import com.ourpos.domain.storeorder.StoreOrderStatus;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,28 +31,29 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @Service
 public class StoreOrderServiceImpl {
-    private final StoreOrderRepository storeOrderRepository;
-    private final StoreOrderDetailRepository storeOrderDetailRepository;
-    private final StoreCommRepository storeCommRepository;
-    //private final StoreComm storeComm;
-    private final StoreRepository storeRepository;
-    private final StoreStockRepository storeStockRepository;
-    private final RecipeRepository recipeRepository;
-    private final StoreStockServiceImpl storeStockService;
+	private final StoreOrderRepository storeOrderRepository;
+	private final StoreOrderDetailRepository storeOrderDetailRepository;
+	private final StoreCommRepository storeCommRepository;
+	//private final StoreComm storeComm;
+	private final StoreRepository storeRepository;
+	private final StoreStockRepository storeStockRepository;
+	private final RecipeRepository recipeRepository;
+	private final StoreStockServiceImpl storeStockService;
 
-    // 판매 비품, 식자재 목록 확인
-    public List<StoreCommResponseDto> checkStoreComms() {
-        List<StoreComm> storeComms = storeCommRepository.findAll();
-        List<StoreCommResponseDto> storeCommResponseDtos = new ArrayList<>();
+	// 판매 비품, 식자재 목록 확인
+	public List<StoreCommResponseDto> checkStoreComms() {
+		System.out.println("StoreCommServiceImplServiceImpl.getStoreComms");
+		List<StoreComm> storeComms = storeCommRepository.findAll();
+		List<StoreCommResponseDto> storeCommResponseDtos = new ArrayList<>();
 
-        for (StoreComm storeComm : storeComms) {
-            storeCommResponseDtos.add(new StoreCommResponseDto(storeComm));
-        }
-        return storeCommResponseDtos;
-    }
+		for (StoreComm storeComm : storeComms) {
+			storeCommResponseDtos.add(new StoreCommResponseDto(storeComm));
+		}
+		return storeCommResponseDtos;
+	}
 
-    // 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영)
-    public void createStoreOrder(StoreOrderRequestDto requestDto) {
+	// 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영)
+	public void createStoreOrder(StoreOrderRequestDto requestDto) {
 
 		// StoreOrder 생성
 		Store store = storeRepository.findById(requestDto.getStoreId())
@@ -60,47 +65,48 @@ public class StoreOrderServiceImpl {
 			.quantity(requestDto.getStoreOrderDetailQuantity())
 			.build();
 
-        // StoreOrder 저장
-        storeOrderRepository.save(storeOrder);
+		// StoreOrder 저장
+		storeOrderRepository.save(storeOrder);
 
-        StoreComm storeComm = storeCommRepository.findById(requestDto.getStoreCommId())
-            .orElseThrow(() -> new IllegalArgumentException("해당 StoreComm을 찾을 수 없습니다."));
+		StoreComm storeComm = storeCommRepository.findById(requestDto.getStoreCommId())
+			.orElseThrow(() -> new IllegalArgumentException("해당 StoreComm을 찾을 수 없습니다."));
 
-        // StoreOrderDetail 생성
-        StoreOrderDetail storeOrderDetail = StoreOrderDetail.builder()
-            .storeOrder(storeOrder)
-            .storeMenu(storeComm)
-            .build();
+		// StoreOrderDetail 생성
+		StoreOrderDetail storeOrderDetail = StoreOrderDetail.builder()
+			.storeOrder(storeOrder)
+			.storeMenu(storeComm)
+			.build();
 
-        // StoreOrderDetail 저장
-        storeOrderDetailRepository.save(storeOrderDetail);
-    }
+		// StoreOrderDetail 저장
+		storeOrderDetailRepository.save(storeOrderDetail);
+	}
 
-    // 비품, 식자재 주문 내역 확인(직영점)
-    public StoreOrderResponseDto getStoreOrder(Long orderDetailId) {
-        StoreOrderDetail storeOrderDetail = storeOrderDetailRepository.findById(orderDetailId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+	// 비품, 식자재 주문 내역 확인(직영점)
+	public StoreOrderResponseDto getStoreOrder(Long orderDetailId) {
+		StoreOrderDetail storeOrderDetail = storeOrderDetailRepository.findById(orderDetailId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
 
-        return new StoreOrderResponseDto(storeOrderDetail);
-    }
+		return new StoreOrderResponseDto(storeOrderDetail);
 
-    // 비품, 식자재 주문 수정
-    public void updateStoreOrder(Long orderDetailId, StoreOrderRequestDto storeOrderResponseDto) {
-        StoreOrderDetail storeOrderDetail = storeOrderDetailRepository.findById(orderDetailId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+	}
 
-        // storeOrderDetail.update(storeOrderResponseDto.getStoreOrderDetailQuantity());
-        storeOrderDetailRepository.save(storeOrderDetail);
-    }
+	// 비품, 식자재 주문 수정
+	public void updateStoreOrder(Long orderDetailId, StoreOrderRequestDto storeOrderResponseDto) {
+		StoreOrderDetail storeOrderDetail = storeOrderDetailRepository.findById(orderDetailId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
 
-    // 비품, 식자재 주문 삭제
-    public void deleteStoreOrder(Long orderDetailId) {
-        StoreOrderDetail storeOrderDetail = storeOrderDetailRepository.findById(orderDetailId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+		// storeOrderDetail.update(storeOrderResponseDto.getStoreOrderDetailQuantity());
+		storeOrderDetailRepository.save(storeOrderDetail);
+	}
 
-        storeOrderDetailRepository.delete(storeOrderDetail);
+	// 비품, 식자재 주문 삭제
+	public void deleteStoreOrder(Long orderDetailId) {
+		StoreOrderDetail storeOrderDetail = storeOrderDetailRepository.findById(orderDetailId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
 
-    }
+		storeOrderDetailRepository.delete(storeOrderDetail);
+
+	}
 
 	//비품, 식자재 주문 확인(본사)
 	/*
@@ -240,38 +246,40 @@ public class StoreOrderServiceImpl {
 
 
 
-    //비품, 식자재 주문 상태 변경
+		//비품, 식자재 주문 상태 변경
 
-    // 1. WAITING -> ACCEPTED
-    public void acceptedStoreOrder(Long storeOrderId) {
-        StoreOrder order = storeOrderRepository.findById(storeOrderId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+		// 1. WAITING -> ACCEPTED
+		public void acceptedStoreOrder (Long storeOrderId){
+			StoreOrder order = storeOrderRepository.findById(storeOrderId)
+				.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
 
-        order.acceptedOrder();
-        storeOrderRepository.save(order);
+			order.acceptedOrder();
+			storeOrderRepository.save(order);
 
-    }
+		}
 
-    // 2.ACCEPTED -> DELIVERING
-    public void deliveringStoreOrder(Long storeOrderId) {
-        StoreOrder order = storeOrderRepository.findById(storeOrderId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+		// 2.ACCEPTED -> DELIVERING
+		public void deliveringStoreOrder (Long storeOrderId){
+			StoreOrder order = storeOrderRepository.findById(storeOrderId)
+				.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
 
-        order.deliveringOrder();
-        storeOrderRepository.save(order);
+			order.deliveringOrder();
+			storeOrderRepository.save(order);
 
-    }
+		}
 
-    // 3. DELIVERING -> COMPLETED
-    public void completeStoreOrder(Long storeOrderId) {
-        StoreOrder order = storeOrderRepository.findById(storeOrderId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+		// 3. DELIVERING -> COMPLETED
 
-        order.completeOrder();
-        storeStockService.increaseStockOnOrder(order);
-    }
+		public void completeStoreOrder (Long storeOrderId){
+			StoreOrder order = storeOrderRepository.findById(storeOrderId)
+				.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
+			order.completeOrder();
+			storeStockService.increaseStockOnOrder(order);
 
-}
+		}
+
+	}
+
 
 
 

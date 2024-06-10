@@ -42,7 +42,7 @@
     methods: {
       async fetchOrders() {
         try {
-          const response = await fetch('http://localhost:8080/api/v1/storeorder/1/check'); 
+          const response = await fetch('http://localhost:8080/api/v1/storeorder/1/check', {credentials: 'include'}); 
           const result = await response.json();
           this.orders = result.data;
         } catch (error) {
