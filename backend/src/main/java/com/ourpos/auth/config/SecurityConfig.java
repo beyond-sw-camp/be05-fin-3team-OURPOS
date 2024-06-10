@@ -84,7 +84,6 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, hasRoleSuperAdmin_GET).hasRole("SUPER_ADMIN")
                 .requestMatchers(HttpMethod.POST, hasRoleSuperAdmin_POST).hasRole("SUPER_ADMIN")
                 .requestMatchers(HttpMethod.PUT, hasRoleSuperAdmin_PUT).hasRole("SUPER_ADMIN")
-                // .requestMatchers("/").permitAll()
                 .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated());
 

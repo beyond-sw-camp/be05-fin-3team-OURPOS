@@ -66,7 +66,7 @@ public class JwtFilter extends OncePerRequestFilter {
             .role(role)
             .build();
 
-        CustomOAuth2Customer customOAuth2Customer = new CustomOAuth2Customer(customerLoginDto);
+        CustomOAuth2Customer customOAuth2Customer = new CustomOAuth2Customer(customerLoginDto, false);
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
             customOAuth2Customer, null, customOAuth2Customer.getAuthorities());
