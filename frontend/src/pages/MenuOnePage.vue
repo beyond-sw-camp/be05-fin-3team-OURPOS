@@ -197,7 +197,8 @@ const addToCart = () => {
 
   const fullOrder = {
     storeId: storeId,
-    orderTakeoutYn: true,
+    storeName: existingFullOrder ? existingFullOrder.storeName : menu.value.storeName,
+    orderTakeoutYn: existingFullOrder ? existingFullOrder.orderTakeoutYn : true,
     orderDetailDtos: existingOrders
   };
 
