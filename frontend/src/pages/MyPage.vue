@@ -73,8 +73,8 @@ import axios from 'axios';
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080', // 백엔드 서버의 URL
-  withCredentials: true, // 쿠키를 서버로 전송하기 위해 필요
+  baseURL: 'http://localhost:8080', 
+  withCredentials: true, 
 });
 
 export default {
@@ -87,6 +87,7 @@ export default {
     }
   },
   mounted() {
+
     // 페이지가 마운트될 때 고객 정보를 요청
     this.fetchCustomerInfo();
     
