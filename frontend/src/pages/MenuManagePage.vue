@@ -32,7 +32,7 @@
         <v-col cols="9">
           <v-row>
             <v-col cols="4" v-for="menu in filteredMenus" :key="menu.id" class="mb-4">
-              <v-card>
+              <v-card @click="openUpdateMenuDialog(menu)">
                 <v-img :src="menu.image" height="200px"></v-img>
                 <v-card-title>{{ menu.name }}</v-card-title>
                 <v-card-subtitle>{{ menu.price }}</v-card-subtitle>
@@ -116,6 +116,35 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
+    <!-- Update Menu Dialog -->
+    <v-dialog v-model="dialog.updateMenu" max-width="800px">
+      <v-card>
+        <v-card-title>메뉴 수정</v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="6">
+                <v-img :src="selectedMenu.image" height="200px"></v-img>
+                <v-text-field v-model="selectedMenu.name" label="제품명"></v-text-field>
+                <v-select v-model="selectedMenu.category" :items="categories" label="카테고리"></v-select>
+                <v-text-field v-model="selectedMenu.price" label="가격"></v-text-field>
+                <v-text-field v-model="selectedMenu.image" label="사진 URL"></v-text-field>
+                <input type="file" ref="fileInputUpdate" style="display: none" @change="handleFileChangeUpdate">
+                <v-btn @click="triggerFileInputUpdate">Browse</v-btn>
+                <v-textarea v-model="selectedMenu.description" label="메뉴 설명"></v-textarea>
+              </v-col>
+              <v-col cols="6">
+                <v-btn color="blue darken-1" block @click="updateMenu">수정 반영</v-btn>
+                <v-btn color="red darken-1" block @click="deleteMenu">메뉴 삭제</v-btn>
+                <v-btn color="grey" block @click="closeDialog">뒤로가기</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
@@ -150,6 +179,7 @@ const dialog = ref({
   editCategory: false,
   deleteCategory: false,
   addMenu: false,
+  updateMenu: false,
 });
 
 const newCategory = ref('');
@@ -157,6 +187,15 @@ const selectedEditCategory = ref(null);
 const updatedCategoryName = ref('');
 const selectedDeleteCategory = ref(null);
 const newMenu = ref({
+  name: '',
+  category: '',
+  price: '',
+  image: '',
+  description: ''
+});
+
+const selectedMenu = ref({
+  id: null,
   name: '',
   category: '',
   price: '',
@@ -173,6 +212,7 @@ const closeDialog = () => {
   dialog.value.editCategory = false;
   dialog.value.deleteCategory = false;
   dialog.value.addMenu = false;
+  dialog.value.updateMenu = false;
 };
 
 const addCategory = () => {
@@ -224,6 +264,29 @@ const addMenu = () => {
   }
 };
 
+const openUpdateMenuDialog = (menu) => {
+  selectedMenu.value = { ...menu };
+  dialog.value.updateMenu = true;
+};
+
+const updateMenu = () => {
+  const index = menus.value.findIndex(m => m.id === selectedMenu.value.id);
+  if (index !== -1) {
+    menus.value[index] = { ...selectedMenu.value };
+    filterMenus(selectedCategory.value);
+    closeDialog();
+  }
+};
+
+const deleteMenu = () => {
+  const index = menus.value.findIndex(m => m.id === selectedMenu.value.id);
+  if (index !== -1) {
+    menus.value.splice(index, 1);
+    filterMenus(selectedCategory.value);
+    closeDialog();
+  }
+};
+
 const triggerFileInput = () => {
   document.querySelector('input[type="file"]').click();
 };
@@ -234,6 +297,22 @@ const handleFileChange = (event) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       newMenu.value.image = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+const triggerFileInputUpdate = () => {
+  document.querySelector('input[type="file"]').click();
+  // document.querySelector('input[ref="fileInputUpdate"]').click();
+};
+
+const handleFileChangeUpdate = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      selectedMenu.value.image = e.target.result;
     };
     reader.readAsDataURL(file);
   }
