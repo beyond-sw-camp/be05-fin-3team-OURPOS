@@ -19,6 +19,9 @@ import HeadOfficeLandingPage from '@/pages/HeadOfficeLandingPage.vue';
 import AdminPage from "@/pages/AdminPage.vue";
 import {checkUserRole} from "@/utils/auth";
 import AdminLoginPage from "@/pages/AdminLoginPage.vue";
+import MenuManagePage from '@/pages/MenuManagePage.vue';
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -97,6 +100,11 @@ const router = createRouter({
       name: 'headOfficeLanding',
       path : '/super-admin/headOfficeLanding',
       component : HeadOfficeLandingPage
+    },
+    {
+      name: 'menuManage',
+      path : '/super-admin/headOfficeLanding/menuManage',
+      component : MenuManagePage
     }
   ]
 });

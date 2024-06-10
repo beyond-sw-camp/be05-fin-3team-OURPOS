@@ -13,7 +13,9 @@
         <v-col cols="12" class="card-group">
           <v-row>
             <v-col cols="3.5">
-              <v-card class="menu-card" title="메뉴 관리" link></v-card>
+              <router-link to="/super-admin/headOfficeLanding/menuManage">
+                <v-card class="menu-card" title="메뉴 관리" link></v-card>
+              </router-link>
             </v-col>
             <v-col cols="3.5">
               <v-card class="same-card" title="비품/식자재 관리" link></v-card>

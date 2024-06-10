@@ -13,12 +13,12 @@
           <v-col cols="9" class="card-group">
             <v-row>
               <v-col cols="4">
-                <router-link to="/storeLanding/hallOrderManage">
+                <router-link to="/admin/storeLanding/hallOrderManage">
                   <v-card class="mx-auto same-card" title="홀 주문 관리" link></v-card>
                 </router-link>
               </v-col> 
               <v-col cols="4">
-                <router-link to="/storeLanding/deliveryOrderManage">
+                <router-link to="/admin/storeLanding/deliveryOrderManage">
                   <v-card class="mx-auto same-card" title="배달 주문 관리" link></v-card>
                 </router-link>
               </v-col>
@@ -26,7 +26,7 @@
                 <v-card class="mx-auto same-card" title="비즈니스 인사이트 확인" link></v-card>
               </v-col> 
               <v-col cols="4">
-                <router-link to="/storeLanding/menuStatusManage">
+                <router-link to="/admin/storeLanding/menuStatusManage">
                   <v-card class="mx-auto same-card" title="메뉴 상태 관리" link></v-card>
                 </router-link>
               </v-col>
