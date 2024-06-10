@@ -13,17 +13,23 @@
           <v-col cols="9" class="card-group">
             <v-row>
               <v-col cols="4">
-                <v-card class="mx-auto same-card" title="홀 주문 관리" link></v-card>
+                <router-link to="/storeLanding/hallOrderManage">
+                  <v-card class="mx-auto same-card" title="홀 주문 관리" link></v-card>
+                </router-link>
               </v-col> 
               <v-col cols="4">
-                <v-card class="mx-auto same-card" title="배달 주문 관리" link></v-card>
-              </v-col> 
+                <router-link to="/storeLanding/deliveryOrderManage">
+                  <v-card class="mx-auto same-card" title="배달 주문 관리" link></v-card>
+                </router-link>
+              </v-col>
               <v-col cols="4">
                 <v-card class="mx-auto same-card" title="비즈니스 인사이트 확인" link></v-card>
               </v-col> 
               <v-col cols="4">
-                <v-card class="mx-auto same-card" title="메뉴 상태 관리" link></v-card>
-              </v-col> 
+                <router-link to="/storeLanding/menuStatusManage">
+                  <v-card class="mx-auto same-card" title="메뉴 상태 관리" link></v-card>
+                </router-link>
+              </v-col>
               <v-col cols="4">
                 <v-card class="mx-auto same-card" title="비품/식자재 주문" link></v-card>
               </v-col> 
@@ -42,6 +48,8 @@
   </template>
   
   <script setup>
+ import HallOrderManagePage from '@/pages/HallOrderManagePage.vue';
+ const hallOrderManagePage = HallOrderManagePage;
   
   
   </script>
