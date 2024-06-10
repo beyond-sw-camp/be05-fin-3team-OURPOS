@@ -75,6 +75,6 @@ public class OrderDetail {
         int optionPrice = orderOptionGroups.stream()
             .mapToInt(OrderOptionGroup::calculatePrice)
             .sum();
-        return (menuPrice * quantity) + optionPrice;
+        return (menuPrice + optionPrice) * quantity;
     }
 }
