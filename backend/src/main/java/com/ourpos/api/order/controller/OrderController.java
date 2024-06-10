@@ -12,6 +12,7 @@ import com.ourpos.api.order.dto.request.DeliveryOrderRequestDto;
 import com.ourpos.api.order.dto.request.HallOrderRequestDto;
 import com.ourpos.api.order.service.OrderService;
 import com.ourpos.auth.dto.CustomOAuth2Customer;
+import com.ourpos.auth.exception.LoginRequiredException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,9 +45,12 @@ public class OrderController {
 
     private static String getLoginCustomerLoginId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomOAuth2Customer customOAuth2Customer = (CustomOAuth2Customer)principal;
+        if (!(principal instanceof CustomOAuth2Customer)) {
+            // 로그인 에러
+            throw new LoginRequiredException("로그인이 필요합니다.");
+        }
 
-        return customOAuth2Customer.getLoginId();
+        return ((CustomOAuth2Customer)principal).getLoginId();
     }
 
 }
