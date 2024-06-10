@@ -5,7 +5,7 @@
         <AppHeader title="장바구니" />
         <v-row>
           <v-col cols="12">
-            <h2>{{ fullOrder.storeName }}</h2>
+            <h2 v-show="orderDetailDtos.length !== 0">{{ fullOrder.storeName }}</h2>
             <v-card v-for="(orderDetail, index) in orderDetailDtos" :key="orderDetail.menuId" class="my-1">
               <v-card-title class="d-flex justify-space-between align-center">
                 {{ orderDetail.menuName }}
@@ -42,9 +42,15 @@
         </v-row>
 
         <v-container class="d-flex flex-column justify-end">
-          <v-row>
+          <v-row v-if="orderDetailDtos.length > 0">
             <v-col cols="12" md="4" sm="6">
               <v-btn @click="submitOrder" rounded="lg" size="x-large" block class="mb-4">주문하기</v-btn>
+            </v-col>
+          </v-row>
+          <v-row v-else class="text-center">
+            <v-col cols="12">
+              <v-icon color="primary" size="48">mdi-cart-outline</v-icon>
+              <div class="mt-2">장바구니가 비었습니다!</div>
             </v-col>
           </v-row>
         </v-container>
@@ -63,6 +69,11 @@
             </v-card-text>
           </v-card>
         </v-bottom-sheet>
+
+        <!-- Error alert -->
+        <v-alert v-model="orderErrorAlert" type="error" dismissible>
+          {{ orderErrorMessage }}
+        </v-alert>
       </v-container>
     </v-main>
   </v-app>
@@ -77,6 +88,8 @@ import AppHeader from "@/components/AppHeader.vue";
 let fullOrder = ref(JSON.parse(localStorage.getItem('fullOrder')) || {});
 let orderDetailDtos = ref(fullOrder.value.orderDetailDtos || []);
 const orderSuccessSheet = ref(false);
+const orderErrorAlert = ref(false);
+const orderErrorMessage = ref('');
 const router = useRouter();
 
 const deleteOrderDetail = (index) => {
@@ -114,15 +127,24 @@ const submitOrder = async () => {
     );
     console.log('Order response:', response.data);
 
-    // Clear the cart after successful order
-    orderDetailDtos.value = [];
-    localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: [] }));
+    if (response.data.code === 200) {
+      // Clear the cart after successful order
+      orderDetailDtos.value = [];
+      localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: [] }));
 
-    // Show success message
-    orderSuccessSheet.value = true;
+      // Show success message
+      orderSuccessSheet.value = true;
+    } else if (response.data.code === 401 || response.data.code === 403) {
+      router.push('/login');
+    } else {
+      // Show error message
+      orderErrorMessage.value = response.data.message;
+      orderErrorAlert.value = true;
+    }
   } catch (error) {
     console.error('Error submitting order:', error);
-    // Handle error (e.g., show a notification to the user)
+    orderErrorMessage.value = '서버와 통신 중 오류가 발생했습니다. 다시 시도해주세요.';
+    orderErrorAlert.value = true;
   }
 };
 
@@ -130,5 +152,4 @@ console.log(orderDetailDtos.value);
 </script>
 
 <style scoped>
-
 </style>

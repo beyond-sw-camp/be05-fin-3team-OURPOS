@@ -87,7 +87,7 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
                 saveNaverAddress(accessToken, customer);
             }
 
-            return new CustomOAuth2Customer(customerLoginDto);
+            return new CustomOAuth2Customer(customerLoginDto, true);
         } else {
             log.info("Existing User");
             customer.update(oAuth2Response.getName(), oAuth2Response.getNickname(), oAuth2Response.getPhone(),
@@ -101,7 +101,7 @@ public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
                 .role(customer.getRole())
                 .build();
 
-            return new CustomOAuth2Customer(customerLoginDto);
+            return new CustomOAuth2Customer(customerLoginDto, false);
         }
 
     }

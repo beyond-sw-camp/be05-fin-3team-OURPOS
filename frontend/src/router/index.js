@@ -26,6 +26,7 @@ import MenuStatusManagePage from '@/pages/MenuStatusManagePage.vue';
 import AdminPage from "@/pages/AdminPage.vue";
 import {checkUserRole} from "@/utils/auth";
 import AdminLoginPage from "@/pages/AdminLoginPage.vue";
+import SignupSuccess from "@/pages/SignupSuccess.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -99,6 +100,11 @@ const router = createRouter({
       path: '/admin',
       component: AdminPage,
       meta: { requiredRoles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+    },
+    {
+      name: 'signup-success',
+      path: '/signup-success',
+      component: SignupSuccess
     },
     {
       name: 'mypage',

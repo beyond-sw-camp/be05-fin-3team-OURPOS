@@ -22,9 +22,9 @@ import com.ourpos.api.order.dto.response.MealTimeResponseDto;
 import com.ourpos.api.order.dto.response.MealTypeResponseDto;
 import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 import com.ourpos.api.store.Location;
+import com.ourpos.domain.order.AdminOrderQueryRepository;
 import com.ourpos.domain.order.DeliveryOrder;
 import com.ourpos.domain.order.HallOrder;
-import com.ourpos.domain.order.OrderQueryRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,78 +34,62 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
-public class ManagerOrderServiceImpl implements ManagerOrderService {
+public class AdminOrderService {
 
     @Value("${google.api.key}")
     private String apiKey;
 
-    private final OrderQueryRepository orderQueryRepository;
+    private final AdminOrderQueryRepository adminOrderQueryRepository;
 
     // 홀 상태 주문 목록 조회
-    @Override
-    public Page<HallOrderResponseDto> findHallOrder(Long storeId, String status, Pageable pageable) {
-        log.info("홀 상태 주문 목록 조회 서비스 {} {}", storeId, status);
-        Page<HallOrder> hallOrders = orderQueryRepository.findHallOrders(storeId, status, pageable);
+    public Page<HallOrderResponseDto> findHallOrder(String adminLoginId, String status, Pageable pageable) {
+        log.info("홀 상태 주문 목록 조회 서비스 {}", adminLoginId);
+        Page<HallOrder> hallOrders = adminOrderQueryRepository.findHallOrders(adminLoginId, status, pageable);
 
         return hallOrders.map(HallOrderResponseDto::new);
     }
 
     // 배달 상태에 따른 목록 조회
-    @Override
-    public Page<DeliveryOrderResponseDto> findDeliveryOrder(Long storeId, String status, Pageable pageable) {
-        log.info("배달 대기 주문 조회 서비스 {} {} ", storeId, status);
-        Page<DeliveryOrder> deliveryOrders = orderQueryRepository.findDeliveryOrders(storeId, status, pageable);
+    public Page<DeliveryOrderResponseDto> findDeliveryOrder(String adminLoginId, String status, Pageable pageable) {
+        log.info("배달 대기 주문 조회 서비스 {}", adminLoginId);
+        Page<DeliveryOrder> deliveryOrders = adminOrderQueryRepository.findDeliveryOrders(adminLoginId, status,
+            pageable);
 
         return deliveryOrders.map(DeliveryOrderResponseDto::new);
     }
 
     // 월 매출 확인
-    @Override
-    public List<CountMonthlyResponseDto> countMonthly(Long storeId) {
-        log.info("월 매출 확인 서비스 {}", storeId);
+    public List<CountMonthlyResponseDto> countMonthly(String adminLoginId) {
+        log.info("월 매출 확인 서비스 {}", adminLoginId);
 
-        List<CountMonthlyResponseDto> dtos = orderQueryRepository.countMonthly(storeId);
-
-        return dtos;
+        return adminOrderQueryRepository.countMonthly(adminLoginId);
     }
 
     // 식사 유형에 따른 매출액 비중
-    @Override
-    public List<MealTypeResponseDto> mealType(Long storeId) {
-        log.info("식사 유형에 따른 매출액 비중 서비스 {} ", storeId);
-        List<MealTypeResponseDto> dtos = new ArrayList<MealTypeResponseDto>();
-        if (storeId != null) {
-            dtos = orderQueryRepository.mealType(storeId);
-        } else {
-            dtos = orderQueryRepository.mealTypeAll();
-        }
-        return dtos;
+    public List<MealTypeResponseDto> mealType(String adminLoginId) {
+        log.info("식사 유형에 따른 매출액 비중 서비스 {} ", adminLoginId);
+        return adminOrderQueryRepository.mealType(adminLoginId);
     }
 
     // 각 메뉴별 주문 비중
-    @Override
-    public List<MenuPreferResponseDto> menuPrefer(Long storeId) {
-        log.info("각 메뉴별 주문 비중 {}", storeId);
-        return orderQueryRepository.menuPrefer(storeId);
+    public List<MenuPreferResponseDto> menuPrefer(String adminLoginId) {
+        log.info("각 메뉴별 주문 비중 {}", adminLoginId);
+        return adminOrderQueryRepository.menuPrefer(adminLoginId);
     }
 
     // 시간대별 매출 발생 추이
-    @Override
-    public List<MealTimeResponseDto> mealTime(Long storeId) {
-        log.info("시간대별 매출 발생 추이 {}", storeId);
-        List<MealTimeResponseDto> dtos = orderQueryRepository.mealTime(storeId);
+    public List<MealTimeResponseDto> mealTime(String adminLoginId) {
+        log.info("시간대별 매출 발생 추이 {}", adminLoginId);
 
-        return dtos;
+        return adminOrderQueryRepository.mealTime(adminLoginId);
     }
 
     // 지역별 배달 빈도율 반환값 -> 위도, 경도
-    @Override
-    public List<Location> deliveryFrequency(Long storeId) {
-        log.info("지역별 배달 빈도율 {}", storeId);
-        List<String> addresses = orderQueryRepository.deliveryFrequency(storeId);
+    public List<Location> deliveryFrequency(String adminLoginId) {
+        log.info("지역별 배달 빈도율 {}", adminLoginId);
+        List<String> addresses = adminOrderQueryRepository.deliveryFrequency(adminLoginId);
         // 위도, 경도 좌표들
-        List<Location> locations = getLocations(addresses);
-        return locations;
+        return getLocations(addresses);
     }
 
     // 배달주소 -> 위도, 경도 반환

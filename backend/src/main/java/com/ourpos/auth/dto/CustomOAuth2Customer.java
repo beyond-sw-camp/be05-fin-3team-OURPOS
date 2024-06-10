@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class CustomOAuth2Customer implements OAuth2User {
 
     private final CustomerLoginDto customerLoginDto;
+    private final boolean isNewUser;
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -33,6 +34,10 @@ public class CustomOAuth2Customer implements OAuth2User {
 
     public String getLoginId() {
         return customerLoginDto.getLoginId();
+    }
+
+    public boolean isNewUser() {
+        return isNewUser;
     }
 
 }

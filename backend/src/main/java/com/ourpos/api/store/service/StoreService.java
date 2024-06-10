@@ -10,6 +10,7 @@ import com.ourpos.api.map.MapService;
 import com.ourpos.api.store.Location;
 import com.ourpos.api.store.dto.request.StoreRequestDto;
 import com.ourpos.api.store.dto.response.StoreResponseDto;
+import com.ourpos.auth.exception.LoginRequiredException;
 import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerAddress;
 import com.ourpos.domain.customer.CustomerRepository;
@@ -34,7 +35,7 @@ public class StoreService {
     public void createStore(StoreRequestDto storeRequestDto) {
         log.info(storeRequestDto.toString());
         Customer customer = customerRepository.findById(storeRequestDto.getCustomerId())
-            .orElseThrow(() -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
+            .orElseThrow(() -> new LoginRequiredException("해당 고객이 존재하지 않습니다."));
 
         Location location = mapService.getLocation(storeRequestDto.getStoreAddress().getAddressBase());
         storeRequestDto.getStoreAddress().setLatitude(location.latitude());
@@ -56,7 +57,7 @@ public class StoreService {
 
     public List<StoreResponseDto> findStoresOrderByDeliveryDistance(String loginId) {
         Customer customer = customerRepository.findByLoginId(loginId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
+            .orElseThrow(() -> new LoginRequiredException("해당 고객이 존재하지 않습니다."));
 
         CustomerAddress customerDefaultAddress = customer.getCustomerAddresses()
             .stream().filter(CustomerAddress::getDefaultYn)
