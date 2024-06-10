@@ -20,3 +20,14 @@
 
 ### 시스템 아키텍처 기획서
 ![Web App Reference Architecture (3)](https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/155698895/6fda9d1d-f181-41de-822b-88c2b664d5f5)
+
+## 백엔드 산출물
+
+### (Spring Boot 프레임웍을 활용한 백엔드 개발) : BE와 FE 연결작업 완료된 후 산출물 작성 예정
+
+### (프로그램 사양서)
+[요구사항 정의서 Link] (https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit#gid=374839476)
+
+### (단위 테스트 결과서) : BE와 FE 연결 작업 완료된 후 유저 시점에서 단위 테스트 수행 수 산출물 작성 예정
+
+### (git을 활용한 형상관리) : 각 담당자 별로 개별 Branch를 생성한 후 기능구현이 완료될 때마다 dev branch에 push하여 업데이트하는 전략을 취하고 있음. dev에서 test 후 이상이 없을 경우 main branch로 push하여 최종 배포할 예정임. 본 페이지 상단에서  각 brach에 접근하여 확인할 수 있음
