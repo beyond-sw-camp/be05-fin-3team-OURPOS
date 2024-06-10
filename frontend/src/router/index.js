@@ -21,6 +21,7 @@ import {checkUserRole} from "@/utils/auth";
 import AdminLoginPage from "@/pages/AdminLoginPage.vue";
 import SignupSuccess from "@/pages/SignupSuccess.vue";
 import MenuManagePage from '@/pages/MenuManagePage.vue';
+import MenuOptionGroupManagePage from '@/pages/MenuOptionGroupManagePage.vue';
 
 
 
@@ -111,6 +112,11 @@ const router = createRouter({
       name: 'menuManage',
       path : '/super-admin/headOfficeLanding/menuManage',
       component : MenuManagePage
+    },
+    {
+      name: 'menuOptionGroupManage',
+      path : '/super-admin/headOfficeLanding/menuOptionGroupManage',
+      component : MenuOptionGroupManagePage
     }
   ]
 });

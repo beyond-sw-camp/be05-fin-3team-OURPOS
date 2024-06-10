@@ -14,10 +14,12 @@
           <v-row>
             <v-col cols="3.5">
               <router-link to="/super-admin/headOfficeLanding/menuManage">
-                <v-card class="menu-card" title="메뉴 관리" link></v-card>
+                <v-card class="same-card" title="메뉴/카테고리 관리" link></v-card>
               </router-link>
-            </v-col>
-            <v-col cols="3.5">
+              <router-link to="/super-admin/headOfficeLanding/menuOptionGroupManage">
+                <v-card class="same-card" title="메뉴옵션그룹/메뉴옵션 관리 관리" link></v-card>
+              </router-link>
+            </v-col>                                   <v-col cols="3.5">
               <v-card class="same-card" title="비품/식자재 관리" link></v-card>
               <v-card class="same-card" title="비품/식자재 주문 관리" link></v-card>
             </v-col>
@@ -58,7 +60,7 @@
 }
 
 .same-card {
-  height: calc(90vh / 2 - 4px);
+  height: calc(90vh / 2 - 8px);
   display: flex;
   justify-content: center;
   align-items: center;
