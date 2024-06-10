@@ -38,7 +38,7 @@ public class StoreOrderCheckResponseDto {
 
 
 
-	public StoreOrderCheckResponseDto(StoreOrder storeOrder, StoreOrderDetail storeOrderDetail){
+	public void StoreOrderCheckResponseDto(StoreOrder storeOrder, StoreOrderDetail storeOrderDetail){
 		this.storeId = storeOrder.getStore().getId();
 		this.storeCommName= storeOrderDetail.getStoreMenu().getName();
 		//this.storeCommPrice = storeOrderDetail.getStoreMenu().getPrice();
@@ -60,7 +60,7 @@ public class StoreOrderCheckResponseDto {
 		this.storePhone = storeOrder.getStore().getPhone();
 
 
-	}
+    }
 }
 
 

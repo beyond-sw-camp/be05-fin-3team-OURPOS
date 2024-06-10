@@ -5,7 +5,6 @@ import java.util.List;
 import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -105,16 +104,12 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     }
 
     //비품, 식자재 주문 확인 (본사)
-
-
     @GetMapping("/storeorder/{storeId}/check")
     public Result<List<StoreOrderCheckResponseDto>> getStoreOrderCheck(@PathVariable Long storeId) {
         log.info("가게 식자재, 비품 주문: {}", storeId);
-        List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheck(storeId);
-        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", storeOrderList );
+        // List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheck(storeId);
+        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", null);
     }
-
-
 
     //비품, 식자재 주문 상태 변경
 

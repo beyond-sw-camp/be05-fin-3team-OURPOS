@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class FileStore {
 
-    @Value("${file.dir}") // file.dir -> file:dir 로 수정
+    @Value("${file.dir}")
     private String fileDir;
 
     public UploadFile storeFile(MultipartFile multipartFile) {
@@ -25,7 +28,7 @@ public class FileStore {
         try {
             multipartFile.transferTo(new File(storeFileFullPath));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error("Failed to store file", e);
         }
 
         return new UploadFile(originalFilename, storeFileName);
