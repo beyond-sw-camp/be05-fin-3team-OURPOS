@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row justify="center" align="center" style="height: 100vh;">
+    <v-row justify="center" align="center" style="height: 100vh;" v-if="Object.keys(userInfo).length !== 0">
       <v-col cols="12" md="6">
         <v-card class="text-center">
           <v-card-title>마이 페이지</v-card-title>
@@ -13,33 +13,35 @@
               <v-list-item class="mb-4">
                 <v-list-item-content>
                   <v-list-item-title>이름</v-list-item-title>
-                  <v-list-item-subtitle>{{ userInfo.name }}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ userInfo.data.nickname }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item class="mb-4">
                 <v-list-item-content>
                   <v-list-item-title>아이디</v-list-item-title>
-                  <v-list-item-subtitle>{{ userInfo.username }}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ userInfo.data.loginId }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item class="mb-4">
                 <v-list-item-content>
                   <v-list-item-title>전화번호</v-list-item-title>
-                  <v-list-item-subtitle>{{ userInfo.phoneNumber }}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ userInfo.data.phone }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item class="mb-4">
                 <v-list-item-content>
                   <v-list-item-title>성별</v-list-item-title>
-                  <v-list-item-subtitle>{{ userInfo.gender }}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ userInfo.data.gender }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item class="mb-4">
-                <v-list-item-content class="text-center">
-                  <v-list-item-title>기본주소</v-list-item-title>
-                  <v-list-item-subtitle>{{ userInfo.address }}</v-list-item-subtitle>
+                <v-list-item-content>
+                  <v-list-item-title>나이</v-list-item-title>
+                  <v-list-item-subtitle>{{ userInfo.data.ageRange }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
+             
+
               <v-list-item>
                 <v-list-item-content class="text-center">
                   <v-btn color="transparent" dark @click="changeAddress">
@@ -67,22 +69,41 @@
 
 <script>
 import BottomNav from "@/components/BottomNav.vue";
+import axios from 'axios';
+
+// Axios 인스턴스 생성
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:8080', // 백엔드 서버의 URL
+  withCredentials: true, // 쿠키를 서버로 전송하기 위해 필요
+});
+
 export default {
   components: {
     BottomNav
   },
   data() {
     return {
-      userInfo: {
-        name: '사용자 이름',
-        username: '사용자 아이디',
-        phoneNumber: '010-1234-5678',
-        address: '서울시 강남구',
-        gender: '남성'
-      }
+      userInfo: {}
     }
   },
+  mounted() {
+    // 페이지가 마운트될 때 고객 정보를 요청
+    this.fetchCustomerInfo();
+    
+  },
   methods: {
+    fetchCustomerInfo(){
+      
+      // Axios를 사용하여 백엔드 API에 요청을 보냄
+      axiosInstance.get('http://localhost:8080/api/v1/customers/my')
+      .then(response => {
+        this.userInfo = response.data;
+        console.log("Error fetching customer info:",response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching customer info:",error);
+      });
+    },
     changeAddress() {
       this.$router.push('/change-address');
     },

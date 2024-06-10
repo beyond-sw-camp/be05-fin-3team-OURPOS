@@ -103,12 +103,14 @@ const router = createRouter({
     {
       name: 'mypage',
       path: '/mypage',
-      component: MyPage
+      component: MyPage,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'storeorder',
       path: '/storeorder',
-      component: StoreOrder
+      component: StoreOrder,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     }, 
     {
       name: 'storeordercheck_store',
