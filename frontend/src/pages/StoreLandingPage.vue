@@ -47,10 +47,7 @@
     </div>
   </template>
   
-  <script setup>
- import HallOrderManagePage from '@/pages/HallOrderManagePage.vue';
- const hallOrderManagePage = HallOrderManagePage;
-  
+  <script setup> 
   
   </script>
   
