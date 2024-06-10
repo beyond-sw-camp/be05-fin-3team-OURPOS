@@ -23,20 +23,9 @@ import StoreLandingPage from '@/pages/StoreLandingPage.vue';
 import HallOrderManagePage from '@/pages/HallOrderManagePage.vue';
 import DeliveryOrderManagePage from '@/pages/DeliveryOrderManagePage.vue';
 import MenuStatusManagePage from '@/pages/MenuStatusManagePage.vue';
-
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-};
-
-const requireAuth = (to, from, next) => {
-  const token = getCookie('Authorization');
-  if (token) {
-    return next();
-  }
-  next('/login');
-};
+import AdminPage from "@/pages/AdminPage.vue";
+import {checkUserRole} from "@/utils/auth";
+import AdminLoginPage from "@/pages/AdminLoginPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,7 +34,7 @@ const router = createRouter({
       name: 'home',
       path: '/',
       component: MainPage,
-      beforeEnter: requireAuth
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'login',
@@ -56,42 +45,60 @@ const router = createRouter({
       name: 'findStore',
       path: '/stores',
       component: FindStoreHallPage,
-      beforeEnter: requireAuth
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'store',
       path: '/stores/:id/menus',
       component: MenuPage,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'storeMenu',
       path: '/stores/:storeId/menus/:menuId',
       component: MenuOnePage,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'cart',
       path: '/cart',
-      component: CartPage
+      component: CartPage,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'storeLanding',
       path: '/storeLanding',
-      component: StoreLandingPage
+      component: StoreLandingPage,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'hallOrderManage',
       path: '/storeLanding/hallOrderManage',
-      component: HallOrderManagePage
+      component: HallOrderManagePage,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'deliveryOrderManage',
       path : '/storeLanding/deliveryOrderManage',
-      component : DeliveryOrderManagePage
+      component: DeliveryOrderManagePage,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'menuStatusManage',
       path : '/storeLanding/menuStatusManage',
-      component : MenuStatusManagePage
+      component: MenuStatusManagePage,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+    },
+    {
+      name: 'admin-login',
+      path: '/admin/login',
+      component: AdminLoginPage
+    },
+    {
+      name: 'admin',
+      path: '/admin',
+      component: AdminPage,
+      meta: { requiredRoles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'mypage',
@@ -130,6 +137,20 @@ const router = createRouter({
     },
 
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiredRoles) {
+    const hasAccess = checkUserRole(to.meta.requiredRoles);
+    if (hasAccess) {
+      next();
+    } else {
+      alert('접근 권한이 없습니다.');
+      next({ name: 'login' });
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

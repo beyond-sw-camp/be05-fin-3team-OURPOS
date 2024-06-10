@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ourpos.api.Result;
+import com.ourpos.auth.exception.LoginRequiredException;
 
 @RestControllerAdvice
 public class ControllerAdvisor {
@@ -24,5 +25,10 @@ public class ControllerAdvisor {
     @ExceptionHandler
     public Result<Void> handleException(IllegalStateException e) {
         return new Result<>(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null);
+    }
+
+    @ExceptionHandler
+    public Result<Void> handleException(LoginRequiredException e) {
+        return new Result<>(HttpStatus.UNAUTHORIZED.value(), e.getMessage(), null);
     }
 }
