@@ -2,8 +2,6 @@ package com.ourpos.api.customer.controller;
 
 import java.util.List;
 
-
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -48,7 +46,7 @@ public class CustomerController implements CustomerControllerDocs {
     // 마이페이지- 개인정보조회
     @GetMapping("/my")
     public Result<CustomerResponseDto> findCustomer() {
-        String loginId = getLoginCustomerLoginId();
+        String loginId = getCustomerLoginId();
         log.info("개인 정보 조회: {}", loginId);
 
         CustomerResponseDto customerResponse = customerServiceImpl.findLoginCustomer(loginId);
@@ -58,7 +56,7 @@ public class CustomerController implements CustomerControllerDocs {
     // 마이페이지- 나의 주소 조회
     @GetMapping("/my/addresses")
     public Result<List<CustomerAddressResponseDto>> findCustomerAddress() {
-        String loginId = getLoginCustomerLoginId();
+        String loginId = getCustomerLoginId();
         log.info("나의 주소 조회: {}", loginId);
 
         List<CustomerAddressResponseDto> customerAddresses = customerServiceImpl.findLoginCustomerAddresses(loginId);
@@ -68,7 +66,7 @@ public class CustomerController implements CustomerControllerDocs {
     // 마이페이지-개인정보 변경(서브주소 추가)
     @PostMapping("/addresses")
     public Result<Void> addAddress(@Valid @RequestBody CustomerAddressRequestDto customerAddressRequestDto) {
-        String loginId = getLoginCustomerLoginId();
+        String loginId = getCustomerLoginId();
         log.info("서브주소 추가: {}", loginId);
 
         customerServiceImpl.addSubAddress(loginId, customerAddressRequestDto);
@@ -88,7 +86,7 @@ public class CustomerController implements CustomerControllerDocs {
     // 마이페이지-개인정보 변경(기본 주소 변경)
     @PutMapping("/addresses/{addressId}/default")
     public Result<Void> updateDefaultAddress(@PathVariable Long addressId) {
-        String loginId = getLoginCustomerLoginId();
+        String loginId = getCustomerLoginId();
         customerServiceImpl.updateDefaultAddress(loginId, addressId);
         log.info("기본 주소 변경: {}", loginId);
 
@@ -107,7 +105,7 @@ public class CustomerController implements CustomerControllerDocs {
     // 마이페이지 - 내가 주문한 홀/포장 주문 내역 조회
     @GetMapping("/my/orders/hall")
     public Result<Page<HallOrderResponseDto>> getMyOrders(@PageableDefault(size = 10) Pageable pageable) {
-        String loginId = getLoginCustomerLoginId();
+        String loginId = getCustomerLoginId();
         log.info("나의 주문 내역 조회: {}", loginId);
 
         Page<HallOrderResponseDto> hallOrders = orderQueryService.findHallOrderByLoginId(loginId, pageable);
@@ -118,7 +116,7 @@ public class CustomerController implements CustomerControllerDocs {
     @GetMapping("/my/orders/delivery")
     public Result<Page<DeliveryOrderResponseDto>> getMyDeliveryOrders(@PageableDefault(size = 10) Pageable pageable,
         @RequestParam(required = false) String status) {
-        String loginId = getLoginCustomerLoginId();
+        String loginId = getCustomerLoginId();
         log.info("나의 배달 주문 내역 조회: {}", loginId);
 
         Page<DeliveryOrderResponseDto> deliveryOrders = orderQueryService.findDeliveryOrderByLoginId(loginId, status,
@@ -126,7 +124,7 @@ public class CustomerController implements CustomerControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "나의 배달 주문 내역 조회가 완료되었습니다.", deliveryOrders);
     }
 
-    private String getLoginCustomerLoginId() {
+    private String getCustomerLoginId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomOAuth2Customer customOAuth2Customer = (CustomOAuth2Customer)principal;
 

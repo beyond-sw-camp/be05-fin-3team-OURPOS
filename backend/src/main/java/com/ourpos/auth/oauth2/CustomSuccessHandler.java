@@ -39,6 +39,11 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         String token = jwtUtil.createJwt(loginId, role, 1000L * 60 * 60 * 24 * 7);
 
+        if (customCustomerDetails.isNewUser()) {
+            response.sendRedirect("http://localhost:3000/signup-success");
+            return;
+        }
+
         response.addCookie(createCookie(token));
         switch (role) {
             case "ROLE_USER" -> response.sendRedirect("http://localhost:3000/");
