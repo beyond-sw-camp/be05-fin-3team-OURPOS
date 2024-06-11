@@ -1,10 +1,10 @@
---INSERT INTO customer (customer_login_id, customer_name, customer_nickname, customer_gender, customer_age_range,
---                      customer_phone, customer_role)
---VALUES ('test', '테스트', '닉네임', 'M', '20', '010-1234-1234', 'ROLE_USER');
+INSERT INTO customer (customer_login_id, customer_name, customer_nickname, customer_gender, customer_age_range,
+                      customer_phone, customer_role, created_date_time, modified_date_time)
+VALUES ('test', '테스트', '닉네임', 'M', '20', '010-1234-1234', 'ROLE_USER', NOW(), NOW());
 --
-INSERT INTO store_address(store_address_detail, store_address_base, store_address_zipcode, store_address_latitude,
+INSERT INTO store_address(store_address_base, store_address_detail, store_address_zipcode, store_address_latitude,
                           store_address_longitude)
-VALUES ('서울시 강남구 역삼동 123-4', '서울시 강남구 역삼동', '123-4', '37.123456', '127.123456');
+VALUES ('서울 동작구 보라매로 87', '플레이데이터 3층', '07060', '37.4971487', '126.9276885');
 --
 --
 INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time, modified_date_time, store_address_id,
