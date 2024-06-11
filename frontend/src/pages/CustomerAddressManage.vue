@@ -21,19 +21,19 @@
               <!-- 서브주소 리스트 -->
               <v-list-item v-for="(address, index) in subAddresses" :key="address.customerAddressId" class="address-item">
                 <v-list-item-content>
-                  <v-icon>mdi-map-marker</v-icon>
+                  <v-icon>mdi-map-marker-outline</v-icon>
                   <v-list-item-title>서브주소 {{ index + 1 }}</v-list-item-title>
                   <v-list-item-subtitle>{{ address.addressBase }}</v-list-item-subtitle>
                   <v-list-item-subtitle>{{ address.addressDetail }}</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
-                  <v-btn small outlined color="orange-lighten-5" class="rounded-btn" @click="editSubAddress(address, index)">
+                  <v-btn small outlined color="amber-lighten-4" class="rounded-btn" @click="editSubAddress(address, index)">
                     수정
                   </v-btn>
-                  <v-btn small outlined color="orange-lighten-5" class="rounded-btn ml-2" @click="deleteSubAddress(address.customerAddressId)">
+                  <v-btn small outlined color="amber-lighten-4" class="rounded-btn " @click="deleteSubAddress(address.customerAddressId)">
                     삭제
                   </v-btn>
-                  <v-btn small outlined color="orange-lighten-5" class="rounded-btn ml-2" @click="updateSubAddress(index)">
+                  <v-btn small outlined color="amber-lighten-4" class="rounded-btn " @click="updateSubAddress(index)">
                     기본주소로 변경
                   </v-btn>
                 </v-list-item-action>
@@ -41,7 +41,7 @@
             </v-list>
             <v-row justify="end">
               <v-btn icon @click="addSubAddress">
-                <v-icon>mdi-plus</v-icon>
+                <v-icon>mdi-map-plus</v-icon>
               </v-btn>
             </v-row>
           </v-card-text>
@@ -52,14 +52,14 @@
     <!-- 서브주소 수정 다이얼로그 -->
     <v-dialog v-model="dialogSubAddress" max-width="500px">
       <v-card>
-        <v-card-title>서브주소 수정</v-card-title>
+        <v-card-title> <v-icon>mdi-alert-box-outline</v-icon> </v-card-title>
         <v-card-text>
           <v-text-field v-model="tempSubAddress.name" label="이름" />
           <v-text-field v-model="tempSubAddress.receiverName" label="수령인 이름" />
           <v-text-field v-model="tempSubAddress.telNo" label="전화번호" />
           <v-text-field v-model="tempSubAddress.addressBase" label="주소" />
+          <v-btn color="warning" @click="execDaumPostcode('sub')">우편번호 찾기</v-btn><br>
           <v-text-field v-model="tempSubAddress.zipcode" label="우편번호" />
-          <v-btn @click="execDaumPostcode('sub')">우편번호 찾기</v-btn><br>
           <v-text-field v-model="tempSubAddress.addressDetail" label="상세주소" />
           <v-text-field v-model="tempSubAddress.extraAddress" label="참고항목" />
         </v-card-text>
@@ -310,6 +310,7 @@ export default {
 .rounded-btn {
   border-radius: 40px;
   font-size: 0.6rem;
+  font-color: #fff;
   padding: 1px 5px;
   min-width: 40px;
   height: 24px;

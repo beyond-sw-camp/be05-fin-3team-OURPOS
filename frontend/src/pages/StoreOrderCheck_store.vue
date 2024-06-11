@@ -2,6 +2,7 @@
     <v-container class="text-center"> 
       <v-row>
         <v-col cols="12">
+          
           <v-card>
             <v-card-title>주문 내역</v-card-title>
             <v-card-text>
@@ -104,7 +105,7 @@
       },
       async cancelOrder(storeOrderId) {
         try {
-          const response = await axios.post(`http://localhost:8080/api/v1/storeorder/${storeOrderId}/cancel`);
+          const response = await axios.delete(`http://localhost:8080/api/v1/storeorder/1`);
           if (response.status === 200) {
             this.orders = this.orders.filter(order => order.storeOrderId !== storeOrderId);
             alert('주문이 성공적으로 취소되었습니다.');
