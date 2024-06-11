@@ -151,7 +151,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 const addDialog = ref(false);
 const editDialog = ref(false);
@@ -159,19 +160,8 @@ const selectedCategory = ref('group');
 const selectedItems = ref([]);
 const currentItemIndex = ref(null);
 
-const menuOptionGroups = ref([
-  { name: 'Hamburger Size', description: 'Size of the hamburger', unit: '', price: 0 },
-  { name: 'Topping', description: 'Extra toppings for the hamburger', unit: '', price: 0 },
-]);
-
-const menuOptions = ref([
-  { name: 'Little', group: 'Hamburger Size', description: 'Small size', unit: 'pcs', price: 0 },
-  { name: 'Normal', group: 'Hamburger Size', description: 'Regular size', unit: 'pcs', price: 0 },
-  { name: 'All the way', group: 'Topping', description: 'All toppings', unit: 'pcs', price: 1 },
-  { name: 'Tomato', group: 'Topping', description: 'Tomato topping', unit: 'pcs', price: 0.5 },
-  { name: 'Lettuce', group: 'Topping', description: 'Lettuce topping', unit: 'pcs', price: 0.5 },
-  { name: 'Cheese', group: 'Topping', description: 'Cheese topping', unit: 'pcs', price: 1 },
-]);
+const menuOptionGroups = ref([]);
+const menuOptions = ref([]);
 
 const currentItem = ref({
   name: '',
@@ -188,6 +178,38 @@ const newItem = ref({
   unit: '',
   description: '',
 });
+
+const fetchCategories = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/categories');
+    if (response.data.code === 200) {
+      const categories = response.data.data;
+      categories.forEach(category => {
+        category.menuOptionGroupResponseDtos.forEach(group => {
+          menuOptionGroups.value.push({
+            name: group.name,
+            description: group.exclusiveYn ? 'Exclusive' : 'Non-exclusive',
+            categoryId: group.categoryId,
+            id: group.id
+          });
+          group.menuOptionResponseDtos.forEach(option => {
+            menuOptions.value.push({
+              name: option.menuOptionName,
+              group: group.name,
+              price: option.price,
+              unit: 'pcs', // Assuming unit is pcs for all options
+              description: '',
+              menuOptionGroupId: option.menuOptionGroupId,
+              menuOptionId: option.menuOptionId
+            });
+          });
+        });
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+  }
+};
 
 const selectCategory = (category) => {
   selectedCategory.value = category;
@@ -247,36 +269,48 @@ const addItem = () => {
 };
 
 const saveItem = () => {
-  if (selectedCategory.value === 'group') {
-    menuOptionGroups.value[currentItemIndex.value] = { ...currentItem.value, unit: '', price: 0 };
-  } else {
-    menuOptions.value[currentItemIndex.value] = { ...currentItem.value };
+  if (currentItemIndex.value !== null) {
+    if (selectedCategory.value === 'group') {
+      menuOptionGroups.value[currentItemIndex.value] = { ...currentItem.value };
+    } else {
+      menuOptions.value[currentItemIndex.value] = { ...currentItem.value };
+    }
+    selectCategory(selectedCategory.value);
   }
-  selectCategory(selectedCategory.value);
   closeEditDialog();
 };
 
 const deleteItem = () => {
-  if (selectedCategory.value === 'group') {
-    menuOptionGroups.value.splice(currentItemIndex.value, 1);
-  } else {
-    menuOptions.value.splice(currentItemIndex.value, 1);
+  if (currentItemIndex.value !== null) {
+    if (selectedCategory.value === 'group') {
+      menuOptionGroups.value.splice(currentItemIndex.value, 1);
+    } else {
+      menuOptions.value.splice(currentItemIndex.value, 1);
+    }
+    selectCategory(selectedCategory.value);
   }
-  selectCategory(selectedCategory.value);
   closeEditDialog();
 };
 
-selectCategory('group');
+onMounted(() => {
+  fetchCategories();
+  selectCategory(selectedCategory.value);
+});
 </script>
 
 <style scoped>
 .navigation-bar {
-  background-color: #6200ea;
+  background-color: #3f51b5;
 }
 
 .add-button {
   position: fixed;
   bottom: 16px;
   right: 16px;
+}
+
+.headline {
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 </style>

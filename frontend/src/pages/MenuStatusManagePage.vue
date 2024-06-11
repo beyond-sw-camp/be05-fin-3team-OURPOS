@@ -29,7 +29,7 @@
           <v-row>
             <v-col cols="4" v-for="menu in filteredMenus" :key="menu.id" class="mb-4">
               <v-card>
-                <v-img :src="menu.image" height="200px"></v-img>
+                <v-img :src="menu.pictureUrl" height="200px"></v-img>
                 <v-card-title>{{ menu.name }}</v-card-title>
                 <v-card-subtitle>{{ menu.price }}</v-card-subtitle>
                 <v-card-text>{{ menu.description }}</v-card-text>
@@ -60,21 +60,25 @@ const fetchCategories = async () => {
   }
 };
 
-const menus = ref([
-  { id: 1, name: 'Burger A', price: '5,000원', description: 'Delicious Burger A', image: 'https://via.placeholder.com/200', category: 'BURGERS' },
-  { id: 2, name: 'Burger B', price: '6,000원', description: 'Delicious Burger B', image: 'https://via.placeholder.com/200', category: 'BURGERS' },
-  { id: 3, name: 'Burger C', price: '7,000원', description: 'Delicious Burger C', image: 'https://via.placeholder.com/200', category: 'BURGERS' },
-  { id: 4, name: 'Burger D', price: '8,000원', description: 'Delicious Burger D', image: 'https://via.placeholder.com/200', category: 'FRIES' },
-  { id: 5, name: 'Burger E', price: '9,000원', description: 'Delicious Burger E', image: 'https://via.placeholder.com/200', category: 'FRIES' },
-  { id: 6, name: 'Burger F', price: '10,000원', description: 'Delicious Burger F', image: 'https://via.placeholder.com/200', category: 'FRIES' },
-  { id: 7, name: 'Burger G', price: '11,000원', description: 'Delicious Burger G', image: 'https://via.placeholder.com/200', category: 'MILKSHAKES' },
-  { id: 8, name: 'Burger H', price: '12,000원', description: 'Delicious Burger H', image: 'https://via.placeholder.com/200', category: 'MILKSHAKES' },
-  { id: 9, name: 'Burger I', price: '13,000원', description: 'Delicious Burger I', image: 'https://via.placeholder.com/200', category: 'MILKSHAKES' },
-  { id: 10, name: 'Burger J', price: '14,000원', description: 'Delicious Burger J', image: 'https://via.placeholder.com/200', category: 'DRINKS' },
-  { id: 11, name: 'Burger K', price: '15,000원', description: 'Delicious Burger K', image: 'https://via.placeholder.com/200', category: 'DRINKS' },
-]);
-
+const menus = ref([]);
 const filteredMenus = ref([]);
+
+const fetchMenus = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/menus');
+    menus.value = response.data.data.map(menu => ({
+      id: menu.id,
+      name: menu.name,
+      price: `${menu.price}원`,  // Converting price to string with '원' suffix
+      description: menu.description,
+      pictureUrl: menu.pictureUrl,
+      category: menu.categoryName,
+    }));
+    filterMenus(selectedCategory.value);
+  } catch (error) {
+    console.error('Error fetching menus:', error);
+  }
+};
 
 const filterMenus = (category) => {
   selectedCategory.value = category;
@@ -83,6 +87,7 @@ const filterMenus = (category) => {
 
 onMounted(() => {
   fetchCategories();
+  fetchMenus();
 });
 </script>
 
