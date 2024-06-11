@@ -19,11 +19,15 @@ import HeadOfficeLandingPage from '@/pages/HeadOfficeLandingPage.vue';
 import AdminPage from "@/pages/AdminPage.vue";
 import {checkUserRole} from "@/utils/auth";
 import AdminLoginPage from "@/pages/AdminLoginPage.vue";
+<<<<<<< Updated upstream
 import SignupSuccess from "@/pages/SignupSuccess.vue";
 import MenuManagePage from '@/pages/MenuManagePage.vue';
 import MenuOptionGroupManagePage from '@/pages/MenuOptionGroupManagePage.vue';
 
 
+=======
+import AdminInsightPage from "@/pages/AdminInsightPage.vue";
+>>>>>>> Stashed changes
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -99,6 +103,7 @@ const router = createRouter({
       meta: { requiredRoles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
+<<<<<<< Updated upstream
       name: 'signup-success',
       path: '/signup-success',
       component: SignupSuccess
@@ -117,6 +122,12 @@ const router = createRouter({
       name: 'menuOptionGroupManage',
       path : '/super-admin/headOfficeLanding/menuOptionGroupManage',
       component : MenuOptionGroupManagePage
+=======
+      name: 'admin-insight',
+      path: '/admin/insight',
+      component: AdminInsightPage,
+      meta: {requiredRoles: ['ROLE_ADMIN']}
+>>>>>>> Stashed changes
     }
   ]
 });
