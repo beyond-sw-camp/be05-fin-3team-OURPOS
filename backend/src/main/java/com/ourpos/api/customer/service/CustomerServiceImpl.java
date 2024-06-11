@@ -9,6 +9,7 @@ import com.ourpos.api.customer.dto.request.CustomerAddressRequestDto;
 import com.ourpos.api.customer.dto.request.CustomerAddressUpdateDto;
 import com.ourpos.api.customer.dto.response.CustomerAddressResponseDto;
 import com.ourpos.api.customer.dto.response.CustomerResponseDto;
+import com.ourpos.auth.exception.LoginRequiredException;
 import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerAddress;
 import com.ourpos.domain.customer.CustomerAddressRepository;
@@ -27,7 +28,7 @@ public class CustomerServiceImpl {
     //개인 정보 조회
     public CustomerResponseDto findLoginCustomer(String loginId) {
         Customer customer = customerRepository.findByLoginId(loginId)
-            .orElseThrow(() -> new IllegalArgumentException("Customer not found. Id: " + loginId));
+            .orElseThrow(() -> new LoginRequiredException("Customer not found. Id: " + loginId));
 
         return new CustomerResponseDto(customer);
     }
@@ -35,7 +36,7 @@ public class CustomerServiceImpl {
     //로그인 고객의 주소 조회
     public List<CustomerAddressResponseDto> findLoginCustomerAddresses(String loginId) {
         Customer customer = customerRepository.findByLoginId(loginId)
-            .orElseThrow(() -> new IllegalArgumentException("Customer not found. Id: " + loginId));
+            .orElseThrow(() -> new LoginRequiredException("Customer not found. Id: " + loginId));
 
         List<CustomerAddress> customerAddresses = customerAddressRepository.findByCustomer(customer);
 
@@ -48,7 +49,7 @@ public class CustomerServiceImpl {
     @Transactional
     public void addSubAddress(String loginId, CustomerAddressRequestDto customerAddressRequestDto) {
         Customer customer = customerRepository.findByLoginId(loginId).orElseThrow(
-            () -> new IllegalArgumentException("Customer not found. loginId: " + loginId));
+            () -> new LoginRequiredException("Customer not found. loginId: " + loginId));
 
         CustomerAddress customerAddress = createCustomerAddress(customerAddressRequestDto);
         customer.addAddress(customerAddress);
@@ -84,7 +85,7 @@ public class CustomerServiceImpl {
     @Transactional
     public void updateDefaultAddress(String loginId, Long addressId) {
         Customer customer = customerRepository.findByLoginId(loginId)
-            .orElseThrow(() -> new IllegalArgumentException("Customer not found. loginId: " + loginId));
+            .orElseThrow(() -> new LoginRequiredException("Customer not found. loginId: " + loginId));
 
         CustomerAddress customerAddress = customerAddressRepository.findById(addressId)
             .orElseThrow(() -> new IllegalArgumentException("Address not found. Id: " + addressId));

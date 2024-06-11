@@ -15,9 +15,15 @@ import StoreLandingPage from '@/pages/StoreLandingPage.vue';
 import HallOrderManagePage from '@/pages/HallOrderManagePage.vue';
 import DeliveryOrderManagePage from '@/pages/DeliveryOrderManagePage.vue';
 import MenuStatusManagePage from '@/pages/MenuStatusManagePage.vue';
+import HeadOfficeLandingPage from '@/pages/HeadOfficeLandingPage.vue';
 import AdminPage from "@/pages/AdminPage.vue";
 import {checkUserRole} from "@/utils/auth";
 import AdminLoginPage from "@/pages/AdminLoginPage.vue";
+import SignupSuccess from "@/pages/SignupSuccess.vue";
+import MenuManagePage from '@/pages/MenuManagePage.vue';
+import MenuOptionGroupManagePage from '@/pages/MenuOptionGroupManagePage.vue';
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,27 +65,27 @@ const router = createRouter({
     },
     {
       name: 'storeLanding',
-      path: '/storeLanding',
+      path: '/admin/storeLanding',
       component: StoreLandingPage,
-      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+      // meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'hallOrderManage',
-      path: '/storeLanding/hallOrderManage',
+      path: '/admin/storeLanding/hallOrderManage',
       component: HallOrderManagePage,
-      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+      // meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'deliveryOrderManage',
-      path : '/storeLanding/deliveryOrderManage',
+      path : '/admin/storeLanding/deliveryOrderManage',
       component: DeliveryOrderManagePage,
-      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+      // meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'menuStatusManage',
-      path : '/storeLanding/menuStatusManage',
+      path : '/admin/storeLanding/menuStatusManage',
       component: MenuStatusManagePage,
-      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+      // meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
       name: 'admin-login',
@@ -91,6 +97,26 @@ const router = createRouter({
       path: '/admin',
       component: AdminPage,
       meta: { requiredRoles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+    },
+    {
+      name: 'signup-success',
+      path: '/signup-success',
+      component: SignupSuccess
+    },
+    {
+      name: 'headOfficeLanding',
+      path : '/super-admin/headOfficeLanding',
+      component : HeadOfficeLandingPage
+    },
+    {
+      name: 'menuManage',
+      path : '/super-admin/headOfficeLanding/menuManage',
+      component : MenuManagePage
+    },
+    {
+      name: 'menuOptionGroupManage',
+      path : '/super-admin/headOfficeLanding/menuOptionGroupManage',
+      component : MenuOptionGroupManagePage
     }
   ]
 });

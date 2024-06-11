@@ -9,6 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
@@ -30,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @PropertySource("classpath:config.properties")
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class ManagerOrderServiceImpl implements ManagerOrderService {

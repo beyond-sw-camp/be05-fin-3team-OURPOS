@@ -13,7 +13,7 @@
           </v-col>
           <v-col v-else v-for="store in stores" :key="store.storeId" cols="12" md="6">
             <v-card
-              @click="viewStore(store.storeId)"
+              @click="openOrderTypeDialog(store)"
               link
               class="mx-auto"
               max-width="400"
@@ -43,21 +43,61 @@
         </v-row>
       </v-col>
     </v-row>
-  </v-container>
 
-  <BottomNav/>
+    <!-- Order Type Dialog -->
+    <v-dialog v-model="orderTypeDialog" max-width="800">
+      <v-card>
+        <v-card-title>{{ selectedStore.storeName }}</v-card-title>
+        <v-card-subtitle>{{ selectedStore.addressResponseDto.addressBase }}</v-card-subtitle>
+        <v-img :src="'http://localhost:8080/images/' + selectedStore.pictureUrl"></v-img>
+        <v-card-text>
+          <p><FontAwesomeIcon :icon="faPhone"/> 전화번호: {{ selectedStore.storePhone }}</p>
+          <p><FontAwesomeIcon :icon="faClock"/> 영업 시간: {{ selectedStore.openTime }} - {{ selectedStore.closeTime }}</p>
+          <p><FontAwesomeIcon :icon="faShoppingBag"/> 최소 주문 가격: {{ selectedStore.minimumOrderPrice }}원</p>
+          <p><FontAwesomeIcon :icon="faMapLocation"/> 거리: {{ formatDistance(selectedStore.distance) }}</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary"
+                 prepend-icon="mdi-silverware-fork-knife"
+                 @click="setOrderType(false)" stacked>
+            매장 식사
+          </v-btn>
+          <v-btn color="primary"
+                 prepend-icon="mdi-shopping"
+                 @click="setOrderType(true)" stacked>
+            테이크아웃
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-container>
 </template>
 
 <script setup>
-import BottomNav from "@/components/BottomNav.vue";
-import {ref} from "vue";
-import axios from "axios";
-import {useRouter} from "vue-router";
-import HeaderPage from "@/components/AppHeader.vue";
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import HeaderPage from '@/components/AppHeader.vue';
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {faClock, faMapLocation, faPhone, faShoppingBag} from "@fortawesome/free-solid-svg-icons";
 
 const stores = ref([]);
 const router = useRouter();
-const loading = ref(true); // 초기 로딩 상태를 true로 설정합니다.
+const loading = ref(true);
+
+const orderTypeDialog = ref(false);
+const selectedStore = ref({});
+
+const openOrderTypeDialog = (store) => {
+  selectedStore.value = store;
+  orderTypeDialog.value = true;
+};
+
+const setOrderType = (orderTakeoutYn) => {
+  viewStore(selectedStore.value.storeId, selectedStore.value.storeName, orderTakeoutYn);
+  orderTypeDialog.value = false;
+};
 
 const findItems = async (latitude, longitude) => {
   try {
@@ -68,16 +108,28 @@ const findItems = async (latitude, longitude) => {
         longitude: longitude
       }
     });
+    if (response.data.code !== 200) {
+      console.error('Error fetching items:', response.data);
+      return;
+    }
     stores.value = response.data.data;
   } catch (error) {
-    console.error("Error fetching items:", error);
+    console.error('Error fetching items:', error);
   } finally {
-    loading.value = false; // 데이터를 모두 불러온 후 로딩 상태를 false로 변경합니다.
+    loading.value = false;
   }
 };
 
-const viewStore = (storeId) => {
-  router.push('/stores/' + storeId +'/menus');
+const viewStore = (storeId, storeName, orderTakeoutYn) => {
+  const fullOrder = {
+    storeId: storeId,
+    storeName: storeName,
+    orderTakeoutYn: orderTakeoutYn,
+    orderDetailDtos: []
+  };
+
+  localStorage.setItem('fullOrder', JSON.stringify(fullOrder));
+  router.push('/stores/' + storeId + '/menus');
 };
 
 const formatDistance = (distance) => {
@@ -87,7 +139,8 @@ const formatDistance = (distance) => {
     return `${(distance / 1000).toFixed(2)}km`;
   }
 };
-const EXPIRATION_TIME = 10 * 60 * 1000; // 10 minutes in milliseconds
+
+const EXPIRATION_TIME = 10 * 60 * 1000;
 
 function setItemWithExpiration(key, value) {
   const now = new Date().getTime();
@@ -130,8 +183,8 @@ if (latitude && longitude) {
     setItemWithExpiration('latitude', latitude.toString());
     setItemWithExpiration('longitude', longitude.toString());
   }, (error) => {
-    console.error("Error getting location:", error);
-    loading.value = false; // 위치 정보를 가져오는 데 실패하면 로딩 상태를 false로 변경합니다.
+    console.error('Error getting location:', error);
+    loading.value = false;
   });
 }
 </script>

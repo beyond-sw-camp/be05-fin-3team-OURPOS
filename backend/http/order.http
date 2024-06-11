@@ -49,7 +49,7 @@ GET http://localhost:8080/api/v1/orders/hall/1
 
 POST http://localhost:8080/api/v1/orders/delivery
 content-type: application/json
-Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfWUZmUnA4ZW94TEU2SGlabGpCUUpCR2tQMjZjZHRPa09qbzdwUEJEbEgycyIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3MTc0NjU2MzgsImV4cCI6MTcxODA3MDQzOH0.XztHMcFBWoi7RwZeQUClt4YtpTTMvfcm1itwVFVRqDc
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoia2FrYW9fMzQ5ODY0MzMzOSIsInJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzE4MDA4MTAyLCJleHAiOjE3MTg2MTI5MDJ9.hWXBQ2hpq4uT5Nu5dRQlqaj7nBhtSEVmAmybsRk-RUQ
 
 {
   "storeId": 1,
@@ -114,3 +114,7 @@ Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2S
 
 ### 가게에서 배달 주문 조회
 GET http://localhost:8080/api/v1/orders/delivery?storeId=1&page=1
+
+### 가게에서 선호도 조회
+GET http://localhost:8080/api/v1/orders/menu-prefer/my
+Cookie: Authorization=eyJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoibmF2ZXJfdkZDY25LeFJ2SEEyeFpsajJadUs5T2NWdmhsN2Q2RGdtNS03RUQxV25PVSIsInJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzE4MDAxNTg0LCJleHAiOjE3MTg2MDYzODR9.JHXOzsf4vDvY9xJ0JU91f_03CPT6MzOJGh1Ltn-RN4I
