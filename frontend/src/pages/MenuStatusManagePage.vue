@@ -42,38 +42,50 @@
   </div>
 </template>
 
-### Script
-
-```javascript
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
-const categories = ref(['Menu Category 1', 'Menu Category 2', 'Menu Category 3']);
-const selectedCategory = ref(categories.value[0]);
+const categories = ref([]);
+const selectedCategory = ref(null);
+
+const fetchCategories = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/categories');
+    categories.value = response.data.data.map(category => category.name);
+    selectedCategory.value = categories.value[0]; // Set default selected category
+    filterMenus(selectedCategory.value);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+  }
+};
 
 const menus = ref([
-  { id: 1, name: 'Burger A', price: '5,000원', description: 'Delicious Burger A', image: 'https://via.placeholder.com/200', category: 'Menu Category 1' },
-  { id: 2, name: 'Burger B', price: '6,000원', description: 'Delicious Burger B', image: 'https://via.placeholder.com/200', category: 'Menu Category 1' },
-  { id: 3, name: 'Burger C', price: '7,000원', description: 'Delicious Burger C', image: 'https://via.placeholder.com/200', category: 'Menu Category 1' },
-  { id: 4, name: 'Burger D', price: '8,000원', description: 'Delicious Burger D', image: 'https://via.placeholder.com/200', category: 'Menu Category 2' },
-  { id: 5, name: 'Burger E', price: '9,000원', description: 'Delicious Burger E', image: 'https://via.placeholder.com/200', category: 'Menu Category 2' },
-  { id: 6, name: 'Burger F', price: '10,000원', description: 'Delicious Burger F', image: 'https://via.placeholder.com/200', category: 'Menu Category 2' },
-  { id: 7, name: 'Burger G', price: '11,000원', description: 'Delicious Burger G', image: 'https://via.placeholder.com/200', category: 'Menu Category 3' },
-  { id: 8, name: 'Burger H', price: '12,000원', description: 'Delicious Burger H', image: 'https://via.placeholder.com/200', category: 'Menu Category 3' },
-  { id: 9, name: 'Burger I', price: '13,000원', description: 'Delicious Burger I', image: 'https://via.placeholder.com/200', category: 'Menu Category 3' }
+  { id: 1, name: 'Burger A', price: '5,000원', description: 'Delicious Burger A', image: 'https://via.placeholder.com/200', category: 'BURGERS' },
+  { id: 2, name: 'Burger B', price: '6,000원', description: 'Delicious Burger B', image: 'https://via.placeholder.com/200', category: 'BURGERS' },
+  { id: 3, name: 'Burger C', price: '7,000원', description: 'Delicious Burger C', image: 'https://via.placeholder.com/200', category: 'BURGERS' },
+  { id: 4, name: 'Burger D', price: '8,000원', description: 'Delicious Burger D', image: 'https://via.placeholder.com/200', category: 'FRIES' },
+  { id: 5, name: 'Burger E', price: '9,000원', description: 'Delicious Burger E', image: 'https://via.placeholder.com/200', category: 'FRIES' },
+  { id: 6, name: 'Burger F', price: '10,000원', description: 'Delicious Burger F', image: 'https://via.placeholder.com/200', category: 'FRIES' },
+  { id: 7, name: 'Burger G', price: '11,000원', description: 'Delicious Burger G', image: 'https://via.placeholder.com/200', category: 'MILKSHAKES' },
+  { id: 8, name: 'Burger H', price: '12,000원', description: 'Delicious Burger H', image: 'https://via.placeholder.com/200', category: 'MILKSHAKES' },
+  { id: 9, name: 'Burger I', price: '13,000원', description: 'Delicious Burger I', image: 'https://via.placeholder.com/200', category: 'MILKSHAKES' },
+  { id: 10, name: 'Burger J', price: '14,000원', description: 'Delicious Burger J', image: 'https://via.placeholder.com/200', category: 'DRINKS' },
+  { id: 11, name: 'Burger K', price: '15,000원', description: 'Delicious Burger K', image: 'https://via.placeholder.com/200', category: 'DRINKS' },
 ]);
 
-const filteredMenus = ref(menus.value.filter(menu => menu.category === selectedCategory.value));
+const filteredMenus = ref([]);
 
 const filterMenus = (category) => {
   selectedCategory.value = category;
   filteredMenus.value = menus.value.filter(menu => menu.category === category);
 };
+
+onMounted(() => {
+  fetchCategories();
+});
 </script>
 
-### Styles
-
-```css
 <style scoped>
 .navigation-bar {
   background-color: #3f51b5;

@@ -11,6 +11,7 @@ public class MenuResponseDto {
 
 	private Long Id;
 	private Long categoryId;
+	private String categoryName;
 	private String name;
 	private Integer price;
 	private String description;
@@ -19,6 +20,7 @@ public class MenuResponseDto {
 	public MenuResponseDto(Menu menu) {
 		this.Id = menu.getId();
 		this.categoryId = menu.getCategory().getId();
+		this.categoryName = menu.getCategory().getName();
 		this.name = menu.getName();
 		this.price = menu.getPrice();
 		this.description = menu.getDescription();

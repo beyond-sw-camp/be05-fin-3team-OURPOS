@@ -28,7 +28,7 @@ public interface MenuControllerDocs {
 
 	@Operation(summary = "카테고리 별 전체 메뉴 조회", description = "카테고리 별 전체 메뉴를 조회합니다.")
 	Result<List<MenuResponseDto>> findAllMenus(
-		@Parameter(name = "categoryName", description = "조회하고자 하는 카테고리의 이름") @RequestParam(value = "category", required = false) String category);
+		@Parameter(name = "category", description = "조회하고자 하는 카테고리의 이름") @RequestParam(value = "category", required = false) String category);
 
 	@Operation(summary = "메뉴 추가", description = "새로운 메뉴를 추가합니다.")
 	Result<Void> addMenu(
