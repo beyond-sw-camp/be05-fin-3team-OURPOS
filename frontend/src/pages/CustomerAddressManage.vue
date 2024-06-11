@@ -11,7 +11,8 @@
                 <v-list-item-content>
                   <v-icon>mdi-map-marker</v-icon>
                   <v-list-item-title>기본주소</v-list-item-title>
-                  <v-list-item-subtitle>{{ mainAddress }}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ mainAddress.addressBase }}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ mainAddress.addressDetail }}</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-btn icon @click="editMainAddress">
@@ -21,17 +22,18 @@
               </v-list-item>
               <v-divider class="my-4"></v-divider>
               <!-- 서브주소 리스트 -->
-              <v-list-item v-for="(address, index) in subAddresses" :key="index" class="address-item">
+              <v-list-item v-for="(address, index) in subAddresses" :key="address.customerAddressId" class="address-item">
                 <v-list-item-content>
                   <v-icon>mdi-map-marker</v-icon>
                   <v-list-item-title>서브주소 {{ index + 1 }}</v-list-item-title>
-                  <v-list-item-subtitle>{{ address }}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ address.addressBase }}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ address.addressDetail }}</v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
-                  <v-btn small outlined color="orange-lighten-5" class="rounded-btn" @click="editSubAddress(index)">
+                  <v-btn small outlined color="orange-lighten-5" class="rounded-btn" @click="editSubAddress(address, index)">
                     수정
                   </v-btn>
-                  <v-btn small outlined color="orange-lighten-5" class="rounded-btn ml-2" @click="deleteSubAddress(index)">
+                  <v-btn small outlined color="orange-lighten-5" class="rounded-btn ml-2" @click="deleteSubAddress(address.id)">
                     삭제
                   </v-btn>
                 </v-list-item-action>
@@ -109,6 +111,13 @@
 
 <script>
 import BottomNav from "@/components/BottomNav.vue";
+import axios from 'axios';
+
+// Axios 인스턴스 생성
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:8080', 
+  withCredentials: true, // 쿠키를 전송하기 위해 필요
+});
 
 export default {
   components: {
@@ -116,12 +125,8 @@ export default {
   },
   data() {
     return {
-      mainAddress: '서울시 강남구 테헤란로 123',
-      subAddresses: [
-        '서울시 서초구 서초동 456',
-        '서울시 용산구 이태원로 789',
-        '인천시 남동구 구월동 1010'
-      ],
+      mainAddress: '',
+      subAddresses: [],
       dialogMainAddress: false,
       dialogSubAddress: false,
       dialogAddSubAddress: false,
@@ -131,7 +136,7 @@ export default {
       editIndex: -1,
     };
   },
-  mounted() {
+  async mounted() {
     // Daum Postcode API 스크립트 동적 로드
     const script = document.createElement('script');
     script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
@@ -139,37 +144,90 @@ export default {
       console.log('Daum Postcode script loaded');
     };
     document.head.appendChild(script);
+
+    // 로그인한 사용자의 주소 데이터 로드
+    await this.loadAddresses();
   },
   methods: {
+    async loadAddresses() {
+      try {
+        const response = await axiosInstance.get('http://localhost:8080/api/v1/customers/my/addresses');
+        const addresses = response.data.data;
+
+        // 응답 데이터가 배열인지 확인
+        if (Array.isArray(addresses)) {
+          const mainAddress = addresses.find(address => address.defaultYn);
+          this.mainAddress = mainAddress ? mainAddress : '';
+
+          this.subAddresses = addresses.filter(address => !address.defaultYn);
+          console.log('Addresses loaded:', this.mainAddress, this.subAddresses);
+        } else {
+          console.error('Addresses data is not an array:', addresses);
+        }
+      } catch (error) {
+        console.error('Error loading addresses:', error);
+      }
+    },
     editMainAddress() {
       this.tempMainAddress = this.mainAddress;
       this.dialogMainAddress = true;
     },
-    saveMainAddress() {
-      this.mainAddress = this.tempMainAddress;
-      this.dialogMainAddress = false;
+    async saveMainAddress() {
+      try {
+        const mainAddressId = this.subAddresses.find(address => address.addressBase === this.tempMainAddress)?.id;
+        if (mainAddressId) {
+          await axiosInstance.put(`http://localhost:8080/api/v1/customers/addresses/${mainAddressId}/default`);
+          this.mainAddress = this.tempMainAddress;
+          this.dialogMainAddress = false;
+          await this.loadAddresses();
+        } else {
+          console.error('Main address ID not found');
+        }
+      } catch (error) {
+        console.error('Error saving main address:', error);
+      }
     },
-    editSubAddress(index) {
+    editSubAddress(address, index) {
       this.editIndex = index;
-      this.tempSubAddress = this.subAddresses[index];
+      this.tempSubAddress = address.addressBase;
       this.dialogSubAddress = true;
     },
-    saveSubAddress() {
-      this.subAddresses[this.editIndex] = this.tempSubAddress;
-      this.dialogSubAddress = false;
+    async saveSubAddress() {
+      try {
+        const addressId = this.subAddresses[this.editIndex].id;
+        await axiosInstance.put(`http://localhost:8080/api/v1/customers/addresses/${addressId}`, {
+          addressBase: this.tempSubAddress
+        });
+        this.subAddresses[this.editIndex].addressBase = this.tempSubAddress;
+        this.dialogSubAddress = false;
+      } catch (error) {
+        console.error('Error saving sub address:', error);
+      }
     },
-    deleteSubAddress(index) {
-      this.subAddresses.splice(index, 1);
+    async deleteSubAddress(addressId) {
+      try {
+        await axiosInstance.delete(`http://localhost:8080/api/v1/customers/addresses/${addressId}`);
+        this.subAddresses = this.subAddresses.filter(address => address.id !== addressId);
+      } catch (error) {
+        console.error('Error deleting sub address:', error);
+      }
     },
     addSubAddress() {
       this.newSubAddress = '';
       this.dialogAddSubAddress = true;
     },
-    saveNewSubAddress() {
-      if (this.newSubAddress) {
-        this.subAddresses.push(this.newSubAddress);
+    async saveNewSubAddress() {
+      try {
+        if (this.newSubAddress) {
+          await axiosInstance.post('http://localhost:8080/api/v1/customers/addresses', {
+            addressBase: this.newSubAddress
+          });
+          await this.loadAddresses();
+          this.dialogAddSubAddress = false;
+        }
+      } catch (error) {
+        console.error('Error saving new sub address:', error);
       }
-      this.dialogAddSubAddress = false;
     },
     execDaumPostcode(type) {
       new daum.Postcode({
@@ -207,25 +265,25 @@ export default {
   },
 };
 </script>
-  
-  <style scoped>
-  .v-avatar img {
-    object-fit: cover;
-  }
-  .mb-4 {
-    margin-bottom: 1rem;
-  }
-  .rounded-btn {
-    border-radius: 40px;
-    font-size: 0.6rem;
-    padding: 1px 5px;
-    min-width: 40px;
-    height: 24px;
-  }
-  .ml-2 {
-    margin-left: 8px;
-  }
-  .address-item {
-    margin-bottom: 15px;
-  }
-  </style>
+
+<style scoped>
+.v-avatar img {
+  object-fit: cover;
+}
+.mb-4 {
+  margin-bottom: 1rem;
+}
+.rounded-btn {
+  border-radius: 40px;
+  font-size: 0.6rem;
+  padding: 1px 5px;
+  min-width: 40px;
+  height: 24px;
+}
+.ml-2 {
+  margin-left: 8px;
+}
+.address-item {
+  margin-bottom: 8px;
+}
+</style>
