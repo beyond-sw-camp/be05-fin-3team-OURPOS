@@ -2,8 +2,10 @@
   <v-container>
     <v-row justify="center" align="center">
       <v-col cols="12" md="8">
+        <h1><v-icon @click="goToMypage">mdi-chevron-left</v-icon>
+        주소 관리
+        </h1>
         <v-card>
-          <v-card-title>주소 관리</v-card-title>
           <v-card-text>
             <v-list dense>
               <!-- 기본주소 -->
@@ -14,11 +16,6 @@
                   <v-list-item-subtitle>{{ mainAddress.addressBase }}</v-list-item-subtitle>
                   <v-list-item-subtitle>{{ mainAddress.addressDetail }}</v-list-item-subtitle>
                 </v-list-item-content>
-                <v-list-item-action>
-                  <v-btn icon @click="editMainAddress">
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
-                </v-list-item-action>
               </v-list-item>
               <v-divider class="my-4"></v-divider>
               <!-- 서브주소 리스트 -->
@@ -36,6 +33,9 @@
                   <v-btn small outlined color="orange-lighten-5" class="rounded-btn ml-2" @click="deleteSubAddress(address.customerAddressId)">
                     삭제
                   </v-btn>
+                  <v-btn small outlined color="orange-lighten-5" class="rounded-btn ml-2" @click="updateSubAddress(index)">
+                    기본주소로 변경
+                  </v-btn>
                 </v-list-item-action>
               </v-list-item>
             </v-list>
@@ -48,24 +48,6 @@
         </v-card>
       </v-col>
     </v-row>
-
-    <!-- 기본주소 수정 다이얼로그 -->
-    <v-dialog v-model="dialogMainAddress" max-width="500px">
-      <v-card>
-        <v-card-title>기본주소 수정</v-card-title>
-        <v-card-text>
-          <v-text-field v-model="tempMainAddress.addressBase" label="기본주소" />
-          <v-text-field v-model="tempMainAddress.postcode" label="우편번호" />
-          <v-btn @click="execDaumPostcode('main')">우편번호 찾기</v-btn><br>
-          <v-text-field v-model="tempMainAddress.addressDetail" label="상세주소" />
-          <v-text-field v-model="tempMainAddress.extraAddress" label="참고항목" />
-        </v-card-text>
-        <v-card-actions>
-          <v-btn text @click="dialogMainAddress = false">취소</v-btn>
-          <v-btn text @click="saveMainAddress">저장</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
 
     <!-- 서브주소 수정 다이얼로그 -->
     <v-dialog v-model="dialogSubAddress" max-width="500px">
@@ -129,6 +111,7 @@ export default {
   data() {
     return {
       mainAddress: {
+        customerAddressId: null,
         addressBase: '',
         addressDetail: '',
         postcode: '',
@@ -139,12 +122,14 @@ export default {
       dialogSubAddress: false,
       dialogAddSubAddress: false,
       tempMainAddress: {
+        customerAddressId: null,
         addressBase: '',
         addressDetail: '',
         postcode: '',
         extraAddress: '',
       },
       tempSubAddress: {
+        customerAddressId: null,
         name: '',
         receiverName: '',
         telNo: '',
@@ -202,26 +187,33 @@ export default {
         console.error('Error loading addresses:', error);
       }
     },
-    editMainAddress() {
-      this.tempMainAddress = { ...this.mainAddress };
-      this.dialogMainAddress = true;
-    },
-    async saveMainAddress() {
-      try {
-        const mainAddressId = this.mainAddress.customerAddressId;
-        if (mainAddressId) {
-          await axiosInstance.put(`http://localhost:8080/api/v1/customers/addresses/${mainAddressId}/default`, this.tempMainAddress);
-          this.mainAddress = { ...this.tempMainAddress };
-          this.dialogMainAddress = false;
-        }
-      } catch (error) {
-        console.error('Error saving main address:', error);
-      }
-    },
     editSubAddress(address, index) {
       this.tempSubAddress = { ...address };
       this.editIndex = index;
       this.dialogSubAddress = true;
+    },
+    async updateSubAddress(index) {
+      try {
+        const addressId = this.subAddresses[index].customerAddressId;
+        
+        // 서브 주소를 기본 주소로 변경
+        await axiosInstance.put(`http://localhost:8080/api/v1/customers/addresses/${addressId}/default`);
+        
+        // 기존의 기본주소를 서브주소 리스트에 추가
+        if (this.mainAddress.customerAddressId) {
+          this.subAddresses.push({ ...this.mainAddress, defaultYn: false });
+        }
+
+        // 새로운 기본주소 설정
+        const newMainAddress = this.subAddresses[index];
+        this.mainAddress = { ...newMainAddress, defaultYn: true };
+
+        // 서브주소 리스트에서 기본주소로 변경된 주소를 제거
+        this.subAddresses.splice(index, 1);
+
+      } catch (error) {
+        console.error('Error updating sub address:', error);
+      }
     },
     async saveSubAddress() {
       try {
@@ -265,35 +257,45 @@ export default {
       }
     },
     execDaumPostcode(type) {
-      new daum.Postcode({
-        oncomplete: (data) => {
-          let addr = '';
-          let extraAddr = '';
+    new daum.Postcode({
+      oncomplete: (data) => {
+        let addr = '';
+        let extraAddr = '';
 
-          if (data.userSelectedType === 'R') {
-            addr = data.roadAddress;
-          } else {
-            addr = data.jibunAddress;
-          }
-
-          if (data.userSelectedType === 'R') {
-            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-              extraAddr += data.bname;
-            }
-            if (data.buildingName !== '' && data.apartment === 'Y') {
-              extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-            }
-            if (extraAddr !== '') {
-              extraAddr = ' (' + extraAddr + ')';
-            }
-          }
-          
-          this[`${type}Address`].addressBase = addr;
-          this[`${type}Address`].postcode = data.zonecode;
-          this[`${type}Address`].extraAddress = extraAddr;
+        if (data.userSelectedType === 'R') { 
+          addr = data.roadAddress;
+        } else { 
+          addr = data.jibunAddress;
         }
-      }).open();
-    }
+
+        if (data.userSelectedType === 'R') {
+          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+            extraAddr += data.bname;
+          }
+          if (data.buildingName !== '' && data.apartment === 'Y') {
+            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+          }
+          if (extraAddr !== '') {
+            extraAddr = ' (' + extraAddr + ')';
+          }
+        }
+
+        if (type === 'sub') {
+          this.tempSubAddress.addressBase = addr;
+          this.tempSubAddress.zipcode = data.zonecode;
+          this.tempSubAddress.extraAddress = extraAddr;
+        } else if (type === 'new') {
+          this.newSubAddress.addressBase = addr;
+          this.newSubAddress.zipcode = data.zonecode;
+          this.newSubAddress.extraAddress = extraAddr;
+        }
+      }
+    }).open();
+  },
+  goToMypage() {
+      // mypage로 이동하는 코드 추가
+      this.$router.push('/mypage');
+    },
   },
 };
 </script>
