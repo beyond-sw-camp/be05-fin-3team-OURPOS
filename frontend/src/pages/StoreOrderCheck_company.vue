@@ -1,4 +1,5 @@
 <template>
+  
     <v-container>
       <v-tabs v-model="tab">
         <v-tab v-for="status in statuses" :key="status.value">
@@ -11,6 +12,7 @@
         </v-tab-item>
       </v-tabs-items>
     </v-container>
+    
   </template>
   
   <script>

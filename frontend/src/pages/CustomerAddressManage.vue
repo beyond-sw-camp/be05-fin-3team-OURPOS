@@ -33,7 +33,7 @@
                   <v-btn small outlined color="orange-lighten-5" class="rounded-btn" @click="editSubAddress(address, index)">
                     수정
                   </v-btn>
-                  <v-btn small outlined color="orange-lighten-5" class="rounded-btn ml-2" @click="deleteSubAddress(address.id)">
+                  <v-btn small outlined color="orange-lighten-5" class="rounded-btn ml-2" @click="deleteSubAddress(address.customerAddressId)">
                     삭제
                   </v-btn>
                 </v-list-item-action>
@@ -54,12 +54,11 @@
       <v-card>
         <v-card-title>기본주소 수정</v-card-title>
         <v-card-text>
-          <v-text-field v-model="tempMainAddress" label="기본주소" />
-          <input type="text" id="main_postcode" placeholder="우편번호">
+          <v-text-field v-model="tempMainAddress.addressBase" label="기본주소" />
+          <v-text-field v-model="tempMainAddress.postcode" label="우편번호" />
           <v-btn @click="execDaumPostcode('main')">우편번호 찾기</v-btn><br>
-          <input type="text" id="main_address" placeholder="주소">
-          <input type="text" id="main_detailAddress" placeholder="상세주소">
-          <input type="text" id="main_extraAddress" placeholder="참고항목">
+          <v-text-field v-model="tempMainAddress.addressDetail" label="상세주소" />
+          <v-text-field v-model="tempMainAddress.extraAddress" label="참고항목" />
         </v-card-text>
         <v-card-actions>
           <v-btn text @click="dialogMainAddress = false">취소</v-btn>
@@ -73,12 +72,14 @@
       <v-card>
         <v-card-title>서브주소 수정</v-card-title>
         <v-card-text>
-          <v-text-field v-model="tempSubAddress" label="서브주소" />
-          <input type="text" id="sub_postcode" placeholder="우편번호">
+          <v-text-field v-model="tempSubAddress.name" label="이름" />
+          <v-text-field v-model="tempSubAddress.receiverName" label="수령인 이름" />
+          <v-text-field v-model="tempSubAddress.telNo" label="전화번호" />
+          <v-text-field v-model="tempSubAddress.addressBase" label="주소" />
+          <v-text-field v-model="tempSubAddress.zipcode" label="우편번호" />
           <v-btn @click="execDaumPostcode('sub')">우편번호 찾기</v-btn><br>
-          <input type="text" id="sub_address" placeholder="주소">
-          <input type="text" id="sub_detailAddress" placeholder="상세주소">
-          <input type="text" id="sub_extraAddress" placeholder="참고항목">
+          <v-text-field v-model="tempSubAddress.addressDetail" label="상세주소" />
+          <v-text-field v-model="tempSubAddress.extraAddress" label="참고항목" />
         </v-card-text>
         <v-card-actions>
           <v-btn text @click="dialogSubAddress = false">취소</v-btn>
@@ -92,12 +93,14 @@
       <v-card>
         <v-card-title>서브주소 추가</v-card-title>
         <v-card-text>
-          <v-text-field v-model="newSubAddress" label="서브주소" />
-          <input type="text" id="new_postcode" placeholder="우편번호">
+          <v-text-field v-model="newSubAddress.name" label="이름" />
+          <v-text-field v-model="newSubAddress.receiverName" label="수령인 이름" />
+          <v-text-field v-model="newSubAddress.telNo" label="전화번호" />
+          <v-text-field v-model="newSubAddress.addressBase" label="주소" />
+          <v-text-field v-model="newSubAddress.zipcode" label="우편번호" />
           <v-btn @click="execDaumPostcode('new')">우편번호 찾기</v-btn><br>
-          <input type="text" id="new_address" placeholder="주소">
-          <input type="text" id="new_detailAddress" placeholder="상세주소">
-          <input type="text" id="new_extraAddress" placeholder="참고항목">
+          <v-text-field v-model="newSubAddress.addressDetail" label="상세주소" />
+          <v-text-field v-model="newSubAddress.extraAddress" label="참고항목" />
         </v-card-text>
         <v-card-actions>
           <v-btn text @click="dialogAddSubAddress = false">취소</v-btn>
@@ -125,14 +128,40 @@ export default {
   },
   data() {
     return {
-      mainAddress: '',
+      mainAddress: {
+        addressBase: '',
+        addressDetail: '',
+        postcode: '',
+        extraAddress: '',
+      },
       subAddresses: [],
       dialogMainAddress: false,
       dialogSubAddress: false,
       dialogAddSubAddress: false,
-      tempMainAddress: '',
-      tempSubAddress: '',
-      newSubAddress: '',
+      tempMainAddress: {
+        addressBase: '',
+        addressDetail: '',
+        postcode: '',
+        extraAddress: '',
+      },
+      tempSubAddress: {
+        name: '',
+        receiverName: '',
+        telNo: '',
+        addressBase: '',
+        addressDetail: '',
+        zipcode: '',
+        extraAddress: '',
+      },
+      newSubAddress: {
+        name: '',
+        receiverName: '',
+        telNo: '',
+        addressBase: '',
+        addressDetail: '',
+        zipcode: '',
+        extraAddress: '',
+      },
       editIndex: -1,
     };
   },
@@ -157,7 +186,12 @@ export default {
         // 응답 데이터가 배열인지 확인
         if (Array.isArray(addresses)) {
           const mainAddress = addresses.find(address => address.defaultYn);
-          this.mainAddress = mainAddress ? mainAddress : '';
+          this.mainAddress = mainAddress ? mainAddress : {
+            addressBase: '',
+            addressDetail: '',
+            postcode: '',
+            extraAddress: '',
+          };
 
           this.subAddresses = addresses.filter(address => !address.defaultYn);
           console.log('Addresses loaded:', this.mainAddress, this.subAddresses);
@@ -169,36 +203,31 @@ export default {
       }
     },
     editMainAddress() {
-      this.tempMainAddress = this.mainAddress;
+      this.tempMainAddress = { ...this.mainAddress };
       this.dialogMainAddress = true;
     },
     async saveMainAddress() {
       try {
-        const mainAddressId = this.subAddresses.find(address => address.addressBase === this.tempMainAddress)?.id;
+        const mainAddressId = this.mainAddress.customerAddressId;
         if (mainAddressId) {
-          await axiosInstance.put(`http://localhost:8080/api/v1/customers/addresses/${mainAddressId}/default`);
-          this.mainAddress = this.tempMainAddress;
+          await axiosInstance.put(`http://localhost:8080/api/v1/customers/addresses/${mainAddressId}/default`, this.tempMainAddress);
+          this.mainAddress = { ...this.tempMainAddress };
           this.dialogMainAddress = false;
-          await this.loadAddresses();
-        } else {
-          console.error('Main address ID not found');
         }
       } catch (error) {
         console.error('Error saving main address:', error);
       }
     },
     editSubAddress(address, index) {
+      this.tempSubAddress = { ...address };
       this.editIndex = index;
-      this.tempSubAddress = address.addressBase;
       this.dialogSubAddress = true;
     },
     async saveSubAddress() {
       try {
-        const addressId = this.subAddresses[this.editIndex].id;
-        await axiosInstance.put(`http://localhost:8080/api/v1/customers/addresses/${addressId}`, {
-          addressBase: this.tempSubAddress
-        });
-        this.subAddresses[this.editIndex].addressBase = this.tempSubAddress;
+        const addressId = this.subAddresses[this.editIndex].customerAddressId;
+        await axiosInstance.put(`http://localhost:8080/api/v1/customers/addresses/${addressId}`, this.tempSubAddress);
+        this.subAddresses[this.editIndex] = { ...this.tempSubAddress };
         this.dialogSubAddress = false;
       } catch (error) {
         console.error('Error saving sub address:', error);
@@ -207,21 +236,27 @@ export default {
     async deleteSubAddress(addressId) {
       try {
         await axiosInstance.delete(`http://localhost:8080/api/v1/customers/addresses/${addressId}`);
-        this.subAddresses = this.subAddresses.filter(address => address.id !== addressId);
+        this.subAddresses = this.subAddresses.filter(address => address.customerAddressId !== addressId);
       } catch (error) {
         console.error('Error deleting sub address:', error);
       }
     },
     addSubAddress() {
-      this.newSubAddress = '';
+      this.newSubAddress = {
+        name: '',
+        receiverName: '',
+        telNo: '',
+        addressBase: '',
+        addressDetail: '',
+        zipcode: '',
+        extraAddress: '',
+      };
       this.dialogAddSubAddress = true;
     },
     async saveNewSubAddress() {
       try {
-        if (this.newSubAddress) {
-          await axiosInstance.post('http://localhost:8080/api/v1/customers/addresses', {
-            addressBase: this.newSubAddress
-          });
+        if (this.newSubAddress.addressBase) {
+          await axiosInstance.post('http://localhost:8080/api/v1/customers/addresses', this.newSubAddress);
           await this.loadAddresses();
           this.dialogAddSubAddress = false;
         }
@@ -241,24 +276,21 @@ export default {
             addr = data.jibunAddress;
           }
 
-          if(data.userSelectedType === 'R'){
-            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+          if (data.userSelectedType === 'R') {
+            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
               extraAddr += data.bname;
             }
-            if(data.buildingName !== '' && data.apartment === 'Y'){
+            if (data.buildingName !== '' && data.apartment === 'Y') {
               extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
             }
-            if(extraAddr !== ''){
+            if (extraAddr !== '') {
               extraAddr = ' (' + extraAddr + ')';
             }
-            document.getElementById(`${type}_extraAddress`).value = extraAddr;
-          } else {
-            document.getElementById(`${type}_extraAddress`).value = '';
           }
-
-          document.getElementById(`${type}_postcode`).value = data.zonecode;
-          document.getElementById(`${type}_address`).value = addr;
-          document.getElementById(`${type}_detailAddress`).focus();
+          
+          this[`${type}Address`].addressBase = addr;
+          this[`${type}Address`].postcode = data.zonecode;
+          this[`${type}Address`].extraAddress = extraAddr;
         }
       }).open();
     }
