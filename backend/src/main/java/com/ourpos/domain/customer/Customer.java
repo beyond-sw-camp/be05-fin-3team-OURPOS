@@ -31,7 +31,7 @@ public class Customer extends BaseEntity {
     @Column(name = "customer_id")
     private Long id;
 
-    @Column(name = "customer_login_id")
+    @Column(name = "customer_login_id", unique = true)
     private String loginId;
 
     @Column(name = "customer_name")

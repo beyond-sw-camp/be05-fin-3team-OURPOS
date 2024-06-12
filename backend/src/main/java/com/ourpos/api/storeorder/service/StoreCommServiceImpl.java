@@ -28,7 +28,6 @@ public class StoreCommServiceImpl implements StoreCommService {
 
     @Override
     public List<StoreCommResponseDto> getStoreComms() {
-        System.out.println("StoreCommServiceImplServiceImpl.getStoreComms");
         List<StoreComm> storeComms = storeCommRepository.findAll();
         List<StoreCommResponseDto> storeCommResponseDtos = new ArrayList<>();
 

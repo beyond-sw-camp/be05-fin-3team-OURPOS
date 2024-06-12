@@ -7,12 +7,12 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ourpos.auth.dto.CustomOAuth2Customer;
-import com.ourpos.auth.dto.CustomerAddressLoginDto;
-import com.ourpos.auth.dto.CustomerLoginDto;
-import com.ourpos.auth.dto.KakaoOAuth2Response;
-import com.ourpos.auth.dto.NaverOAuth2Response;
-import com.ourpos.auth.dto.OAuth2Response;
+import com.ourpos.auth.dto.customer.CustomOAuth2Customer;
+import com.ourpos.auth.dto.customer.CustomerAddressLoginDto;
+import com.ourpos.auth.dto.customer.CustomerLoginDto;
+import com.ourpos.auth.dto.customer.KakaoOAuth2Response;
+import com.ourpos.auth.dto.customer.NaverOAuth2Response;
+import com.ourpos.auth.dto.customer.OAuth2Response;
 import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerAddress;
 import com.ourpos.domain.customer.CustomerRepository;
@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @RequiredArgsConstructor
 @Service
-public class CustomOAuth2CustomerService extends DefaultOAuth2UserService {
+public class CustomerOAuth2CustomerService extends DefaultOAuth2UserService {
 
     public static final String NAVER = "naver";
     public static final String KAKAO = "kakao";
