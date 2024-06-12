@@ -54,7 +54,7 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Transactional
-	public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto) {
+	public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto, MultipartFile multipartFile) {
 		log.info("MenuService.updateMenu() called");
 		Menu menu = menuRepository.findById(menuId)
 			.filter(m -> !m.getDeletedYn())
@@ -62,9 +62,19 @@ public class MenuServiceImpl implements MenuService {
 				() -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
 		Category category = categoryRepository.findById(menuUpdateDto.getCategoryId()).orElseThrow(
 			() -> new IllegalArgumentException(CATEGORY_NOT_FOUND_MESSAGE));
+		updateMenuPicture(menuUpdateDto, multipartFile);
 
 		menu.update(category, menuUpdateDto.getName(), menuUpdateDto.getPrice(),
 			menuUpdateDto.getDescription(), menuUpdateDto.getPictureUrl());
+	}
+
+	private void updateMenuPicture(MenuUpdateDto menuUpdateDto, MultipartFile multipartFile) {
+		if (multipartFile != null) {
+			UploadFile uploadFile = fileStore.storeFile(multipartFile);
+			menuUpdateDto.setPictureUrl(uploadFile.getStoreFilename());
+		} else {
+			menuUpdateDto.setPictureUrl("default.png");
+		}
 	}
 
 	@Transactional
