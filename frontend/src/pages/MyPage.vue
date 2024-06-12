@@ -14,6 +14,12 @@
               <v-list-item class="mb-4">
                 <v-list-item-content>
                   <v-list-item-title>이름</v-list-item-title>
+                  <v-list-item-subtitle>{{ userInfo.data.name }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item class="mb-4">
+                <v-list-item-content>
+                  <v-list-item-title>닉네임</v-list-item-title>
                   <v-list-item-subtitle>{{ userInfo.data.nickname }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>

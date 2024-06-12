@@ -13,6 +13,7 @@ public class CustomerResponseDto {
 
     private Long customerId;
     private String loginId;
+    private String name;
     private String nickname;
     private String phone;
     private String gender;
@@ -23,6 +24,7 @@ public class CustomerResponseDto {
     public CustomerResponseDto(Customer customer) {
         this.customerId = customer.getId();
         this.loginId = customer.getLoginId();
+        this.name = customer.getName();
         this.nickname = customer.getNickname();
         this.phone = customer.getPhone();
         this.gender = customer.getGender();
