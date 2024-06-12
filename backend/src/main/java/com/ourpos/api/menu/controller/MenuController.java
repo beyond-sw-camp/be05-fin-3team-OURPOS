@@ -2,7 +2,6 @@ package com.ourpos.api.menu.controller;
 
 import java.util.List;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,10 +60,20 @@ public class MenuController implements MenuControllerDocs {
 		return new Result<>(HttpStatus.OK.value(), "메뉴 추가 성공", null);
 	}
 
-	@PutMapping(value = "/menus/{menuId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
-		MediaType.APPLICATION_JSON_VALUE})
-	public Result<Void> updateMenu(@PathVariable Long menuId, @RequestPart @Valid MenuUpdateDto menuUpdateDto,
-		@RequestPart(required = false) MultipartFile multipartFile) {
+	// @PostMapping(value = "/menus/{menuId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
+	// 	MediaType.APPLICATION_JSON_VALUE})
+	// public Result<Void> updateMenu(@PathVariable Long menuId, @RequestPart @Valid MenuUpdateDto menuUpdateDto,
+	// 	@RequestPart MultipartFile multipartFile) {
+	// 	log.info("MenuController.updateMenu() called");
+	//
+	// 	menuServiceImpl.updateMenu(menuId, menuUpdateDto, multipartFile);
+	// 	return new Result<>(HttpStatus.OK.value(), "메뉴 수정 성공", null);
+	// }
+
+	@PostMapping(value = "/menus/{menuId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public Result<Void> updateMenu(@PathVariable Long menuId,
+		@RequestPart("menuRequestDto") @Valid MenuUpdateDto menuUpdateDto,
+		@RequestPart("multipartFile") MultipartFile multipartFile) {
 		log.info("MenuController.updateMenu() called");
 
 		menuServiceImpl.updateMenu(menuId, menuUpdateDto, multipartFile);
