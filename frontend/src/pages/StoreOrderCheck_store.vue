@@ -14,7 +14,7 @@
                     <v-list-item-title style="width: 20%;">주문 일자</v-list-item-title>
                     <v-list-item-title style="width: 20%;">주문 금액</v-list-item-title>
                     <v-list-item-title style="width: 20%;">주문 상태</v-list-item-title>
-                    <v-list-item-title style="width: 20%;">기타</v-list-item-title> 
+                    <v-list-item-title style="width: 20%;"></v-list-item-title> 
                   </v-list-item-content>
                 </v-list-item>
                 <!-- 주문 내역 표시 -->
@@ -30,7 +30,7 @@
                     <v-list-item-title style="width: 20%;">{{ order.storeOrderStatus }}</v-list-item-title>
                     <!-- 기타 -->
                     <v-list-item-title style="width: 20%;">
-                      <v-btn color="red" @click="cancelOrder(order.storeOrderId)">취소</v-btn>
+                      <v-btn color="warning" @click="cancelOrder(order.storeOrderId)" style="margin-right:10px;">취소</v-btn>
                       <v-btn color="primary" @click="viewOrderDetails(order.storeOrderId)">상세</v-btn>
                     </v-list-item-title>
                   </v-list-item-content>
