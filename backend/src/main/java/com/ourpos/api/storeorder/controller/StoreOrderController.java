@@ -65,6 +65,16 @@ public class StoreOrderController implements StoreOrderControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문이 완료되었습니다.", storeOrderResponseDto);
     }
 
+    //비품, 식자재 주문 확인 (직영점)
+
+    @GetMapping("/storeorder/{storeId}/checkforstore")
+    public Result<List<StoreOrderCheckResponseDto>> getStoreOrdercheckforstore(@PathVariable Long storeId) {
+        log.info("가게 식자재, 비품 주문: {}", storeId);
+        List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheck(storeId);
+        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", storeOrderList );
+    }
+
+
     /*
     // 비품, 식자재 주문 수정
     @PutMapping("/storeorder/{orderdetailId}")
@@ -97,8 +107,19 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     @GetMapping("/storeorder/{storeId}/check")
     public Result<List<StoreOrderCheckResponseDto>> getStoreOrderCheck(@PathVariable Long storeId) {
         log.info("가게 식자재, 비품 주문: {}", storeId);
-        // List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheck(storeId);
-        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", null);
+        log.debug("getStoreOrderCheck 메서드 호출됨");
+        try {
+            List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheck(storeId);
+    
+            // 로그 추가: 데이터 로드 성공 로그
+            log.debug("주문 목록 데이터 로드 성공: {}", storeOrderList);
+    
+            return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", storeOrderList);
+        } catch (Exception e) {
+            // 로그 추가: 데이터 로드 실패 로그
+            log.error("주문 목록 데이터 로드 실패", e);
+            return new Result<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "주문 목록을 불러오는 중에 오류가 발생했습니다", null);
+        }
     }
 
     //비품, 식자재 주문 상태 변경

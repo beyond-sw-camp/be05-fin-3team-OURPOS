@@ -7,6 +7,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginPage from "@/pages/LoginPage.vue";
 import FindStoreHallPage from "@/pages/FindStoreHallPage.vue";
+import MyPage from "@/pages/MyPage.vue";
+import StoreOrder from "@/pages/StoreOrder.vue";
+import StoreOrderCheck_company from "@/pages/StoreOrderCheck_company.vue";
+import StoreOrderCheck_store from "@/pages/StoreOrderCheck_store.vue";
+import CustomerMainPage from "@/pages/CustomerMainPage.vue";
+import CustomerAddressManage from "@/pages/CustomerAddressManage.vue";
+import CustomerOrderCheckPage from "@/pages/CustomerOrderCheckPage.vue";
+
 import MenuPage from "@/pages/MenuPage.vue";
 import MenuOnePage from "@/pages/MenuOnePage.vue";
 import MainPage from "@/pages/MainPage.vue";
@@ -117,7 +125,45 @@ const router = createRouter({
       name: 'menuOptionGroupManage',
       path : '/super-admin/headOfficeLanding/menuOptionGroupManage',
       component : MenuOptionGroupManagePage
-    }
+    },
+    {
+      name: 'mypage',
+      path: '/mypage',
+      component: MyPage,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+    },
+    {
+      name: 'storeorder',
+      path: '/storeorder',
+      component: StoreOrder,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+    }, 
+    {
+      name: 'storeordercheck_store',
+      path: '/storeorder/:storeId/checkforstore',
+      component: StoreOrderCheck_store
+    },
+    {
+      name: 'storeordercheck_company',
+      path: '/storeorder/:storeId/check',
+      component: StoreOrderCheck_company
+    },
+    {
+      name: 'nfhome',
+      path: '/nfhome',
+      component: CustomerMainPage
+    },
+    {
+      name: 'addressmanage',
+      path: '/change-address',
+      component: CustomerAddressManage
+    },
+    {
+      name: 'ordercheck',
+      path: '/order-check',
+      component: CustomerOrderCheckPage
+    },
+
   ]
 });
 
