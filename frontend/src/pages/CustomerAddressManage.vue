@@ -79,8 +79,8 @@
           <v-text-field v-model="newSubAddress.receiverName" label="수령인 이름" />
           <v-text-field v-model="newSubAddress.telNo" label="전화번호" />
           <v-text-field v-model="newSubAddress.addressBase" label="주소" />
+          <v-btn color="warning" @click="execDaumPostcode('new')">우편번호 찾기</v-btn><br>
           <v-text-field v-model="newSubAddress.zipcode" label="우편번호" />
-          <v-btn @click="execDaumPostcode('new')">우편번호 찾기</v-btn><br>
           <v-text-field v-model="newSubAddress.addressDetail" label="상세주소" />
           <v-text-field v-model="newSubAddress.extraAddress" label="참고항목" />
         </v-card-text>

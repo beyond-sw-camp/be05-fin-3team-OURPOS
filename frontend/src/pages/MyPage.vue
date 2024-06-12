@@ -6,7 +6,8 @@
           <v-card-title>마이 페이지</v-card-title>
           <v-card-text>
             <v-avatar size="100">
-              <img src="https://cambridgeleisure.co.uk/sites/cambridge_leisure/files/styles/whats_on_gallery_small/public/images/shops/gallery/five_guys.jpg?itok=YKUdHJuQ" alt="User Avatar">
+              <img v-if="userInfo.data.profileImage" :src="userInfo.data.profileImage" alt="User Avatar">
+              <img v-else src="https://cambridgeleisure.co.uk/sites/cambridge_leisure/files/styles/whats_on_gallery_small/public/images/shops/gallery/five_guys.jpg?itok=YKUdHJuQ" alt="User Avatar">
             </v-avatar>
             <v-divider class="my-4"></v-divider>
             <v-list dense>
