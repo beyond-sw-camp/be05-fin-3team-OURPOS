@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <HeaderPage title="로그인"/>
+<!--    <HeaderPage title="로그인"/>-->
     <v-card-text class="mx-auto pl-12 pr-12" max-width="400" rounded="lg">
       <v-img class="mx-auto my-8" max-width="228" src="../img/Five-Guys-logo.png"></v-img>
 
@@ -22,6 +22,7 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {faCircleExclamation} from "@fortawesome/free-solid-svg-icons";
 import HeaderPage from "@/components/AppHeader.vue";
 import { useRoute, useRouter } from 'vue-router';
+import axios from "axios";
 
 const router = useRouter();
 const route = useRoute();
