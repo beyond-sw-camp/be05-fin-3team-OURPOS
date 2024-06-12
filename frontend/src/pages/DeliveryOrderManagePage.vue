@@ -3,9 +3,11 @@
     <v-toolbar dark prominent class="navigation-bar">
       <v-toolbar-title>OUR POS</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-export</v-icon>
-      </v-btn>
+      <router-link to="/admin/storeLanding">
+        <v-btn icon>
+          <v-icon>mdi-export</v-icon>
+        </v-btn>
+      </router-link>
     </v-toolbar>
 
     <v-container fluid>
