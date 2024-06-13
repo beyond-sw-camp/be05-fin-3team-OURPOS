@@ -1,10 +1,7 @@
 package com.ourpos.auth.config;
 
-import static org.springframework.http.HttpMethod.*;
-
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +24,7 @@ import com.ourpos.auth.jwt.JwtFilter;
 import com.ourpos.auth.jwt.JwtUtil;
 import com.ourpos.auth.jwt.ManagerLoginFilter;
 import com.ourpos.auth.oauth2.CustomClientRegistrationRepo;
+import com.ourpos.auth.oauth2.CustomFailureHandler;
 import com.ourpos.auth.oauth2.CustomSuccessHandler;
 import com.ourpos.auth.service.CustomerOAuth2CustomerService;
 
@@ -34,32 +32,13 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableMethodSecurity(securedEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @Configuration
 public class SecurityConfig {
 
-    public static final Map<String, String[]> hasRoleSuperAdmin = Map.of(
-        "GET", new String[] {},
-        "POST", new String[] {},
-        "PUT", new String[] {}
-    );
-
-    public static final Map<String, String[]> hasRoleAdmin = Map.of(
-        "GET", new String[] {"/api/v1/orders/monthly/my", "/api/v1/orders/hall/my", "/api/v1/orders/delivery/my",
-            "/api/v1/orders/monthly/my", "/api/v1/orders/meal-time/my", "/api/v1/orders/meal-time/my",
-            "/api/v1/orders/menu-prefer/my", "/api/v1/orders/delivery/frequency/my"},
-        "POST", new String[] {},
-        "PUT", new String[] {}
-    );
-
-    public static final Map<String, String[]> hasRoleUser = Map.of(
-        "GET", new String[] {"USER"},
-        "POST", new String[] {"USER"},
-        "PUT", new String[] {"USER"}
-    );
-
     private final CustomerOAuth2CustomerService customerOAuth2CustomerService;
     private final CustomSuccessHandler customSuccessHandler;
+    private final CustomFailureHandler customFailureHandler;
     private final CustomClientRegistrationRepo customClientRegistrationRepo;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
@@ -98,7 +77,10 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable);
 
         http
-            .formLogin(AbstractHttpConfigurer::disable);
+            .formLogin(AbstractHttpConfigurer::disable)
+            .exceptionHandling(exceptionHandling -> exceptionHandling
+                .authenticationEntryPoint((request, response, authException) -> response.setStatus(401))
+                .accessDeniedHandler((request, response, accessDeniedException) -> response.setStatus(403)));
 
         http
             .httpBasic(AbstractHttpConfigurer::disable);
@@ -114,26 +96,20 @@ public class SecurityConfig {
                     .userService(customerOAuth2CustomerService)
                 )
                 .successHandler(customSuccessHandler)
+                .failureHandler(customFailureHandler)
             );
 
         ManagerLoginFilter loginFilter =
             new ManagerLoginFilter(authenticationManager(authenticationConfiguration), jwtUtil);
+
         loginFilter.setFilterProcessesUrl("/managers/login");
+
         http
             .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(GET, hasRoleSuperAdmin.get("GET")).hasRole("SUPER_ADMIN")
-                .requestMatchers(POST, hasRoleSuperAdmin.get("POST")).hasRole("SUPER_ADMIN")
-                .requestMatchers(PUT, hasRoleSuperAdmin.get("PUT")).hasRole("SUPER_ADMIN")
-                .requestMatchers(GET, hasRoleAdmin.get("GET")).hasRole("ADMIN")
-                .requestMatchers(POST, hasRoleAdmin.get("POST")).hasRole("ADMIN")
-                .requestMatchers(PUT, hasRoleAdmin.get("PUT")).hasRole("ADMIN")
-                // .requestMatchers(GET, hasRoleUser.get("GET")).hasRole("USER")
-                // .requestMatchers(POST, hasRoleUser.get("POST")).hasRole("USER")
-                // .requestMatchers(PUT, hasRoleUser.get("PUT")).hasRole("USER")
-                .requestMatchers("/managers/join", "/managers/login", "/login").permitAll()
+                .requestMatchers("/managers/login", "/login").permitAll()
                 .anyRequest().authenticated());
 
         http

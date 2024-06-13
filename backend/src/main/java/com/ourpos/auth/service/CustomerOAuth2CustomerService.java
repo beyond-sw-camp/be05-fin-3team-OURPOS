@@ -81,7 +81,6 @@ public class CustomerOAuth2CustomerService extends DefaultOAuth2UserService {
             String accessToken = getAccessToken(userRequest);
             if (registrationId.equals(KAKAO)) {
                 saveKakaoAddress(accessToken, customer);
-                // kakaoService.sendKakaoMessage(accessToken, LocalDateTime.now() + "로그인 시도");
             }
             if (registrationId.equals(NAVER)) {
                 saveNaverAddress(accessToken, customer);

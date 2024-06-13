@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,7 @@ public class CategoryController implements CategoryControllerDocs {
     private final CategoryQueryService categoryQueryService;
     private final CategoryServiceImpl categoryServiceImpl;
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
     @GetMapping("/categories/{categoryId}")
     public Result<CategoryResponseDto> findCategory(@PathVariable Long categoryId) {
         log.info("카테고리 조회: {}", categoryId);
@@ -43,6 +45,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "카테고리 조회가 완료되었습니다.", categoryQueryService.findCategory(categoryId));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
     @GetMapping("/categories")
     public Result<List<CategoryResponseDto>> findAllCategories() {
         log.info("전체 카테고리 조회 컨트롤러 가동");
@@ -51,6 +54,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "전체 카테고리 조회완료.", categories);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
     @PostMapping("/categories")
     public Result<Void> addCategory(@RequestBody @Valid CategoryRequestDto categoryRequestDto) {
         log.info("CategoryController.addCategory() called");

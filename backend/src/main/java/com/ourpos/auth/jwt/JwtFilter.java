@@ -1,6 +1,7 @@
 package com.ourpos.auth.jwt;
 
 import java.io.IOException;
+import java.util.Map;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -8,12 +9,12 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.jetbrains.annotations.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.ourpos.auth.config.SecurityConfig;
 import com.ourpos.auth.dto.customer.CustomOAuth2Customer;
 import com.ourpos.auth.dto.customer.CustomerLoginDto;
 import com.ourpos.auth.dto.manager.ManagerUserDetails;
@@ -21,12 +22,20 @@ import com.ourpos.domain.customer.Role;
 import com.ourpos.domain.manager.Manager;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
+
+    private static final Map<String, String[]> hasRoleUser = Map.of(
+        "GET", new String[] {"/api/v1/customers/**", "api/v1/stores/delivery", "/api/v1/orders/delivery",
+            "/api/v1/orders/hall"},
+        "POST", new String[] {"/api/v1/customers/**"},
+        "PUT", new String[] {"/api/v1/customers/**"}
+    );
 
     private final JwtUtil jwtUtil;
 
@@ -37,31 +46,36 @@ public class JwtFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
         String method = request.getMethod();
 
-        String[] superAdminPaths = SecurityConfig.hasRoleSuperAdmin.get(method);
-        String[] managerPaths = SecurityConfig.hasRoleAdmin.get(method);
-        String[] userPaths = SecurityConfig.hasRoleUser.get(method);
+        String[] userPaths = hasRoleUser.get(method);
 
-        if (accessManagerPath(request, response, filterChain, managerPaths, requestURI)) {
+        String managerToken = getManagerToken(request);
+        if (managerToken != null) {
+            if (accessUserPath(userPaths, requestURI)) {
+                log.info("userPath");
+                customerFilter(request, response, filterChain);
+                return;
+            }
+            log.info("managerToken");
+            managerFilter(request, response, filterChain);
             return;
         }
 
-        if (accessManagerPath(request, response, filterChain, superAdminPaths, requestURI)) {
+        String customerToken = getCustomerToken(request);
+        if (customerToken != null) {
+            log.info("customerToken");
+            customerFilter(request, response, filterChain);
             return;
         }
 
-        // if (accessUserPath(request, response, filterChain, userPaths, requestURI)) {
-        //     return;
-        // }
-        customerFilter(request, response, filterChain);
-        // filterChain.doFilter(request, response);
+        log.info("no token");
+        filterChain.doFilter(request, response);
     }
 
-    private boolean accessUserPath(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain,
-        String[] userPaths, String requestURI) throws ServletException, IOException {
+    private boolean accessUserPath(String[] userPaths, String requestURI) {
         if (userPaths != null) {
             for (String path : userPaths) {
-                if (requestURI.matches(path)) {
-                    customerFilter(request, response, filterChain);
+                path = path.replace("**", "");
+                if (requestURI.startsWith(path)) {
                     return true;
                 }
             }
@@ -86,30 +100,7 @@ public class JwtFilter extends OncePerRequestFilter {
         ServletException,
         IOException {
         log.info("managerFilter");
-        String authorization = request.getHeader("Authorization");
-
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-            log.info("token null");
-            filterChain.doFilter(request, response);
-
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
-
-        String token = authorization.split(" ")[1];
-
-        if (jwtUtil.isExpired(token)) {
-
-            log.info("Token is expired");
-            try {
-                filterChain.doFilter(request, response);
-            } catch (IOException | ServletException e) {
-                throw new RuntimeException(e);
-            }
-
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
+        String token = getManagerToken(request);
 
         String username = jwtUtil.getLoginId(token);
         String role = jwtUtil.getRole(token);
@@ -128,37 +119,39 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    private String getManagerToken(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            log.info("token null");
+
+            return null;
+        }
+
+        String token = authorization.split(" ")[1];
+
+        try {
+            jwtUtil.isExpired(token);
+        } catch (ExpiredJwtException e) {
+            log.info("Token is expired");
+
+            return null;
+        } catch (SignatureException e) {
+            log.info("Token is invalid");
+
+            return null;
+        }
+        return token;
+    }
+
     private void customerFilter(HttpServletRequest request, HttpServletResponse response,
         FilterChain filterChain) throws
         IOException,
         ServletException {
 
         log.info("customerFilter");
-        String authorization = null;
-
-        Cookie[] cookies = request.getCookies();
-        cookies = cookies == null ? new Cookie[0] : cookies;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("Authorization")) {
-                authorization = cookie.getValue();
-                break;
-            }
-        }
-
-        if (authorization == null) {
-            log.info("Authorization is null");
-
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        String token = authorization;
-        try {
-            jwtUtil.isExpired(token);
-        } catch (ExpiredJwtException e) {
-            log.info("Token is expired");
-
-            filterChain.doFilter(request, response);
+        String token = getCustomerToken(request);
+        if (token == null) {
             return;
         }
 
@@ -177,5 +170,38 @@ public class JwtFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);
+    }
+
+    private @Nullable String getCustomerToken(HttpServletRequest request) {
+        String authorization = null;
+
+        Cookie[] cookies = request.getCookies();
+        cookies = cookies == null ? new Cookie[0] : cookies;
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("Authorization")) {
+                authorization = cookie.getValue();
+                break;
+            }
+        }
+
+        if (authorization == null) {
+            log.info("Authorization is null");
+
+            return null;
+        }
+
+        String token = authorization;
+        try {
+            jwtUtil.isExpired(token);
+        } catch (ExpiredJwtException e) {
+            log.info("Token is expired");
+
+            return null;
+        } catch (SignatureException e) {
+            log.info("Token is invalid");
+
+            return null;
+        }
+        return token;
     }
 }
