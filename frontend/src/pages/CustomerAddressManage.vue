@@ -57,9 +57,9 @@
           <v-text-field v-model="tempSubAddress.name" label="이름" />
           <v-text-field v-model="tempSubAddress.receiverName" label="수령인 이름" />
           <v-text-field v-model="tempSubAddress.telNo" label="전화번호" />
-          <v-text-field v-model="tempSubAddress.addressBase" label="주소" />
           <v-btn color="warning" @click="execDaumPostcode('sub')">우편번호 찾기</v-btn><br>
           <v-text-field v-model="tempSubAddress.zipcode" label="우편번호" />
+          <v-text-field v-model="tempSubAddress.addressBase" label="주소" />
           <v-text-field v-model="tempSubAddress.addressDetail" label="상세주소" />
           <v-text-field v-model="tempSubAddress.extraAddress" label="참고항목" />
         </v-card-text>
@@ -78,9 +78,9 @@
           <v-text-field v-model="newSubAddress.name" label="이름" />
           <v-text-field v-model="newSubAddress.receiverName" label="수령인 이름" />
           <v-text-field v-model="newSubAddress.telNo" label="전화번호" />
-          <v-text-field v-model="newSubAddress.addressBase" label="주소" />
           <v-btn color="warning" @click="execDaumPostcode('new')">우편번호 찾기</v-btn><br>
           <v-text-field v-model="newSubAddress.zipcode" label="우편번호" />
+          <v-text-field v-model="newSubAddress.addressBase" label="주소" />
           <v-text-field v-model="newSubAddress.addressDetail" label="상세주소" />
           <v-text-field v-model="newSubAddress.extraAddress" label="참고항목" />
         </v-card-text>
@@ -90,6 +90,16 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="snackbar" :timeout="3000">
+      {{ snackbarMessage }}
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          닫기
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+
   </v-container>
   <BottomNav/>
 </template>
@@ -148,6 +158,8 @@ export default {
         extraAddress: '',
       },
       editIndex: -1,
+      snackbar: false,
+      snackbarMessage: '',
     };
   },
   async mounted() {
@@ -234,18 +246,30 @@ export default {
       }
     },
     addSubAddress() {
-      this.newSubAddress = {
-        name: '',
-        receiverName: '',
-        telNo: '',
-        addressBase: '',
-        addressDetail: '',
-        zipcode: '',
-        extraAddress: '',
-      };
-      this.dialogAddSubAddress = true;
+      if(this.subAddresses.length>2){
+        this.snackbarMessage = '서브주소는 최대 3개까지 등록 가능합니다.';
+        this.snackbar = true;
+      }else{
+        this.newSubAddress={
+          name:'',
+          receiverName:'',
+          telNo:'',
+          addressBase:'',
+          addressDetail:'',
+          zipcode:'',
+          extraAddress:'',
+
+        };
+        this.dialogAddSubAddress = true;
+      }
     },
     async saveNewSubAddress() {
+      if(this.subAddresses.length>=3){
+        this.snackbarMessage= '서브주소는 최대 3개까지 추가할 수 있습니다.';
+        this.snackbar= true;
+        this.dialogAddSubAdddress= false; // 다이얼로그 닫기
+        return;
+      }
       try {
         if (this.newSubAddress.addressBase) {
           await axiosInstance.post('http://localhost:8080/api/v1/customers/addresses', this.newSubAddress);

@@ -31,7 +31,9 @@
                 </router-link>
               </v-col>
               <v-col cols="4">
+                <router-link to="/storeorder">
                 <v-card class="mx-auto same-card" title="비품/식자재 주문" link></v-card>
+              </router-link>
               </v-col> 
               <v-col cols="4">
                 <v-card class="mx-auto same-card" title="라이더 위치 확인" link></v-card>
