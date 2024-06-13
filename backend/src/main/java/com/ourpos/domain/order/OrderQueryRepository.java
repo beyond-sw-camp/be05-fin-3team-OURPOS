@@ -300,6 +300,7 @@ public class OrderQueryRepository {
             .join(orderDetail.order)
             .join(orderDetail.menu)
             .join(orderDetail.menu.category)
+            .join(order.store)
             .where(builder)
             .fetch();
 
@@ -307,12 +308,19 @@ public class OrderQueryRepository {
 
     // 배달 주소 검색
     public List<String> deliveryFrequency(Long storeId) {
+        BooleanBuilder builder = new BooleanBuilder();
+
+        // builder에 조건 담기
+        if (storeId != null) {
+            builder.and(deliveryOrder.store.id.eq(storeId));
+        }
+
         return queryFactory
             .select(deliveryOrder.orderAddress.addressBase)
             .from(deliveryOrder)
             .join(deliveryOrder.orderAddress)
             .join(deliveryOrder.store)
-            .where(deliveryOrder.store.id.eq(storeId))
+            .where(builder)
             .fetch();
     }
 
