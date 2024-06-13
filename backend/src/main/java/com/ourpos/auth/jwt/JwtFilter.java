@@ -50,7 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String managerToken = getManagerToken(request);
         if (managerToken != null) {
-            if (accessUserPath(userPaths, requestURI)) {
+            if (accessUserPath(userPaths, requestURI) && getCustomerToken(request) != null) {
                 log.info("userPath");
                 customerFilter(request, response, filterChain);
                 return;
@@ -74,8 +74,11 @@ public class JwtFilter extends OncePerRequestFilter {
     private boolean accessUserPath(String[] userPaths, String requestURI) {
         if (userPaths != null) {
             for (String path : userPaths) {
-                path = path.replace("**", "");
-                if (requestURI.startsWith(path)) {
+                log.info("path: {}", path.contains("**"));
+                if (path.contains("**") && requestURI.startsWith(path)) {
+                    return true;
+                }
+                if (requestURI.equals(path)) {
                     return true;
                 }
             }
