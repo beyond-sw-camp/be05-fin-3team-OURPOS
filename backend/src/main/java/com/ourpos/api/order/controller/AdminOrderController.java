@@ -2,11 +2,15 @@ package com.ourpos.api.order.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +24,9 @@ import com.ourpos.api.order.dto.response.MealTypeResponseDto;
 import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 import com.ourpos.api.order.service.AdminOrderService;
 import com.ourpos.api.store.Location;
+import com.ourpos.api.store.dto.response.StoreStockCheckResponseDto;
+import com.ourpos.api.store.dto.response.StoreStockResponseDto;
+import com.ourpos.api.storeorder.service.StoreOrderService;
 import com.ourpos.auth.dto.manager.ManagerUserDetails;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +39,9 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminOrderController {
 
     private final AdminOrderService adminOrderService;
+
+   
+    
 
     // 홀 -> 상태에 따른 주문 목록 확인
     @GetMapping("/orders/hall/my")
@@ -112,5 +122,61 @@ public class AdminOrderController {
         ManagerUserDetails managerUserDetails = (ManagerUserDetails)principal;
 
         return managerUserDetails.getUsername();
+    }
+
+    // 아침에 들어온 재고 고정량 조회
+
+    // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)
+    @GetMapping("/store/{storeId}/incoming-stock")
+    public Result<List<StoreStockResponseDto>> getIncomingStock(@PathVariable Long storeId) {
+        log.info("가게 입고 예정량 조회: {}", storeId);
+        log.debug("getIncomingStock 메서드 호출됨");
+        try {
+            List<StoreStockResponseDto> incomingStockList = adminOrderService.getIncomingStock(storeId);
+            log.debug("입고 예정량 데이터 로드 성공: {}", incomingStockList);
+            return new Result<>(HttpStatus.OK.value(), "입고 예정량 목록을 불러옵니다", incomingStockList);
+        } catch (Exception e) {
+            log.error("입고 예정량 데이터 로드 실패", e);
+            return new Result<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "입고 예정량을 불러오는 중에 오류가 발생했습니다", null);
+        }
+    }
+    /* 
+    // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)->관리자가 로그인한 경우
+    @GetMapping("/store/incoming-stock/my")
+    public Result<List<StoreStockResponseDto>> getIncomingStock() {
+        String adminLoginId = getAdminLoginId();
+
+        log.info("로그인된 관리자의 가게 입고 예정량 조회: {}", adminLoginId);
+        try {
+            // adminLoginId를 사용하여 storeId를 가져오는 로직 
+            Long storeId = adminOrderService.getStoreIdByAdminLoginId(adminLoginId);
+            log.debug("getIncomingStock 메서드 호출됨, storeId: {}", storeId);
+            
+            List<StoreStockResponseDto> incomingStockList = adminOrderService.getIncomingStock(storeId);
+            log.debug("입고 예정량 데이터 로드 성공: {}", incomingStockList);
+            return new Result<>(HttpStatus.OK.value(), "입고 예정량 목록을 불러옵니다", incomingStockList);
+        } catch (Exception e) {
+            // 로그 추가: 데이터 로드 실패 로그
+            log.error("입고 예정량 데이터 로드 실패", e);
+            return new Result<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "입고 예정량을 불러오는 중에 오류가 발생했습니다", null);
+        }
+    }
+    */
+
+    // 기타 입고 (점주가 배송된 상품의 상태 확인 후 임의로 재고 변경)
+    @PutMapping("/storestocks/{storeStockId}/decrease")
+    public ResponseEntity<String> decreaseStock(
+        @PathVariable Long storeStockId,
+        @RequestParam Integer quantity
+    ) {
+        adminOrderService.decreaseStock(storeStockId, quantity);
+        return ResponseEntity.status(HttpStatus.OK).body("재고가 감소되었습니다.");
+    }
+
+    // 배송 완료 반영된 재고량 조회 (기타 입출고 포함)
+    @GetMapping("/storestocks")
+    public ResponseEntity<List<StoreStockCheckResponseDto>> getAllStoreStocks() {
+        List<StoreStockCheckResponseDto> storeStocks = adminOrderService.getAllStoreStocks();
+        return ResponseEntity.status(HttpStatus.OK).body(storeStocks);
     }
 }

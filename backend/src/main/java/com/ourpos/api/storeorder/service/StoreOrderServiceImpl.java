@@ -109,32 +109,16 @@ public class StoreOrderServiceImpl {
 	}
 
 	//비품, 식자재 주문 확인(본사)
-	/*
-	public StoreOrderCheckResponseDto getStoreOrdercheck(Long storeId) {
-		Store store = storeRepository.findById(storeId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
-
-		return new StoreOrderCheckResponseDto();
-
-	}
-
-	 */
-	
 	public List<StoreOrderCheckResponseDto> getStoreOrdercheck(Long storeId) {
 		System.out.println("StoreOrderService.getStoreOrdercheck");
-
 		Store store = storeRepository.findById(storeId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
-
 		List<StoreOrder> storeOrders = storeOrderRepository.findByStoreId(storeId);
 		if (storeOrders.isEmpty()) {
 			throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
 		}
-
 		List<StoreOrderCheckResponseDto> storeOrderCheckResponseDtos = new ArrayList<>();
-
 		for (StoreOrder storeOrder : storeOrders) {
-
 			List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(
 				storeOrder.getId());
 			for (StoreOrderDetail storeOrderDetail : storeOrderDetails) {
@@ -205,7 +189,6 @@ public class StoreOrderServiceImpl {
 	//비품, 식자재 주문 확인(직영점)
 	public List<StoreOrderCheckResponseDto>getStoreOrdercheckforstore(Long storeId){
 		System.out.println("StoreOrderService.getStoreOrdercheck");
-
 		Store store= storeRepository.findById(storeId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
 		List<StoreOrder> storeOrders= storeOrderRepository.findByStoreId(storeId);

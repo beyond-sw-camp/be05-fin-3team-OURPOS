@@ -3,6 +3,7 @@ package com.ourpos.api.store.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ public class StoreController {
     private final StoreService storeService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public Result<Void> createStore(@RequestBody StoreRequestDto storeRequestDto) {
         log.info("매장 생성");
         storeService.createStore(storeRequestDto);
@@ -39,6 +41,7 @@ public class StoreController {
     }
 
     @GetMapping("/hall")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Result<List<StoreResponseDto>> findStoresOrderByDistance(@RequestParam Double latitude,
         @RequestParam Double longitude) {
         log.info("현재 위치에서 가장 가까운 매장 정렬 조회");
@@ -48,6 +51,7 @@ public class StoreController {
     }
 
     @GetMapping("/delivery")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Result<List<StoreResponseDto>> findStoresOrderByDeliveryDistance() {
         log.info("현재 위치에서 가장 가까운 배달 매장 정렬 조회");
         String loginId = getCustomerLoginId();

@@ -3,6 +3,7 @@ package com.ourpos.api.order.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -22,9 +23,19 @@ import com.ourpos.api.order.dto.response.MealTimeResponseDto;
 import com.ourpos.api.order.dto.response.MealTypeResponseDto;
 import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
 import com.ourpos.api.store.Location;
+import com.ourpos.api.store.dto.response.StoreStockCheckResponseDto;
+import com.ourpos.api.store.dto.response.StoreStockResponseDto;
+import com.ourpos.api.storeorder.dto.response.StoreOrderCheckResponseDto;
 import com.ourpos.domain.order.AdminOrderQueryRepository;
 import com.ourpos.domain.order.DeliveryOrder;
 import com.ourpos.domain.order.HallOrder;
+import com.ourpos.domain.store.Store;
+import com.ourpos.domain.store.StoreRepository;
+import com.ourpos.domain.store.StoreStock;
+import com.ourpos.domain.store.StoreStockRepository;
+import com.ourpos.domain.storeorder.StoreOrder;
+import com.ourpos.domain.storeorder.StoreOrderRepository;
+import com.ourpos.domain.storeorder.StoreOrderStatus;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +51,12 @@ public class AdminOrderService {
     private String apiKey;
 
     private final AdminOrderQueryRepository adminOrderQueryRepository;
+    private final StoreOrderRepository storeOrderRepository;
+    private final StoreRepository storeRepository;
+    private final StoreStockRepository storeStockRepository;
+    
+    
+
 
     // 홀 상태 주문 목록 조회
     public Page<HallOrderResponseDto> findHallOrder(String adminLoginId, String status, Pageable pageable) {
@@ -117,5 +134,51 @@ public class AdminOrderService {
             }
         }
         return locationList;
+    }
+    
+    // 아침에 들어온 재고 고정량 조회(보류)
+
+    // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)
+     public List<StoreStockResponseDto> getIncomingStock(Long storeId) {
+        Store store = storeRepository.findById(storeId)
+            .orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
+        
+        List<StoreOrder> storeOrders = storeOrderRepository.findByStoreId(storeId);
+        if (storeOrders.isEmpty()) {
+            throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
+        }
+
+        List<StoreStockResponseDto> incomingStockList = new ArrayList<>();
+        for (StoreOrder storeOrder : storeOrders) {
+            if (storeOrder.getStatus() == StoreOrderStatus.WAITING ||
+                storeOrder.getStatus() == StoreOrderStatus.ACCEPTED ||
+                storeOrder.getStatus() == StoreOrderStatus.DELIVERING) {
+                
+                StoreStockResponseDto dto = new StoreStockResponseDto(storeOrder);
+                incomingStockList.add(dto);
+            }
+        }
+
+        return incomingStockList;
+    }
+
+
+    // 기타 입고(점주가 배송된 상품의 상태 확인 후 임의로 재고 변경)
+     @Transactional
+    public void decreaseStock(Long storeStockId, Integer quantity) {
+        StoreStock storeStock = storeStockRepository.findById(storeStockId)
+            .orElseThrow(() -> new IllegalArgumentException("해당 id의 재고를 찾을 수 없습니다."));
+        storeStock.decreaseQuantity(quantity);
+        storeStockRepository.save(storeStock);
+    }
+
+
+    // 배송 완료 반영된 재고량 조회 (기타 입출고 포함)
+    @Transactional(readOnly = true)
+    public List<StoreStockCheckResponseDto> getAllStoreStocks() {
+        List<StoreStock> storeStocks = storeStockRepository.findAll();
+        return storeStocks.stream()
+            .map(StoreStockCheckResponseDto::new)
+            .collect(Collectors.toList());
     }
 }
