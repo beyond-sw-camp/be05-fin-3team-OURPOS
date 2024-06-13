@@ -33,6 +33,10 @@ const props = defineProps(["storeId"]);
   
     // Fetching location data with frequency information
     const locationResponse = await axios.get('http://localhost:8080/api/v1/orders/delivery/frequency', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        },
       params: {
         storeId: props.storeId,
       },
