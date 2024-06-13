@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import com.ourpos.domain.store.Store;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -28,6 +29,7 @@ public class MenuQueryRepository {
             .where(categoryEq(category), isNotDelete())
             .fetch();
     }
+
 
     public Optional<Menu> findOne(Long menuId) {
         return Optional.ofNullable(queryFactory

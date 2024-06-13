@@ -65,7 +65,7 @@ const filteredMenus = ref([]);
 
 const fetchMenus = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/menus');
+    const response = await axios.get('http://localhost:8080/api/v1/menus/all');
     menus.value = response.data.data.map(menu => ({
       id: menu.id,
       name: menu.name,
