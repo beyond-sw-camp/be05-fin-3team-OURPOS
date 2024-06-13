@@ -2,7 +2,6 @@ package com.ourpos.api.menu.service;
 
 import java.time.LocalDateTime;
 
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,10 +10,15 @@ import com.ourpos.api.file.FileStore;
 import com.ourpos.api.file.UploadFile;
 import com.ourpos.api.menu.dto.request.MenuRequestDto;
 import com.ourpos.api.menu.dto.request.MenuUpdateDto;
+import com.ourpos.api.menu.dto.request.StoreRestrictedMenuRequestDto;
 import com.ourpos.domain.menu.Category;
 import com.ourpos.domain.menu.CategoryRepository;
 import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.menu.MenuRepository;
+import com.ourpos.domain.menu.StoreRestrictedMenu;
+import com.ourpos.domain.menu.StoreRestrictedMenuRepository;
+import com.ourpos.domain.store.Store;
+import com.ourpos.domain.store.StoreRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +30,13 @@ import lombok.extern.slf4j.Slf4j;
 public class MenuServiceImpl implements MenuService {
 	public static final String MENU_NOT_FOUND_MESSAGE = "해당 메뉴가 존재하지 않습니다.";
 	public static final String CATEGORY_NOT_FOUND_MESSAGE = "해당 카테고리가 존재하지 않습니다.";
+	public static final String STORE_NOT_FOUND_MESSAGE = "해당 직영점이 존재하지 않습니다.";
 
 	private final MenuRepository menuRepository;
 	private final CategoryRepository categoryRepository;
 	private final FileStore fileStore;
+	private final StoreRepository storeRepository;
+	private final StoreRestrictedMenuRepository storeRestrictedMenuRepository;
 
 	@Override
 	public void addMenu(MenuRequestDto menuRequestDto, MultipartFile multipartFile) {
@@ -51,6 +58,18 @@ public class MenuServiceImpl implements MenuService {
 		} else {
 			menuRequestDto.setPictureUrl("default.png");
 		}
+	}
+
+	public void deactivateMenu(StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
+		log.info("MenuService,deactivateMenu() called");
+		Menu menu = menuRepository.findById(storeRestrictedMenuRequestDto.getMenuId()).orElseThrow(
+			() -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
+		Store store = storeRepository.findById(storeRestrictedMenuRequestDto.getMenuId()).orElseThrow(
+			() -> new IllegalArgumentException());
+
+		StoreRestrictedMenu storeRestrictedMenu = storeRestrictedMenuRequestDto.toEntity(store, menu);
+		storeRestrictedMenuRepository.save(storeRestrictedMenu);
+
 	}
 
 	@Transactional

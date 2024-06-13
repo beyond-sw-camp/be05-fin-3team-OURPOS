@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ourpos.api.Result;
 import com.ourpos.api.menu.dto.request.MenuRequestDto;
 import com.ourpos.api.menu.dto.request.MenuUpdateDto;
+import com.ourpos.api.menu.dto.request.StoreRestrictedMenuRequestDto;
 import com.ourpos.api.menu.dto.response.MenuResponseDto;
 import com.ourpos.api.menu.service.MenuQueryService;
 import com.ourpos.api.menu.service.MenuServiceImpl;
@@ -35,7 +35,7 @@ public class MenuController implements MenuControllerDocs {
 	private final MenuQueryService menuQueryService;
 	private final MenuServiceImpl menuServiceImpl;
 
-	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
+	// @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
 	@GetMapping("/menus/{menuId}")
 	public Result<MenuResponseDto> findMenu(@PathVariable Long menuId) {
 		log.info("메뉴 조회: {}", menuId);
@@ -45,7 +45,7 @@ public class MenuController implements MenuControllerDocs {
 	}
 
 	// 메뉴 활성화 정보 포함하여 응답 (손님용)
-	@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
+	// @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
 	@GetMapping("/menus")
 	public Result<List<MenuResponseDto>> findAllMenus(
 		@RequestParam(value = "category", required = false) String category, Long storeId) {
@@ -55,7 +55,7 @@ public class MenuController implements MenuControllerDocs {
 	}
 
 	// 메뉴 활성화 정보 제외하여 응답(본사,점주용)
-	@PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
+	// @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
 	@GetMapping("/menus/all")
 	public Result<List<MenuResponseDto>> findAllMenusAdmin(
 		@RequestParam(value = "category", required = false) String category) {
@@ -64,7 +64,17 @@ public class MenuController implements MenuControllerDocs {
 		return new Result<>(HttpStatus.OK.value(), "점주,관리자용 카테고리별 메뉴 조회가 완료되었습니다.", menus);
 	}
 
-	@PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
+	// @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
+	@PostMapping("/menus/deactivate")
+	public Result<Void> deactivateMenu(
+		@RequestPart @Valid StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
+		log.info("{}번 직영점 {}번 메뉴 비활성화", storeRestrictedMenuRequestDto.getStoreId(),
+			storeRestrictedMenuRequestDto.getMenuId());
+		menuServiceImpl.deactivateMenu(storeRestrictedMenuRequestDto);
+		return new Result<>(HttpStatus.OK.value(), "메뉴 비활성화 성공", null);
+	}
+
+	// @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
 	@PostMapping(value = "/menus", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
 	public Result<Void> addMenu(@RequestPart @Valid MenuRequestDto menuRequestDto,
 		@RequestPart(required = false) MultipartFile multipartFile) {
@@ -84,7 +94,7 @@ public class MenuController implements MenuControllerDocs {
 	// 	return new Result<>(HttpStatus.OK.value(), "메뉴 수정 성공", null);
 	// }
 
-	@PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
+	// @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
 	@PostMapping(value = "/menus/{menuId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public Result<Void> updateMenu(@PathVariable Long menuId,
 		@RequestPart("menuRequestDto") @Valid MenuUpdateDto menuUpdateDto,
@@ -95,7 +105,7 @@ public class MenuController implements MenuControllerDocs {
 		return new Result<>(HttpStatus.OK.value(), "메뉴 수정 성공", null);
 	}
 
-	@PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
+	// @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
 	@PutMapping("/menus/{menuId}/delete")
 	public Result<Void> deleteMenu(@PathVariable Long menuId) {
 		log.info("MenuController.deleteMenu() called");
