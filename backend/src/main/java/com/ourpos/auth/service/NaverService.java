@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.ourpos.auth.dto.CustomerAddressLoginDto;
+import com.ourpos.auth.dto.customer.CustomerAddressLoginDto;
 
 @Service
 public class NaverService {

@@ -46,8 +46,8 @@ class DeliveryOrderTest {
 
         // then
         assertThat(orderDetail1.getPrice()).isEqualTo(
-            menu1.getPrice() * orderDetail1.getQuantity() + orderOption1.getPrice() + orderOption2.getPrice()
-                + orderOption3.getPrice() + orderOption4.getPrice());
+            (menu1.getPrice() + orderOption1.getPrice() + orderOption2.getPrice() + orderOption3.getPrice()
+                + orderOption4.getPrice()) * orderDetail1.getQuantity());
         assertThat(orderDetail2.getPrice()).isEqualTo(
             menu2.getPrice() + orderOption1.getPrice() + orderOption2.getPrice() + orderOption4.getPrice());
 

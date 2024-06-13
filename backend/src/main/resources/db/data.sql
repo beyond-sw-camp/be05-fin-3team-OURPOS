@@ -1,14 +1,30 @@
---INSERT INTO customer (customer_login_id, customer_name, customer_nickname, customer_gender, customer_age_range,
---                      customer_phone, customer_role)
---VALUES ('test', '테스트', '닉네임', 'M', '20', '010-1234-1234', 'ROLE_USER');
+INSERT INTO customer (customer_login_id, customer_name, customer_nickname, customer_gender, customer_age_range,
+                      customer_phone, customer_role, created_date_time, modified_date_time)
+VALUES ('test', '테스트', '닉네임', 'M', '20', '010-1234-1234', 'ROLE_USER', NOW(), NOW());
 --
-INSERT INTO store_address(store_address_detail, store_address_base, store_address_zipcode)
-VALUES ('서울시 강남구 역삼동 123-4', '서울시 강남구 역삼동', '123-4');
+INSERT INTO store_address(store_address_base, store_address_detail, store_address_zipcode, store_address_latitude,
+                          store_address_longitude)
+VALUES ('서울 동작구 보라매로 87', '플레이데이터 3층', '07060', '37.4971487', '126.9276885');
+--
+INSERT INTO manager (manager_login_id, manager_password, role)
+VALUES ('admin', '$2a$10$qVUZj9jSbrTYnfzmMrt8SO4Qm7NPmyarLqv0N4r.Iy.Q5qgqGAbye', 'ROLE_ADMIN');
+
+INSERT INTO manager (manager_login_id, manager_password, role)
+VALUES ('super', '$2a$10$qVUZj9jSbrTYnfzmMrt8SO4Qm7NPmyarLqv0N4r.Iy.Q5qgqGAbye', 'ROLE_SUPER_ADMIN');
+--
+INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time, modified_date_time, store_address_id,
+                   store_close_time, store_closed_datetime, store_open_time, store_name, store_phone, store_picture_url,
+                   manager_id)
+VALUES (FALSE, 10000, NULL, NULL, 1, '22:00', NULL, '10:00', '강남점', '010-1111-1234', 'store1.png', 1);
+
+INSERT INTO store_address(store_address_detail, store_address_base, store_address_zipcode, store_address_latitude,
+                          store_address_longitude)
+VALUES ('서울시 강남구 역삼동 123-4', '서울시 강남구 역삼동', '123-4', '36.123456', '127.123456');
 --
 --
 INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time, modified_date_time, store_address_id,
                    store_close_time, store_closed_datetime, store_open_time, store_name, store_phone, store_picture_url)
-VALUES (FALSE, 10000, NULL, NULL, 1, '22:00', NULL, '10:00', '맛집', '010-1234-1234', 'https://www.google.com');
+VALUES (FALSE, 20000, NULL, NULL, 2, '22:00', NULL, '10:00', '신대방삼거리점', '010-2222-1234', 'store2.png');
 --
 --
 INSERT INTO category(category_name, category_deleted_yn)
@@ -25,43 +41,47 @@ VALUES ('DRINKS', FALSE);
 --
 --
 --
-INSERT INTO menu_option_group (menu_option_group_name, category_id, menu_option_group_deleted_yn)
-VALUES ('토핑', 1, FALSE);
+INSERT INTO menu_option_group (menu_option_group_name, category_id, menu_option_group_deleted_yn,
+                               menu_option_group_exclusive_yn)
+VALUES ('토핑', 1, FALSE, FALSE);
 --
-INSERT INTO menu_option_group (menu_option_group_name, category_id, menu_option_group_deleted_yn)
-VALUES ('사이즈', 1, FALSE);
+INSERT INTO menu_option_group (menu_option_group_name, category_id, menu_option_group_deleted_yn,
+                               menu_option_group_exclusive_yn)
+VALUES ('사이즈', 1, FALSE, TRUE);
 --
-INSERT INTO menu_option_group (menu_option_group_name, category_id, menu_option_group_deleted_yn)
-VALUES ('밀크쉐이크 토핑', 3, FALSE);
+INSERT INTO menu_option_group (menu_option_group_name, category_id, menu_option_group_deleted_yn,
+                               menu_option_group_exclusive_yn)
+VALUES ('밀크쉐이크 토핑', 3, FALSE, FALSE);
 --
-INSERT INTO menu_option_group (menu_option_group_name, category_id, menu_option_group_deleted_yn)
-VALUES ('FRIES 사이즈', 2, FALSE);
+INSERT INTO menu_option_group (menu_option_group_name, category_id, menu_option_group_deleted_yn,
+                               menu_option_group_exclusive_yn)
+VALUES ('FRIES 사이즈', 2, FALSE, TRUE);
 --
 
 
 INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                   menu_description, menu_name, menu_picture_url)
-VALUES (NULL, FALSE, 9900, 1, '햄버거', '햄버거', 'https://www.google.com');
+VALUES (NULL, FALSE, 9900, 1, '햄버거', '햄버거', 'burgers.png');
 
 INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                   menu_description, menu_name, menu_picture_url)
-VALUES (NULL, FALSE, 11400, 1, '치즈버거', '치즈버거', 'https://www.google.com');
+VALUES (NULL, FALSE, 11400, 1, '치즈버거', '치즈버거', 'burgers.png');
 
 INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                   menu_description, menu_name, menu_picture_url)
-VALUES (NULL, FALSE, 12400, 1, '베이컨 버거', '베이컨 버거', 'https://www.google.com');
+VALUES (NULL, FALSE, 12400, 1, '베이컨 버거', '베이컨 버거', 'burgers.png');
 
 INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                   menu_description, menu_name, menu_picture_url)
-VALUES (NULL, FALSE, 13900, 1, '베이컨 치즈버거', '베이컨 치즈버거', 'https://www.google.com');
+VALUES (NULL, FALSE, 13900, 1, '베이컨 치즈버거', '베이컨 치즈버거', 'burgers.png');
 
 INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                   menu_description, menu_name, menu_picture_url)
-VALUES (NULL, FALSE, 6900, 2, '감자튀김', 'FRIES', 'https://www.google.com');
+VALUES (NULL, FALSE, 6900, 2, '감자튀김', 'FRIES', 'fries.png');
 
 INSERT INTO menu (menu_deleted_datetime, menu_deleted_yn, menu_price, category_id,
                   menu_description, menu_name, menu_picture_url)
-VALUES (NULL, FALSE, 6900, 3, '밀크쉐이크', '파이브가이즈 쉐이크', 'https://www.google.com');
+VALUES (NULL, FALSE, 6900, 3, '밀크쉐이크', '파이브가이즈 쉐이크', 'milk.png');
 
 
 
@@ -114,10 +134,10 @@ INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_
 VALUES ('핫소스', 0, 1, FALSE);
 
 INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id, menu_option_deleted_yn)
-VALUES ('보통', 3500, 2, FALSE);
+VALUES ('리틀', 0, 2, FALSE);
 
 INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id, menu_option_deleted_yn)
-VALUES ('리틀', 0, 2, FALSE);
+VALUES ('보통', 3500, 2, FALSE);
 
 INSERT INTO menu_option (menu_option_name, menu_option_price, menu_option_group_id, menu_option_deleted_yn)
 VALUES ('초콜릿', 0, 3, FALSE);
