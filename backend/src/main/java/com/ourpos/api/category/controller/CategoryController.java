@@ -45,7 +45,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "카테고리 조회가 완료되었습니다.", categoryQueryService.findCategory(categoryId));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
     @GetMapping("/categories")
     public Result<List<CategoryResponseDto>> findAllCategories() {
         log.info("전체 카테고리 조회 컨트롤러 가동");
@@ -54,7 +54,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "전체 카테고리 조회완료.", categories);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @PostMapping("/categories")
     public Result<Void> addCategory(@RequestBody @Valid CategoryRequestDto categoryRequestDto) {
         log.info("CategoryController.addCategory() called");
@@ -63,6 +63,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "카테고리 추가 성공", null);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @PostMapping("/menuOptionGroups")
     public Result<Void> addMenuOptionGroup(@RequestBody @Valid MenuOptionGroupRequestDto menuOptionGroupRequestDto) {
         log.info("CategoryController.addMenuOptionGroup() called");
@@ -71,6 +72,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "메뉴옵션그룹 추가 완료", null);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @PostMapping("/menuOptions")
     public Result<Void> addMenuOption(@RequestBody @Valid MenuOptionRequestDto menuOptionRequestDto) {
         log.info("CategoryController.addMenuOption() called");
@@ -79,6 +81,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "메뉴옵션 추가 완료", null);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/categories/{categoryId}/update")
     public Result<Void> updateCategory(@PathVariable Long categoryId,
         @RequestBody @Valid CategoryUpdateDto categoryUpdateDto) {
@@ -88,6 +91,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "카테고리 수정 완료", null);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/menuOptionGroups/{menuOptionGroupId}/update")
     public Result<Void> updateMenuOptionGroup(@PathVariable Long menuOptionGroupId,
         @RequestBody @Valid MenuOptionGroupUpdateDto menuOptionGroupUpdateDto) {
@@ -97,6 +101,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "메뉴 옵션 그룹 수정 성공", null);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/menuOptions/{menuOptionId}/update")
     public Result<Void> updateMenuOption(@PathVariable Long menuOptionId,
         @RequestBody @Valid MenuOptionUpdateDto menuOptionUpdateDto) {
@@ -105,6 +110,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "메뉴 옵션 그룹 수정 성공", null);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/categories/{categoryId}/delete")
     public Result<Void> deleteCategory(@PathVariable Long categoryId) {
         log.info("CategoryController.deleteCategory() called");
@@ -113,6 +119,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "카테고리 삭제 성공", null);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/menuOptionGroups/{menuOptionGroupId}/delete")
     public Result<Void> deleteMenuOptionGroup(@PathVariable Long menuOptionGroupId) {
         log.info("CategoryController.deleteMenuOptionGroup() called");
@@ -121,6 +128,7 @@ public class CategoryController implements CategoryControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "메뉴옵션그룹 삭제 성공", null);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/menuOptions/{menuOptionId}/delete")
     public Result<Void> deleteMenuOption(@PathVariable Long menuOptionId) {
         log.info("CategoryController.deleteMenuOption() called");

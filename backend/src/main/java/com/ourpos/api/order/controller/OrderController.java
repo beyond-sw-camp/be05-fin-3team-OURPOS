@@ -1,6 +1,7 @@
 package com.ourpos.api.order.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping("/hall")
     public Result<Void> createHallOrder(@RequestBody HallOrderRequestDto hallOrderRequestDto) {
         log.info("홀 주문: {}", hallOrderRequestDto);
@@ -34,6 +36,7 @@ public class OrderController {
         return new Result<>(HttpStatus.OK.value(), "홀 주문이 완료되었습니다.", null);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping("/delivery")
     public Result<Void> createDeliveryOrder(@RequestBody DeliveryOrderRequestDto deliveryOrderRequestDto) {
         log.info("배달 주문: {}", deliveryOrderRequestDto);
