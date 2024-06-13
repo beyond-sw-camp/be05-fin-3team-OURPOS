@@ -8,6 +8,9 @@ VALUES ('서울 동작구 보라매로 87', '플레이데이터 3층', '07060', 
 --
 INSERT INTO manager (manager_login_id, manager_password, role)
 VALUES ('admin', '$2a$10$qVUZj9jSbrTYnfzmMrt8SO4Qm7NPmyarLqv0N4r.Iy.Q5qgqGAbye', 'ROLE_ADMIN');
+
+INSERT INTO manager (manager_login_id, manager_password, role)
+VALUES ('super', '$2a$10$qVUZj9jSbrTYnfzmMrt8SO4Qm7NPmyarLqv0N4r.Iy.Q5qgqGAbye', 'ROLE_SUPER_ADMIN');
 --
 INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time, modified_date_time, store_address_id,
                    store_close_time, store_closed_datetime, store_open_time, store_name, store_phone, store_picture_url,
