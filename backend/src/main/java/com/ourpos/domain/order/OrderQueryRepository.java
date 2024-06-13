@@ -288,7 +288,7 @@ public class OrderQueryRepository {
 
         // builder에 조건 담기
         if (storeId != null) {
-            builder.and(order.store.id.eq(storeId));
+            builder.and(orderDetail.order.store.id.eq(storeId));
         }
 
         return queryFactory
@@ -302,7 +302,6 @@ public class OrderQueryRepository {
             .join(orderDetail.order)
             .join(orderDetail.menu)
             .join(orderDetail.menu.category)
-            .join(order.store)
             .where(builder)
             .fetch();
 
