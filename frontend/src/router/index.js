@@ -30,6 +30,8 @@ import AdminLoginPage from "@/pages/AdminLoginPage.vue";
 import SignupSuccess from "@/pages/SignupSuccess.vue";
 import MenuManagePage from '@/pages/MenuManagePage.vue';
 import MenuOptionGroupManagePage from '@/pages/MenuOptionGroupManagePage.vue';
+import FindStoreDeliveryPage from "@/pages/FindStoreDeliveryPage.vue";
+import DeliveryAddress from "@/pages/DeliveryAddress.vue";
 
 
 
@@ -48,10 +50,21 @@ const router = createRouter({
       component: LoginPage
     },
     {
-      name: 'findStore',
+      name: 'findHallStore',
       path: '/stores',
       component: FindStoreHallPage,
       meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+    },
+    {
+      name: 'findDeliveryStore',
+      path: '/stores/delivery',
+      component: FindStoreDeliveryPage,
+      meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+    },
+    {
+      name: 'deliveryAddress',
+      path: '/stores/delivery/address',
+      component: DeliveryAddress,
     },
     {
       name: 'store',
@@ -137,7 +150,7 @@ const router = createRouter({
       path: '/storeorder',
       component: StoreOrder,
       meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
-    }, 
+    },
     {
       name: 'storeordercheck_store',
       path: '/storeorder/:storeId/checkforstore',

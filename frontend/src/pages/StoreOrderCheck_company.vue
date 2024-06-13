@@ -16,6 +16,7 @@
   </template>
   
   <script>
+
   import OrderTable from '../components/OrderTable.vue';
   
   export default {

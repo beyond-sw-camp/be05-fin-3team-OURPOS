@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +41,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     private final StoreOrderServiceImpl storeOrderService;
 
     // 판매 비품, 식자재 목록 확인
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/storecomms")
     public Result<List<StoreCommResponseDto>> checkStoreComms() {
         log.info("비품/식자재 목록 출력");
@@ -49,6 +50,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     }
 
     // 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영) ?-> price가 반영 안됨
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/storecomms/order")
     public Result<Void> createStoreOrder(@Valid @RequestBody StoreOrderRequestDto storeOrderRequestDto) {
         log.info("가게 식자재, 비품 주문: {}", storeOrderRequestDto);
@@ -57,7 +59,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     }
 
     // 비품, 식자재 주문 내역 확인 ? 주문 내역  개별 조회 o
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/storeorder/{orderDetailId}")
     public Result<StoreOrderResponseDto> getStoreOrder(@PathVariable Long orderDetailId) {
         log.info("가게 식자재, 비품 주문: {}", orderDetailId);
@@ -66,7 +68,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     }
 
     //비품, 식자재 주문 확인 (직영점)
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/storeorder/{storeId}/checkforstore")
     public Result<List<StoreOrderCheckResponseDto>> getStoreOrdercheckforstore(@PathVariable Long storeId) {
         log.info("가게 식자재, 비품 주문: {}", storeId);
@@ -88,6 +90,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
      */
 
     // 비품, 식자재 주문 삭제
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/storeorder/{orderdetailId}")
     public Result<Void> deleteStoreOrder(@PathVariable Long orderdetailId) {
 
@@ -104,6 +107,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     }
 
     //비품, 식자재 주문 확인 (본사)
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @GetMapping("/storeorder/{storeId}/check")
     public Result<List<StoreOrderCheckResponseDto>> getStoreOrderCheck(@PathVariable Long storeId) {
         log.info("가게 식자재, 비품 주문: {}", storeId);
@@ -125,6 +129,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     //비품, 식자재 주문 상태 변경
 
     // 1. WAITING -> ACCEPTED
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/storeorder/{storeOrderId}/accepted")
     public Result<Void> acceptedStoreOrder(@PathVariable Long storeOrderId) {
         log.info("가게 식자재, 비품 주문 수정: {}", storeOrderId);
@@ -133,6 +138,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     }
 
     // 2. ACCEPTED -> DELIVERING
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/storeorder/{storeOrderId}/delivering")
     public Result<Void> deliveringStoreOrder(@PathVariable Long storeOrderId) {
         log.info("가게 식자재, 비품 주문 수정: {}", storeOrderId);
@@ -141,7 +147,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     }
 
     // 3. DELIVERING -> COMPLETED
-
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/storeorder/{storeOrderId}/complete")
     public Result<Void> completeStoreOrder(@PathVariable Long storeOrderId) {
         log.info("가게 식자재, 비품 주문 수정: {}", storeOrderId);

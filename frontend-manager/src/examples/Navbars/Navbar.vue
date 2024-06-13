@@ -20,17 +20,6 @@
           <material-input id="search" label="Search here" />
         </div>
         <ul class="navbar-nav justify-content-end">
-          <li class="nav-item d-flex align-items-center">
-            <router-link
-              :to="{ name: 'SignIn' }"
-              class="px-0 nav-link font-weight-bold lh-1"
-              :class="color ? color : 'text-body'"
-            >
-              <i class="material-icons" :class="isRTL ? 'ms-sm-2' : 'me-sm-1'">
-                account_circle
-              </i>
-            </router-link>
-          </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
             <a
               href="#"

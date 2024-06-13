@@ -3,19 +3,23 @@
     <v-btn icon @click="goBack">
       <v-icon>mdi-arrow-left</v-icon>
     </v-btn>
-    <v-toolbar-title>{{ title }}</v-toolbar-title>
+    <v-toolbar-title>{{storeName}} {{ title }}</v-toolbar-title>
     <v-toolbar-items>
       <v-btn icon>
-        <FontAwesomeIcon :icon="faShoppingCart" @click="goToCart"/>
+        <v-badge :content="cartItemCount" color="red" overlap>
+          <FontAwesomeIcon :icon="faShoppingCart" @click="goToCart"/>
+        </v-badge>
       </v-btn>
     </v-toolbar-items>
   </v-app-bar>
 </template>
 
+
 <script setup>
+import {computed, ref} from 'vue';
 import { useRouter } from 'vue-router';
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {faShoppingCart} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { defineProps } from 'vue';
 
 // Setup router
@@ -23,18 +27,28 @@ const router = useRouter();
 
 // Create a reactive title property
 defineProps(['title']);
-
-const goToCart = () => {
-  router.push('/cart');
-};
+const storeName = ref('');
 
 // Method to go back to the previous page
 const goBack = () => {
   router.back();
 };
 
+// Method to navigate to cart page
+const goToCart = () => {
+  router.push('/cart');
+};
+
+// Computed property to get the count of items in the cart
+const cartItemCount = computed(() => {
+  const fullOrder = JSON.parse(localStorage.getItem('fullOrder')) || {};
+  const orderDetailDtos = fullOrder.orderDetailDtos || [];
+  return orderDetailDtos.length;
+});
+
+storeName.value = localStorage.getItem('fullOrder') ? JSON.parse(localStorage.getItem('fullOrder')).storeName : '';
 </script>
 
+
 <style scoped>
-/* Add any custom styles if necessary */
 </style>

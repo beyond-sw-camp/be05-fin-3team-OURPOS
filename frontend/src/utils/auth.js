@@ -8,7 +8,6 @@ export function parseJwt(token) {
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-    console.log('Decoded Payload:', jsonPayload);
     return JSON.parse(jsonPayload);
   } catch (error) {
     console.error('Failed to parse JWT:', error);
@@ -29,7 +28,6 @@ export function getCookie(name) {
       }
     }
   }
-  console.log(`Cookie [${name}]:`, cookieValue);
   return cookieValue;
 }
 
@@ -54,9 +52,7 @@ export function checkUserRole(requiredRoles) {
     }
     const decoded = parseJwt(token);
     if (decoded && decoded.role) {
-      console.log('User Role:', decoded.role);
       if (requiredRoles.includes(decoded.role)) {
-        console.log('Access Granted');
         return true; // 접근 허용
       } else {
         console.warn(`Access Denied. Required Roles: ${requiredRoles}, User Role: ${decoded.role}`);

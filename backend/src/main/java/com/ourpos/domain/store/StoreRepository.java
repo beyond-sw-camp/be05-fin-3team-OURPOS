@@ -13,5 +13,8 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
         + "JOIN FETCH s.address")
     List<Store> findAllWithAddress();
 
-    Optional<Store> findByCustomerId(Long customerId);
+    @Query("SELECT s "
+        + "FROM Store s "
+        + "WHERE s.manager = :managerLoginId")
+    Optional<Store> findByManagerLoginId(String managerLoginId);
 }

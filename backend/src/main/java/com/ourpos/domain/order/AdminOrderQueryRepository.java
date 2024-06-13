@@ -1,6 +1,6 @@
 package com.ourpos.domain.order;
 
-import static com.ourpos.domain.customer.QCustomer.*;
+import static com.ourpos.domain.manager.QManager.*;
 import static com.ourpos.domain.menu.QCategory.*;
 import static com.ourpos.domain.menu.QMenu.*;
 import static com.ourpos.domain.order.QDeliveryOrder.*;
@@ -22,6 +22,7 @@ import com.ourpos.api.order.dto.response.CountMonthlyResponseDto;
 import com.ourpos.api.order.dto.response.MealTimeResponseDto;
 import com.ourpos.api.order.dto.response.MealTypeResponseDto;
 import com.ourpos.api.order.dto.response.MenuPreferResponseDto;
+import com.ourpos.domain.store.QStore;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -177,11 +178,11 @@ public class AdminOrderQueryRepository {
     }
 
     private static BooleanExpression deliveryOrderStoreLoginIdEq(String adminLoginId) {
-        return deliveryOrder.store.customer.loginId.eq(adminLoginId);
+        return deliveryOrder.store.manager.loginId.eq(adminLoginId);
     }
 
     private static BooleanExpression hallOrderStoreLoginIdEq(String adminLoginId) {
-        return hallOrder.store.customer.loginId.eq(adminLoginId);
+        return hallOrder.store.manager.loginId.eq(adminLoginId);
     }
 
     // 시간대별 매출 발생 추이
@@ -236,7 +237,7 @@ public class AdminOrderQueryRepository {
             .from(orderDetail)
             .join(orderDetail.order, order)
             .join(order.store, store)
-            .join(store.customer, customer)
+            .join(store.manager, manager)
             .join(orderDetail.menu, menu)
             .join(menu.category, category)
             .where(builder)
@@ -246,7 +247,7 @@ public class AdminOrderQueryRepository {
     }
 
     private static BooleanExpression orderStoreLoginIdEq(String adminLoginId) {
-        return order.store.customer.loginId.eq(adminLoginId);
+        return order.store.manager.loginId.eq(adminLoginId);
     }
 
     // 배달 주소 검색
@@ -286,5 +287,19 @@ public class AdminOrderQueryRepository {
         return list;
 
     }
+    //식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)->관리자 로그인으로 storeId 조회
+    /* 
+    public Long getStoreIdByAdminLoginId(String adminLoginId) {
+    QStore store = QStore.store;
+    QAdmin admin = QAdmin.admin;
+
+    JPAQuery<Long> query = queryFactory.select(store.id)
+            .from(store)
+            .join(store.admins, admin)
+            .where(admin.loginId.eq(adminLoginId));
+
+    return query.fetchOne();
+    }
+    */
 
 }

@@ -288,7 +288,7 @@ public class OrderQueryRepository {
 
         // builder에 조건 담기
         if (storeId != null) {
-            builder.and(order.store.id.eq(storeId));
+            builder.and(orderDetail.order.store.id.eq(storeId));
         }
 
         return queryFactory
@@ -309,12 +309,19 @@ public class OrderQueryRepository {
 
     // 배달 주소 검색
     public List<String> deliveryFrequency(Long storeId) {
+        BooleanBuilder builder = new BooleanBuilder();
+
+        // builder에 조건 담기
+        if (storeId != null) {
+            builder.and(deliveryOrder.store.id.eq(storeId));
+        }
+
         return queryFactory
             .select(deliveryOrder.orderAddress.addressBase)
             .from(deliveryOrder)
             .join(deliveryOrder.orderAddress)
             .join(deliveryOrder.store)
-            .where(deliveryOrder.store.id.eq(storeId))
+            .where(builder)
             .fetch();
     }
 

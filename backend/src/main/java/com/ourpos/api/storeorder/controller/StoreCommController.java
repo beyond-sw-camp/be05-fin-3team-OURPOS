@@ -3,6 +3,7 @@ package com.ourpos.api.storeorder.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ public class StoreCommController implements StoreCommControllerDocs {
     private final StoreCommServiceImpl storeCommServiceImpl;
 
     // 새로운 비품,식자재를 추가하는 코드
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @PostMapping("/storecomms")
     public Result<Void> addStoreComm(@RequestBody StoreCommRequestDto storeCommRequestDto) {
         log.info("비품/식자재추가 : {}", storeCommRequestDto);
@@ -48,6 +50,7 @@ public class StoreCommController implements StoreCommControllerDocs {
      */
 
     // 비품,식자재 수정
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/storecomms/{storeCommId}")
     public Result<Void> updateStoreComm(@Valid @PathVariable Long storeCommId,
         @RequestBody StoreCommRequestDto storeCommRequestDto) {
@@ -57,6 +60,7 @@ public class StoreCommController implements StoreCommControllerDocs {
     }
 
     // 비품 식자재 삭제
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @PutMapping("/storecomms/{storeCommId}/delete")
     public Result<Void> restoreStoreComm(@PathVariable Long storeCommId) {
         log.info("비품/식자재 삭제 : {}", storeCommId);
