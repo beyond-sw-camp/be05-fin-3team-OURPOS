@@ -12,7 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.ourpos.auth.dto.CustomOAuth2Customer;
+import com.ourpos.auth.dto.customer.CustomOAuth2Customer;
 import com.ourpos.auth.exception.LoginRequiredException;
 import com.ourpos.auth.jwt.JwtUtil;
 
@@ -37,19 +37,16 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             () -> new LoginRequiredException("권한이 없습니다.")
         ).getAuthority();
 
-        String token = jwtUtil.createJwt(loginId, role, 1000L * 60 * 60 * 24 * 7);
+        String token = jwtUtil.createJwt(loginId, role, 60L * 60 * 24 * 7);
 
-        if (customCustomerDetails.isNewUser()) {
+        if (customCustomerDetails.isNewUser() && role.equals("ROLE_USER")) {
+            response.addCookie(createCookie(token));
             response.sendRedirect("http://localhost:3000/signup-success");
             return;
         }
 
         response.addCookie(createCookie(token));
-        switch (role) {
-            case "ROLE_USER" -> response.sendRedirect("http://localhost:3000/");
-            case "ROLE_ADMIN" -> response.sendRedirect("http://localhost:3000/admin");
-            case "ROLE_SUPER_ADMIN" -> response.sendRedirect("http://localhost:3000/super-admin");
-        }
+        response.sendRedirect("http://localhost:3000/");
     }
 
     private Cookie createCookie(String value) {

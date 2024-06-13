@@ -10,7 +10,7 @@
           max-height="228"
         ></v-img>
         <h1 class="mb-2">{{ menu.name }}</h1>
-        <h2 class="mb-4">{{ menu.price }}원</h2>
+        <h2 class="mb-4">{{ Number(menu.price).toLocaleString() }}원</h2>
       </v-col>
       <v-btn variant="plain" @click="decrementQuantity" :disabled="quantity === 1" class="mr-2">
         <h2>-</h2>
@@ -56,23 +56,13 @@
       </v-row>
     </v-form>
 
-    <v-row class="justify-center mt-4">
-      <v-col cols="12" md="4">
-        <v-btn @click="addToCart" rounded="lg" size="large" block class="py-4 mb-4" color="primary">
-          {{ totalPrices }}원 장바구니 담기
-        </v-btn>
-      </v-col>
-    </v-row>
-
     <v-bottom-sheet v-model="sheet" inset>
       <v-card class="text-center py-4">
         <v-card-text>
-          <div>
-            장바구니에 추가되었습니다.
-          </div>
-          <v-btn variant="text" @click="sheet = !sheet">
-            닫기
-          </v-btn>
+          <v-icon color="primary" size="48">mdi-check-circle</v-icon>
+          <div>주문이 완료되었습니다!</div>
+          <v-btn variant="text" @click="navigateToCart">장바구니로 이동</v-btn>
+          <v-btn variant="text" @click="navigateToMenus">다른 메뉴 더보기</v-btn>
         </v-card-text>
       </v-card>
     </v-bottom-sheet>
@@ -96,11 +86,24 @@
         </v-card-text>
       </v-card>
     </v-bottom-sheet>
+
+    <!-- 하단 고정 떠다니는 버튼 -->
+    <v-btn
+      fab
+      dark
+      bottom
+      right
+      color="primary"
+      @click="addToCart"
+      class="floating-btn"
+    >
+      {{ Number(totalPrices).toLocaleString() }}원 장바구니 담기
+    </v-btn>
   </v-container>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
 import HeaderPage from "@/components/AppHeader.vue";
@@ -112,13 +115,14 @@ const storeId = route.params.storeId;
 const menuId = route.params.menuId;
 
 const sheet = ref(false);
-const errorSheet = ref(false); // 에러 메시지 표시 여부
+const errorSheet = ref(false);
 const menu = ref({});
 const menuOptionGroups = ref([]);
 const orderDetailDtos = ref([]);
 const orderOptions = ref({});
 const totalPrices = ref(0);
-const quantity = ref(1); // Initialize quantity to 1
+const quantity = ref(1);
+const optionTotalPrice = ref(0);
 
 const findMenu = async () => {
   try {
@@ -155,6 +159,23 @@ const findMenuOptionGroups = async () => {
   }
 };
 
+const calculateTotalPrice = () => {
+  let optionTotal = 0;
+  for (const groupId in orderOptions.value) {
+    const options = orderOptions.value[groupId];
+    if (Array.isArray(options)) {
+      optionTotal += options.reduce((sum, option) => sum + option.price, 0);
+    } else {
+      optionTotal += options.price;
+    }
+  }
+  totalPrices.value = (menu.value.price + optionTotal) * quantity.value;
+  optionTotalPrice.value = optionTotal;
+};
+
+watch(orderOptions, calculateTotalPrice, { deep: true });
+watch(quantity, calculateTotalPrice);
+
 const incrementQuantity = () => {
   quantity.value++;
 };
@@ -175,18 +196,19 @@ const addToCart = () => {
 
   const newOrderDetail = {
     menuId: menu.value.id,
-    menuName: menu.value.name, // Include menu name
-    menuPictureUrl: menu.value.pictureUrl, // Include menu picture URL
+    menuName: menu.value.name,
+    menuPictureUrl: menu.value.pictureUrl,
     quantity: quantity.value,
+    totalPrice: totalPrices.value,
+    menuPrice: menu.value.price + optionTotalPrice.value,
     orderOptionGroups
   };
 
   const existingFullOrder = JSON.parse(localStorage.getItem('fullOrder'));
 
-  // Check if there is an existing order from a different store
   if (existingFullOrder && existingFullOrder.storeId !== storeId) {
     if (existingFullOrder.orderDetailDtos.length > 0) {
-      errorSheet.value = true; // Display error using bottom sheet if there are items from another store
+      errorSheet.value = true;
       return;
     }
   }
@@ -204,7 +226,6 @@ const addToCart = () => {
 
   localStorage.setItem('fullOrder', JSON.stringify(fullOrder));
 
-  console.log(fullOrder);
   sheet.value = true;
 };
 
@@ -213,8 +234,19 @@ const navigateToCart = () => {
   router.push('/cart');
 };
 
+const navigateToMenus = () => {
+  errorSheet.value = false;
+  router.push(`/stores/${storeId}/menus`);
+};
+
 findMenu();
 </script>
 
 <style scoped>
+.floating-btn {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 1000;
+}
 </style>

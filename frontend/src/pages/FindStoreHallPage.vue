@@ -1,6 +1,12 @@
 <template>
   <v-container>
-    <HeaderPage title="주변 가게 찾기"/>
+    <v-app-bar app dark>
+      <v-btn icon @click="goBack">
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <v-toolbar-title>주변 가게 찾기</v-toolbar-title>
+
+    </v-app-bar>
     <v-row>
       <v-col>
         <v-row>
@@ -53,7 +59,7 @@
         <v-card-text>
           <p><FontAwesomeIcon :icon="faPhone"/> 전화번호: {{ selectedStore.storePhone }}</p>
           <p><FontAwesomeIcon :icon="faClock"/> 영업 시간: {{ selectedStore.openTime }} - {{ selectedStore.closeTime }}</p>
-          <p><FontAwesomeIcon :icon="faShoppingBag"/> 최소 주문 가격: {{ selectedStore.minimumOrderPrice }}원</p>
+          <p><FontAwesomeIcon :icon="faShoppingBag"/> 최소 주문 가격: {{ Number(selectedStore.minimumOrderPrice).toLocaleString() }}원</p>
           <p><FontAwesomeIcon :icon="faMapLocation"/> 거리: {{ formatDistance(selectedStore.distance) }}</p>
         </v-card-text>
         <v-card-actions>
@@ -80,7 +86,7 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 import HeaderPage from '@/components/AppHeader.vue';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {faClock, faMapLocation, faPhone, faShoppingBag} from "@fortawesome/free-solid-svg-icons";
+import {faClock, faMapLocation, faPhone, faShoppingBag, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 
 const stores = ref([]);
 const router = useRouter();
@@ -187,6 +193,10 @@ if (latitude && longitude) {
     loading.value = false;
   });
 }
+
+const goBack = () => {
+  router.back();
+};
 </script>
 
 <style scoped>

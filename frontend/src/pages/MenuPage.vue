@@ -1,11 +1,11 @@
 <template>
   <v-container>
-    <HeaderPage title="메뉴" />
+    <HeaderPage title="메뉴"/>
     <v-row>
       <v-col>
         <v-tabs v-model="activeTab" background-color="grey lighten-4" grow show-arrows>
-          <v-tab v-for="category in categories" :key="category" @click="findMenus(category)">
-            {{ category }}
+          <v-tab v-for="category in categories" :key="category.name" @click="findMenus(category.name)">
+            {{ category.name }}
           </v-tab>
         </v-tabs>
         <v-card class="my-5">
@@ -30,7 +30,7 @@
                   <v-col>
                     <v-card-title>{{ menu.name }}</v-card-title>
                     <v-card-subtitle>
-                      {{ menu.price }}
+                      {{ Number(menu.price).toLocaleString() }}원
                     </v-card-subtitle>
                     <v-card-text>
                       <p style="color: red">{{ menu.description }}</p>
@@ -60,7 +60,7 @@ const route = useRoute();
 const id = route.params.id;
 const menus = ref([]);
 const activeTab = ref(0); // Active tab index
-const categories = ref(['BURGERS', 'FRIES', 'MILKSHAKES', 'DRINKS']);
+const categories = ref([]);
 
 const findMenus = async (category) => {
   try {
@@ -76,12 +76,24 @@ const findMenus = async (category) => {
   }
 };
 
+const findCategories = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/categories', {
+      withCredentials: true
+    });
+    categories.value = response.data.data;
+    await findMenus(categories.value[0].name);
+  } catch (error) {
+    console.error("Error fetching items:", error);
+  }
+};
+
 const viewMenu = (menuId) => {
   router.push('/stores/' + id + '/menus/' + menuId);
 };
 
 // Initialize with the first category
-findMenus(categories.value[0]);
+findCategories();
 </script>
 
 <style scoped>

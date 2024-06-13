@@ -16,7 +16,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class CustomLogoutFilter extends GenericFilterBean {
+public class CustomerLogoutFilter extends GenericFilterBean {
 
     private final JwtUtil jwtUtil;
 
@@ -37,7 +37,6 @@ public class CustomLogoutFilter extends GenericFilterBean {
             return;
         }
         String requestMethod = request.getMethod();
-        System.out.println("requestMethod = " + requestMethod);
         if (!requestMethod.equals("POST")) {
             filterChain.doFilter(request, response);
             return;
