@@ -37,6 +37,9 @@
                   </v-card-text>
                 </v-col>
               </v-row>
+              <v-card-text class="text-right">
+                <strong>금액: {{ Number(orderDetail.totalPrice).toLocaleString()  }}원</strong>
+              </v-card-text>
             </v-card>
           </v-col>
         </v-row>
@@ -44,7 +47,7 @@
         <v-container class="d-flex flex-column justify-end">
           <v-row v-if="orderDetailDtos.length > 0">
             <v-col cols="12" md="4" sm="6">
-              <v-btn @click="submitOrder" rounded="lg" size="x-large" block class="mb-4">주문하기</v-btn>
+              <v-btn @click="submitOrder" rounded="lg" size="x-large" block class="mb-4"> {{ Number(totalOrderPrice).toLocaleString() }}원 주문하기</v-btn>
             </v-col>
           </v-row>
           <v-row v-else class="text-center">
@@ -80,7 +83,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import AppHeader from "@/components/AppHeader.vue";
@@ -92,19 +95,30 @@ const orderErrorAlert = ref(false);
 const orderErrorMessage = ref('');
 const router = useRouter();
 
+// Compute the total price of the order
+const totalOrderPrice = computed(() => {
+  return orderDetailDtos.value.reduce((total, orderDetail) => {
+    return total + orderDetail.totalPrice;
+  }, 0);
+});
+
 const deleteOrderDetail = (index) => {
   orderDetailDtos.value.splice(index, 1);
   localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: orderDetailDtos.value }));
 };
 
 const incrementQuantity = (index) => {
-  orderDetailDtos.value[index].quantity += 1;
+  let orderDetail = orderDetailDtos.value[index];
+  orderDetail.quantity += 1;
+  orderDetail.totalPrice = orderDetail.menuPrice * orderDetail.quantity;
   localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: orderDetailDtos.value }));
 };
 
 const decrementQuantity = (index) => {
   if (orderDetailDtos.value[index].quantity > 1) {
-    orderDetailDtos.value[index].quantity -= 1;
+    let orderDetail = orderDetailDtos.value[index];
+    orderDetail.quantity -= 1;
+    orderDetail.totalPrice = orderDetail.menuPrice * orderDetail.quantity;
     localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: orderDetailDtos.value }));
   }
 };
@@ -147,6 +161,11 @@ const submitOrder = async () => {
     orderErrorAlert.value = true;
   }
 };
+
+// Watch for changes in orderDetailDtos and update localStorage accordingly
+watch(orderDetailDtos, (newOrderDetailDtos) => {
+  localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: newOrderDetailDtos }));
+});
 
 console.log(orderDetailDtos.value);
 </script>
