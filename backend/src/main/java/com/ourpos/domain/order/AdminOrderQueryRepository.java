@@ -1,6 +1,6 @@
 package com.ourpos.domain.order;
 
-import static com.ourpos.domain.customer.QCustomer.*;
+import static com.ourpos.domain.manager.QManager.*;
 import static com.ourpos.domain.menu.QCategory.*;
 import static com.ourpos.domain.menu.QMenu.*;
 import static com.ourpos.domain.order.QDeliveryOrder.*;
@@ -178,11 +178,11 @@ public class AdminOrderQueryRepository {
     }
 
     private static BooleanExpression deliveryOrderStoreLoginIdEq(String adminLoginId) {
-        return deliveryOrder.store.customer.loginId.eq(adminLoginId);
+        return deliveryOrder.store.manager.loginId.eq(adminLoginId);
     }
 
     private static BooleanExpression hallOrderStoreLoginIdEq(String adminLoginId) {
-        return hallOrder.store.customer.loginId.eq(adminLoginId);
+        return hallOrder.store.manager.loginId.eq(adminLoginId);
     }
 
     // 시간대별 매출 발생 추이
@@ -237,7 +237,7 @@ public class AdminOrderQueryRepository {
             .from(orderDetail)
             .join(orderDetail.order, order)
             .join(order.store, store)
-            .join(store.customer, customer)
+            .join(store.manager, manager)
             .join(orderDetail.menu, menu)
             .join(menu.category, category)
             .where(builder)
@@ -247,7 +247,7 @@ public class AdminOrderQueryRepository {
     }
 
     private static BooleanExpression orderStoreLoginIdEq(String adminLoginId) {
-        return order.store.customer.loginId.eq(adminLoginId);
+        return order.store.manager.loginId.eq(adminLoginId);
     }
 
     // 배달 주소 검색

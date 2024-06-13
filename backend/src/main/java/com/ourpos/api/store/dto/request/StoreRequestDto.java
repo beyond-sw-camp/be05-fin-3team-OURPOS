@@ -2,7 +2,7 @@ package com.ourpos.api.store.dto.request;
 
 import java.time.LocalTime;
 
-import com.ourpos.domain.customer.Customer;
+import com.ourpos.domain.manager.Manager;
 import com.ourpos.domain.store.Store;
 
 import lombok.Getter;
@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class StoreRequestDto {
 
-    private Long customerId;
+    private Long managerId;
     private StoreAddressRequestDto storeAddress;
     private String storeName;
     private String storePhone;
@@ -23,9 +23,9 @@ public class StoreRequestDto {
     private Integer storeMinimumOrderPrice;
     private String storePictureUrl;
 
-    public Store toEntity(Customer customer) {
+    public Store toEntity(Manager manager) {
         return Store.builder()
-            .customer(customer)
+            .manager(manager)
             .address(storeAddress.toEntity())
             .name(storeName)
             .phone(storePhone)

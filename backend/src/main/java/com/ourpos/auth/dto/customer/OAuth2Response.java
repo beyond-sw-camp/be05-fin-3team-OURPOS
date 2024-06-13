@@ -1,4 +1,4 @@
-package com.ourpos.auth.dto;
+package com.ourpos.auth.dto.customer;
 
 public interface OAuth2Response {
 

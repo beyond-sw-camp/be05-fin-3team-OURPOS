@@ -29,7 +29,8 @@ import com.ourpos.api.customer.service.CustomerServiceImpl;
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 import com.ourpos.api.order.service.OrderQueryService;
-import com.ourpos.auth.dto.CustomOAuth2Customer;
+import com.ourpos.auth.dto.customer.CustomOAuth2Customer;
+import com.ourpos.auth.exception.LoginRequiredException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -127,9 +128,11 @@ public class CustomerController implements CustomerControllerDocs {
     
     private String getCustomerLoginId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CustomOAuth2Customer customOAuth2Customer = (CustomOAuth2Customer)principal;
+        if (!(principal instanceof CustomOAuth2Customer)) {
+            throw new LoginRequiredException("로그인이 필요합니다.");
+        }
 
-        return customOAuth2Customer.getLoginId();
+        return ((CustomOAuth2Customer)principal).getLoginId();
     }
 
 }
