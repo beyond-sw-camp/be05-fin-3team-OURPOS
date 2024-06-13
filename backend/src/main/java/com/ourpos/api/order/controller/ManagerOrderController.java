@@ -201,7 +201,7 @@ public class ManagerOrderController {
     // 지역별 배달 빈도
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @GetMapping("orders/delivery/frequency")
-    public Result<List<Location>> deliveryFrequency(@RequestParam Long storeId) {
+    public Result<List<Location>> deliveryFrequency(@RequestParam(required = false) Long storeId) {
         log.info("지역별 배달 빈도 컨트롤러 {} ", storeId);
         return new Result<>(HttpStatus.OK.value(), "지역별 배달 빈도수 위도 경도", managerOrderService.deliveryFrequency(storeId));
     }
