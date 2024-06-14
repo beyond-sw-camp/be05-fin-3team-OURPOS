@@ -62,7 +62,7 @@ const routes = [
     path: "/manager",
     name: "ManagerHome",
     component: ManagerHome,
-    meta: { requiredRoles: ['ROLE_ADMIN'] }
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   }
 ];
 

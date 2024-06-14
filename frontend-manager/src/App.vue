@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
   <sidenav
     :custom_class="color"
     :class="[isRTL ? 'fixed-end' : 'fixed-start']"
-    v-if="showSidenav"
+    v-if="showSidenav && !$route.meta.hideSidenav"
   />
   <main
     class="main-content position-relative max-height-vh-100 h-100 overflow-x-hidden"
