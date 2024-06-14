@@ -6,6 +6,10 @@ import RTL from "../views/Rtl.vue";
 import Notifications from "../views/Notifications.vue";
 import Profile from "../views/Profile.vue";
 import SignUp from "../views/SignUp.vue";
+import SubDash from "../views/SubDashboard.vue";
+import {checkUserRole} from "@/utils/auth";
+import ManagerHome from "@/views/ManagerHome.vue";
+import OwnerHome from "@/views/OwnerHome.vue";
 import StoreLanding from '../views/StoreLanding.vue';
 import DeliveryOrderManage from '../views/DeliveryOrderManage.vue';
 import MenuStatusManage from "../views/MenuStatusManage.vue";
@@ -17,12 +21,13 @@ const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/dashboard",
+    redirect: "/sign-up",
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
+    path: "/owner",
+    name: "OwnerHome",
+    component: OwnerHome,
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
   },
   {
     path: "/tables",
@@ -55,34 +60,46 @@ const routes = [
     component: SignUp,
   },
   {
+    path: "/subdash",
+    name: "SubDash",
+    component: SubDash,
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
+  },
+  {
+    path: "/manager",
+    name: "ManagerHome",
+    component: ManagerHome,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
+  }
+  {
     path:"/store-landing",
     name:"StoreLanding",
-    component:StoreLanding, 
+    component:StoreLanding,
   },
   {
     path:"/store-landing/delivery-order-manage",
     name:"DeliveryOrderManage",
-    component:DeliveryOrderManage, 
+    component:DeliveryOrderManage,
   },
   {
     path:"/store-landing/menu-status-manage",
     name:"MenuStatusManage",
-    component:MenuStatusManage, 
+    component:MenuStatusManage,
   },
   {
     path:"/head-office-landing",
     name:"HeadOfficeLanding",
-    component:HeadOfficeLanding, 
+    component:HeadOfficeLanding,
   },
   {
     path:"/head-office-landing/menu-manage",
     name:"MenuManage",
-    component:MenuManage, 
+    component:MenuManage,
   },
   {
     path:"/head-office-landing/menu-option-group-manage",
     name:"MenuOptionGroupManage",
-    component:MenuOptionGroupManage, 
+    component:MenuOptionGroupManage,
   },
 ];
 
@@ -91,5 +108,18 @@ const router = createRouter({
   routes,
   linkActiveClass: "active",
 });
-
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiredRoles) {
+    const hasAccess = checkUserRole(to.meta.requiredRoles);
+    console.log(hasAccess);
+    if (hasAccess) {
+      next();
+    } else {
+      alert('접근 권한이 없습니다.');
+      next({ name: 'SignUp' });
+    }
+  } else {
+    next();
+  }
+});
 export default router;
