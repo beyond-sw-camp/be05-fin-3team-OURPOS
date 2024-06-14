@@ -1,4 +1,4 @@
-package com.ourpos.auth.dto;
+package com.ourpos.auth.dto.customer;
 
 import com.ourpos.domain.customer.Role;
 

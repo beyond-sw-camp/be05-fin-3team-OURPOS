@@ -45,7 +45,7 @@ public class CustomerServiceImpl {
             .toList();
     }
 
-    //개인정보 변경(서브주소 추가)ㅜ
+    //개인정보 변경(서브주소 추가)
     @Transactional
     public void addSubAddress(String loginId, CustomerAddressRequestDto customerAddressRequestDto) {
         Customer customer = customerRepository.findByLoginId(loginId).orElseThrow(
