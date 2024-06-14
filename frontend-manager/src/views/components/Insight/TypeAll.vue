@@ -32,11 +32,14 @@
     isLoading.value = true;
     try {
       const response = await axios.get('http://localhost:8080/api/v1/orders/meal-type', {
-        params: {
-            storeId: props.storeId,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
         },
-        withCredentials: true
-    });
+        params: {
+          storeId: props.storeId,
+        }
+      });
       sales.value = response.data.data;
       const salesData = {};
       sales.value.forEach(record => {

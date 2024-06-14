@@ -39,8 +39,7 @@ const props = defineProps(["storeId"]);
         },
       params: {
         storeId: props.storeId,
-      },
-      withCredentials: true
+      }
     });
     const locationData = locationResponse.data.data;
   

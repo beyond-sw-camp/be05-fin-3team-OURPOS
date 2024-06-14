@@ -27,10 +27,13 @@ const fetchData = async () => {
     isLoading.value = true;
     try {
         const response = await axios.get('http://localhost:8080/api/v1/orders/menu-prefer', {
-            params: {
-                storeId: props.storeId,
-            },
-            withCredentials: true
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+          },
+          params: {
+            storeId: props.storeId,
+          }
         });
         console.log("menuprefer 통신 성공");
         sales.value = response.data.data;
