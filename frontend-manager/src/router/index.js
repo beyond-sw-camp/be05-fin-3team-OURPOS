@@ -6,6 +6,7 @@ import RTL from "../views/Rtl.vue";
 import Notifications from "../views/Notifications.vue";
 import Profile from "../views/Profile.vue";
 import SignUp from "../views/SignUp.vue";
+import SubDash from "../views/SubDashboard.vue";
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     name: "SignUp",
     component: SignUp,
   },
+  {
+    path: "/subdash",
+    name: "SubDash",
+    component: SubDash,
+  }
 ];
 
 const router = createRouter({

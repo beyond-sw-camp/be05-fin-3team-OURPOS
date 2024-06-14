@@ -62,11 +62,6 @@ const router = createRouter({
       meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
     },
     {
-      name: 'deliveryAddress',
-      path: '/stores/delivery/address',
-      component: DeliveryAddress,
-    },
-    {
       name: 'store',
       path: '/stores/:id/menus',
       component: MenuPage,
