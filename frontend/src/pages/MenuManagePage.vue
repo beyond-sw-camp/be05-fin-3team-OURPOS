@@ -15,9 +15,9 @@
           <div class="category-list">
             <v-btn
               v-for="category in categories"
-              :key="category"
+              :key="category.id"
               @click="filterMenus(category)"
-              :color="selectedCategory === category ? 'primary' : 'default'"
+              :color="selectedCategory === category.name ? 'primary' : 'default'"
               class="category-button">
               {{ category.name }}
             </v-btn>
@@ -31,7 +31,7 @@
           <v-row>
             <v-col cols="4" v-for="menu in filteredMenus" :key="menu.id" class="mb-4">
               <v-card @click="openUpdateMenuDialog(menu)">
-                <v-img :src="menu.image" height="200px"></v-img>
+                <v-img :src="getMenuImageUrl(menu.pictureUrl)" height="200px"></v-img>
                 <v-card-title>{{ menu.name }}</v-card-title>
                 <v-card-subtitle>{{ menu.price }}</v-card-subtitle>
                 <v-card-text>{{ menu.description }}</v-card-text>
@@ -123,11 +123,11 @@
           <v-container>
             <v-row>
               <v-col cols="6">
-                <v-img :src="selectedMenu.image" height="200px"></v-img>
+                <v-img :src="getMenuImageUrl(selectedMenu.pictureUrl)" height="200px"></v-img>
                 <v-text-field v-model="selectedMenu.name" label="제품명"></v-text-field>
-                <v-select v-model="selectedMenu.category" :items="categories" label="카테고리"></v-select>
+                <v-select v-model="selectedMenu.category" :items="categoryNames" label="카테고리"></v-select>
                 <v-text-field v-model="selectedMenu.price" label="가격"></v-text-field>
-                <v-text-field v-model="selectedMenu.image" label="사진 URL"></v-text-field>
+                <v-text-field v-model="selectedMenu.pictureUrl" label="사진 URL"></v-text-field>
                 <input type="file" ref="fileInputUpdate" style="display: none" @change="handleFileChangeUpdate">
                 <v-btn @click="triggerFileInputUpdate">Browse</v-btn>
                 <v-textarea v-model="selectedMenu.description" label="메뉴 설명"></v-textarea>
@@ -142,9 +142,9 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -171,7 +171,6 @@ const fetchCategories = async () => {
   }
 };
 
-
 const fetchMenus = async () => {
   try {
     const response = await axios.get('http://localhost:8080/api/v1/menus/all');
@@ -193,7 +192,12 @@ const filteredMenus = ref(menus.value.filter(menu => menu.category === selectedC
 
 const filterMenus = (category) => {
   selectedCategory.value = category;
-  filteredMenus.value = menus.value.filter(menu => menu.category === category);
+  filteredMenus.value = menus.value.filter(menu => menu.category === category.name);
+};
+
+// Helper method to get full URL of menu image
+const getMenuImageUrl = (imagePath) => {
+  return `http://localhost:8080/images/${imagePath}`;
 };
 
 // Dialogs state
@@ -223,7 +227,7 @@ const selectedMenu = ref({
   name: '',
   category: '',
   price: '',
-  image: '',
+  pictureUrl: '',
   description: ''
 });
 
@@ -339,8 +343,6 @@ const addMenu = async () => {
   }
 };
 
-
-
 const openUpdateMenuDialog = (menu) => {
   selectedMenu.value = { ...menu };
   dialog.value.updateMenu = true;
@@ -381,6 +383,7 @@ const handleFileChange = (event) => {
       newMenu.value.image = e.target.result;
     };
     reader.readAsDataURL(file);
+    newMenuFile.value = file;
   }
 };
 
@@ -405,8 +408,8 @@ onMounted(() => {
   fetchMenus();
 });
 
-
 </script>
+
 
 <style scoped>
 .navigation-bar {
