@@ -6,6 +6,12 @@ import RTL from "../views/Rtl.vue";
 import Notifications from "../views/Notifications.vue";
 import Profile from "../views/Profile.vue";
 import SignUp from "../views/SignUp.vue";
+import StoreLanding from '../views/StoreLanding.vue';
+import DeliveryOrderManage from '../views/DeliveryOrderManage.vue';
+import MenuStatusManage from "../views/MenuStatusManage.vue";
+import HeadOfficeLanding from "../views/HeadOfficeLanding.vue";
+import MenuManage from "../views/MenuManage.vue";
+import MenuOptionGroupManage from "../views/MenuOptionGroupManage.vue";
 
 const routes = [
   {
@@ -47,6 +53,36 @@ const routes = [
     path: "/sign-up",
     name: "SignUp",
     component: SignUp,
+  },
+  {
+    path:"/store-landing",
+    name:"StoreLanding",
+    component:StoreLanding, 
+  },
+  {
+    path:"/store-landing/delivery-order-manage",
+    name:"DeliveryOrderManage",
+    component:DeliveryOrderManage, 
+  },
+  {
+    path:"/store-landing/menu-status-manage",
+    name:"MenuStatusManage",
+    component:MenuStatusManage, 
+  },
+  {
+    path:"/head-office-landing",
+    name:"HeadOfficeLanding",
+    component:HeadOfficeLanding, 
+  },
+  {
+    path:"/head-office-landing/menu-manage",
+    name:"MenuManage",
+    component:MenuManage, 
+  },
+  {
+    path:"/head-office-landing/menu-option-group-manage",
+    name:"MenuOptionGroupManage",
+    component:MenuOptionGroupManage, 
   },
 ];
 
