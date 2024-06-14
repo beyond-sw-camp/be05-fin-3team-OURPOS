@@ -154,7 +154,7 @@
     const storeId = "1";
 
     const goToBack = () => {
-        router.push({ name: "Dashboard" });
+        router.push({ name: "OwnerHome" });
     };
 
 </script>

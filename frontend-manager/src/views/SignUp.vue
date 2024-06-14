@@ -100,7 +100,7 @@ const password = ref('');
 const illustrationImage = require('@/assets/img/illustrations/illustration-signin.jpg');
 const store = useStore();
 const router = useRouter();
-
+import {parseJwt} from "@/utils/auth";
 const body = document.getElementsByTagName("body")[0];
 
 const updateBodyClass = (revert = false) => {
@@ -128,8 +128,19 @@ const login = async () => {
     formData.append('password', password.value);
     const response = await axios.post('http://localhost:8080/managers/login', formData);
     if (response.status === 200) {
-      localStorage.setItem('token', response.headers.authorization);
-      await router.push('/');
+      const token = response.headers.authorization;
+      console.log(token);
+      const role = parseJwt(token).role;
+      console.log(role);
+      localStorage.setItem('token', token);
+
+      if (role === 'ROLE_SUPER_ADMIN') {
+        await router.push('/owner');
+      } else if (role === 'ROLE_ADMIN') {
+        await router.push('/manager');
+      } else {
+        await router.push('/sign-up');
+      }
     } else {
       alert('아이디와 비밀번호를 확인해주세요.');
     }
