@@ -136,49 +136,7 @@ const categoryNames = ref([]);
 const menus = ref([]);
 const selectedCategory = ref(null);
 
-const fetchCategories = async () => {
-  try {
-    const response = await axios.get('http://localhost:8080/api/v1/categories',{
-      headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
-    });
-    categories.value = response.data.data.map(category => ({
-      id: category.id,
-      name: category.name
-    }));
-    categoryNames.value = categories.value.map(category => category.name);
-    selectedCategory.value = categories.value[0].name; // Set default selected category
-    filterMenus(selectedCategory.value);
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-  }
-};
-
-const fetchMenus = async () => {
-  try {
-    const response = await axios.get('http://localhost:8080/api/v1/menus/all',{
-      headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
-    });
-    menus.value = response.data.data.map(menu => ({
-      id: menu.id,
-      name: menu.name,
-      price: `${menu.price}원`,  // Converting price to string with '원' suffix
-      description: menu.description,
-      pictureUrl: menu.pictureUrl,
-      category: menu.categoryName,
-    }));
-    filterMenus(selectedCategory.value);
-  } catch (error) {
-    console.error('Error fetching menus:', error);
-  }
-};
-
-const filteredMenus = ref(menus.value.filter(menu => menu.category === selectedCategory.value));
+const filteredMenus = ref([]); // Make sure this is correctly initialized
 
 const filterMenus = (category) => {
   selectedCategory.value = category;
@@ -235,16 +193,21 @@ const closeDialog = () => {
 
 const addCategory = async () => {
   try {
-    const response = await axios.post('http://localhost:8080/api/v1/categories', {
-      name: newCategory.value,
-      headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
+    const response = await axios.post(
+      'http://localhost:8080/api/v1/categories',
+      {
+        name: newCategory.value,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
         }
-    });
+      }
+    );
     if (response.status === 200) {
       // Update categories after successfully adding
-      fetchCategories();
+      fetchCategoriesAndMenus();
       newCategory.value = '';
       closeDialog();
     } else {
@@ -264,10 +227,17 @@ const editCategory = async () => {
     }
     const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/update`, {
       name: updatedCategoryName.value
-    });
+    },
+    {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
+        }
+      }
+    );
     if (response.status === 200) {
       // Update categories after successfully updating
-      fetchCategories();
+      fetchCategoriesAndMenus();
       selectedEditCategory.value = null;
       updatedCategoryName.value = '';
       closeDialog();
@@ -286,10 +256,16 @@ const deleteCategory = async () => {
       console.error('Category ID not found');
       return;
     }
-    const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/delete`);
+    const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/delete`,{},{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
+        }
+      }
+    );
     if (response.status === 200) {
       // Update categories after successfully deleting
-      fetchCategories();
+      fetchCategoriesAndMenus();
       selectedDeleteCategory.value = null;
       closeDialog();
     } else {
@@ -315,11 +291,12 @@ const addMenu = async () => {
   try {
     const response = await axios.post('http://localhost:8080/api/v1/menus', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        'Authorization': localStorage.getItem('token')
       }
     });
     if (response.status === 200) {
-      fetchMenus();
+      fetchCategoriesAndMenus();
       newMenu.value = {
         name: '',
         category: '',
@@ -342,20 +319,41 @@ const openUpdateMenuDialog = (menu) => {
   dialog.value.updateMenu = true;
 };
 
-const updateMenu = () => {
-  const index = menus.value.findIndex(m => m.id === selectedMenu.value.id);
-  if (index !== -1) {
-    menus.value[index] = { ...selectedMenu.value };
-    filterMenus(selectedCategory.value);
-    closeDialog();
+const updateMenu = async () => {
+  try {
+    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/update`, {
+      name: selectedMenu.value.name,
+      category: selectedMenu.value.category,
+      price: selectedMenu.value.price,
+      description: selectedMenu.value.description,
+      pictureUrl: selectedMenu.value.pictureUrl
+    },{
+      headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        }
+    });
+    if (response.status === 200) {
+      fetchCategoriesAndMenus();
+      closeDialog();
+    } else {
+      console.error('Error updating menu:', response);
+    }
+  } catch (error) {
+    console.error('Error updating menu:', error);
   }
 };
 
 const deleteMenu = async () => {
   try {
-    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/delete`);
+    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/delete`,{},{
+      headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        }
+    });
     if (response.status === 200) {
-      fetchMenus();
+      fetchCategoriesAndMenus();
       closeDialog();
     } else {
       console.error('Error deleting menu:', response);
@@ -383,7 +381,6 @@ const handleFileChange = (event) => {
 
 const triggerFileInputUpdate = () => {
   document.querySelector('input[type="file"]').click();
-  // document.querySelector('input[ref="fileInputUpdate"]').click();
 };
 
 const handleFileChangeUpdate = (event) => {
@@ -397,11 +394,51 @@ const handleFileChangeUpdate = (event) => {
   }
 };
 
+const fetchCategoriesAndMenus = async () => {
+  try {
+    // Fetch categories
+    const categoriesResponse = await axios.get('http://localhost:8080/api/v1/categories', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
+    });
+    categories.value = categoriesResponse.data.data.map(category => ({
+      id: category.id,
+      name: category.name
+    }));
+    categoryNames.value = categories.value.map(category => category.name);
+
+    // Fetch menus
+    const menusResponse = await axios.get('http://localhost:8080/api/v1/menus/all', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
+    });
+    menus.value = menusResponse.data.data.map(menu => ({
+      id: menu.id,
+      name: menu.name,
+      price: `${menu.price}원`,  // Converting price to string with '원' suffix
+      description: menu.description,
+      pictureUrl: menu.pictureUrl,
+      category: menu.categoryName,
+    }));
+
+    // Set default selected category and filter menus
+    selectedCategory.value = categories.value[0].name; 
+    filterMenus(categories.value[0]);
+
+  } catch (error) {
+    console.error('Error fetching categories or menus:', error);
+  }
+};
+
 onMounted(() => {
-  fetchCategories();
-  fetchMenus();
+  fetchCategoriesAndMenus();
 });
 </script>
+
 
 <style scoped>
 .navigation-bar {
@@ -428,14 +465,12 @@ onMounted(() => {
 }
 
 .modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background: white;
   padding: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  position: relative;
+  max-width: 500px;
+  width: 100%;
   z-index: 1000;
 }
 
@@ -449,6 +484,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 
 .actions {

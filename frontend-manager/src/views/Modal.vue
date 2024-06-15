@@ -1,7 +1,7 @@
 <!-- Modal.vue -->
 <template>
   <div class="modal-overlay" @click.self="close">
-    <div class="modal">
+    <div class="modal-content">
       <button class="close-button" @click="close">X</button>
       <slot></slot>
     </div>
@@ -29,9 +29,10 @@ const close = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
-.modal {
+.modal-content {
   background: white;
   padding: 20px;
   border-radius: 5px;
