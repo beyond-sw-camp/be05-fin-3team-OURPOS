@@ -63,9 +63,6 @@
 <script setup>
 
     import MiniStatisticsCard from "./components/MiniStatisticsCard.vue";
-    import ProjectCard from "./components/ProjectCard.vue";
-    import TimelineList from "@/examples/Cards/TimelineList.vue";
-    import TimelineItem from "@/examples/Cards/TimelineItem.vue";
     import MonthlySaleAll from "./components/Insight/MonthlySaleAll.vue";
     import HourlySaleAll from "./components/Insight/HourlySaleAll.vue";
     import TypeAll from "./components/Insight/TypeAll.vue";
