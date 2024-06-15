@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Dashboard from "../views/Dashboard.vue";
+// import Dashboard from "../views/Dashboard.vue";
 import Tables from "../views/Tables.vue";
 import Billing from "../views/Billing.vue";
 import RTL from "../views/Rtl.vue";
@@ -70,7 +70,7 @@ const routes = [
     name: "ManagerHome",
     component: ManagerHome,
     meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
-  }
+  },
   {
     path:"/store-landing",
     name:"StoreLanding",
