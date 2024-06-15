@@ -1,199 +1,159 @@
 <template>
   <div>
-    <v-toolbar dark prominent class="navigation-bar">
-      <v-toolbar-title>OUR POS</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <router-link to="/super-admin/headOfficeLanding">
-        <v-btn icon>
-          <v-icon>mdi-export</v-icon>
-        </v-btn>
+    <div class="navigation-bar">
+      <h1>OUR POS</h1>
+      <router-link to="/head-office-landing">
+        <button class="icon-button">
+          <i class="mdi mdi-export"></i>
+        </button>
       </router-link>
-    </v-toolbar>
+    </div>
 
-    <v-container fluid>
-      <v-row>
-        <v-col cols="3">
-          <v-btn
-            block
-            :color="selectedCategory.value === 'group' ? 'primary' : ''"
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-3">
+          <button
+            :class="selectedCategory.value === 'group' ? 'btn primary' : 'btn'"
             @click="selectCategory('group')"
           >
             메뉴 옵션 그룹
-          </v-btn>
-          <v-btn
-            block
-            :color="selectedCategory.value === 'option' ? 'primary' : ''"
+          </button>
+          <button
+            :class="selectedCategory.value === 'option' ? 'btn primary' : 'btn'"
             @click="selectCategory('option')"
           >
             메뉴 옵션
-          </v-btn>
-        </v-col>
-        <v-col cols="9">
-          <v-row>
-            <v-col cols="12" sm="4" v-for="(item, index) in selectedItems" :key="index">
-              <v-card @click="openEditDialog(item, index)">
-                <v-card-title>{{ item.name }}</v-card-title>
-                <v-card-subtitle>{{ item.description }}</v-card-subtitle>
-                <v-card-text>
-                  <div v-if="selectedCategory.value === 'option'">단위: {{ item.unit }}</div>
-                  <div>가격: {{ item.price }}</div>
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-    </v-container>
+          </button>
+        </div>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-12 col-sm-4" v-for="(item, index) in selectedItems" :key="index">
+              <div class="card" @click="openEditDialog(item, index)">
+                <h2>{{ item.name }}</h2>
+                <h3>{{ item.description }}</h3>
+                <p v-if="selectedCategory.value === 'option'">단위: {{ item.unit }}</p>
+                <p>가격: {{ item.price }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <v-btn fab bottom right @click="openAddDialog" class="add-button">
+    <button class="fab" @click="openAddDialog">
       추가하기
-    </v-btn>
+    </button>
 
     <!-- Add Dialog for 그룹 -->
-    <v-dialog v-model="addDialogGroup" max-width="600px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">메뉴 옵션 그룹 추가하기</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field label="메뉴 옵션 그룹 이름" v-model="newItem.name"></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field label="메뉴 옵션 그룹 설명" v-model="newItem.description"></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-select
-                  label="카테고리 이름"
-                  :items="categories.map(category => category.name)"
-                  v-model="selectedCategoryName"
-                ></v-select>
-              </v-col>
-              <v-col cols="12">
-                <v-checkbox label="배타선택 여부" v-model="newItem.exclusiveYn"></v-checkbox>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="addMenuOptionGroup">저장</v-btn>
-          <v-btn color="blue darken-1" text @click="closeAddDialogGroup">취소</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <Modal v-if="addDialogGroup" @close="closeAddDialogGroup">
+      <h2>메뉴 옵션 그룹 추가하기</h2>
+      <div class="form-group">
+        <label>메뉴 옵션 그룹 이름</label>
+        <input type="text" v-model="newItem.name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>메뉴 옵션 그룹 설명</label>
+        <input type="text" v-model="newItem.description" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>카테고리 이름</label>
+        <select v-model="selectedCategoryName" class="form-control">
+          <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" v-model="newItem.exclusiveYn"> 배타선택 여부
+        </label>
+      </div>
+      <div class="actions">
+        <button @click="addMenuOptionGroup" class="btn btn-primary">저장</button>
+        <button @click="closeAddDialogGroup" class="btn btn-secondary">취소</button>
+      </div>
+    </Modal>
 
     <!-- Add Dialog for 옵션 -->
-    <v-dialog v-model="addDialogOption" max-width="600px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">메뉴 옵션 추가하기</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field label="메뉴 옵션 이름" v-model="newItem.name"></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-select
-                  label="메뉴 옵션 그룹"
-                  :items="menuOptionGroups.map(group => group.name)"
-                  v-model="newItem.group"
-                ></v-select>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field label="추가금액" v-model="newItem.price" type="number"></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="addMenuOption">저장</v-btn>
-          <v-btn color="blue darken-1" text @click="closeAddDialogOption">취소</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <Modal v-if="addDialogOption" @close="closeAddDialogOption">
+      <h2>메뉴 옵션 추가하기</h2>
+      <div class="form-group">
+        <label>메뉴 옵션 이름</label>
+        <input type="text" v-model="newItem.name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>메뉴 옵션 그룹</label>
+        <select v-model="newItem.group" class="form-control">
+          <option v-for="group in menuOptionGroups" :key="group.id">{{ group.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>추가금액</label>
+        <input type="number" v-model="newItem.price" class="form-control">
+      </div>
+      <div class="actions">
+        <button @click="addMenuOption" class="btn btn-primary">저장</button>
+        <button @click="closeAddDialogOption" class="btn btn-secondary">취소</button>
+      </div>
+    </Modal>
 
     <!-- Edit Dialog for 그룹 -->
-    <v-dialog v-model="editDialogGroup" max-width="600px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">메뉴 옵션 그룹 수정하기</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field label="메뉴 옵션 그룹 이름" v-model="currentItem.name"></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field label="메뉴 옵션 그룹 설명" v-model="currentItem.description"></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-select
-                  label="카테고리 이름"
-                  :items="categories.map(category => category.name)"
-                  v-model="currentCategoryName"
-                ></v-select>
-              </v-col>
-              <v-col cols="12">
-                <v-checkbox label="배타선택 여부" v-model="currentItem.exclusiveYn"></v-checkbox>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="saveMenuOptionGroup">저장</v-btn>
-          <v-btn color="blue darken-1" text @click="closeEditDialogGroup">취소</v-btn>
-          <v-btn color="red darken-1" text @click="deleteMenuOptionGroup">삭제</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <Modal v-if="editDialogGroup" @close="closeEditDialogGroup">
+      <h2>메뉴 옵션 그룹 수정하기</h2>
+      <div class="form-group">
+        <label>메뉴 옵션 그룹 이름</label>
+        <input type="text" v-model="currentItem.name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>메뉴 옵션 그룹 설명</label>
+        <input type="text" v-model="currentItem.description" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>카테고리 이름</label>
+        <select v-model="currentCategoryName" class="form-control">
+          <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" v-model="currentItem.exclusiveYn"> 배타선택 여부
+        </label>
+      </div>
+      <div class="actions">
+        <button @click="saveMenuOptionGroup" class="btn btn-primary">저장</button>
+        <button @click="closeEditDialogGroup" class="btn btn-secondary">취소</button>
+        <button @click="deleteMenuOptionGroup" class="btn btn-danger">삭제</button>
+      </div>
+    </Modal>
 
     <!-- Edit Dialog for 옵션 -->
-    <v-dialog v-model="editDialogOption" max-width="600px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">메뉴 옵션 수정하기</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field label="메뉴 옵션 이름" v-model="currentItem.name"></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-select
-                  label="메뉴 옵션 그룹"
-                  :items="menuOptionGroups.map(group => group.name)"
-                  v-model="currentItem.group"
-                ></v-select>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field label="추가금액" v-model="currentItem.price" type="number"></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="saveMenuOption">저장</v-btn>
-          <v-btn color="blue darken-1" text @click="closeEditDialogOption">취소</v-btn>
-          <v-btn color="red darken-1" text @click="deleteMenuOption">삭제</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <Modal v-if="editDialogOption" @close="closeEditDialogOption">
+      <h2>메뉴 옵션 수정하기</h2>
+      <div class="form-group">
+        <label>메뉴 옵션 이름</label>
+        <input type="text" v-model="currentItem.name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>메뉴 옵션 그룹</label>
+        <select v-model="currentItem.group" class="form-control">
+          <option v-for="group in menuOptionGroups" :key="group.id">{{ group.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>추가금액</label>
+        <input type="number" v-model="currentItem.price" class="form-control">
+      </div>
+      <div class="actions">
+        <button @click="saveMenuOption" class="btn btn-primary">저장</button>
+        <button @click="closeEditDialogOption" class="btn btn-secondary">취소</button>
+        <button @click="deleteMenuOption" class="btn btn-danger">삭제</button>
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import Modal from './Modal.vue';
 
 const addDialogGroup = ref(false);
 const addDialogOption = ref(false);
@@ -229,11 +189,11 @@ const currentCategoryName = ref('');
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/categories',{
+    const response = await axios.get('http://localhost:8080/api/v1/categories', {
       headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
     });
     if (response.data.code === 200) {
       const fetchedCategories = response.data.data;
@@ -345,6 +305,11 @@ const addMenuOptionGroup = async () => {
         categoryId: category.id,
         exclusiveYn: newItem.value.exclusiveYn,
         description: newItem.value.description
+      },{
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
       });
       fetchCategories();
       closeAddDialogGroup();
@@ -362,6 +327,11 @@ const addMenuOption = async () => {
         menuOptionGroupId: group.id,
         name: newItem.value.name,
         price: newItem.value.price
+      },{
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
       });
       await fetchCategories();
       selectCategory('option');
@@ -382,6 +352,11 @@ const saveMenuOptionGroup = async () => {
           categoryId: category.id,
           exclusiveYn: currentItem.value.exclusiveYn,
           description: currentItem.value.description
+        },{
+          headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
         });
         menuOptionGroups.value[currentItemIndex.value] = { ...currentItem.value };
         closeEditDialogGroup();
@@ -401,6 +376,11 @@ const saveMenuOption = async () => {
           menuOptionGroupId: group.id,
           name: currentItem.value.name,
           price: currentItem.value.price
+        },{
+          headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
         });
         menuOptions.value[currentItemIndex.value] = { ...currentItem.value };
         closeEditDialogOption();
@@ -414,7 +394,12 @@ const saveMenuOption = async () => {
 const deleteMenuOptionGroup = async () => {
   if (currentItemIndex.value !== null) {
     try {
-      await axios.put(`http://localhost:8080/api/v1/menuOptionGroups/${currentItem.value.id}/delete`);
+      await axios.put(`http://localhost:8080/api/v1/menuOptionGroups/${currentItem.value.id}/delete`,{},{
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
+      });
       menuOptionGroups.value.splice(currentItemIndex.value, 1);
       closeEditDialogGroup();
     } catch (error) {
@@ -427,7 +412,12 @@ const deleteMenuOptionGroup = async () => {
 const deleteMenuOption = async () => {
   if (currentItemIndex.value !== null) {
     try {
-      await axios.put(`http://localhost:8080/api/v1/menuOptions/${currentItem.value.menuOptionId}/delete`);
+      await axios.put(`http://localhost:8080/api/v1/menuOptions/${currentItem.value.menuOptionId}/delete`,{},{
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
+      });
       menuOptions.value.splice(currentItemIndex.value, 1);
       closeEditDialogOption();
     } catch (error) {
@@ -445,16 +435,81 @@ onMounted(() => {
 <style scoped>
 .navigation-bar {
   background-color: #3f51b5;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.add-button {
+.container-fluid {
+  padding: 16px;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.btn.secondary {
+  background-color: grey;
+  color: white;
+}
+
+.fab {
   position: fixed;
   bottom: 16px;
   right: 16px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+}
+
+.card {
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .headline {
   font-size: 1.5rem;
   font-weight: 500;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 </style>
