@@ -65,9 +65,8 @@
                 {
                   logo,
                   title,
-                  members,
-                  budget,
-                  progress: { percentage, color },
+                  dashboard,
+                  address,
                 },
                 index
               ) of projects"
@@ -85,43 +84,11 @@
               </td>
               <td>
                 <div class="avatar-group mt-2">
-                  <a
-                    v-for="(member, index) of members"
-                    :key="index"
-                    href="javascript:;"
-                    class="avatar avatar-xs rounded-circle"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="bottom"
-                    title=""
-                    data-bs-original-title=""
-                  >
-                    <img :src="member" alt="Team member" />
-                  </a>
+                  <button @click="goToStore">{{ dashboard }}</button>
                 </div>
               </td>
               <td class="align-middle text-center text-sm">
-                <span class="text-xs font-weight-bold"> {{ budget }} </span>
-              </td>
-              <td class="align-middle d-flex justify-content-end">
-                <div class="progress-wrapper w-75 mx-auto">
-                  <div class="progress-info">
-                    <div class="progress-percentage">
-                      <span class="text-xs font-weight-bold"
-                        >{{ percentage }}%
-                      </span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div
-                      class="progress-bar"
-                      :class="`w-${percentage}  bg-gradient-${color}`"
-                      role="progressbar"
-                      :aria-valuenow="percentage"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                </div>
+                <span class="text-xs font-weight-bold"> {{ address }} </span>
               </td>
             </tr>
           </tbody>
@@ -132,8 +99,14 @@
 </template>
 
 <script>
+
 export default {
   name: "projectCard",
+  methods: {
+    goToStore() {
+      this.$router.push({ name: 'SubDash' });
+    }
+  },
   props: {
     title: {
       type: String,
@@ -152,13 +125,9 @@ export default {
       required: true,
       logo: String,
       title: String,
-      members: Array,
-      budget: String,
-      progress: {
-        type: Object,
-        percentage: Number,
-        color: String,
-      },
+      dashboard: String,
+      address: String,
+
     },
   },
 };

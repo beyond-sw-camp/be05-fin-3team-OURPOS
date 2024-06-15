@@ -68,50 +68,38 @@
 
     <div class="row">
       <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
-        <project-card title="Projects"
-          description="<i class='fa fa-check text-info' aria-hidden='true'></i> <span class='font-weight-bold ms-1'>30 done</span> this month"
-          :headers="['Companies', 'Members', 'Budget', 'Progress']" :projects="[
+        <project-card title="Current States Of Franchise"
+          description="<i class='fa fa-check text-info' aria-hidden='true'></i> <span class='font-weight-bold ms-1'>5 franchies</span> real time"
+          :headers="['Branch', 'DashBoard', 'Address']" :projects="[
             {
               logo: logoXD,
-              title: 'Material XD Material XD Version',
-              members: [team1, team2, team3, team4],
-              budget: '$14,000',
-              progress: { percentage: 60, color: 'info' },
+              title: '강남역점',
+              dashboard: '강남역점 대시보드',
+              address: '서울 특별시 서초구 강남대로 435'
             },
             {
               logo: logoAtlassian,
-              title: 'Add Progress Track',
-              members: [team2, team4],
-              budget: '$3,000',
-              progress: { percentage: 10, color: 'info' },
+              title: '고속터미널점',
+              dashboard: '고속터미널점 대시보드',
+              address: '서울특별시 서초구 신반포로 176'
             },
             {
               logo: logoSlack,
-              title: 'Fix Platform Errors',
-              members: [team3, team1],
-              budget: 'Not set',
-              progress: { percentage: 100, color: 'success' },
+              title: '서울역점',
+              dashboard: '서울역점 대시보드',
+              address: '서울특별시 중구 한강대로 405 2층'
             },
             {
               logo: logoSpotify,
-              title: 'Launch our Mobile App',
-              members: [team4, team3, team4, team1],
-              budget: '$20,500',
-              progress: { percentage: 100, color: 'success' },
+              title: '여의도점',
+              dashboard: '여의도점 대시보드',
+              address: '서울특별시 영등포구 여의대로 108 더현대 서울 B1'
             },
             {
               logo: logoJira,
-              title: 'Add the New Pricing Page',
-              members: [team4],
-              budget: '$500',
-              progress: { percentage: 25, color: 'info' },
-            },
-            {
-              logo: logoJira,
-              title: 'Redesign New Online Shop',
-              members: [team1, team4],
-              budget: '$2,000',
-              progress: { percentage: 40, color: 'info' },
+              title: '신대방삼거리점',
+              dashboard: '신대방삼거리점 대시보드',
+              address: '서울특별시 동작구 보라매로 87'
             },
           ]" />
       </div>
