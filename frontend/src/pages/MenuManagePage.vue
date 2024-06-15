@@ -9,19 +9,17 @@
         </v-btn>
       </router-link>
     </v-toolbar>
-
     <v-container fluid>
       <v-row>
         <v-col cols="3">
           <div class="category-list">
             <v-btn
               v-for="category in categories"
-              :key="category"
+              :key="category.id"
               @click="filterMenus(category)"
-              :color="selectedCategory === category ? 'primary' : 'default'"
-              class="category-button"
-            >
-              {{ category }}
+              :color="selectedCategory === category.name ? 'primary' : 'default'"
+              class="category-button">
+              {{ category.name }}
             </v-btn>
             <v-btn @click="openDialog('addCategory')" class="action-button">카테고리 추가</v-btn>
             <v-btn @click="openDialog('editCategory')" class="action-button">카테고리 수정</v-btn>
@@ -33,7 +31,7 @@
           <v-row>
             <v-col cols="4" v-for="menu in filteredMenus" :key="menu.id" class="mb-4">
               <v-card @click="openUpdateMenuDialog(menu)">
-                <v-img :src="menu.image" height="200px"></v-img>
+                <v-img :src="getMenuImageUrl(menu.pictureUrl)" height="200px"></v-img>
                 <v-card-title>{{ menu.name }}</v-card-title>
                 <v-card-subtitle>{{ menu.price }}</v-card-subtitle>
                 <v-card-text>{{ menu.description }}</v-card-text>
@@ -64,7 +62,7 @@
       <v-card>
         <v-card-title>카테고리 수정</v-card-title>
         <v-card-text>
-          <v-select v-model="selectedEditCategory" :items="categories" label="수정할 카테고리"></v-select>
+          <v-select v-model="selectedEditCategory" :items="categoryNames" label="수정할 카테고리"></v-select>
           <v-text-field v-model="updatedCategoryName" label="변경 후 카테고리 이름"></v-text-field>
         </v-card-text>
         <v-card-actions>
@@ -80,7 +78,7 @@
       <v-card>
         <v-card-title>카테고리 삭제</v-card-title>
         <v-card-text>
-          <v-select v-model="selectedDeleteCategory" :items="categories" label="삭제할 카테고리"></v-select>
+          <v-select v-model="selectedDeleteCategory" :items="categoryNames" label="삭제할 카테고리"></v-select>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -100,7 +98,7 @@
               <v-col cols="6">
                 <v-img :src="newMenu.image" height="200px"></v-img>
                 <v-text-field v-model="newMenu.name" label="제품명"></v-text-field>
-                <v-select v-model="newMenu.category" :items="categories" label="카테고리"></v-select>
+                <v-select v-model="newMenu.category" :items="categoryNames" label="카테고리"></v-select>
                 <v-text-field v-model="newMenu.price" label="가격"></v-text-field>
                 <v-text-field v-model="newMenu.image" label="사진 URL"></v-text-field>
                 <input type="file" ref="fileInput" style="display: none" @change="handleFileChange">
@@ -125,11 +123,11 @@
           <v-container>
             <v-row>
               <v-col cols="6">
-                <v-img :src="selectedMenu.image" height="200px"></v-img>
+                <v-img :src="getMenuImageUrl(selectedMenu.pictureUrl)" height="200px"></v-img>
                 <v-text-field v-model="selectedMenu.name" label="제품명"></v-text-field>
-                <v-select v-model="selectedMenu.category" :items="categories" label="카테고리"></v-select>
+                <v-select v-model="selectedMenu.category" :items="categoryNames" label="카테고리"></v-select>
                 <v-text-field v-model="selectedMenu.price" label="가격"></v-text-field>
-                <v-text-field v-model="selectedMenu.image" label="사진 URL"></v-text-field>
+                <v-text-field v-model="selectedMenu.pictureUrl" label="사진 URL"></v-text-field>
                 <input type="file" ref="fileInputUpdate" style="display: none" @change="handleFileChangeUpdate">
                 <v-btn @click="triggerFileInputUpdate">Browse</v-btn>
                 <v-textarea v-model="selectedMenu.description" label="메뉴 설명"></v-textarea>
@@ -144,33 +142,62 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-
   </div>
 </template>
 
+
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
-const categories = ref(['Menu Category 1', 'Menu Category 2', 'Menu Category 3']);
-const selectedCategory = ref(categories.value[0]);
+const categories = ref([]);
+const categoryNames = ref([]);
 
-const menus = ref([
-  { id: 1, name: 'Burger A', price: '5,000원', description: 'Delicious Burger A', image: 'https://via.placeholder.com/200', category: 'Menu Category 1' },
-  { id: 2, name: 'Burger B', price: '6,000원', description: 'Delicious Burger B', image: 'https://via.placeholder.com/200', category: 'Menu Category 1' },
-  { id: 3, name: 'Burger C', price: '7,000원', description: 'Delicious Burger C', image: 'https://via.placeholder.com/200', category: 'Menu Category 1' },
-  { id: 4, name: 'Burger D', price: '8,000원', description: 'Delicious Burger D', image: 'https://via.placeholder.com/200', category: 'Menu Category 2' },
-  { id: 5, name: 'Burger E', price: '9,000원', description: 'Delicious Burger E', image: 'https://via.placeholder.com/200', category: 'Menu Category 2' },
-  { id: 6, name: 'Burger F', price: '10,000원', description: 'Delicious Burger F', image: 'https://via.placeholder.com/200', category: 'Menu Category 2' },
-  { id: 7, name: 'Burger G', price: '11,000원', description: 'Delicious Burger G', image: 'https://via.placeholder.com/200', category: 'Menu Category 3' },
-  { id: 8, name: 'Burger H', price: '12,000원', description: 'Delicious Burger H', image: 'https://via.placeholder.com/200', category: 'Menu Category 3' },
-  { id: 9, name: 'Burger I', price: '13,000원', description: 'Delicious Burger I', image: 'https://via.placeholder.com/200', category: 'Menu Category 3' }
-]);
+const menus = ref([]);
+const selectedCategory = ref(null);
+
+const fetchCategories = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/categories');
+    categories.value = response.data.data.map(category => ({
+      id: category.id,
+      name: category.name
+    }));
+    categoryNames.value = categories.value.map(category => category.name);
+    selectedCategory.value = categories.value[0].name; // Set default selected category
+    filterMenus(selectedCategory.value);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+  }
+};
+
+const fetchMenus = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/menus/all');
+    menus.value = response.data.data.map(menu => ({
+      id: menu.id,
+      name: menu.name,
+      price: `${menu.price}원`,  // Converting price to string with '원' suffix
+      description: menu.description,
+      pictureUrl: menu.pictureUrl,
+      category: menu.categoryName,
+    }));
+    filterMenus(selectedCategory.value);
+  } catch (error) {
+    console.error('Error fetching menus:', error);
+  }
+};
 
 const filteredMenus = ref(menus.value.filter(menu => menu.category === selectedCategory.value));
 
 const filterMenus = (category) => {
   selectedCategory.value = category;
-  filteredMenus.value = menus.value.filter(menu => menu.category === category);
+  filteredMenus.value = menus.value.filter(menu => menu.category === category.name);
+};
+
+// Helper method to get full URL of menu image
+const getMenuImageUrl = (imagePath) => {
+  return `http://localhost:8080/images/${imagePath}`;
 };
 
 // Dialogs state
@@ -193,13 +220,14 @@ const newMenu = ref({
   image: '',
   description: ''
 });
+const newMenuFile = ref(null);
 
 const selectedMenu = ref({
   id: null,
   name: '',
   category: '',
   price: '',
-  image: '',
+  pictureUrl: '',
   description: ''
 });
 
@@ -215,52 +243,103 @@ const closeDialog = () => {
   dialog.value.updateMenu = false;
 };
 
-const addCategory = () => {
-  if (newCategory.value) {
-    categories.value.push(newCategory.value);
-    newCategory.value = '';
-    closeDialog();
-  }
-};
-
-const editCategory = () => {
-  const index = categories.value.indexOf(selectedEditCategory.value);
-  if (index !== -1 && updatedCategoryName.value) {
-    categories.value[index] = updatedCategoryName.value;
-    selectedEditCategory.value = null;
-    updatedCategoryName.value = '';
-    closeDialog();
-  }
-};
-
-const deleteCategory = () => {
-  const index = categories.value.indexOf(selectedDeleteCategory.value);
-  if (index !== -1) {
-    categories.value.splice(index, 1);
-    selectedDeleteCategory.value = null;
-    closeDialog();
-  }
-};
-
-const addMenu = () => {
-  if (newMenu.value.name && newMenu.value.category && newMenu.value.price) {
-    menus.value.push({
-      id: menus.value.length + 1,
-      name: newMenu.value.name,
-      category: newMenu.value.category,
-      price: newMenu.value.price,
-      image: newMenu.value.image,
-      description: newMenu.value.description
+const addCategory = async () => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/v1/categories', {
+      name: newCategory.value
     });
-    newMenu.value = {
-      name: '',
-      category: '',
-      price: '',
-      image: '',
-      description: ''
-    };
-    filterMenus(selectedCategory.value);
-    closeDialog();
+    if (response.status === 200) {
+      // Update categories after successfully adding
+      fetchCategories();
+      newCategory.value = '';
+      closeDialog();
+    } else {
+      console.error('Error adding category:', response);
+    }
+  } catch (error) {
+    console.error('Error adding category:', error);
+  }
+};
+
+const editCategory = async () => {
+  try {
+    const categoryId = categories.value.find(cat => cat.name === selectedEditCategory.value)?.id;
+    if (!categoryId) {
+      console.error('Category ID not found');
+      return;
+    }
+    const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/update`, {
+      name: updatedCategoryName.value
+    });
+    if (response.status === 200) {
+      // Update categories after successfully updating
+      fetchCategories();
+      selectedEditCategory.value = null;
+      updatedCategoryName.value = '';
+      closeDialog();
+    } else {
+      console.error('Error updating category:', response);
+    }
+  } catch (error) {
+    console.error('Error updating category:', error);
+  }
+};
+
+const deleteCategory = async () => {
+  try {
+    const categoryId = categories.value.find(cat => cat.name === selectedDeleteCategory.value)?.id;
+    if (!categoryId) {
+      console.error('Category ID not found');
+      return;
+    }
+    const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/delete`);
+    if (response.status === 200) {
+      // Update categories after successfully deleting
+      fetchCategories();
+      selectedDeleteCategory.value = null;
+      closeDialog();
+    } else {
+      console.error('Error deleting category:', response);
+    }
+  } catch (error) {
+    console.error('Error deleting category:', error);
+  }
+};
+
+const addMenu = async () => {
+  const formData = new FormData();
+  const menuRequestDto = {
+    categoryId: categories.value.find(category => category.name === newMenu.value.category)?.id,
+    name: newMenu.value.name,
+    price: newMenu.value.price,
+    description: newMenu.value.description,
+    pictureUrl: newMenu.value.image // This will be updated by the file upload
+  };
+  formData.append('menuRequestDto', new Blob([JSON.stringify(menuRequestDto)], { type: 'application/json' }));
+  formData.append('multipartFile', newMenuFile.value);
+
+  try {
+    const response = await axios.post('http://localhost:8080/api/v1/menus', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    if (response.status === 200) {
+      fetchMenus();
+      newMenu.value = {
+        name: '',
+        category: '',
+        price: '',
+        image: '',
+        description: ''
+      };
+      newMenuFile.value = null;
+      closeDialog();
+    } else {
+      console.error('Error adding menu:', response);
+    }
+  } catch (error) {
+    console.error('Error adding menu:', error);
   }
 };
 
@@ -278,12 +357,17 @@ const updateMenu = () => {
   }
 };
 
-const deleteMenu = () => {
-  const index = menus.value.findIndex(m => m.id === selectedMenu.value.id);
-  if (index !== -1) {
-    menus.value.splice(index, 1);
-    filterMenus(selectedCategory.value);
-    closeDialog();
+const deleteMenu = async () => {
+  try {
+    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/delete`);
+    if (response.status === 200) {
+      fetchMenus();
+      closeDialog();
+    } else {
+      console.error('Error deleting menu:', response);
+    }
+  } catch (error) {
+    console.error('Error deleting menu:', error);
   }
 };
 
@@ -299,6 +383,7 @@ const handleFileChange = (event) => {
       newMenu.value.image = e.target.result;
     };
     reader.readAsDataURL(file);
+    newMenuFile.value = file;
   }
 };
 
@@ -317,7 +402,14 @@ const handleFileChangeUpdate = (event) => {
     reader.readAsDataURL(file);
   }
 };
+
+onMounted(() => {
+  fetchCategories();
+  fetchMenus();
+});
+
 </script>
+
 
 <style scoped>
 .navigation-bar {

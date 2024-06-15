@@ -1,44 +1,44 @@
 <template>
   <div>
-    <v-toolbar dark prominent class="navigation-bar">
-      <v-toolbar-title>OUR POS</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <router-link to="/admin/storeLanding">
-        <v-btn icon>
-          <v-icon>mdi-export</v-icon>
-        </v-btn>
+    <nav class="navbar navbar-dark bg-dark navigation-bar">
+      <span class="navbar-brand">OUR POS</span>
+      <router-link to="/store-landing" class="ml-auto">
+        <button class="btn btn-outline-light">
+          <i class="mdi mdi-export"></i>
+        </button>
       </router-link>
-    </v-toolbar>
+    </nav>
 
-    <v-container fluid>
-      <v-row>
-        <v-col cols="3">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-3">
           <div class="category-list">
-            <v-btn
+            <button
               v-for="category in categories"
               :key="category"
               @click="filterMenus(category)"
-              :color="selectedCategory === category ? 'primary' : 'default'"
-              class="category-button"
+              :class="['btn', selectedCategory === category ? 'btn-primary' : 'btn-light', 'category-button']"
             >
               {{ category }}
-            </v-btn>
+            </button>
           </div>
-        </v-col>
-        <v-col cols="9">
-          <v-row>
-            <v-col cols="4" v-for="menu in filteredMenus" :key="menu.id" class="mb-4">
-              <v-card>
-                <v-img :src="menu.pictureUrl" height="200px"></v-img>
-                <v-card-title>{{ menu.name }}</v-card-title>
-                <v-card-subtitle>{{ menu.price }}</v-card-subtitle>
-                <v-card-text>{{ menu.description }}</v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-    </v-container>
+        </div>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-4 mb-4" v-for="menu in filteredMenus" :key="menu.id">
+              <div class="card">
+                <img :src="menu.pictureUrl" class="card-img-top" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ menu.name }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ menu.price }}</h6>
+                  <p class="card-text">{{ menu.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -51,7 +51,12 @@ const selectedCategory = ref(null);
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/categories');
+    const response = await axios.get('http://localhost:8080/api/v1/categories',{
+      headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        }
+    });
     categories.value = response.data.data.map(category => category.name);
     selectedCategory.value = categories.value[0]; // Set default selected category
     filterMenus(selectedCategory.value);
@@ -65,7 +70,12 @@ const filteredMenus = ref([]);
 
 const fetchMenus = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/menus/all');
+    const response = await axios.get('http://localhost:8080/api/v1/menus/all',{
+      headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        }
+    });
     menus.value = response.data.data.map(menu => ({
       id: menu.id,
       name: menu.name,
@@ -105,12 +115,12 @@ onMounted(() => {
   margin-bottom: 10px;
 }
 
-.v-btn--default {
+.btn-light {
   background-color: white;
   color: black;
 }
 
-.v-btn--primary {
+.btn-primary {
   background-color: #3f51b5;
   color: white;
 }
