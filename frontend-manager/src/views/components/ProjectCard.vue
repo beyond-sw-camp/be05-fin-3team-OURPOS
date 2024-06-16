@@ -67,6 +67,7 @@
                   title,
                   dashboard,
                   address,
+                  storeId
                 },
                 index
               ) of projects"
@@ -84,12 +85,13 @@
               </td>
               <td>
                 <div class="avatar-group mt-2">
-                  <button @click="goToStore">{{ dashboard }}</button>
+                  <button @click="goToStore(storeId)">{{ dashboard }}</button>
                 </div>
               </td>
               <td class="align-middle text-center text-sm">
                 <span class="text-xs font-weight-bold"> {{ address }} </span>
               </td>
+
             </tr>
           </tbody>
         </table>
@@ -103,8 +105,9 @@
 export default {
   name: "projectCard",
   methods: {
-    goToStore() {
-      this.$router.push({ name: 'SubDash' });
+    goToStore(storeId) {
+      console.log("projectCard storeID", storeId);
+      this.$router.push({ name: 'SubDash', query: {storeId} });
     }
   },
   props: {
@@ -127,6 +130,7 @@ export default {
       title: String,
       dashboard: String,
       address: String,
+      storeId: String,
 
     },
   },

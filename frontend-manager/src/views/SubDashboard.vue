@@ -68,11 +68,16 @@
     import TypeAll from "./components/Insight/TypeAll.vue";
     import DeliveryAll from "./components/Insight/DeliveryAll.vue";
     import MenuAll from "./components/Insight/MenuAll.vue";
-    import { useRouter } from 'vue-router';
+    import { useRouter, useRoute } from 'vue-router';
+    import {ref} from "vue";
 
     const router = useRouter();
+    const route = useRoute();
 
-    const storeId = "1";
+
+
+    const storeId = ref(route.query.storeId || "1");
+    console.log("subDash storeId" , storeId);
 
     const goToBack = () => {
         router.push({ name: "OwnerHome" });
