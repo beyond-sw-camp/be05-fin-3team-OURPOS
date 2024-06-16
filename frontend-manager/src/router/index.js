@@ -16,6 +16,7 @@ import MenuStatusManage from "../views/MenuStatusManage.vue";
 import HeadOfficeLanding from "../views/HeadOfficeLanding.vue";
 import MenuManage from "../views/MenuManage.vue";
 import MenuOptionGroupManage from "../views/MenuOptionGroupManage.vue";
+import ManagerInsight from "@/views/ManagerInsight.vue";
 
 const routes = [
   {
@@ -75,32 +76,44 @@ const routes = [
     path:"/store-landing",
     name:"StoreLanding",
     component:StoreLanding,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
   {
     path:"/store-landing/delivery-order-manage",
     name:"DeliveryOrderManage",
     component:DeliveryOrderManage,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
   {
     path:"/store-landing/menu-status-manage",
     name:"MenuStatusManage",
     component:MenuStatusManage,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
   {
     path:"/head-office-landing",
     name:"HeadOfficeLanding",
     component:HeadOfficeLanding,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
   {
     path:"/head-office-landing/menu-manage",
     name:"MenuManage",
     component:MenuManage,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
   {
     path:"/head-office-landing/menu-option-group-manage",
     name:"MenuOptionGroupManage",
     component:MenuOptionGroupManage,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
+  {
+    path:"/manager/insight",
+    name: "ManagerInsight",
+    component: ManagerInsight,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
+  }
 ];
 
 const router = createRouter({
