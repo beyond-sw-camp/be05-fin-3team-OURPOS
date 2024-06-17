@@ -25,6 +25,8 @@ import com.ourpos.domain.order.HallOrder;
 import com.ourpos.domain.order.Order;
 import com.ourpos.domain.order.OrderAddress;
 import com.ourpos.domain.order.OrderRepository;
+import com.ourpos.domain.order.TempOrder;
+import com.ourpos.domain.order.TempOrderRepository;
 import com.ourpos.domain.orderdetail.OrderDetail;
 import com.ourpos.domain.recipe.Recipe;
 import com.ourpos.domain.recipe.RecipeRepository;
@@ -52,6 +54,7 @@ public class OrderServiceImpl implements OrderService {
     private final StoreRestrictedMenuRepository storeRestrictedMenuRepository;
     private final MapService mapService;
     private final AdministrativeBuildingAddressRepository administrativeBuildingAddressRepository;
+    private final TempOrderRepository tempOrderRepository;
 
     @Override
     public Long createHallOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
@@ -64,10 +67,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createDeliveryOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto) {
+    public void createDeliveryOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto,
+        String tempOrderId) {
+
         DeliveryOrder deliveryOrder = createOrder(loginId, deliveryOrderRequestDto);
         if (deliveryOrder.getPrice() < deliveryOrder.getStore().getMinimumOrderPrice()) {
             throw new IllegalArgumentException("최소 주문 금액을 충족하지 못했습니다.");
+        }
+
+        TempOrder tempOrder = tempOrderRepository.findByTempOrderId(tempOrderId).orElseThrow(
+            () -> new IllegalArgumentException("해당 임시 주문이 존재하지 않습니다."));
+
+        if (deliveryOrder.getPrice() != tempOrder.getAmount()) {
+            throw new IllegalArgumentException("주문 금액이 일치하지 않습니다.");
         }
 
         storeStockCalculate(deliveryOrder);
@@ -196,6 +208,26 @@ public class OrderServiceImpl implements OrderService {
         order.completeOrder(LocalDateTime.now());
     }
 
+    @Override
+    public TempOrder saveTempOrder(String tempOrderId, int amount) {
+
+        TempOrder tempOrder = TempOrder.builder()
+            .tempOrderId(tempOrderId)
+            .amount(amount)
+            .isConfirmed(false)
+            .build();
+
+        return tempOrderRepository.save(tempOrder);
+    }
+
+    @Override
+    public void deleteTempOrder(String orderId) {
+        TempOrder tempOrder = tempOrderRepository.findByTempOrderId(orderId).orElseThrow(
+            () -> new IllegalArgumentException("해당 임시 주문이 존재하지 않습니다."));
+
+        tempOrderRepository.delete(tempOrder);
+    }
+
     private HallOrder createOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
         Customer customer = getCustomer(loginId);
         Store store = getStore(hallOrderRequestDto.getStoreId());
@@ -211,6 +243,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderDetail> orderDetails = createOrderDetails(
             deliveryOrderRequestDto.getOrderDetailDtos());
+
         return deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
     }
 

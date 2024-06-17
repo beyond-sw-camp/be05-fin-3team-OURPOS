@@ -19,6 +19,7 @@ public class CustomerResponseDto {
     private String gender;
     private String ageRange;
     private String profileImage;
+    private String email;
     private List<CustomerAddressResponseDto> customerAddresses;
 
     public CustomerResponseDto(Customer customer) {
@@ -29,6 +30,7 @@ public class CustomerResponseDto {
         this.phone = customer.getPhone();
         this.gender = customer.getGender();
         this.ageRange = customer.getAgeRange();
+        this.email = customer.getEmail();
         this.profileImage = customer.getProfileImage();
         this.customerAddresses = customer.getCustomerAddresses().stream()
             .map(CustomerAddressResponseDto::new)
