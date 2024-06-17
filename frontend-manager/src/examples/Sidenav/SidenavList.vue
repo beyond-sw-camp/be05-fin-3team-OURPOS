@@ -35,8 +35,8 @@
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="billing"
-          navText="Billing"
+          collapseRef="supplies"
+          navText="Supplies Manage"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">receipt_long</i>
