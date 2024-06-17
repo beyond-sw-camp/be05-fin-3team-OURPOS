@@ -54,6 +54,7 @@ public class OrderQueryRepository {
             .join(hallOrder.customer).fetchJoin()
             .join(hallOrder.store).fetchJoin()
             .where(builder)
+            .orderBy(hallOrder.createdDateTime.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
@@ -107,6 +108,7 @@ public class OrderQueryRepository {
             .join(deliveryOrder.store).fetchJoin()
             .join(deliveryOrder.orderAddress).fetchJoin()
             .where(builder)
+            .orderBy(deliveryOrder.createdDateTime.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
@@ -149,8 +151,8 @@ public class OrderQueryRepository {
             .join(deliveryOrder.customer).fetchJoin()
             .join(deliveryOrder.store).fetchJoin()
             .join(deliveryOrder.orderAddress).fetchJoin()
-            .where(deliveryLoginIdEq(loginId), deliveryStatusEq(status))
             .orderBy(deliveryOrder.createdDateTime.desc())
+            .where(deliveryLoginIdEq(loginId), deliveryStatusEq(status))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
@@ -286,7 +288,7 @@ public class OrderQueryRepository {
 
         // builder에 조건 담기
         if (storeId != null) {
-            builder.and(order.store.id.eq(storeId));
+            builder.and(orderDetail.order.store.id.eq(storeId));
         }
 
         return queryFactory
@@ -307,12 +309,19 @@ public class OrderQueryRepository {
 
     // 배달 주소 검색
     public List<String> deliveryFrequency(Long storeId) {
+        BooleanBuilder builder = new BooleanBuilder();
+
+        // builder에 조건 담기
+        if (storeId != null) {
+            builder.and(deliveryOrder.store.id.eq(storeId));
+        }
+
         return queryFactory
             .select(deliveryOrder.orderAddress.addressBase)
             .from(deliveryOrder)
             .join(deliveryOrder.orderAddress)
             .join(deliveryOrder.store)
-            .where(deliveryOrder.store.id.eq(storeId))
+            .where(builder)
             .fetch();
     }
 

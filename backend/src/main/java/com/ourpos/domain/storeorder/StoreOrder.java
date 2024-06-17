@@ -3,7 +3,6 @@ package com.ourpos.domain.storeorder;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,8 +24,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "store_orders")
@@ -47,7 +48,6 @@ public class StoreOrder extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private StoreOrderStatus status;
 
-
     @JoinColumn(name = "store_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Store store;
@@ -63,38 +63,27 @@ public class StoreOrder extends BaseEntity {
         this.store = store;
     }
 
-
-    public void acceptedOrder(){
+    public void acceptedOrder() {
         if (this.status != StoreOrderStatus.WAITING) {
             throw new IllegalArgumentException("대기중인 주문만 승인 가능합니다.");
         }
-        this.status = StoreOrderStatus.ACCEPTED ;
+        this.status = StoreOrderStatus.ACCEPTED;
 
     }
 
-    public void deliveringOrder(){
+    public void deliveringOrder() {
         if (this.status != StoreOrderStatus.ACCEPTED) {
             throw new IllegalArgumentException("대기중인 주문만 배달 가능합니다.");
         }
-        this.status = StoreOrderStatus.DELIVERING ;
+        this.status = StoreOrderStatus.DELIVERING;
 
     }
 
-
-
-
-    public void completeOrder(){
-        if (this.status != StoreOrderStatus.DELIVERING){
+    public void completeOrder() {
+        if (this.status != StoreOrderStatus.DELIVERING) {
             throw new IllegalArgumentException("배달중인 주문만 완료할 수 있습니다.");
         }
         this.status = StoreOrderStatus.COMPLETED;
     }
-
-
-
-
-
-
-
 
 }
