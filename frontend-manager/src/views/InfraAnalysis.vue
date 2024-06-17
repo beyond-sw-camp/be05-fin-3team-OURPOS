@@ -14,11 +14,19 @@
           </div>
           <button @click="openPostcode">주소 선택</button>
           <div v-if="address">선택한 주소: {{ address }}</div>
+          <button @click="getCode">행정동 코드 받기</button>
 
-          <a href="http://127.0.0.1:5000/api/v1/calculator" download>Download PDF</a>
+
+          <a :href="downloadUrl()">Download PDF</a>
+
+          <project-card title="Current States Of Franchise"
+                        description="<i class='fa fa-check text-info' aria-hidden='true'></i> <span class='font-weight-bold ms-1'>5 franchies</span> real time"
+                        :headers="['Branch', ' ', 'Address']"
+                        :projects="franchises"
+          />
         </div>
         <div class="col-lg-5 col-md-6 mt-4">
-          <h5>입점 하고자 하는 건물의 주소 선택 후, 예상 매출액 다운로드 시 아래와 같은 pdf 가 다운로드 됩니다.</h5>
+          <h5>입점 하고자 하는 건물의 주소 선택 후, 예상 매출액 다운로드 시 입점 하고자 하는 건물의 예상 매출액을 분석하여 다음과 같은 pdf로 제공됩니다.</h5>
           <chart-holder-card
               title="예상 매출액 추정 보고서 예시"
               subtitle="서울시 행정동 공공데이터 분석 결과"
@@ -38,10 +46,77 @@
 import ChartHolderCard from "@/views/components/ChartHolderCard.vue";
 import { ref, onMounted } from 'vue';
 import MiniStatisticsCard from "@/views/components/MiniStatisticsCard.vue";
+import axios from "axios";
+import ProjectCard from "@/views/components/ProjectCard.vue";
 const address = ref('');
+const code = ref('');
+const codes = ref([]);
+
+const isLoading = ref(false);
+
+const downloadUrl = () => {
+  return `http://127.0.0.1:5000/api/v1/calculator?dong_code=${encodeURIComponent(code.value)}`;
+};
 
 
+const franchises = ref([
+  {
+    logo: ' ',
+    title: "강남역점",
+    address: "서울 특별시 서초구 강남대로 435",
+  },
+  {
+    logo: ' ',
+    title: "고속터미널점",
+    address: "서울특별시 서초구 신반포로 176",
+  },{
+    logo: ' ',
+    title: '서울역점',
+    address: '서울특별시 중구 한강대로 405 2층',
+  },
+  {
+    logo: ' ',
+    title: '여의도점',
+    address: '서울특별시 영등포구 여의대로 108 더현대 서울 B1',
+  },
+  {
+    logo: ' ',
+    title: '신대방삼거리점',
+    address: '서울특별시 동작구 보라매로 87',
+  },
+]);
 
+
+const getCode = async () => {
+  isLoading.value = true;
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/maps', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      },
+      params: {
+        addressBase: address.value
+      },
+      paramsSerializer: params => {
+        return new URLSearchParams(params).toString();
+      }
+    });
+    console.log(response.data);
+
+    codes.value = response.data.data;
+    codes.value.forEach(record =>{
+      if(record.region_type == 'H'){
+        code.value = record.code.slice(0, -2);
+      }
+    });
+    console.log(code.value);
+  } catch (error) {
+    console.error('데이터를 가져오는 중 에러가 발생했습니다:', error);
+  } finally {
+    isLoading.value = false;
+  }
+};
 const loadDaumPostcodeScript = () => {
   return new Promise((resolve, reject) => {
     if (document.getElementById('daum-postcode-script')) {
