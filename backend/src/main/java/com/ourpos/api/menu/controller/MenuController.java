@@ -72,7 +72,6 @@ public class MenuController implements MenuControllerDocs {
         @RequestBody @Valid StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
         log.info("MenuController.deactivateMenu() called with storeId: {} and menuId: {}",
             storeRestrictedMenuRequestDto.getMenuId());
-
         menuServiceImpl.deactivateMenu(storeRestrictedMenuRequestDto);
         return new Result<>(HttpStatus.OK.value(), "메뉴 비활성화 성공", null);
     }
