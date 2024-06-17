@@ -4,7 +4,7 @@ VALUES ('test', '테스트', '닉네임', 'M', '20', '010-1234-1234', 'ROLE_USER
 --
 INSERT INTO store_address(store_address_base, store_address_detail, store_address_zipcode, store_address_latitude,
                           store_address_longitude)
-VALUES ('서울 동작구 보라매로 87', '플레이데이터 3층', '07060', '37.4971487', '126.9276885');
+VALUES ('서울특별시 서초구 강남대로 435', '주류성 빌딩', '06612', '37.50123', '127.0256');
 --
 INSERT INTO manager (manager_login_id, manager_password, role)
 VALUES ('admin', '$2a$10$qVUZj9jSbrTYnfzmMrt8SO4Qm7NPmyarLqv0N4r.Iy.Q5qgqGAbye', 'ROLE_ADMIN');
@@ -15,16 +15,16 @@ VALUES ('super', '$2a$10$qVUZj9jSbrTYnfzmMrt8SO4Qm7NPmyarLqv0N4r.Iy.Q5qgqGAbye',
 INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time, modified_date_time, store_address_id,
                    store_close_time, store_closed_datetime, store_open_time, store_name, store_phone, store_picture_url,
                    manager_id)
-VALUES (FALSE, 10000, NULL, NULL, 1, '22:00', NULL, '10:00', '강남점', '010-1111-1234', 'store1.png', 1);
+VALUES (FALSE, 15000, NULL, NULL, 1, '22:00', NULL, '10:00', '강남점', '010-1111-1234', 'store1.png', 1);
 
 INSERT INTO store_address(store_address_detail, store_address_base, store_address_zipcode, store_address_latitude,
                           store_address_longitude)
-VALUES ('서울시 강남구 역삼동 123-4', '서울시 강남구 역삼동', '123-4', '36.123456', '127.123456');
+VALUES ('2층', '서울특별시 중구 한강대로 405', '04509', '37.55454', '126.9707');
 --
 --
 INSERT INTO store (store_close_yn, store_minimum_order_price, created_date_time, modified_date_time, store_address_id,
                    store_close_time, store_closed_datetime, store_open_time, store_name, store_phone, store_picture_url)
-VALUES (FALSE, 20000, NULL, NULL, 2, '22:00', NULL, '10:00', '신대방삼거리점', '010-2222-1234', 'store2.png');
+VALUES (FALSE, 15000, NULL, NULL, 2, '22:00', NULL, '10:00', '서울역점', '010-2222-1234', 'store2.png');
 --
 --
 INSERT INTO category(category_name, category_deleted_yn)

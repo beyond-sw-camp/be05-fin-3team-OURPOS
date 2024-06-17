@@ -52,7 +52,7 @@ public class StoreService {
         List<Store> stores = storeRepository.findAllWithAddress();
 
         return stores.stream().map(store ->
-                new StoreResponseDto(store, mapService.calculateDistance(
+                new StoreResponseDto(store, mapService.getDuration(
                     location,
                     new Location(store.getAddress().getLatitude(), store.getAddress().getLongitude()))))
             .sorted().toList();
@@ -72,7 +72,7 @@ public class StoreService {
         Double latitude = location.latitude();
         Double longitude = location.longitude();
         return stores.stream().map(store ->
-            new StoreResponseDto(store, mapService.calculateDistance(
+            new StoreResponseDto(store, mapService.getDuration(
                 new Location(latitude, longitude),
                 new Location(store.getAddress().getLatitude(), store.getAddress().getLongitude())
             ))).sorted().toList();

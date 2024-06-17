@@ -5,7 +5,6 @@
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-toolbar-title>주변 가게 찾기</v-toolbar-title>
-
     </v-app-bar>
     <v-row>
       <v-col>
@@ -81,12 +80,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import axios from 'axios';
-import { useRouter } from 'vue-router';
-import HeaderPage from '@/components/AppHeader.vue';
+import {useRouter} from 'vue-router';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {faClock, faMapLocation, faPhone, faShoppingBag, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
+import {faClock, faMapLocation, faPhone, faShoppingBag} from "@fortawesome/free-solid-svg-icons";
 
 const stores = ref([]);
 const router = useRouter();
@@ -105,48 +103,7 @@ const setOrderType = (orderTakeoutYn) => {
   orderTypeDialog.value = false;
 };
 
-const findItems = async (latitude, longitude) => {
-  try {
-    const response = await axios.get('http://localhost:8080/api/v1/stores/hall', {
-      withCredentials: true,
-      params: {
-        latitude: latitude,
-        longitude: longitude
-      }
-    });
-    if (response.data.code !== 200) {
-      console.error('Error fetching items:', response.data);
-      return;
-    }
-    stores.value = response.data.data;
-  } catch (error) {
-    console.error('Error fetching items:', error);
-  } finally {
-    loading.value = false;
-  }
-};
-
-const viewStore = (storeId, storeName, orderTakeoutYn) => {
-  const fullOrder = {
-    storeId: storeId,
-    storeName: storeName,
-    orderTakeoutYn: orderTakeoutYn,
-    orderDetailDtos: []
-  };
-
-  localStorage.setItem('fullOrder', JSON.stringify(fullOrder));
-  router.push('/stores/' + storeId + '/menus');
-};
-
-const formatDistance = (distance) => {
-  if (distance < 1000) {
-    return `${Math.round(distance)}m`;
-  } else {
-    return `${(distance / 1000).toFixed(2)}km`;
-  }
-};
-
-const EXPIRATION_TIME = 10 * 60 * 1000;
+const EXPIRATION_TIME = 10 * 60 * 1000; // 10분
 
 function setItemWithExpiration(key, value) {
   const now = new Date().getTime();
@@ -175,24 +132,89 @@ function getItemWithExpiration(key) {
   return item.value;
 }
 
+const findItems = async (latitude, longitude) => {
+  const cachedStores = getItemWithExpiration('hallStores');
+  if (cachedStores) {
+    stores.value = cachedStores;
+    loading.value = false;
+    return;
+  }
+
+  try {
+    const response = await axios.get('http://localhost:8080/api/v1/stores/hall', {
+      withCredentials: true,
+      params: {
+        latitude: latitude,
+        longitude: longitude
+      }
+    });
+    if (response.data.code !== 200) {
+      console.error('Error fetching items:', response.data);
+      return;
+    }
+    stores.value = response.data.data;
+    setItemWithExpiration('hallStores', stores.value);
+  } catch (error) {
+    console.error('Error fetching items:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+const viewStore = (storeId, storeName, orderTakeoutYn) => {
+  let storageFullOrder = localStorage.getItem('fullOrder');
+  if (storageFullOrder !== null) {
+    storageFullOrder = JSON.parse(storageFullOrder); // JSON 문자열을 객체로 변환
+    storageFullOrder.storeId = storeId;
+    storageFullOrder.storeName = storeName;
+    storageFullOrder.orderTakeoutYn = orderTakeoutYn; // 누락된 속성 추가
+    console.log('storageFullOrder:', storageFullOrder);
+    localStorage.setItem('fullOrder', JSON.stringify(storageFullOrder)); // 객체를 JSON 문자열로 변환하여 저장
+    router.push('/stores/' + storeId + '/menus');
+    return;
+  }
+
+  const fullOrder = {
+    storeId: storeId,
+    storeName: storeName,
+    orderTakeoutYn: orderTakeoutYn,
+    orderDetailDtos: []
+  };
+
+  localStorage.setItem('fullOrder', JSON.stringify(fullOrder));
+  router.push('/stores/' + storeId + '/menus');
+};
+
+const formatDistance = (distance) => {
+  if (distance < 1000) {
+    return `${Math.round(distance)}m`;
+  } else {
+    return `${(distance / 1000).toFixed(2)}km`;
+  }
+};
+
 const latitude = getItemWithExpiration('latitude');
 const longitude = getItemWithExpiration('longitude');
 
-if (latitude && longitude) {
-  findItems(latitude, longitude);
-} else {
-  navigator.geolocation.getCurrentPosition((position) => {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
+const initMap = () => {
+  if (latitude && longitude) {
     findItems(latitude, longitude);
+  } else {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      findItems(latitude, longitude);
 
-    setItemWithExpiration('latitude', latitude.toString());
-    setItemWithExpiration('longitude', longitude.toString());
-  }, (error) => {
-    console.error('Error getting location:', error);
-    loading.value = false;
-  });
+      setItemWithExpiration('latitude', latitude.toString());
+      setItemWithExpiration('longitude', longitude.toString());
+    }, (error) => {
+      console.error('Error getting location:', error);
+      loading.value = false;
+    });
+  }
 }
+
+initMap();
 
 const goBack = () => {
   router.back();

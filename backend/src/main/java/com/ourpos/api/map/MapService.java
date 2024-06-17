@@ -60,19 +60,6 @@ public class MapService {
         }
     }
 
-    public double calculateDistance(Location location1, Location location2) {
-        final int R = 6371000; // Radius of the earth in meters
-
-        double latDistance = Math.toRadians(location1.latitude() - location2.latitude());
-        double lonDistance = Math.toRadians(location1.longitude() - location2.longitude());
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-            + Math.cos(Math.toRadians(location1.latitude())) * Math.cos(Math.toRadians(location1.longitude()))
-            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        return R * c; // distance in meters
-    }
-
     public List<MapResponseDto> searchAddress(String addressBase) {
         Location location = getLocation(addressBase);
         String url = "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=" + location.longitude() + "&y="
@@ -101,5 +88,52 @@ public class MapService {
             response.getBody().get("documents"), new TypeReference<>() {
             }
         );
+    }
+
+    public Duration getDuration(Location location1, Location location2) {
+        String url = "https://apis-navi.kakaomobility.com/v1/directions?" +
+            "origin=" + location1.longitude() + "," + location1.latitude() +
+            "&destination=" + location2.longitude() + "," + location2.latitude() +
+            "&priority=RECOMMEND&car_fuel=GASOLINE&car_hipass=false&alternatives=false&road_details=false";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "KakaoAK " + restApiKey);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<Map> response = restTemplate.exchange(
+            url,
+            HttpMethod.GET,
+            entity,
+            Map.class
+        );
+
+        if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+            Map<String, Object> body = response.getBody();
+            // 응답 로그를 출력하여 디버깅을 돕습니다.
+            log.info("Full API Response: {}", body);
+
+            // API 응답 상태 확인
+            String status = (String)body.get("status");
+
+            // 응답에서 경로 정보를 추출합니다.
+            List<Map<String, Object>> routes = (List<Map<String, Object>>)body.get("routes");
+            if (routes != null && !routes.isEmpty()) {
+                Map<String, Object> firstRoute = routes.get(0);
+                Map<String, Object> summary = (Map<String, Object>)firstRoute.get("summary");
+                if (summary != null) {
+                    long duration = ((Number)summary.get("duration")).longValue();
+                    long distance = ((Number)summary.get("distance")).longValue();
+                    log.info("Duration: {}, Distance: {}", duration, distance);
+                    return new Duration(duration, distance);
+                }
+                log.info(firstRoute.get("result_code").toString());
+                if (firstRoute.get("result_code").equals(104)) {
+                    return new Duration(5L, 5L);
+                }
+            }
+        }
+        throw new RuntimeException("Failed to get a valid response from the API");
     }
 }
