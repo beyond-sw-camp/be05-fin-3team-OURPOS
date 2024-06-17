@@ -54,7 +54,9 @@
       <v-card>
         <v-card-title> <v-icon>mdi-alert-box-outline</v-icon> </v-card-title>
         <v-card-text>
-          <v-text-field v-model="tempSubAddress.name" label="이름" />
+          <v-text-field v-model="tempSubAddress.name" 
+                        :rules="nameRules"
+                        label="이름" />
           <v-text-field v-model="tempSubAddress.receiverName" label="수령인 이름" />
           <v-text-field v-model="tempSubAddress.telNo" label="전화번호" />
           <v-btn color="warning" @click="execDaumPostcode('sub')">우편번호 찾기</v-btn><br>
@@ -140,7 +142,6 @@ export default {
       },
       tempSubAddress: {
         customerAddressId: null,
-        name: '',
         receiverName: '',
         telNo: '',
         addressBase: '',

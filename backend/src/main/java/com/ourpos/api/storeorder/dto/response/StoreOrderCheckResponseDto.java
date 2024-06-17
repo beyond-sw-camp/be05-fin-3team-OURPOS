@@ -44,7 +44,7 @@ public class StoreOrderCheckResponseDto {
 		//this.storeCommPrice = storeOrderDetail.getStoreMenu().getPrice();
 		this.storeCommArticleUnit= storeOrderDetail.getStoreMenu().getArticleUnit();
 		this.storeCommPictureUrl = storeOrderDetail.getStoreMenu().getPictureUrl();
-		this.storeCommPrice = storeOrderDetail.getStoreOrder().getQuantity();
+		this.storeCommPrice = storeOrderDetail.getStoreMenu().getPrice();
 		this.storeOrderDetailPrice = storeOrderDetail.getStoreOrder().getPrice();
 		this.storeOrderDetailQuantity = storeOrderDetail.getStoreOrder().getQuantity();
 		// 추가

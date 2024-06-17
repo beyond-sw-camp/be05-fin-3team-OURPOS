@@ -60,7 +60,7 @@ public class StoreOrderServiceImpl {
 			.orElseThrow(() -> new IllegalArgumentException("해당 store를 찾을 수 없습니다."));
 		// StoreOrder 생성
 			StoreOrder storeOrder = StoreOrder.builder()
-			.price(0)
+			.price(requestDto.getStoreCommPrice())
 			.store(store)
 			.quantity(requestDto.getStoreOrderDetailQuantity())
 			.build();
@@ -126,7 +126,7 @@ public class StoreOrderServiceImpl {
 				StoreOrderCheckResponseDto dto = new StoreOrderCheckResponseDto(
 						storeOrder.getId(),
 						storeOrder.getCreatedDateTime().toString(),
-						storeOrder.getPrice(),
+						storeOrderDetail.getStoreMenu().getPrice(),
 						storeOrder.getStatus(),
 						store.getAddress().getAddressBase(),
 						storeOrder.getStore().getAddress().getAddressDetail(),

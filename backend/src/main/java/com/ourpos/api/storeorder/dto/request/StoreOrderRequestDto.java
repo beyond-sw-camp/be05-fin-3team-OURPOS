@@ -38,7 +38,7 @@ public class StoreOrderRequestDto {
         this.storeCommId = storeOrderDetail.getStoreMenu().getId();
         this.storeOrderDetailQuantity = storeOrderDetail.getStoreOrder().getQuantity();
         this.storeOrderStatus = storeOrderDetail.getStoreOrder().getStatus();
-        this.storeCommPrice = storeComm.getPrice();
+        this.storeCommPrice = storeOrderDetail.getStoreOrder().getPrice();
         this.storeId = storeOrderDetail.getStoreOrder().getStore().getId();
     }
 
