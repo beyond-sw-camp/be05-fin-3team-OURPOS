@@ -9,6 +9,11 @@ import SubDash from "../views/SubDashboard.vue";
 import {checkUserRole} from "@/utils/auth";
 import ManagerHome from "@/views/ManagerHome.vue";
 import OwnerHome from "@/views/OwnerHome.vue";
+import StoreOrderCheck_company from "../views/StoreOrderCheck_company.vue";
+import HallOrderManage from "../views/HallOrderManage.vue";
+import StoreOrder from "../views/StoreOrder.vue";
+import StoreOrderCheck_store from "../views/StoreOrderCheck_store.vue";
+
 
 const routes = [
   {
@@ -63,7 +68,33 @@ const routes = [
     name: "ManagerHome",
     component: ManagerHome,
     meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
-  }
+  },
+  {
+    path: "/sign-up",
+    name: "SignUp",
+    component: SignUp,
+  },
+  {
+    name: 'storeordercheck_company',
+    path: '/storeorder/:storeId/check',
+    component: StoreOrderCheck_company
+  },
+  {
+    name: 'storeordercheck_store',
+    path: '/storeorder/:storeId/checkforstore',
+    component: StoreOrderCheck_store
+  },
+  {
+    name: 'HallOrderManage',
+    path: '/hallordermanage',
+    component: HallOrderManage
+  },
+  {
+    name: 'StoreOrder',
+    path: '/storeorder',
+    component: StoreOrder
+  },
+
 ];
 
 const router = createRouter({
