@@ -1,13 +1,12 @@
 package com.ourpos.api.storeorder.dto.request;
 
-import com.ourpos.domain.store.Store;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import com.ourpos.domain.storeorder.StoreComm;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderStatus;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,18 +32,14 @@ public class StoreOrderRequestDto {
 
     private StoreOrderStatus storeOrderStatus;
 
-
     private Integer storeCommPrice;
-
 
     public StoreOrderRequestDto(StoreOrderDetail storeOrderDetail, StoreComm storeComm) {
         this.storeCommId = storeOrderDetail.getStoreMenu().getId();
         this.storeOrderDetailQuantity = storeOrderDetail.getStoreOrder().getQuantity();
         this.storeOrderStatus = storeOrderDetail.getStoreOrder().getStatus();
         this.storeCommPrice = storeComm.getPrice();
-        this.storeId= storeOrderDetail.getStoreOrder().getStore().getId();
-
-
+        this.storeId = storeOrderDetail.getStoreOrder().getStore().getId();
     }
 
 }

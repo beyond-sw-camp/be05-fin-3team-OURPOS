@@ -60,32 +60,32 @@
       <v-card class="text-center py-4">
         <v-card-text>
           <v-icon color="primary" size="48">mdi-check-circle</v-icon>
-          <div>주문이 완료되었습니다!</div>
+          <div>장바구니에 추가되었습니다.</div>
           <v-btn variant="text" @click="navigateToCart">장바구니로 이동</v-btn>
           <v-btn variant="text" @click="navigateToMenus">다른 메뉴 더보기</v-btn>
         </v-card-text>
       </v-card>
     </v-bottom-sheet>
 
-    <v-bottom-sheet v-model="errorSheet" inset>
-      <v-card class="text-center py-4 red lighten-4">
-        <v-card-text class="red--text">
-          <v-icon color="red" large>mdi-alert-circle</v-icon>
-          <div class="my-2">
-            장바구니에는 같은 지점의 메뉴만 담을 수 있습니다.
-          </div>
-          <div class="text-medium-emphasis text-caption my-2">
-            장바구니로 이동하여 기존 메뉴를 삭제하시겠습니까?
-          </div>
-          <v-btn variant="text" @click="navigateToCart">
-            장바구니 이동
-          </v-btn>
-          <v-btn variant="text" @click="errorSheet = !errorSheet">
-            닫기
-          </v-btn>
-        </v-card-text>
-      </v-card>
-    </v-bottom-sheet>
+<!--    <v-bottom-sheet v-model="errorSheet" inset>-->
+<!--      <v-card class="text-center py-4 red lighten-4">-->
+<!--        <v-card-text class="red&#45;&#45;text">-->
+<!--          <v-icon color="red" large>mdi-alert-circle</v-icon>-->
+<!--          <div class="my-2">-->
+<!--            장바구니에는 같은 지점의 메뉴만 담을 수 있습니다.-->
+<!--          </div>-->
+<!--          <div class="text-medium-emphasis text-caption my-2">-->
+<!--            장바구니로 이동하여 기존 메뉴를 삭제하시겠습니까?-->
+<!--          </div>-->
+<!--          <v-btn variant="text" @click="navigateToCart">-->
+<!--            장바구니 이동-->
+<!--          </v-btn>-->
+<!--          <v-btn variant="text" @click="errorSheet = !errorSheet">-->
+<!--            닫기-->
+<!--          </v-btn>-->
+<!--        </v-card-text>-->
+<!--      </v-card>-->
+<!--    </v-bottom-sheet>-->
 
     <!-- 하단 고정 떠다니는 버튼 -->
     <v-btn
@@ -205,13 +205,6 @@ const addToCart = () => {
   };
 
   const existingFullOrder = JSON.parse(localStorage.getItem('fullOrder'));
-
-  if (existingFullOrder && existingFullOrder.storeId !== storeId) {
-    if (existingFullOrder.orderDetailDtos.length > 0) {
-      errorSheet.value = true;
-      return;
-    }
-  }
 
   const existingOrders = existingFullOrder?.orderDetailDtos || [];
   existingOrders.push(newOrderDetail);

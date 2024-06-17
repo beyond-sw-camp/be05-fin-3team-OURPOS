@@ -32,7 +32,7 @@ public class StoreCommController implements StoreCommControllerDocs {
     private final StoreCommServiceImpl storeCommServiceImpl;
 
     // 새로운 비품,식자재를 추가하는 코드
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @PostMapping("/storecomms")
     public Result<Void> addStoreComm(@RequestBody StoreCommRequestDto storeCommRequestDto) {
         log.info("비품/식자재추가 : {}", storeCommRequestDto);

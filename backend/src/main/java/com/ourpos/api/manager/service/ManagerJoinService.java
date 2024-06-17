@@ -1,5 +1,7 @@
 package com.ourpos.api.manager.service;
 
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,5 +39,11 @@ public class ManagerJoinService {
         if (managerRepository.existsByLoginId(loginId)) {
             throw new IllegalArgumentException("이미 존재하는 로그인 아이디입니다.");
         }
+    }
+
+    public List<ManagerResponseDto> findManagers() {
+        List<Manager> managers = managerRepository.findAll();
+
+        return managers.stream().map(ManagerResponseDto::new).toList();
     }
 }

@@ -85,9 +85,13 @@ public class SecurityConfig {
         http
             .httpBasic(AbstractHttpConfigurer::disable);
 
-        http
-            .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class)
-            .addFilterBefore(new CustomerLogoutFilter(jwtUtil), LogoutFilter.class);
+        // 기존의 JWT 필터를 OAuth2LoginAuthenticationFilter 뒤에 추가합니다.
+        JwtFilter jwtFilter = new JwtFilter(jwtUtil);
+        http.addFilterAfter(jwtFilter, OAuth2LoginAuthenticationFilter.class);
+
+        // CustomerLogoutFilter를 LogoutFilter 앞에 추가합니다.
+        CustomerLogoutFilter logoutFilter = new CustomerLogoutFilter(jwtUtil);
+        http.addFilterBefore(logoutFilter, LogoutFilter.class);
 
         http
             .oauth2Login(oauth2 -> oauth2
@@ -104,6 +108,7 @@ public class SecurityConfig {
 
         loginFilter.setFilterProcessesUrl("/managers/login");
 
+        // UsernamePasswordAuthenticationFilter 대신 로그인 필터를 추가합니다.
         http
             .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -119,4 +124,3 @@ public class SecurityConfig {
         return http.build();
     }
 }
-
