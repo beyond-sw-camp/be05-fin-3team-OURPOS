@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.ourpos.api.map.Duration;
 import com.ourpos.domain.store.Store;
 
 import lombok.Getter;
@@ -27,8 +28,9 @@ public class StoreResponseDto implements Comparable<StoreResponseDto> {
     private Boolean closeYn;
     private LocalDateTime closedDateTime;
     private double distance;
+    private double duration;
 
-    public StoreResponseDto(Store store, double distance) {
+    public StoreResponseDto(Store store, Duration duration) {
         this.storeId = store.getId();
         this.addressResponseDto = new StoreAddressResponseDto(store.getAddress());
         this.storeName = store.getName();
@@ -39,7 +41,8 @@ public class StoreResponseDto implements Comparable<StoreResponseDto> {
         this.pictureUrl = store.getPictureUrl();
         this.closeYn = store.getCloseYn();
         this.closedDateTime = store.getClosedDateTime();
-        this.distance = distance;
+        this.distance = duration.distance();
+        this.duration = duration.duration();
     }
 
     @Override

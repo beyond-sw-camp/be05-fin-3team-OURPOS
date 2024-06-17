@@ -39,7 +39,7 @@ public class ManagerLoginFilter extends UsernamePasswordAuthenticationFilter {
         authResult.getAuthorities().stream().findFirst().ifPresent(
             authority -> {
                 String role = authority.getAuthority();
-                String token = jwtUtil.createJwt(authResult.getName(), role, 60L * 60 * 24 * 7);
+                String token = jwtUtil.createJwt(authResult.getName(), role, 1000 * 60L * 60 * 24 * 7);
                 response.addHeader("Authorization", "Bearer " + token);
             }
         );
