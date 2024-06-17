@@ -214,6 +214,7 @@ const addToCart = () => {
     storeId: storeId,
     storeName: existingFullOrder ? existingFullOrder.storeName : menu.value.storeName,
     orderTakeoutYn: existingFullOrder ? existingFullOrder.orderTakeoutYn : true,
+    minOrderAmount: existingFullOrder ? existingFullOrder.minOrderAmount : 0,
     orderDetailDtos: existingOrders
   };
 

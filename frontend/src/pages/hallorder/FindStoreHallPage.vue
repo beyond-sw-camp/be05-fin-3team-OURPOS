@@ -99,7 +99,7 @@ const openOrderTypeDialog = (store) => {
 };
 
 const setOrderType = (orderTakeoutYn) => {
-  viewStore(selectedStore.value.storeId, selectedStore.value.storeName, orderTakeoutYn);
+  viewStore(selectedStore.value.storeId, selectedStore.value.storeName, orderTakeoutYn, selectedStore.value.minimumOrderPrice);
   orderTypeDialog.value = false;
 };
 
@@ -161,13 +161,14 @@ const findItems = async (latitude, longitude) => {
   }
 };
 
-const viewStore = (storeId, storeName, orderTakeoutYn) => {
+const viewStore = (storeId, storeName, orderTakeoutYn, minOrderAmount) => {
   let storageFullOrder = localStorage.getItem('fullOrder');
   if (storageFullOrder !== null) {
     storageFullOrder = JSON.parse(storageFullOrder); // JSON 문자열을 객체로 변환
     storageFullOrder.storeId = storeId;
     storageFullOrder.storeName = storeName;
     storageFullOrder.orderTakeoutYn = orderTakeoutYn; // 누락된 속성 추가
+    storageFullOrder.minOrderAmount = minOrderAmount; // 누락된 속성 추가
     console.log('storageFullOrder:', storageFullOrder);
     localStorage.setItem('fullOrder', JSON.stringify(storageFullOrder)); // 객체를 JSON 문자열로 변환하여 저장
     router.push('/stores/' + storeId + '/menus');
@@ -178,6 +179,7 @@ const viewStore = (storeId, storeName, orderTakeoutYn) => {
     storeId: storeId,
     storeName: storeName,
     orderTakeoutYn: orderTakeoutYn,
+    minOrderAmount: minOrderAmount,
     orderDetailDtos: []
   };
 
@@ -217,7 +219,7 @@ const initMap = () => {
 initMap();
 
 const goBack = () => {
-  router.back();
+  router.push('/');
 };
 </script>
 

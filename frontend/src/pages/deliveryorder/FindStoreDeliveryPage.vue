@@ -36,7 +36,7 @@
               link
               class="mx-auto"
               max-width="400"
-              @click="viewStore(store.storeId, store.storeName)"
+              @click="viewStore(store.storeId, store.storeName, store.minimumOrderPrice)"
               :disabled="calculateTime(store.duration, store.distance) === '배달 불가'"
             >
               <v-row no-gutters>
@@ -71,11 +71,11 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import { ref } from 'vue';
 import axios from 'axios';
-import {useRouter} from 'vue-router';
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {faCar, faMapSigns} from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from 'vue-router';
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faCar, faMapSigns } from "@fortawesome/free-solid-svg-icons";
 
 const stores = ref([]);
 const router = useRouter();
@@ -141,18 +141,27 @@ const findStores = async () => {
   }
 };
 
-const viewStore = (storeId, storeName) => {
-  const deliveryOrder = {
-    storeId: storeId,
-    storeName: storeName,
-    orderAddressRequestDto: address.value,
-    ownerMessage: '',
-    riderMessage: '',
-    disposableYn: false,
-    orderDetailDtos: []
-  };
+const viewStore = (storeId, storeName, minOrderAmount) => {
+  const existingOrder = JSON.parse(localStorage.getItem('deliveryOrder'));
 
-  localStorage.setItem('deliveryOrder', JSON.stringify(deliveryOrder));
+  if (existingOrder) {
+    existingOrder.storeId = storeId;
+    existingOrder.storeName = storeName;
+    existingOrder.orderAddressRequestDto = address.value;
+  } else {
+    const newOrder = {
+      storeId: storeId,
+      storeName: storeName,
+      orderAddressRequestDto: address.value,
+      minOrderAmount: minOrderAmount,
+      ownerMessage: '',
+      riderMessage: '',
+      disposableYn: false,
+      orderDetailDtos: []
+    };
+    localStorage.setItem('deliveryOrder', JSON.stringify(newOrder));
+  }
+
   router.push('/stores/' + storeId + '/delivery/menus');
 };
 
@@ -195,7 +204,7 @@ const findAddresses = () => {
 findStores();
 
 const goBack = () => {
-  router.back();
+  router.push('/');
 };
 </script>
 

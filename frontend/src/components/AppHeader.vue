@@ -29,7 +29,7 @@ const storeName = ref('');
 
 // Method to go back to the previous page
 const goBack = () => {
-  router.back();
+  router.go(-1);
 };
 
 // Method to navigate to cart page
