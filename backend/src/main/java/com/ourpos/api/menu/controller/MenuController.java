@@ -107,10 +107,11 @@ public class MenuController implements MenuControllerDocs {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
-    @PostMapping(value = "/menus/{menuId}")
+    @PostMapping(value = "/menus/{menuId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,
+        MediaType.APPLICATION_JSON_VALUE})
     public Result<Void> updateMenu(@PathVariable Long menuId, @RequestPart @Valid MenuUpdateDto menuUpdateDto,
-        @RequestPart MultipartFile multipartFile) {
-        log.info("MenuController.updateMenu() called");
+        @RequestPart(required = false) MultipartFile multipartFile) {
+        log.info("MenuController.updateMenu() called with menuId: {}", menuId); // Add logging
 
         menuServiceImpl.updateMenu(menuId, menuUpdateDto, multipartFile);
         return new Result<>(HttpStatus.OK.value(), "메뉴 수정 성공", null);

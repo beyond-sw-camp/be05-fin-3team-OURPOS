@@ -99,8 +99,8 @@
       </div>
     </Modal>
 
-    <!-- Update Menu Modal -->
-    <Modal v-if="dialog.updateMenu" @close="closeDialog">
+        <!-- Update Menu Modal -->
+        <Modal v-if="dialog.updateMenu" @close="closeDialog">
       <h2>메뉴 수정</h2>
       <div class="row">
         <div class="col-6">
@@ -138,6 +138,15 @@ const selectedCategory = ref(null);
 
 const filteredMenus = ref([]); // Make sure this is correctly initialized
 
+// Dialogs state
+const dialog = ref({
+  addCategory: false,
+  editCategory: false,
+  deleteCategory: false,
+  addMenu: false,
+  updateMenu: false,
+});
+
 const filterMenus = (category) => {
   selectedCategory.value = category;
   filteredMenus.value = menus.value.filter(menu => menu.category === category.name);
@@ -148,14 +157,7 @@ const getMenuImageUrl = (imagePath) => {
   return `http://localhost:8080/images/${imagePath}`;
 };
 
-// Dialogs state
-const dialog = ref({
-  addCategory: false,
-  editCategory: false,
-  deleteCategory: false,
-  addMenu: false,
-  updateMenu: false,
-});
+
 
 const newCategory = ref('');
 const selectedEditCategory = ref(null);
@@ -179,6 +181,8 @@ const selectedMenu = ref({
   description: ''
 });
 
+const selectedMenuFile = ref(null); // Add this line
+
 const openDialog = (type) => {
   dialog.value[type] = true;
 };
@@ -190,6 +194,8 @@ const closeDialog = () => {
   dialog.value.addMenu = false;
   dialog.value.updateMenu = false;
 };
+
+
 
 const addCategory = async () => {
   try {
@@ -320,18 +326,26 @@ const openUpdateMenuDialog = (menu) => {
 };
 
 const updateMenu = async () => {
+  const formData = new FormData();
+  const menuUpdateDto = {
+    categoryId: categories.value.find(category => category.name === selectedMenu.value.category)?.id,
+    name: selectedMenu.value.name,
+    price: selectedMenu.value.price,
+    description: selectedMenu.value.description,
+    pictureUrl: selectedMenu.value.pictureUrl // This will be updated by the file upload
+  };
+  formData.append('menuUpdateDto', new Blob([JSON.stringify(menuUpdateDto)], { type: 'application/json' }));
+  formData.append('multipartFile', selectedMenuFile.value);
+
+  console.log('Updating menu with ID:', selectedMenu.value.id); // Add logging
+  console.log('FormData:', formData); // Add logging
+
   try {
-    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/update`, {
-      name: selectedMenu.value.name,
-      category: selectedMenu.value.category,
-      price: selectedMenu.value.price,
-      description: selectedMenu.value.description,
-      pictureUrl: selectedMenu.value.pictureUrl
-    },{
+    const response = await axios.post(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}`, formData, {
       headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
+        'Content-Type': 'multipart/form-data',
+        'Authorization': localStorage.getItem('token')
+      }
     });
     if (response.status === 200) {
       fetchCategoriesAndMenus();
@@ -343,6 +357,9 @@ const updateMenu = async () => {
     console.error('Error updating menu:', error);
   }
 };
+
+
+
 
 const deleteMenu = async () => {
   try {
@@ -388,9 +405,10 @@ const handleFileChangeUpdate = (event) => {
   if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
-      selectedMenu.value.image = e.target.result;
+      selectedMenu.value.pictureUrl = e.target.result;
     };
     reader.readAsDataURL(file);
+    selectedMenuFile.value = file; // Use selectedMenuFile
   }
 };
 
