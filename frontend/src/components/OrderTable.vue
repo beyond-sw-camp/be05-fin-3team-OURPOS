@@ -8,8 +8,8 @@
               <v-col><div>주문상태</div></v-col>
               <v-col><div>주문번호</div></v-col>
               <v-col><div>주문일시</div></v-col>
-              <v-col><div>주문 금액</div></v-col>
-              <v-col><div>지점명</div></v-col>
+               <v-col><div>주문 금액</div></v-col>
+               <v-col><div>지점명</div></v-col>
             </v-row>
   
             <!-- chips, storeOrderId, storeOrderDate, storeOrderPrice, storeId -->

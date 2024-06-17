@@ -10,6 +10,11 @@ import SubDash from "../views/SubDashboard.vue";
 import {checkUserRole} from "@/utils/auth";
 import ManagerHome from "@/views/ManagerHome.vue";
 import OwnerHome from "@/views/OwnerHome.vue";
+import StoreOrderCheck_company from "../views/StoreOrderCheck_company.vue";
+import HallOrderManage from "../views/HallOrderManage.vue";
+import StoreOrder from "../views/StoreOrder.vue";
+import StoreOrderCheck_store from "../views/StoreOrderCheck_store.vue";
+
 import StoreLanding from '../views/StoreLanding.vue';
 import DeliveryOrderManage from '../views/DeliveryOrderManage.vue';
 import MenuStatusManage from "../views/MenuStatusManage.vue";
@@ -101,6 +106,33 @@ const routes = [
     name:"MenuOptionGroupManage",
     component:MenuOptionGroupManage,
   },
+  ,
+  {
+    path: "/sign-up",
+    name: "SignUp",
+    component: SignUp,
+  },
+  {
+    name: 'storeordercheck_company',
+    path: '/storeorder/:storeId/check',
+    component: StoreOrderCheck_company
+  },
+  {
+    name: 'storeordercheck_store',
+    path: '/storeorder/:storeId/checkforstore',
+    component: StoreOrderCheck_store
+  },
+  {
+    name: 'HallOrderManage',
+    path: '/hallordermanage',
+    component: HallOrderManage
+  },
+  {
+    name: 'StoreOrder',
+    path: '/storeorder',
+    component: StoreOrder
+  },
+
 ];
 
 const router = createRouter({
