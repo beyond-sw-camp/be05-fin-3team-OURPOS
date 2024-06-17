@@ -3,9 +3,9 @@
     <nav class="navbar navbar-dark bg-dark navigation-bar">
       <span class="navbar-brand">OUR POS</span>
       <router-link to="/store-landing" class="ml-auto">
-        <button class="btn btn-outline-light">
+        <material-button class="btn btn-outline-light">
           <i class="mdi mdi-export"></i>
-        </button>
+        </material-button>
       </router-link>
     </nav>
 
@@ -13,14 +13,14 @@
       <div class="row">
         <div class="col-3">
           <div class="category-list">
-            <button
+            <material-button
               v-for="category in categories"
               :key="category"
               @click="filterMenus(category)"
               :class="['btn', selectedCategory === category ? 'btn-primary' : 'btn-light', 'category-button']"
             >
               {{ category }}
-            </button>
+            </material-button>
           </div>
         </div>
         <div class="col-9">
@@ -49,6 +49,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+
 
 const categories = ref([]);
 const selectedCategory = ref(null);

@@ -41,28 +41,6 @@ public class MenuServiceImpl implements MenuService {
     private final StoreRepository storeRepository;
     private final StoreRestrictedMenuRepository storeRestrictedMenuRepository;
 
-    @Override
-    public void addMenu(MenuRequestDto menuRequestDto, MultipartFile multipartFile) {
-        log.info("MenuService.addMenu() called");
-
-        Category category = categoryRepository.findById(menuRequestDto.getCategoryId()).orElseThrow(
-            () -> new IllegalArgumentException(CATEGORY_NOT_FOUND_MESSAGE));
-
-        addMenuPicture(menuRequestDto, multipartFile);
-        Menu menu = menuRequestDto.toEntity(category);
-
-        menuRepository.save(menu);
-    }
-
-    private void addMenuPicture(MenuRequestDto menuRequestDto, MultipartFile multipartFile) {
-        if (multipartFile != null) {
-            UploadFile uploadFile = fileStore.storeFile(multipartFile);
-            menuRequestDto.setPictureUrl(uploadFile.getStoreFilename());
-        } else {
-            menuRequestDto.setPictureUrl("default.png");
-        }
-    }
-
     public void deactivateMenu(StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
         log.info("MenuService,deactivateMenu() called");
 
@@ -96,7 +74,29 @@ public class MenuServiceImpl implements MenuService {
         log.info("finish Deleting StoreRestrictedMenu with menuId: {} and storeId: {}", menu.getId(), store.getId());
     }
 
-    @Transactional
+    @Override
+    public void addMenu(MenuRequestDto menuRequestDto, MultipartFile multipartFile) {
+        log.info("MenuService.addMenu() called");
+
+        Category category = categoryRepository.findById(menuRequestDto.getCategoryId()).orElseThrow(
+            () -> new IllegalArgumentException(CATEGORY_NOT_FOUND_MESSAGE));
+
+        addMenuPicture(menuRequestDto, multipartFile);
+        Menu menu = menuRequestDto.toEntity(category);
+
+        menuRepository.save(menu);
+    }
+
+    private void addMenuPicture(MenuRequestDto menuRequestDto, MultipartFile multipartFile) {
+        if (multipartFile != null) {
+            UploadFile uploadFile = fileStore.storeFile(multipartFile);
+            menuRequestDto.setPictureUrl(uploadFile.getStoreFilename());
+        } else {
+            menuRequestDto.setPictureUrl("default.png");
+        }
+    }
+
+    @Override
     public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto, MultipartFile multipartFile) {
         log.info("MenuService.updateMenu() called");
         Menu menu = menuRepository.findById(menuId)

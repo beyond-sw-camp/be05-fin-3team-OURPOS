@@ -62,7 +62,7 @@ public interface MenuControllerDocs {
         @PathVariable Long menuId,
         @Parameter(name = "menuUpdateDto", description = "수정하고자 하는 메뉴의 정보")
         @RequestBody @Valid MenuUpdateDto menuUpdateDto,
-        @Parameter(name = "multipartFile", description = "수정하고자 하는 메뉴의 사진")
+        @Parameter(name = "multipartFile", description = "추가하고자 하는 메뉴의 사진")
         @RequestPart(required = false) MultipartFile multipartFile);
 
     @Operation(summary = "메뉴 삭제", description = "기존의 메뉴를 삭제합니다.")
