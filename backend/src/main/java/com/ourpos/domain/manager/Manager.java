@@ -25,6 +25,9 @@ public class Manager {
     @Column(name = "manager_id")
     private Long id;
 
+    @Column(name = "manager_name")
+    private String name;
+
     @Column(name = "manager_login_id", unique = true)
     private String loginId;
 
