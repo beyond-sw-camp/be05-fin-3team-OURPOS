@@ -26,7 +26,7 @@
         <div class="col-9">
           <div class="row">
             <div class="col-4 mb-4" v-for="menu in filteredMenus" :key="menu.id">
-              <div class="card">
+              <div class="card" @click="deactivateMenu(menu.id)">
                 <img :src="menu.pictureUrl" class="card-img-top" style="height: 200px; object-fit: cover;">
                 <div class="card-body">
                   <h5 class="card-title">{{ menu.name }}</h5>
@@ -42,6 +42,7 @@
   </div>
 </template>
 
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
@@ -51,11 +52,11 @@ const selectedCategory = ref(null);
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/categories',{
+    const response = await axios.get('http://localhost:8080/api/v1/categories', {
       headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
     });
     categories.value = response.data.data.map(category => category.name);
     selectedCategory.value = categories.value[0]; // Set default selected category
@@ -70,11 +71,11 @@ const filteredMenus = ref([]);
 
 const fetchMenus = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/menus/all',{
+    const response = await axios.get('http://localhost:8080/api/v1/menus/all', {
       headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
     });
     menus.value = response.data.data.map(menu => ({
       id: menu.id,
@@ -95,11 +96,35 @@ const filterMenus = (category) => {
   filteredMenus.value = menus.value.filter(menu => menu.category === category);
 };
 
+const deactivateMenu = async (menuId) => {
+  console.log("Attempting to deactivate menu:", menuId); // Add logging
+  try {
+    const response = await axios.post('http://localhost:8080/api/v1/menus/deactivate', {
+      menuId: menuId
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
+    });
+    console.log("Deactivate response:", response); // Add logging
+    if (response.status === 200) {
+      fetchMenus();
+    } else {
+      console.error('Error deactivating menu:', response);
+    }
+  } catch (error) {
+    console.error('Error deactivating menu:', error);
+  }
+};
+
+
 onMounted(() => {
   fetchCategories();
   fetchMenus();
 });
 </script>
+
 
 <style scoped>
 .navigation-bar {
