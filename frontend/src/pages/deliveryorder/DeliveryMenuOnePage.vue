@@ -214,6 +214,7 @@ const addToCart = () => {
     storeId: storeId,
     storeName: existingDeliveryOrder ? existingDeliveryOrder.storeName : menu.value.storeName,
     orderDetailDtos: existingOrders,
+    minOrderAmount: existingDeliveryOrder ? existingDeliveryOrder.minOrderAmount : menu.value.storeMinOrderAmount,
     disposalYn: existingDeliveryOrder ? existingDeliveryOrder.disposalYn : false,
     ownerMessage: existingDeliveryOrder ? existingDeliveryOrder.ownerMessage : '',
     riderMessage: existingDeliveryOrder ? existingDeliveryOrder.riderMessage : '',

@@ -35,7 +35,12 @@ import DeliveryAddress from "@/pages/deliveryorder/DeliveryAddress.vue";
 import DeliveryMenusPage from "@/pages/deliveryorder/DeliveryMenusPage.vue";
 import DeliveryMenuOnePage from "@/pages/deliveryorder/DeliveryMenuOnePage.vue";
 import DeliveryCartPage from "@/pages/deliveryorder/DeliveryCartPage.vue";
-import CheckoutView from "@/pages/payments/CheckoutView.vue";
+import SuccessView from "@/pages/deliveryorder/payments/SuccessView.vue";
+import FailView from "@/pages/deliveryorder/payments/FailView.vue";
+import CheckoutView from "@/pages/deliveryorder/payments/CheckoutView.vue";
+import HallCheckoutView from "@/pages/hallorder/hallpayments/HallCheckoutView.vue";
+import HallSuccessView from "@/pages/hallorder/hallpayments/HallSuccessView.vue";
+import HallFailView from "@/pages/hallorder/hallpayments/HallFailView.vue";
 
 
 const router = createRouter({
@@ -203,12 +208,27 @@ const router = createRouter({
     {
       path: '/success',
       name: 'success',
-      component: () => import('../pages/payments/SuccessView.vue')
+      component: SuccessView
     },
     {
       path: '/fail',
       name: 'fail',
-      component: () => import('../pages/payments/FailView.vue')
+      component: FailView
+    },
+    {
+      path: '/hall/pay',
+      name: 'hall-pay',
+      component: HallCheckoutView
+    },
+    {
+      path: '/hall/success',
+      name: 'hall-success',
+      component: HallSuccessView
+    },
+    {
+      path: '/hall/fail',
+      name: 'hall-fail',
+      component: HallFailView
     }
 
   ]
