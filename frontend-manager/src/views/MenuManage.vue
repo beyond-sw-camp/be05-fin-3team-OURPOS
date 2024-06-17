@@ -3,27 +3,27 @@
     <div class="navigation-bar">
       <h1>OUR POS</h1>
       <router-link to="/">
-        <button class="icon-button">
+        <MaterialButton  class="icon-MaterialButton">
           <i class="mdi mdi-export"></i>
-        </button>
+        </MaterialButton>
       </router-link>
     </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-3">
           <div class="category-list">
-            <button
+            <MaterialButton 
               v-for="category in categories"
               :key="category.id"
               @click="filterMenus(category)"
-              :class="selectedCategory === category.name ? 'category-button primary' : 'category-button default'"
+              :class="selectedCategory === category.name ? 'category-MaterialButton primary' : 'category-MaterialButton default'"
             >
               {{ category.name }}
-            </button>
-            <button @click="openDialog('addCategory')" class="action-button">카테고리 추가</button>
-            <button @click="openDialog('editCategory')" class="action-button">카테고리 수정</button>
-            <button @click="openDialog('deleteCategory')" class="action-button">카테고리 삭제</button>
-            <button @click="openDialog('addMenu')" class="action-button">메뉴 추가</button>
+            </MaterialButton>
+            <MaterialButton  @click="openDialog('addCategory')" class="action-MaterialButton">카테고리 추가</MaterialButton>
+            <MaterialButton  @click="openDialog('editCategory')" class="action-MaterialButton">카테고리 수정</MaterialButton>
+            <MaterialButton  @click="openDialog('deleteCategory')" class="action-MaterialButton">카테고리 삭제</MaterialButton>
+            <MaterialButton  @click="openDialog('addMenu')" class="action-MaterialButton">메뉴 추가</MaterialButton>
           </div>
         </div>
         <div class="col-9">
@@ -46,8 +46,8 @@
       <h2>추가할 카테고리</h2>
       <input v-model="newCategory" placeholder="카테고리 이름" />
       <div class="actions">
-        <button @click="addCategory">확인</button>
-        <button @click="closeDialog">취소</button>
+        <MaterialButton  @click="addCategory">확인</MaterialButton>
+        <MaterialButton  @click="closeDialog">취소</MaterialButton>
       </div>
     </Modal>
 
@@ -59,8 +59,8 @@
       </select>
       <input v-model="updatedCategoryName" placeholder="변경 후 카테고리 이름" />
       <div class="actions">
-        <button @click="editCategory">확인</button>
-        <button @click="closeDialog">취소</button>
+        <MaterialButton @click="editCategory">확인</MaterialButton>
+        <MaterialButton @click="closeDialog">취소</MaterialButton>
       </div>
     </Modal>
 
@@ -71,8 +71,8 @@
         <option v-for="name in categoryNames" :key="name">{{ name }}</option>
       </select>
       <div class="actions">
-        <button @click="deleteCategory">확인</button>
-        <button @click="closeDialog">취소</button>
+        <MaterialButton @click="deleteCategory">확인</MaterialButton>
+        <MaterialButton @click="closeDialog">취소</MaterialButton>
       </div>
     </Modal>
 
@@ -89,12 +89,12 @@
           <input v-model="newMenu.price" placeholder="가격" />
           <input v-model="newMenu.image" placeholder="사진 URL" />
           <input type="file" ref="fileInput" @change="handleFileChange" style="display: none" />
-          <button @click="triggerFileInput">Browse</button>
+          <MaterialButton @click="triggerFileInput">Browse</MaterialButton>
           <textarea v-model="newMenu.description" placeholder="메뉴 설명"></textarea>
         </div>
         <div class="col-6">
-          <button @click="addMenu">메뉴 추가</button>
-          <button @click="closeDialog">취소</button>
+          <MaterialButton @click="addMenu">메뉴 추가</MaterialButton>
+          <MaterialButton @click="closeDialog">취소</MaterialButton>
         </div>
       </div>
     </Modal>
@@ -112,13 +112,13 @@
           <input v-model="selectedMenu.price" placeholder="가격" />
           <input v-model="selectedMenu.pictureUrl" placeholder="사진 URL" />
           <input type="file" ref="fileInputUpdate" @change="handleFileChangeUpdate" style="display: none" />
-          <button @click="triggerFileInputUpdate">Browse</button>
+          <MaterialButton @click="triggerFileInputUpdate">Browse</MaterialButton>
           <textarea v-model="selectedMenu.description" placeholder="메뉴 설명"></textarea>
         </div>
         <div class="col-6">
-          <button @click="updateMenu">수정 반영</button>
-          <button @click="deleteMenu">메뉴 삭제</button>
-          <button @click="closeDialog">뒤로가기</button>
+          <MaterialButton @click="updateMenu">수정 반영</MaterialButton>
+          <MaterialButton @click="deleteMenu">메뉴 삭제</MaterialButton>
+          <MaterialButton @click="closeDialog">뒤로가기</MaterialButton>
         </div>
       </div>
     </Modal>
@@ -468,8 +468,10 @@ onMounted(() => {
   flex-direction: column;
 }
 
-.category-button, .action-button {
-  margin-bottom: 10px;
+.category-MaterialButton, .action-MaterialButton {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 10px 0;
 }
 
 .primary {
@@ -511,9 +513,9 @@ onMounted(() => {
   margin-top: 20px;
 }
 
-.icon-button {
-  background: none;
-  border: none;
-  cursor: pointer;
+.icon-MaterialButton {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 10px 0;
 }
 </style>

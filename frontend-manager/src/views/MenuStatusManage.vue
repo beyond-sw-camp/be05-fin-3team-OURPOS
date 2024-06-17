@@ -4,7 +4,7 @@
       <span class="navbar-brand">OUR POS</span>
       <router-link to="/store-landing" class="ml-auto">
         <material-button class="btn btn-outline-light">
-          <i class="mdi mdi-export"></i>
+          <i class="mdi mdi-export">나가기</i>
         </material-button>
       </router-link>
     </nav>
@@ -174,7 +174,9 @@ onMounted(() => {
 }
 
 .category-button {
-  margin-bottom: 10px;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 10px 0;
 }
 
 .btn-light {
