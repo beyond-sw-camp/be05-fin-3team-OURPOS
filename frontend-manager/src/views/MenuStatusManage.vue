@@ -96,6 +96,7 @@ const filterMenus = (category) => {
   filteredMenus.value = menus.value.filter(menu => menu.category === category);
 };
 
+
 const deactivateMenu = async (menuId) => {
   console.log("Attempting to deactivate menu:", menuId); // Add logging
   try {
