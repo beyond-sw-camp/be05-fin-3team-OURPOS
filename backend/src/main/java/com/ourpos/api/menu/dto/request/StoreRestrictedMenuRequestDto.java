@@ -13,19 +13,15 @@ import lombok.Setter;
 @Getter
 public class StoreRestrictedMenuRequestDto {
 
-	@NotNull(message = "직영점 아이디를 입력해 주세요")
-	@Positive(message = "1 이상의 상수만 입력해 주세요")
-	private Long storeId;
+    @NotNull(message = "메뉴 아이디를 입력해 주세요")
+    @Positive(message = "1 이상의 상수만 입력해 주세요")
+    private Long menuId;
 
-	@NotNull(message = "메뉴 아이디를 입력해 주세요")
-	@Positive(message = "1 이상의 상수만 입력해 주세요")
-	private Long menuId;
-
-	public StoreRestrictedMenu toEntity(Store store, Menu menu) {
-		return StoreRestrictedMenu.builder()
-			.store(store)
-			.menu(menu)
-			.build();
-	}
+    public StoreRestrictedMenu toEntity(Menu menu, Store store) {
+        return StoreRestrictedMenu.builder()
+            .store(store)
+            .menu(menu)
+            .build();
+    }
 
 }
