@@ -2,10 +2,10 @@
   <v-app>
     <v-main>
       <v-container>
-        <AppHeader title="장바구니" />
+        <AppDeliveryHeader title="장바구니" />
         <v-row>
           <v-col cols="12">
-            <h2 v-show="orderDetailDtos.length !== 0">{{ fullOrder.storeName }}</h2>
+            <h2 v-show="orderDetailDtos.length !== 0">{{ deliveryOrder.storeName }}</h2>
             <v-card v-for="(orderDetail, index) in orderDetailDtos" :key="orderDetail.menuId" class="my-1">
               <v-card-title class="d-flex justify-space-between align-center">
                 {{ orderDetail.menuName }}
@@ -86,10 +86,10 @@
 import { ref, computed, watch } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import AppHeader from "@/components/AppHeader.vue";
+import AppDeliveryHeader from "@/components/AppDeliveryHeader.vue";
 
-let fullOrder = ref(JSON.parse(localStorage.getItem('fullOrder')) || {});
-let orderDetailDtos = ref(fullOrder.value.orderDetailDtos || []);
+let deliveryOrder = ref(JSON.parse(localStorage.getItem('deliveryOrder')) || {});
+let orderDetailDtos = ref(deliveryOrder.value.orderDetailDtos || []);
 const orderSuccessSheet = ref(false);
 const orderErrorAlert = ref(false);
 const orderErrorMessage = ref('');
@@ -104,14 +104,14 @@ const totalOrderPrice = computed(() => {
 
 const deleteOrderDetail = (index) => {
   orderDetailDtos.value.splice(index, 1);
-  localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: orderDetailDtos.value }));
+  localStorage.setItem('deliveryOrder', JSON.stringify({ ...deliveryOrder.value, orderDetailDtos: orderDetailDtos.value }));
 };
 
 const incrementQuantity = (index) => {
   let orderDetail = orderDetailDtos.value[index];
   orderDetail.quantity += 1;
   orderDetail.totalPrice = orderDetail.menuPrice * orderDetail.quantity;
-  localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: orderDetailDtos.value }));
+  localStorage.setItem('deliveryOrder', JSON.stringify({ ...deliveryOrder.value, orderDetailDtos: orderDetailDtos.value }));
 };
 
 const decrementQuantity = (index) => {
@@ -119,19 +119,14 @@ const decrementQuantity = (index) => {
     let orderDetail = orderDetailDtos.value[index];
     orderDetail.quantity -= 1;
     orderDetail.totalPrice = orderDetail.menuPrice * orderDetail.quantity;
-    localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: orderDetailDtos.value }));
+    localStorage.setItem('deliveryOrder', JSON.stringify({ ...deliveryOrder.value, orderDetailDtos: orderDetailDtos.value }));
   }
 };
 
 const submitOrder = async () => {
   try {
     const response = await axios.post(
-      'http://localhost:8080/api/v1/orders/hall',
-      {
-        storeId: fullOrder.value.storeId,
-        orderTakeoutYn: true,
-        orderDetailDtos: orderDetailDtos.value
-      },
+      'http://localhost:8080/api/v1/orders/delivery', deliveryOrder.value,
       {
         headers: {
           'Content-Type': 'application/json'
@@ -144,7 +139,7 @@ const submitOrder = async () => {
     if (response.data.code === 200) {
       // Clear the cart after successful order
       orderDetailDtos.value = [];
-      localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: [] }));
+      localStorage.setItem('deliveryOrder', JSON.stringify({ ...deliveryOrder.value, orderDetailDtos: [] }));
 
       // Show success message
       orderSuccessSheet.value = true;
@@ -164,7 +159,7 @@ const submitOrder = async () => {
 
 // Watch for changes in orderDetailDtos and update localStorage accordingly
 watch(orderDetailDtos, (newOrderDetailDtos) => {
-  localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: newOrderDetailDtos }));
+  localStorage.setItem('deliveryOrder', JSON.stringify({ ...deliveryOrder.value, orderDetailDtos: newOrderDetailDtos }));
 });
 
 console.log(orderDetailDtos.value);
