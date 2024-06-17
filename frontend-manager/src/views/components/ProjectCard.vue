@@ -65,9 +65,9 @@
                 {
                   logo,
                   title,
-                  members,
-                  budget,
-                  progress: { percentage, color },
+                  dashboard,
+                  address,
+                  storeId
                 },
                 index
               ) of projects"
@@ -85,44 +85,13 @@
               </td>
               <td>
                 <div class="avatar-group mt-2">
-                  <a
-                    v-for="(member, index) of members"
-                    :key="index"
-                    href="javascript:;"
-                    class="avatar avatar-xs rounded-circle"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="bottom"
-                    title=""
-                    data-bs-original-title=""
-                  >
-                    <img :src="member" alt="Team member" />
-                  </a>
+                  <button @click="goToStore(storeId)">{{ dashboard }}</button>
                 </div>
               </td>
               <td class="align-middle text-center text-sm">
-                <span class="text-xs font-weight-bold"> {{ budget }} </span>
+                <span class="text-xs font-weight-bold"> {{ address }} </span>
               </td>
-              <td class="align-middle d-flex justify-content-end">
-                <div class="progress-wrapper w-75 mx-auto">
-                  <div class="progress-info">
-                    <div class="progress-percentage">
-                      <span class="text-xs font-weight-bold"
-                        >{{ percentage }}%
-                      </span>
-                    </div>
-                  </div>
-                  <div class="progress">
-                    <div
-                      class="progress-bar"
-                      :class="`w-${percentage}  bg-gradient-${color}`"
-                      role="progressbar"
-                      :aria-valuenow="percentage"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                </div>
-              </td>
+
             </tr>
           </tbody>
         </table>
@@ -132,8 +101,15 @@
 </template>
 
 <script>
+
 export default {
   name: "projectCard",
+  methods: {
+    goToStore(storeId) {
+      console.log("projectCard storeID", storeId);
+      this.$router.push({ name: 'SubDash', query: {storeId} });
+    }
+  },
   props: {
     title: {
       type: String,
@@ -152,13 +128,10 @@ export default {
       required: true,
       logo: String,
       title: String,
-      members: Array,
-      budget: String,
-      progress: {
-        type: Object,
-        percentage: Number,
-        color: String,
-      },
+      dashboard: String,
+      address: String,
+      storeId: String,
+
     },
   },
 };

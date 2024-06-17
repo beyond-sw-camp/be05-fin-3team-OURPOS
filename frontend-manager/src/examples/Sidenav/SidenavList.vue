@@ -9,7 +9,7 @@
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="dashboard"
+          collapseRef="owner"
           navText="Dashboard"
         >
           <template v-slot:icon>
