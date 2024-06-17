@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+// import Dashboard from "../views/Dashboard.vue";
 import Tables from "../views/Tables.vue";
 import Billing from "../views/Billing.vue";
 import RTL from "../views/Rtl.vue";
@@ -14,6 +15,12 @@ import HallOrderManage from "../views/HallOrderManage.vue";
 import StoreOrder from "../views/StoreOrder.vue";
 import StoreOrderCheck_store from "../views/StoreOrderCheck_store.vue";
 
+import StoreLanding from '../views/StoreLanding.vue';
+import DeliveryOrderManage from '../views/DeliveryOrderManage.vue';
+import MenuStatusManage from "../views/MenuStatusManage.vue";
+import HeadOfficeLanding from "../views/HeadOfficeLanding.vue";
+import MenuManage from "../views/MenuManage.vue";
+import MenuOptionGroupManage from "../views/MenuOptionGroupManage.vue";
 
 const routes = [
   {
@@ -69,6 +76,37 @@ const routes = [
     component: ManagerHome,
     meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
+  {
+    path:"/store-landing",
+    name:"StoreLanding",
+    component:StoreLanding,
+  },
+  {
+    path:"/store-landing/delivery-order-manage",
+    name:"DeliveryOrderManage",
+    component:DeliveryOrderManage,
+  },
+  {
+    path:"/store-landing/menu-status-manage",
+    name:"MenuStatusManage",
+    component:MenuStatusManage,
+  },
+  {
+    path:"/head-office-landing",
+    name:"HeadOfficeLanding",
+    component:HeadOfficeLanding,
+  },
+  {
+    path:"/head-office-landing/menu-manage",
+    name:"MenuManage",
+    component:MenuManage,
+  },
+  {
+    path:"/head-office-landing/menu-option-group-manage",
+    name:"MenuOptionGroupManage",
+    component:MenuOptionGroupManage,
+  },
+  ,
   {
     path: "/sign-up",
     name: "SignUp",
