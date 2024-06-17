@@ -65,7 +65,7 @@ public class MenuServiceImpl implements MenuService {
 
     public void deactivateMenu(StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
         log.info("MenuService,deactivateMenu() called");
-        
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ManagerUserDetails managerUserDetails = (ManagerUserDetails)principal;
         String managerLoginId = managerUserDetails.getUsername();
@@ -73,11 +73,27 @@ public class MenuServiceImpl implements MenuService {
         Menu menu = menuRepository.findById(storeRestrictedMenuRequestDto.getMenuId()).orElseThrow(
             () -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
         Store store = storeRepository.findByManagerLoginId(managerLoginId).orElseThrow(
-            () -> new IllegalArgumentException());
+            () -> new IllegalArgumentException(STORE_NOT_FOUND_MESSAGE));
 
         StoreRestrictedMenu storeRestrictedMenu = storeRestrictedMenuRequestDto.toEntity(menu, store);
         storeRestrictedMenuRepository.save(storeRestrictedMenu);
+    }
 
+    public void activateMenu(StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
+        log.info("MenuService,activateMenu() called");
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ManagerUserDetails managerUserDetails = (ManagerUserDetails)principal;
+        String managerLoginId = managerUserDetails.getUsername();
+
+        Menu menu = menuRepository.findById(storeRestrictedMenuRequestDto.getMenuId()).orElseThrow(
+            () -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
+        Store store = storeRepository.findByManagerLoginId(managerLoginId).orElseThrow(
+            () -> new IllegalArgumentException(STORE_NOT_FOUND_MESSAGE));
+
+        log.info("Initiate Deleting StoreRestrictedMenu with menuId: {} and storeId: {}", menu.getId(), store.getId());
+        storeRestrictedMenuRepository.deleteByMenuIdAndStoreId(menu.getId(), store.getId());
+        log.info("finish Deleting StoreRestrictedMenu with menuId: {} and storeId: {}", menu.getId(), store.getId());
     }
 
     @Transactional

@@ -68,13 +68,13 @@ const routes = [
     path: "/subdash",
     name: "SubDash",
     component: SubDash,
-    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] },
   },
   {
     path: "/manager",
     name: "ManagerHome",
     component: ManagerHome,
-    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true},
   },
   {
     path:"/store-landing",
@@ -106,7 +106,6 @@ const routes = [
     name:"MenuOptionGroupManage",
     component:MenuOptionGroupManage,
   },
-  ,
   {
     path: "/sign-up",
     name: "SignUp",
@@ -115,23 +114,23 @@ const routes = [
   {
     name: 'storeordercheck_company',
     path: '/storeorder/:storeId/check',
-    component: StoreOrderCheck_company
+    component: StoreOrderCheck_company,
   },
   {
     name: 'storeordercheck_store',
     path: '/storeorder/:storeId/checkforstore',
-    component: StoreOrderCheck_store
+    component: StoreOrderCheck_store,
   },
   {
     name: 'HallOrderManage',
     path: '/hallordermanage',
-    component: HallOrderManage
+    component: HallOrderManage,
   },
   {
     name: 'StoreOrder',
     path: '/storeorder',
-    component: StoreOrder
-  },
+    component: StoreOrder,
+  }
 
 ];
 

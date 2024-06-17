@@ -56,7 +56,7 @@ public class MenuController implements MenuControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "카테고리별 메뉴 조회가 완료되었습니다.", menus);
     }
 
-    // 메뉴 활성화 정보 제외하여 응답(본사,점주용)
+    // 메뉴 활성화 정보 제외하여 응답(본사용)
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN')")
     @GetMapping("/menus/all")
     public Result<List<MenuResponseDto>> findAllMenusAdmin(
@@ -70,10 +70,20 @@ public class MenuController implements MenuControllerDocs {
     @PostMapping("/menus/deactivate")
     public Result<Void> deactivateMenu(
         @RequestBody @Valid StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
-        log.info("MenuController.deactivateMenu() called with storeId: {} and menuId: {}",
+        log.info("MenuController.deactivateMenu() called with  menuId: {}",
             storeRestrictedMenuRequestDto.getMenuId());
         menuServiceImpl.deactivateMenu(storeRestrictedMenuRequestDto);
         return new Result<>(HttpStatus.OK.value(), "메뉴 비활성화 성공", null);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/menus/activate")
+    public Result<Void> activateMenu(
+        @RequestBody @Valid StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
+        log.info("MenuController.activateMenu() called with and menuId: {}",
+            storeRestrictedMenuRequestDto.getMenuId());
+        menuServiceImpl.activateMenu(storeRestrictedMenuRequestDto);
+        return new Result<>(HttpStatus.OK.value(), "메뉴 활성화 성공", null);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")

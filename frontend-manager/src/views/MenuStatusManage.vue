@@ -26,7 +26,11 @@
         <div class="col-9">
           <div class="row">
             <div class="col-4 mb-4" v-for="menu in filteredMenus" :key="menu.id">
-              <div class="card" @click="deactivateMenu(menu.id)">
+              <div
+                class="card"
+                :class="{ 'deactivated': menu.deactivated }"
+                @click="menu.deactivated ? confirmActivateMenu(menu.id) : confirmDeactivateMenu(menu.id)"
+              >
                 <img :src="menu.pictureUrl" class="card-img-top" style="height: 200px; object-fit: cover;">
                 <div class="card-body">
                   <h5 class="card-title">{{ menu.name }}</h5>
@@ -41,7 +45,6 @@
     </div>
   </div>
 </template>
-
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -84,6 +87,7 @@ const fetchMenus = async () => {
       description: menu.description,
       pictureUrl: menu.pictureUrl,
       category: menu.categoryName,
+      deactivated: menu.deactivated // Add deactivated property
     }));
     filterMenus(selectedCategory.value);
   } catch (error) {
@@ -96,9 +100,7 @@ const filterMenus = (category) => {
   filteredMenus.value = menus.value.filter(menu => menu.category === category);
 };
 
-
 const deactivateMenu = async (menuId) => {
-  console.log("Attempting to deactivate menu:", menuId); // Add logging
   try {
     const response = await axios.post('http://localhost:8080/api/v1/menus/deactivate', {
       menuId: menuId
@@ -108,9 +110,10 @@ const deactivateMenu = async (menuId) => {
         'Authorization': localStorage.getItem('token')
       }
     });
-    console.log("Deactivate response:", response); // Add logging
     if (response.status === 200) {
-      fetchMenus();
+      const menu = menus.value.find(menu => menu.id === menuId);
+      if (menu) menu.deactivated = true;
+      filterMenus(selectedCategory.value);
     } else {
       console.error('Error deactivating menu:', response);
     }
@@ -119,13 +122,45 @@ const deactivateMenu = async (menuId) => {
   }
 };
 
+const activateMenu = async (menuId) => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/v1/menus/activate', {
+      menuId: menuId
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
+    });
+    if (response.status === 200) {
+      const menu = menus.value.find(menu => menu.id === menuId);
+      if (menu) menu.deactivated = false;
+      filterMenus(selectedCategory.value);
+    } else {
+      console.error('Error activating menu:', response);
+    }
+  } catch (error) {
+    console.error('Error activating menu:', error);
+  }
+};
+
+const confirmDeactivateMenu = (menuId) => {
+  if (confirm("이 메뉴를 비활성화 시키시겠습니까?")) {
+    deactivateMenu(menuId);
+  }
+};
+
+const confirmActivateMenu = (menuId) => {
+  if (confirm("이 메뉴를 활성화 시키시겠습니까?")) {
+    activateMenu(menuId);
+  }
+};
 
 onMounted(() => {
   fetchCategories();
   fetchMenus();
 });
 </script>
-
 
 <style scoped>
 .navigation-bar {
@@ -149,5 +184,10 @@ onMounted(() => {
 .btn-primary {
   background-color: #3f51b5;
   color: white;
+}
+
+.deactivated {
+  background-color: gray;
+  opacity: 0.6;
 }
 </style>
