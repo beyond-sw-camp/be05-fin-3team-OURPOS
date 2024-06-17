@@ -1,6 +1,5 @@
 package com.ourpos.domain.order;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -64,11 +63,5 @@ public class HallOrder extends Order {
         this.status = HallStatus.COMPLETED;
         super.setCompleteOrderTime(completeOrderTime);
     }
-    
-    public Duration getElapsedTime(){
-        return Duration.between(super.getCreatedDateTime(), LocalDateTime.now());
-    }
-
-    
 
 }

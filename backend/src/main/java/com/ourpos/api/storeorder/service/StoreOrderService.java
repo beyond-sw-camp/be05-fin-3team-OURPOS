@@ -11,6 +11,7 @@ public interface StoreOrderService {
     // 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영)
     //void createStoreOrder(StoreOrderRequestDto storeOrderRequestDto);
     void createOrder(Long storeOrderDetailId, Integer orderDetailQuantity);
+    //
 
     // 비품, 식자재 주문 내역 확인
     List<StoreCommResponseDto> checkStoreComms();

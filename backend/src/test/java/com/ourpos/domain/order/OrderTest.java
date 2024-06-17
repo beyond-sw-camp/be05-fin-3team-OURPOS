@@ -68,7 +68,7 @@ class OrderTest {
             .build();
 
         // when then
-        assertThat(order.getPrice()).isEqualTo((5000 + 500 + 1000 + 700) * 2);
+        assertThat(order.getPrice()).isEqualTo(5000 * 2 + 500 + 1000 + 700);
     }
 
     @DisplayName("최소 주문 금액을 충족하지 못한 경우 에러 발생")

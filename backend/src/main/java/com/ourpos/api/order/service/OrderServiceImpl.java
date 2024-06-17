@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,15 +55,15 @@ public class OrderServiceImpl implements OrderService {
     private final MapService mapService;
     private final AdministrativeBuildingAddressRepository administrativeBuildingAddressRepository;
 
+
     @Override
-    public Long createHallOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
+    public void createHallOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
         HallOrder hallOrder = createOrder(loginId, hallOrderRequestDto);
 
         storeStockCalculate(hallOrder);
-        HallOrder savedHallOrder = hallOrderRepository.save(hallOrder);
-
-        return savedHallOrder.getId();
+        hallOrderRepository.save(hallOrder);
     }
+
 
     @Override
     public void createDeliveryOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto) {
@@ -103,7 +105,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
     }
-
     //메뉴 비활성화
     private void disabledStoreMenu(Menu menu, Store store) {
         StoreRestrictedMenu storeRestrictedMenu = StoreRestrictedMenu.builder()

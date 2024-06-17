@@ -25,4 +25,6 @@ public class MenuUpdateDto {
 	private String description;
 
 	private String pictureUrl;
+	// private List<MenuOptionGroupUpdateDto> menuOptionGroups = new ArrayList<>();
+
 }

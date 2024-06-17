@@ -1,7 +1,6 @@
 package com.ourpos.api.order.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,8 +11,7 @@ import com.ourpos.api.Result;
 import com.ourpos.api.order.dto.request.DeliveryOrderRequestDto;
 import com.ourpos.api.order.dto.request.HallOrderRequestDto;
 import com.ourpos.api.order.service.OrderService;
-import com.ourpos.auth.dto.customer.CustomOAuth2Customer;
-import com.ourpos.auth.exception.LoginRequiredException;
+import com.ourpos.auth.dto.CustomOAuth2Customer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,33 +24,29 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping("/hall")
     public Result<Void> createHallOrder(@RequestBody HallOrderRequestDto hallOrderRequestDto) {
         log.info("홀 주문: {}", hallOrderRequestDto);
-        String loginId = getCustomerLoginId();
+        String loginId = getLoginCustomerLoginId();
         orderService.createHallOrder(loginId, hallOrderRequestDto);
 
         return new Result<>(HttpStatus.OK.value(), "홀 주문이 완료되었습니다.", null);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping("/delivery")
     public Result<Void> createDeliveryOrder(@RequestBody DeliveryOrderRequestDto deliveryOrderRequestDto) {
         log.info("배달 주문: {}", deliveryOrderRequestDto);
-        String loginId = getCustomerLoginId();
+        String loginId = getLoginCustomerLoginId();
         orderService.createDeliveryOrder(loginId, deliveryOrderRequestDto);
 
         return new Result<>(HttpStatus.OK.value(), "배달 주문이 완료되었습니다.", null);
     }
 
-    private static String getCustomerLoginId() {
+    private static String getLoginCustomerLoginId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!(principal instanceof CustomOAuth2Customer)) {
-            throw new LoginRequiredException("로그인이 필요합니다.");
-        }
+        CustomOAuth2Customer customOAuth2Customer = (CustomOAuth2Customer)principal;
 
-        return ((CustomOAuth2Customer)principal).getLoginId();
+        return customOAuth2Customer.getLoginId();
     }
 
 }

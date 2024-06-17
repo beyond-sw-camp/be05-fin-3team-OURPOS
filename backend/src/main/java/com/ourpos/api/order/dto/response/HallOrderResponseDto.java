@@ -1,6 +1,5 @@
 package com.ourpos.api.order.dto.response;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +21,7 @@ public class HallOrderResponseDto {
     private LocalDateTime orderCreatedDateTime;
     private HallStatus hallOrderStatus;
     private Boolean orderTakeoutYn;
-    private Duration CookingTime;
     private List<OrderDetailResponseDto> orderDetailResponseDtos = new ArrayList<>();
-    
 
     public HallOrderResponseDto(HallOrder order) {
         this.orderId = order.getId();
@@ -34,7 +31,6 @@ public class HallOrderResponseDto {
         this.orderCreatedDateTime = order.getCreatedDateTime();
         this.hallOrderStatus = order.getStatus();
         this.orderTakeoutYn = order.getOrderTakeoutYn();
-        this.CookingTime = order.getElapsedTime();
         this.orderDetailResponseDtos = order.getOrderDetails().stream()
             .map(OrderDetailResponseDto::new)
             .toList();

@@ -2,13 +2,14 @@ package com.ourpos.api.customer.controller;
 
 import java.util.List;
 
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +30,7 @@ import com.ourpos.api.customer.service.CustomerServiceImpl;
 import com.ourpos.api.order.dto.response.DeliveryOrderResponseDto;
 import com.ourpos.api.order.dto.response.HallOrderResponseDto;
 import com.ourpos.api.order.service.OrderQueryService;
-import com.ourpos.auth.dto.customer.CustomOAuth2Customer;
-import com.ourpos.auth.exception.LoginRequiredException;
+import com.ourpos.auth.dto.CustomOAuth2Customer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,10 +46,9 @@ public class CustomerController implements CustomerControllerDocs {
     private final OrderQueryService orderQueryService;
 
     // 마이페이지- 개인정보조회
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/my")
     public Result<CustomerResponseDto> findCustomer() {
-        String loginId = getCustomerLoginId();
+        String loginId = getLoginCustomerLoginId();
         log.info("개인 정보 조회: {}", loginId);
 
         CustomerResponseDto customerResponse = customerServiceImpl.findLoginCustomer(loginId);
@@ -57,10 +56,9 @@ public class CustomerController implements CustomerControllerDocs {
     }
 
     // 마이페이지- 나의 주소 조회
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/my/addresses")
     public Result<List<CustomerAddressResponseDto>> findCustomerAddress() {
-        String loginId = getCustomerLoginId();
+        String loginId = getLoginCustomerLoginId();
         log.info("나의 주소 조회: {}", loginId);
 
         List<CustomerAddressResponseDto> customerAddresses = customerServiceImpl.findLoginCustomerAddresses(loginId);
@@ -68,10 +66,9 @@ public class CustomerController implements CustomerControllerDocs {
     }
 
     // 마이페이지-개인정보 변경(서브주소 추가)
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping("/addresses")
     public Result<Void> addAddress(@Valid @RequestBody CustomerAddressRequestDto customerAddressRequestDto) {
-        String loginId = getCustomerLoginId();
+        String loginId = getLoginCustomerLoginId();
         log.info("서브주소 추가: {}", loginId);
 
         customerServiceImpl.addSubAddress(loginId, customerAddressRequestDto);
@@ -79,7 +76,6 @@ public class CustomerController implements CustomerControllerDocs {
     }
 
     // 마이페이지-개인정보 변경(서브주소 변경)
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PutMapping("/addresses/{addressId}")
     public Result<Void> updateAddress(@Valid @PathVariable Long addressId,
         @RequestBody CustomerAddressUpdateDto addressDto) {
@@ -90,10 +86,9 @@ public class CustomerController implements CustomerControllerDocs {
     }
 
     // 마이페이지-개인정보 변경(기본 주소 변경)
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @PutMapping("/addresses/{addressId}/default")
     public Result<Void> updateDefaultAddress(@PathVariable Long addressId) {
-        String loginId = getCustomerLoginId();
+        String loginId = getLoginCustomerLoginId();
         customerServiceImpl.updateDefaultAddress(loginId, addressId);
         log.info("기본 주소 변경: {}", loginId);
 
@@ -101,7 +96,6 @@ public class CustomerController implements CustomerControllerDocs {
     }
 
     // 마이페이지-개인정보 변경(서브주소 삭제)
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @DeleteMapping("/addresses/{addressId}")
     public Result<Void> deleteAddress(@PathVariable Long addressId) {
         customerServiceImpl.deleteAddress(addressId);
@@ -111,10 +105,9 @@ public class CustomerController implements CustomerControllerDocs {
     }
 
     // 마이페이지 - 내가 주문한 홀/포장 주문 내역 조회
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/my/orders/hall")
     public Result<Page<HallOrderResponseDto>> getMyOrders(@PageableDefault(size = 10) Pageable pageable) {
-        String loginId = getCustomerLoginId();
+        String loginId = getLoginCustomerLoginId();
         log.info("나의 주문 내역 조회: {}", loginId);
 
         Page<HallOrderResponseDto> hallOrders = orderQueryService.findHallOrderByLoginId(loginId, pageable);
@@ -122,11 +115,10 @@ public class CustomerController implements CustomerControllerDocs {
     }
 
     // 마이페이지 - 내가 주문한 배달 주문 내역 조회
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/my/orders/delivery")
     public Result<Page<DeliveryOrderResponseDto>> getMyDeliveryOrders(@PageableDefault(size = 10) Pageable pageable,
         @RequestParam(required = false) String status) {
-        String loginId = getCustomerLoginId();
+        String loginId = getLoginCustomerLoginId();
         log.info("나의 배달 주문 내역 조회: {}", loginId);
 
         Page<DeliveryOrderResponseDto> deliveryOrders = orderQueryService.findDeliveryOrderByLoginId(loginId, status,
@@ -134,13 +126,11 @@ public class CustomerController implements CustomerControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "나의 배달 주문 내역 조회가 완료되었습니다.", deliveryOrders);
     }
 
-    private String getCustomerLoginId() {
+    private String getLoginCustomerLoginId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!(principal instanceof CustomOAuth2Customer)) {
-            throw new LoginRequiredException("로그인이 필요합니다.");
-        }
+        CustomOAuth2Customer customOAuth2Customer = (CustomOAuth2Customer)principal;
 
-        return ((CustomOAuth2Customer)principal).getLoginId();
+        return customOAuth2Customer.getLoginId();
     }
 
 }

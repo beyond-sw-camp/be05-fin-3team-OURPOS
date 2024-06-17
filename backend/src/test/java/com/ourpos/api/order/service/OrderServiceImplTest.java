@@ -16,8 +16,6 @@ import com.ourpos.api.order.dto.request.OrderOptionGroupRequestDto;
 import com.ourpos.api.order.dto.request.OrderOptionRequestDto;
 import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerRepository;
-import com.ourpos.domain.menu.Category;
-import com.ourpos.domain.menu.CategoryRepository;
 import com.ourpos.domain.menu.Menu;
 import com.ourpos.domain.menu.MenuRepository;
 import com.ourpos.domain.menu.StoreRestrictedMenuRepository;
@@ -61,9 +59,6 @@ class OrderServiceImplTest {
 
     @Autowired
     private StoreRestrictedMenuRepository storeRestrictedMenuRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     @DisplayName("포장/홀 주문을 통해 주문 하게 되면 레시피만큼 재고가 감소한다.")
     @Test
@@ -138,33 +133,6 @@ class OrderServiceImplTest {
         assertThat(storeRestrictedMenuRepository.findByStoreId(store.getId())).hasSize(1);
     }
 
-    @DisplayName("주문한 메뉴의 가격을 수량과 옵션을 고려하여 계산한다.")
-    @Test
-    void calculatePrice() {
-        // given
-        Customer customer = createCustomer();
-        Store store = createStore();
-        Menu hamburger = createMenu("햄버거", 5000);
-        List<OrderOptionRequestDto> orderOption = List.of(createOrderOption());
-        OrderOptionGroupRequestDto orderOptionGroup = createOrderOptionGroup(orderOption);
-        OrderDetailRequestDto orderDetail = createOrderDetail(hamburger, 2, List.of(orderOptionGroup));
-        HallOrderRequestDto hallOrder = createHallOrder(store, List.of(orderDetail));
-
-        // when
-        Long hallOrderId = orderServiceImpl.createHallOrder(customer.getLoginId(), hallOrder);
-
-        // then
-        assertThat(orderQueryService.findHallOrder(hallOrderId).getPrice()).isEqualTo(12000);
-    }
-
-    private Category createCategory(String name) {
-        Category category = Category.builder()
-            .name(name)
-            .build();
-        categoryRepository.save(category);
-        return category;
-    }
-
     private StoreComm createStoreComm() {
         StoreComm storeComm = StoreComm.builder()
             .name("패티")
@@ -233,7 +201,6 @@ class OrderServiceImplTest {
         Menu menu = Menu.builder()
             .name(name)
             .price(price)
-            .category(createCategory("햄버거"))
             .build();
         menuRepository.save(menu);
         return menu;

@@ -12,21 +12,21 @@ import com.ourpos.api.category.dto.request.MenuOptionUpdateDto;
 @Service
 public interface CategoryService {
 
-    public void addCategory(CategoryRequestDto categoryRequestDto);
+	public void addCategory(CategoryRequestDto categoryRequestDto);
 
-    public void addMenuOptionGroup(MenuOptionGroupRequestDto menuOptionGroupRequestDto);
+	public void addMenuOptionGroup(MenuOptionGroupRequestDto menuOptionGroupRequestDto);
 
-    public void addMenuOption(MenuOptionRequestDto menuOptionRequestDto);
+	public void addMenuOption(MenuOptionRequestDto menuOptionRequestDto);
 
-    public void updateCategory(Long categoryId, CategoryUpdateDto categoryUpdateDto);
+	public void updateCategory(Long categoryId, CategoryUpdateDto categoryUpdateDto);
 
-    public void updateMenuOptionGroup(Long menuOptionGroupId, MenuOptionGroupUpdateDto menuOptionGroupUpdateDto);
+	public void updateMenuOptionGroup(Long menuOptionGroupId, MenuOptionGroupUpdateDto menuOptionGroupUpdateDto);
 
-    public void updateMenuOption(Long menuOptionId, MenuOptionUpdateDto menuOptionUpdateDto);
+	public void updateMenuOption(Long menuOptionId, MenuOptionUpdateDto menuOptionUpdateDto);
 
-    public void deleteCategory(Long categoryId);
+	public void deleteCategory(Long categoryId);
 
-    public void deleteMenuOptionGroup(Long menuOptionGroupId);
+	public void deleteMenuOptionGroup(Long menuOptionGroupId);
 
-    public void deleteMenuOption(Long menuOption);
+	public void deleteMenuOption(Long menuOptioin);
 }

@@ -88,7 +88,7 @@ class OrderQueryRepositoryTest {
         // then
         assertThat(content).hasSize(2)
             .extracting("orderTakeoutYn")
-            .containsExactlyInAnyOrder(true, false);
+            .containsExactly(true, false);
     }
 
     @DisplayName("특정 가게의 홀/포장 주문을 조회할 때 주문 상태가 완료인 경우 3일 이내의 주문만 조회한다.")
@@ -214,8 +214,7 @@ class OrderQueryRepositoryTest {
         // then
         assertThat(content).hasSize(2)
             .extracting("orderAddress")
-            .containsExactlyInAnyOrder(waitingDeliveryOrder1.getOrderAddress(),
-                waitingDeliveryOrder2.getOrderAddress());
+            .containsExactly(waitingDeliveryOrder1.getOrderAddress(), waitingDeliveryOrder2.getOrderAddress());
     }
 
     @DisplayName("특정 가게의 배달 주문을 조회할 때 주문 상태가 완료인 경우 3일 이내의 주문만 조회한다.")
@@ -270,7 +269,7 @@ class OrderQueryRepositoryTest {
         // then
         assertThat(content).hasSize(3)
             .extracting("orderAddress")
-            .containsExactlyInAnyOrder(waitingDeliveryOrder1.getOrderAddress(), waitingDeliveryOrder2.getOrderAddress(),
+            .containsExactly(waitingDeliveryOrder1.getOrderAddress(), waitingDeliveryOrder2.getOrderAddress(),
                 cookingDeliveryOrder.getOrderAddress());
     }
 

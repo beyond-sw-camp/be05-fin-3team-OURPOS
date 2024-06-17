@@ -9,10 +9,10 @@ import com.ourpos.api.menu.dto.request.MenuUpdateDto;
 @Service
 public interface MenuService {
 
-	public void addMenu(MenuRequestDto menuRequestDto, MultipartFile multipartfile);
+	public void addMenu(MenuRequestDto menuRequestDto, MultipartFile nultipartfile);
 
 	public void deleteMenu(Long menuId);
 
-	public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto, MultipartFile multipartFile);
+	public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto);
 
 }

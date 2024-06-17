@@ -8,21 +8,12 @@
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.5.2",
-    "@fortawesome/free-brands-svg-icons": "^6.5.2",
-    "@fortawesome/free-regular-svg-icons": "^6.5.2",
-    "@fortawesome/free-solid-svg-icons": "^6.5.2",
-    "@fortawesome/vue-fontawesome": "^3.0.8",
     "@mdi/font": "7.0.96",
     "axios": "^1.7.2",
-    "canvas-confetti": "^1.9.3",
-    "chart.js": "^4.4.3",
     "core-js": "^3.34.0",
-    "leaflet.heat": "^0.2.0",
     "roboto-fontface": "*",
     "vue": "^3.4.0",
-    "vuetify": "^3.5.0",
-    "vuex": "^4.1.0"
+    "vuetify": "^3.5.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
