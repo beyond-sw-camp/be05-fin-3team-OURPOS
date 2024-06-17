@@ -28,8 +28,8 @@
             <div class="col-4 mb-4" v-for="menu in filteredMenus" :key="menu.id">
               <div
                 class="card"
-                :class="{ 'deactivated': menu.deactivated }"
-                @click="menu.deactivated ? confirmActivateMenu(menu.id) : confirmDeactivateMenu(menu.id)"
+                :class="{ 'deactivated': !menu.available }"
+                @click="menu.available ? confirmDeactivateMenu(menu.id) : confirmActivateMenu(menu.id)"
               >
                 <img :src="menu.pictureUrl" class="card-img-top" style="height: 200px; object-fit: cover;">
                 <div class="card-body">
@@ -74,7 +74,7 @@ const filteredMenus = ref([]);
 
 const fetchMenus = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/menus/all', {
+    const response = await axios.get('http://localhost:8080/api/v1/menus/store', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -87,7 +87,7 @@ const fetchMenus = async () => {
       description: menu.description,
       pictureUrl: menu.pictureUrl,
       category: menu.categoryName,
-      deactivated: menu.deactivated // Add deactivated property
+      available: menu.available // Use available property
     }));
     filterMenus(selectedCategory.value);
   } catch (error) {
@@ -112,7 +112,7 @@ const deactivateMenu = async (menuId) => {
     });
     if (response.status === 200) {
       const menu = menus.value.find(menu => menu.id === menuId);
-      if (menu) menu.deactivated = true;
+      if (menu) menu.available = false;
       filterMenus(selectedCategory.value);
     } else {
       console.error('Error deactivating menu:', response);
@@ -134,7 +134,7 @@ const activateMenu = async (menuId) => {
     });
     if (response.status === 200) {
       const menu = menus.value.find(menu => menu.id === menuId);
-      if (menu) menu.deactivated = false;
+      if (menu) menu.available = true;
       filterMenus(selectedCategory.value);
     } else {
       console.error('Error activating menu:', response);

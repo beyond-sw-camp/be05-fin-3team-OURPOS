@@ -56,14 +56,24 @@ public class MenuController implements MenuControllerDocs {
         return new Result<>(HttpStatus.OK.value(), "카테고리별 메뉴 조회가 완료되었습니다.", menus);
     }
 
+    // 메뉴 활성화 정보 포함하여 응답 (점주용)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/menus/store")
+    public Result<List<MenuResponseDto>> findAllMenusStore(
+        @RequestParam(value = "category", required = false) String category) {
+        log.info("MenuController.findAllMenusStore() called");
+        List<MenuResponseDto> menus = menuQueryService.findMenusByCategoryStore(category);
+        return new Result<>(HttpStatus.OK.value(), "점주용 카테고리별 메뉴 조회가 완료되었습니다.", menus);
+    }
+
     // 메뉴 활성화 정보 제외하여 응답(본사용)
-    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_SUPER_ADMIN')")
     @GetMapping("/menus/all")
     public Result<List<MenuResponseDto>> findAllMenusAdmin(
         @RequestParam(value = "category", required = false) String category) {
         log.info("MenuController.findAllMenusAdmin() called");
         List<MenuResponseDto> menus = menuQueryService.findMenusByCategoryAdmin(category);
-        return new Result<>(HttpStatus.OK.value(), "점주,관리자용 카테고리별 메뉴 조회가 완료되었습니다.", menus);
+        return new Result<>(HttpStatus.OK.value(), "관리자용 카테고리별 메뉴 조회가 완료되었습니다.", menus);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
