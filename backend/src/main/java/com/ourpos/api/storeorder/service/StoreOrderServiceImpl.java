@@ -81,6 +81,7 @@ public class StoreOrderServiceImpl {
 		storeOrderDetailRepository.save(storeOrderDetail);
 	}
 
+
 	// 비품, 식자재 주문 내역 확인(직영점)
 	public StoreOrderResponseDto getStoreOrder(Long orderDetailId) {
 		StoreOrderDetail storeOrderDetail = storeOrderDetailRepository.findById(orderDetailId)
