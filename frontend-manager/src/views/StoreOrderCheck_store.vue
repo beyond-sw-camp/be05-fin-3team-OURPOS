@@ -103,7 +103,7 @@
       },
       async cancelOrder(storeOrderId) {
         try {
-          const response = await axios.delete(`http://localhost:8080/api/v1/storeorder/1`,{
+          const response = await axios.delete(`http://localhost:8080/api/v1/storeorder/${storeOrderId}`,{
             headers: {
               'Content-Type': 'application/json',
               'Authorization': localStorage.getItem('token')
