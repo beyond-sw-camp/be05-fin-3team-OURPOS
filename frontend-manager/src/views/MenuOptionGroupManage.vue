@@ -3,27 +3,27 @@
     <div class="navigation-bar">
       <h1>OUR POS</h1>
       <router-link to="/head-office-landing">
-        <button class="icon-button">
+        <MaterialButton class="icon-MaterialButton">
           <i class="mdi mdi-export"></i>
-        </button>
+        </MaterialButton>
       </router-link>
     </div>
 
     <div class="container-fluid">
       <div class="row">
         <div class="col-3">
-          <button
+          <MaterialButton
             :class="selectedCategory.value === 'group' ? 'btn primary' : 'btn'"
             @click="selectCategory('group')"
           >
             메뉴 옵션 그룹
-          </button>
-          <button
+          </MaterialButton>
+          <MaterialButton
             :class="selectedCategory.value === 'option' ? 'btn primary' : 'btn'"
             @click="selectCategory('option')"
           >
             메뉴 옵션
-          </button>
+          </MaterialButton>
         </div>
         <div class="col-9">
           <div class="row">
@@ -40,9 +40,9 @@
       </div>
     </div>
 
-    <button class="fab" @click="openAddDialog">
+    <MaterialButton class="fab" @click="openAddDialog">
       추가하기
-    </button>
+    </MaterialButton>
 
     <!-- Add Dialog for 그룹 -->
     <Modal v-if="addDialogGroup" @close="closeAddDialogGroup">
@@ -67,8 +67,8 @@
         </label>
       </div>
       <div class="actions">
-        <button @click="addMenuOptionGroup" class="btn btn-primary">저장</button>
-        <button @click="closeAddDialogGroup" class="btn btn-secondary">취소</button>
+        <MaterialButton @click="addMenuOptionGroup" class="btn btn-primary">저장</MaterialButton>
+        <MaterialButton @click="closeAddDialogGroup" class="btn btn-secondary">취소</MaterialButton>
       </div>
     </Modal>
 
@@ -90,8 +90,8 @@
         <input type="number" v-model="newItem.price" class="form-control">
       </div>
       <div class="actions">
-        <button @click="addMenuOption" class="btn btn-primary">저장</button>
-        <button @click="closeAddDialogOption" class="btn btn-secondary">취소</button>
+        <MaterialButton @click="addMenuOption" class="btn btn-primary">저장</MaterialButton>
+        <MaterialButton @click="closeAddDialogOption" class="btn btn-secondary">취소</MaterialButton>
       </div>
     </Modal>
 
@@ -118,9 +118,9 @@
         </label>
       </div>
       <div class="actions">
-        <button @click="saveMenuOptionGroup" class="btn btn-primary">저장</button>
-        <button @click="closeEditDialogGroup" class="btn btn-secondary">취소</button>
-        <button @click="deleteMenuOptionGroup" class="btn btn-danger">삭제</button>
+        <MaterialButton @click="saveMenuOptionGroup" class="btn btn-primary">저장</MaterialButton>
+        <MaterialButton @click="closeEditDialogGroup" class="btn btn-secondary">취소</MaterialButton>
+        <MaterialButton @click="deleteMenuOptionGroup" class="btn btn-danger">삭제</MaterialButton>
       </div>
     </Modal>
 
@@ -142,9 +142,9 @@
         <input type="number" v-model="currentItem.price" class="form-control">
       </div>
       <div class="actions">
-        <button @click="saveMenuOption" class="btn btn-primary">저장</button>
-        <button @click="closeEditDialogOption" class="btn btn-secondary">취소</button>
-        <button @click="deleteMenuOption" class="btn btn-danger">삭제</button>
+        <MaterialButton @click="saveMenuOption" class="btn btn-primary">저장</MaterialButton>
+        <MaterialButton @click="closeEditDialogOption" class="btn btn-secondary">취소</MaterialButton>
+        <MaterialButton @click="deleteMenuOption" class="btn btn-danger">삭제</MaterialButton>
       </div>
     </Modal>
   </div>
@@ -507,7 +507,7 @@ onMounted(() => {
   font-weight: 500;
 }
 
-.icon-button {
+.icon-MaterialButton {
   background: none;
   border: none;
   cursor: pointer;

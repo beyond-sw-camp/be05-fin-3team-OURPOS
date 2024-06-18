@@ -1,29 +1,29 @@
 <template>
   <div>
-    <div class="navigation-bar">
-      <h1>OUR POS</h1>
-      <router-link to="/">
-        <button class="icon-button">
-          <i class="mdi mdi-export"></i>
+    <nav class="navbar navbar-dark bg-dark navigation-bar">
+      <span class="navbar-brand">OUR POS</span>
+      <router-link to="/owner" class="ml-auto">
+        <button class="btn btn-outline-light">
+          <i class="mdi mdi-export">뒤로 가기</i>
         </button>
       </router-link>
-    </div>
+    </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-3">
+        <div class="col-2">
           <div class="category-list">
-            <button
+            <material-button
               v-for="category in categories"
               :key="category.id"
               @click="filterMenus(category)"
-              :class="selectedCategory === category.name ? 'category-button primary' : 'category-button default'"
+              :class="['btn', selectedCategory === category ? 'btn-primary' : 'btn-light', 'category-button']"
             >
               {{ category.name }}
-            </button>
-            <button @click="openDialog('addCategory')" class="action-button">카테고리 추가</button>
-            <button @click="openDialog('editCategory')" class="action-button">카테고리 수정</button>
-            <button @click="openDialog('deleteCategory')" class="action-button">카테고리 삭제</button>
-            <button @click="openDialog('addMenu')" class="action-button">메뉴 추가</button>
+            </material-button>
+            <material-button  @click="openDialog('addCategory')" class="action-material-button">카테고리 추가</material-button>
+            <material-button  @click="openDialog('editCategory')" class="action-material-button">카테고리 수정</material-button>
+            <material-button  @click="openDialog('deleteCategory')" class="action-material-button">카테고리 삭제</material-button>
+            <material-button  @click="openDialog('addMenu')" class="action-material-button">메뉴 추가</material-button>
           </div>
         </div>
         <div class="col-9">
@@ -46,8 +46,8 @@
       <h2>추가할 카테고리</h2>
       <input v-model="newCategory" placeholder="카테고리 이름" />
       <div class="actions">
-        <button @click="addCategory">확인</button>
-        <button @click="closeDialog">취소</button>
+        <material-button  @click="addCategory">확인</material-button>
+        <material-button  @click="closeDialog">취소</material-button>
       </div>
     </Modal>
 
@@ -59,8 +59,8 @@
       </select>
       <input v-model="updatedCategoryName" placeholder="변경 후 카테고리 이름" />
       <div class="actions">
-        <button @click="editCategory">확인</button>
-        <button @click="closeDialog">취소</button>
+        <material-button @click="editCategory">확인</material-button>
+        <material-button @click="closeDialog">취소</material-button>
       </div>
     </Modal>
 
@@ -71,8 +71,8 @@
         <option v-for="name in categoryNames" :key="name">{{ name }}</option>
       </select>
       <div class="actions">
-        <button @click="deleteCategory">확인</button>
-        <button @click="closeDialog">취소</button>
+        <material-button @click="deleteCategory">확인</material-button>
+        <material-button @click="closeDialog">취소</material-button>
       </div>
     </Modal>
 
@@ -89,18 +89,18 @@
           <input v-model="newMenu.price" placeholder="가격" />
           <input v-model="newMenu.image" placeholder="사진 URL" />
           <input type="file" ref="fileInput" @change="handleFileChange" style="display: none" />
-          <button @click="triggerFileInput">Browse</button>
+          <material-button @click="triggerFileInput">Browse</material-button>
           <textarea v-model="newMenu.description" placeholder="메뉴 설명"></textarea>
         </div>
         <div class="col-6">
-          <button @click="addMenu">메뉴 추가</button>
-          <button @click="closeDialog">취소</button>
+          <material-button @click="addMenu">메뉴 추가</material-button>
+          <material-button @click="closeDialog">취소</material-button>
         </div>
       </div>
     </Modal>
 
-    <!-- Update Menu Modal -->
-    <Modal v-if="dialog.updateMenu" @close="closeDialog">
+        <!-- Update Menu Modal -->
+        <Modal v-if="dialog.updateMenu" @close="closeDialog">
       <h2>메뉴 수정</h2>
       <div class="row">
         <div class="col-6">
@@ -112,13 +112,13 @@
           <input v-model="selectedMenu.price" placeholder="가격" />
           <input v-model="selectedMenu.pictureUrl" placeholder="사진 URL" />
           <input type="file" ref="fileInputUpdate" @change="handleFileChangeUpdate" style="display: none" />
-          <button @click="triggerFileInputUpdate">Browse</button>
+          <material-button @click="triggerFileInputUpdate">Browse</material-button>
           <textarea v-model="selectedMenu.description" placeholder="메뉴 설명"></textarea>
         </div>
         <div class="col-6">
-          <button @click="updateMenu">수정 반영</button>
-          <button @click="deleteMenu">메뉴 삭제</button>
-          <button @click="closeDialog">뒤로가기</button>
+          <material-button @click="updateMenu">수정 반영</material-button>
+          <material-button @click="deleteMenu">메뉴 삭제</material-button>
+          <material-button @click="closeDialog">뒤로가기</material-button>
         </div>
       </div>
     </Modal>
@@ -129,6 +129,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Modal from './Modal.vue';
+import MaterialButton from '../components/MaterialButton.vue';
 
 const categories = ref([]);
 const categoryNames = ref([]);
@@ -137,6 +138,15 @@ const menus = ref([]);
 const selectedCategory = ref(null);
 
 const filteredMenus = ref([]); // Make sure this is correctly initialized
+
+// Dialogs state
+const dialog = ref({
+  addCategory: false,
+  editCategory: false,
+  deleteCategory: false,
+  addMenu: false,
+  updateMenu: false,
+});
 
 const filterMenus = (category) => {
   selectedCategory.value = category;
@@ -148,14 +158,7 @@ const getMenuImageUrl = (imagePath) => {
   return `http://localhost:8080/images/${imagePath}`;
 };
 
-// Dialogs state
-const dialog = ref({
-  addCategory: false,
-  editCategory: false,
-  deleteCategory: false,
-  addMenu: false,
-  updateMenu: false,
-});
+
 
 const newCategory = ref('');
 const selectedEditCategory = ref(null);
@@ -179,6 +182,8 @@ const selectedMenu = ref({
   description: ''
 });
 
+const selectedMenuFile = ref(null); // Add this line
+
 const openDialog = (type) => {
   dialog.value[type] = true;
 };
@@ -190,6 +195,8 @@ const closeDialog = () => {
   dialog.value.addMenu = false;
   dialog.value.updateMenu = false;
 };
+
+
 
 const addCategory = async () => {
   try {
@@ -320,18 +327,26 @@ const openUpdateMenuDialog = (menu) => {
 };
 
 const updateMenu = async () => {
+  const formData = new FormData();
+  const menuUpdateDto = {
+    categoryId: categories.value.find(category => category.name === selectedMenu.value.category)?.id,
+    name: selectedMenu.value.name,
+    price: selectedMenu.value.price,
+    description: selectedMenu.value.description,
+    pictureUrl: selectedMenu.value.pictureUrl // This will be updated by the file upload
+  };
+  formData.append('menuUpdateDto', new Blob([JSON.stringify(menuUpdateDto)], { type: 'application/json' }));
+  formData.append('multipartFile', selectedMenuFile.value);
+
+  console.log('Updating menu with ID:', selectedMenu.value.id); // Add logging
+  console.log('FormData:', formData); // Add logging
+
   try {
-    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/update`, {
-      name: selectedMenu.value.name,
-      category: selectedMenu.value.category,
-      price: selectedMenu.value.price,
-      description: selectedMenu.value.description,
-      pictureUrl: selectedMenu.value.pictureUrl
-    },{
+    const response = await axios.post(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}`, formData, {
       headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
+        'Content-Type': 'multipart/form-data',
+        'Authorization': localStorage.getItem('token')
+      }
     });
     if (response.status === 200) {
       fetchCategoriesAndMenus();
@@ -343,6 +358,9 @@ const updateMenu = async () => {
     console.error('Error updating menu:', error);
   }
 };
+
+
+
 
 const deleteMenu = async () => {
   try {
@@ -388,9 +406,10 @@ const handleFileChangeUpdate = (event) => {
   if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
-      selectedMenu.value.image = e.target.result;
+      selectedMenu.value.pictureUrl = e.target.result;
     };
     reader.readAsDataURL(file);
+    selectedMenuFile.value = file; // Use selectedMenuFile
   }
 };
 
@@ -450,8 +469,10 @@ onMounted(() => {
   flex-direction: column;
 }
 
-.category-button, .action-button {
-  margin-bottom: 10px;
+.category-material-button, .action-material-button {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 10px 0;
 }
 
 .primary {
@@ -493,9 +514,9 @@ onMounted(() => {
   margin-top: 20px;
 }
 
-.icon-button {
-  background: none;
-  border: none;
-  cursor: pointer;
+.icon-material-button {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 10px 0;
 }
 </style>
