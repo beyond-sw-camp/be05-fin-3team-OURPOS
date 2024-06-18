@@ -10,6 +10,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.ourpos.domain.storeorder.StoreComm;
 
 import lombok.AccessLevel;
@@ -38,6 +42,10 @@ public class StoreStock {
 
     @Column(name = "store_stock_quantity")
     private Integer quantity;
+
+     @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
     @Builder
     private StoreStock(Store store, StoreComm storeComm, Integer quantity) {
