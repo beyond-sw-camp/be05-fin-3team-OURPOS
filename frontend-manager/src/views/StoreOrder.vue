@@ -113,7 +113,8 @@
             const orderData = {
                 storeCommId: item.storeCommId,
                 storeId: 1, // 예시로 1로 설정합니다.
-                storeOrderDetailQuantity: item.quantity
+                storeOrderDetailQuantity: item.quantity,
+                storeCommPrice: item.storeCommPrice * item.quantity
             };
             return axios.post('http://localhost:8080/api/v1/storecomms/order', orderData, {
                 headers: {

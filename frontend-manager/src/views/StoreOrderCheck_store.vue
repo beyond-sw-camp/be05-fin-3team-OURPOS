@@ -17,16 +17,20 @@
                     </tr>
                   </thead>
                   <tbody>
+                  
                     <tr v-for="(order, index) in orders" :key="index">
-                      <td>{{ order.storeOrderId }}</td>
-                      <td>{{ order.storeOrderDate }}</td>
-                      <td>{{ order.storeOrderPrice }}</td>
-                      <td>{{ order.storeOrderStatus }}</td>
-                      <td>
-                        <button class="btn btn-warning" @click="cancelOrder(order.storeOrderId)" style="margin-right: 10px;">취소</button>
-                        <button class="btn btn-primary" @click="openOrderDetails(order)">상세</button>
-                      </td>
+                  
+                          <td>{{ order.storeOrderId }}</td>
+                          <td>{{ order.storeOrderDate }}</td>
+                          <td>{{ order.storeCommPrice }}</td>
+                          <td>{{ order.storeOrderStatus }}</td>
+                          <td>
+                            <button class="btn btn-warning" @click="cancelOrder(order.storeOrderId)" style="margin-right: 10px;">취소</button>
+                            <button class="btn btn-primary" @click="openOrderDetails(order)">상세</button>
+                          </td>
+                  
                     </tr>
+                  
                   </tbody>
                 </table>
               </div>
@@ -58,7 +62,7 @@
                   <tbody>
                     <tr v-for="(item, index) in selectedOrder.items" :key="index">
                       <td>{{ item.storeCommName }}</td>
-                      <td>{{ item.storeOrderDetailPrice }}</td>
+                      <td>{{ item.storeCommPrice }}</td>
                       <td>{{ item.storeOrderDetailQuantity }}</td>
                     </tr>
                   </tbody>
@@ -90,7 +94,7 @@
     methods: {
       async fetchOrders() {
         try {
-          const response = await axios.get('http://localhost:8080/api/v1/storeorder/1/check',{
+          const response = await axios.get('http://localhost:8080/api/v1/storeorder/1/checkforstore',{
             headers: {
               'Content-Type': 'application/json',
               'Authorization': localStorage.getItem('token')
