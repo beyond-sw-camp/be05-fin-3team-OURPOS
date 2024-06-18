@@ -13,6 +13,7 @@
             <v-col v-for="menu in menus" :key="menu.id" cols="12" md="6">
               <v-card
                 @click="viewMenu(menu.id)"
+                :disabled="menu.available === false"
                 link
                 class="mx-auto"
                 max-width="400"
@@ -68,6 +69,7 @@ const findMenus = async (category) => {
       withCredentials: true,
       params: {
         category: category,
+        storeId: id
       }
     });
     menus.value = response.data.data;

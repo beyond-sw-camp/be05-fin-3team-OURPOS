@@ -14,13 +14,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DeliveryOrderRequestDto {
-    
+
     private Long storeId;
     private OrderAddressRequestDto orderAddressRequestDto;
     private String ownerMessage;
     private String riderMessage;
     private Integer tip;
     private Boolean disposableYn;
+    private String tempOrderId;
     private List<OrderDetailRequestDto> orderDetailDtos = new ArrayList<>();
 
     public DeliveryOrder toEntity(Customer customer, Store store, List<OrderDetail> orderDetails) {

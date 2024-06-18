@@ -26,7 +26,11 @@
         <div class="col-9">
           <div class="row">
             <div class="col-4 mb-4" v-for="menu in filteredMenus" :key="menu.id">
-              <div class="card">
+              <div
+                class="card"
+                :class="{ 'deactivated': !menu.available }"
+                @click="menu.available ? confirmDeactivateMenu(menu.id) : confirmActivateMenu(menu.id)"
+              >
                 <img :src="menu.pictureUrl" class="card-img-top" style="height: 200px; object-fit: cover;">
                 <div class="card-body">
                   <h5 class="card-title">{{ menu.name }}</h5>
@@ -51,11 +55,11 @@ const selectedCategory = ref(null);
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/categories',{
+    const response = await axios.get('http://localhost:8080/api/v1/categories', {
       headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
     });
     categories.value = response.data.data.map(category => category.name);
     selectedCategory.value = categories.value[0]; // Set default selected category
@@ -70,11 +74,11 @@ const filteredMenus = ref([]);
 
 const fetchMenus = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/menus/all',{
+    const response = await axios.get('http://localhost:8080/api/v1/menus/store', {
       headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
     });
     menus.value = response.data.data.map(menu => ({
       id: menu.id,
@@ -83,6 +87,7 @@ const fetchMenus = async () => {
       description: menu.description,
       pictureUrl: menu.pictureUrl,
       category: menu.categoryName,
+      available: menu.available // Use available property
     }));
     filterMenus(selectedCategory.value);
   } catch (error) {
@@ -93,6 +98,62 @@ const fetchMenus = async () => {
 const filterMenus = (category) => {
   selectedCategory.value = category;
   filteredMenus.value = menus.value.filter(menu => menu.category === category);
+};
+
+const deactivateMenu = async (menuId) => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/v1/menus/deactivate', {
+      menuId: menuId
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
+    });
+    if (response.status === 200) {
+      const menu = menus.value.find(menu => menu.id === menuId);
+      if (menu) menu.available = false;
+      filterMenus(selectedCategory.value);
+    } else {
+      console.error('Error deactivating menu:', response);
+    }
+  } catch (error) {
+    console.error('Error deactivating menu:', error);
+  }
+};
+
+const activateMenu = async (menuId) => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/v1/menus/activate', {
+      menuId: menuId
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
+    });
+    if (response.status === 200) {
+      const menu = menus.value.find(menu => menu.id === menuId);
+      if (menu) menu.available = true;
+      filterMenus(selectedCategory.value);
+    } else {
+      console.error('Error activating menu:', response);
+    }
+  } catch (error) {
+    console.error('Error activating menu:', error);
+  }
+};
+
+const confirmDeactivateMenu = (menuId) => {
+  if (confirm("이 메뉴를 비활성화 시키시겠습니까?")) {
+    deactivateMenu(menuId);
+  }
+};
+
+const confirmActivateMenu = (menuId) => {
+  if (confirm("이 메뉴를 활성화 시키시겠습니까?")) {
+    activateMenu(menuId);
+  }
 };
 
 onMounted(() => {
@@ -123,5 +184,10 @@ onMounted(() => {
 .btn-primary {
   background-color: #3f51b5;
   color: white;
+}
+
+.deactivated {
+  background-color: gray;
+  opacity: 0.6;
 }
 </style>

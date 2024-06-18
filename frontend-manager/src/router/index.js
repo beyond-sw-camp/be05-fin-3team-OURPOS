@@ -70,13 +70,13 @@ const routes = [
     path: "/subdash",
     name: "SubDash",
     component: SubDash,
-    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] },
   },
   {
     path: "/manager",
     name: "ManagerHome",
     component: ManagerHome,
-    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true},
   },
   {
     path:"/store-landing",

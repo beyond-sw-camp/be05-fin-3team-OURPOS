@@ -38,7 +38,7 @@
                 </v-col>
               </v-row>
               <v-card-text class="text-right">
-                <strong>금액: {{ Number(orderDetail.totalPrice).toLocaleString()  }}원</strong>
+                <strong>금액: {{ Number(orderDetail.totalPrice).toLocaleString() }}원</strong>
               </v-card-text>
             </v-card>
           </v-col>
@@ -47,7 +47,13 @@
         <v-container class="d-flex flex-column justify-end">
           <v-row v-if="orderDetailDtos.length > 0">
             <v-col cols="12" md="4" sm="6">
-              <v-btn @click="submitOrder" rounded="lg" size="x-large" block class="mb-4"> {{ Number(totalOrderPrice).toLocaleString() }}원 주문하기</v-btn>
+              <v-progress-linear :value="orderCompletionPercentage" class="mb-2" color="primary"></v-progress-linear>
+              <v-btn :disabled="!canOrder" @click="goToPayment" rounded="lg" size="x-large" block class="mb-4">
+                {{ Number(totalOrderPrice).toLocaleString() }}원 주문하기
+              </v-btn>
+              <div v-if="!canOrder" class="text-right">
+                최소 주문 금액: {{ Number(minOrderPrice).toLocaleString() }}원
+              </div>
             </v-col>
           </v-row>
           <v-row v-else class="text-center">
@@ -95,11 +101,24 @@ const orderErrorAlert = ref(false);
 const orderErrorMessage = ref('');
 const router = useRouter();
 
+// Set the minimum order price (replace this with actual value if available)
+const minOrderPrice = ref(15000); // example minimum order price
+
 // Compute the total price of the order
 const totalOrderPrice = computed(() => {
   return orderDetailDtos.value.reduce((total, orderDetail) => {
     return total + orderDetail.totalPrice;
   }, 0);
+});
+
+// Check if the order can be placed
+const canOrder = computed(() => {
+  return totalOrderPrice.value >= minOrderPrice.value;
+});
+
+// Calculate the percentage of the minimum order amount achieved
+const orderCompletionPercentage = computed(() => {
+  return Math.min((totalOrderPrice.value / minOrderPrice.value) * 100, 100);
 });
 
 const deleteOrderDetail = (index) => {
@@ -123,44 +142,10 @@ const decrementQuantity = (index) => {
   }
 };
 
-const submitOrder = async () => {
-  try {
-    const response = await axios.post(
-      'http://localhost:8080/api/v1/orders/hall',
-      {
-        storeId: fullOrder.value.storeId,
-        orderTakeoutYn: true,
-        orderDetailDtos: orderDetailDtos.value
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true
-      }
-    );
-    console.log('Order response:', response.data);
-
-    if (response.data.code === 200) {
-      // Clear the cart after successful order
-      orderDetailDtos.value = [];
-      localStorage.setItem('fullOrder', JSON.stringify({ ...fullOrder.value, orderDetailDtos: [] }));
-
-      // Show success message
-      orderSuccessSheet.value = true;
-    } else if (response.data.code === 401 || response.data.code === 403) {
-      router.push('/login');
-    } else {
-      // Show error message
-      orderErrorMessage.value = response.data.message;
-      orderErrorAlert.value = true;
-    }
-  } catch (error) {
-    console.error('Error submitting order:', error);
-    orderErrorMessage.value = '서버와 통신 중 오류가 발생했습니다. 다시 시도해주세요.';
-    orderErrorAlert.value = true;
-  }
+const goToPayment = () => {
+  router.push('/hall/pay');
 };
+
 
 // Watch for changes in orderDetailDtos and update localStorage accordingly
 watch(orderDetailDtos, (newOrderDetailDtos) => {
@@ -169,6 +154,7 @@ watch(orderDetailDtos, (newOrderDetailDtos) => {
 
 console.log(orderDetailDtos.value);
 </script>
+
 
 <style scoped>
 </style>
