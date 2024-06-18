@@ -2,9 +2,9 @@
   <div v-if="isOpen" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-bar">
-        <h5 class="modal-title">{{ title }}</h5>
-      </div>
-      <div class="modal-header">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="modal-title">{{ title }}</h5>
+        </div>
       </div>
       <div class="modal-body">
         <slot></slot>
@@ -55,18 +55,55 @@ export default {
 
 .modal-content {
   background: white;
-  padding: 20px;
+  padding: 0;
   border-radius: 5px;
   width: 400px;
   position: relative;
+  overflow: hidden;
 }
 
 .modal-bar {
   background-color: #3f51b5;
   color: white;
-  padding: 10px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+}
+
+.modal-body {
+  padding: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-control {
+  margin-bottom: 10px;
+  height: 40px; /* Set desired height */
+  width: 100%; /* Set desired width */
+  border: 1px solid #ced4da; /* Add border to select box */
+  border-radius: 4px; /* Optional: to match the input box */
+}
+
+
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  border-top: 1px solid #dee2e6;
 }
 
 .modal-header {
@@ -81,15 +118,8 @@ export default {
   background-color: white;
 }
 
-.modal-body {
-  padding: 50px 0 20px 0;
-  font-weight: bold;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+.modal-title {
+  font-size: 1.25rem;
+  color: #dee2e6;
 }
 </style>
