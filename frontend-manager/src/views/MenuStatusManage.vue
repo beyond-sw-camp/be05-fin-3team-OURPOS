@@ -26,17 +26,12 @@
         <div class="col-10">
           <div class="row">
             <div class="col-3 mb-4" v-for="menu in filteredMenus" :key="menu.id">
-              <div
-                class="card"
-                :class="{ 'deactivated': !menu.available }"
-                @click="menu.available ? confirmDeactivateMenu(menu.id) : confirmActivateMenu(menu.id)"
-              >
+              <div class="card" :class="{ 'deactivated': !menu.available }"
+                @click="menu.available ? confirmDeactivateMenu(menu.id) : confirmActivateMenu(menu.id)">
                 <img :src="menu.pictureUrl" class="card-img-top" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                  <h5 class="card-title">{{ menu.name }}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">{{ menu.price }}</h6>
-                  <p class="card-text">{{ menu.description }}</p>
-                </div>
+                  <h2>{{ menu.name }}</h2>
+                  <h3>{{ menu.price }}</h3>
+                  <p>{{ menu.description }}</p>
               </div>
             </div>
           </div>

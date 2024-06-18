@@ -44,116 +44,130 @@
       추가하기
     </MaterialButton>
 
-    <!-- Add Dialog for 그룹 -->
-    <Modal v-if="addDialogGroup" @close="closeAddDialogGroup">
-      <h2>메뉴 옵션 그룹 추가하기</h2>
-      <div class="form-group">
-        <label>메뉴 옵션 그룹 이름</label>
-        <input type="text" v-model="newItem.name" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>메뉴 옵션 그룹 설명</label>
-        <input type="text" v-model="newItem.description" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>카테고리 이름</label>
-        <select v-model="selectedCategoryName" class="form-control">
-          <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>
-          <input type="checkbox" v-model="newItem.exclusiveYn"> 배타선택 여부
-        </label>
-      </div>
-      <div class="actions">
+    <MenuOptionGroupManageModal v-if="addDialogGroup" @update:modelValue="addDialogGroup = false">
+      <template #header>
+        <h2>메뉴 옵션 그룹 추가하기</h2>
+      </template>
+      <template #body>
+        <div class="form-group">
+          <label>메뉴 옵션 그룹 이름</label>
+          <input type="text" v-model="newItem.name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>메뉴 옵션 그룹 설명</label>
+          <input type="text" v-model="newItem.description" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>카테고리 이름</label>
+          <select v-model="selectedCategoryName" class="form-control">
+            <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" v-model="newItem.exclusiveYn"> 배타선택 여부
+          </label>
+        </div>
+      </template>
+      <template #footer>
         <MaterialButton @click="addMenuOptionGroup" class="btn btn-primary">저장</MaterialButton>
         <MaterialButton @click="closeAddDialogGroup" class="btn btn-secondary">취소</MaterialButton>
-      </div>
-    </Modal>
+      </template>
+    </MenuOptionGroupManageModal>
 
-    <!-- Add Dialog for 옵션 -->
-    <Modal v-if="addDialogOption" @close="closeAddDialogOption">
-      <h2>메뉴 옵션 추가하기</h2>
-      <div class="form-group">
-        <label>메뉴 옵션 이름</label>
-        <input type="text" v-model="newItem.name" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>메뉴 옵션 그룹</label>
-        <select v-model="newItem.group" class="form-control">
-          <option v-for="group in menuOptionGroups" :key="group.id">{{ group.name }}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>추가금액</label>
-        <input type="number" v-model="newItem.price" class="form-control">
-      </div>
-      <div class="actions">
+    <MenuOptionGroupManageModal v-if="addDialogOption" @update:modelValue="addDialogOption = false">
+      <template #header>
+        <h2>메뉴 옵션 추가하기</h2>
+      </template>
+      <template #body>
+        <div class="form-group">
+          <label>메뉴 옵션 이름</label>
+          <input type="text" v-model="newItem.name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>메뉴 옵션 그룹</label>
+          <select v-model="newItem.group" class="form-control">
+            <option v-for="group in menuOptionGroups" :key="group.id">{{ group.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>추가금액</label>
+          <input type="number" v-model="newItem.price" class="form-control">
+        </div>
+      </template>
+      <template #footer>
         <MaterialButton @click="addMenuOption" class="btn btn-primary">저장</MaterialButton>
         <MaterialButton @click="closeAddDialogOption" class="btn btn-secondary">취소</MaterialButton>
-      </div>
-    </Modal>
+      </template>
+    </MenuOptionGroupManageModal>
 
     <!-- Edit Dialog for 그룹 -->
-    <Modal v-if="editDialogGroup" @close="closeEditDialogGroup">
-      <h2>메뉴 옵션 그룹 수정하기</h2>
-      <div class="form-group">
-        <label>메뉴 옵션 그룹 이름</label>
-        <input type="text" v-model="currentItem.name" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>메뉴 옵션 그룹 설명</label>
-        <input type="text" v-model="currentItem.description" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>카테고리 이름</label>
-        <select v-model="currentCategoryName" class="form-control">
-          <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>
-          <input type="checkbox" v-model="currentItem.exclusiveYn"> 배타선택 여부
-        </label>
-      </div>
-      <div class="actions">
+    <MenuOptionGroupManageModal v-if="editDialogGroup" @update:modelValue="editDialogGroup = false">
+      <template #header>
+        <h2>메뉴 옵션 그룹 수정하기</h2>
+      </template>
+      <template #body>
+        <div class="form-group">
+          <label>메뉴 옵션 그룹 이름</label>
+          <input type="text" v-model="currentItem.name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>메뉴 옵션 그룹 설명</label>
+          <input type="text" v-model="currentItem.description" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>카테고리 이름</label>
+          <select v-model="currentCategoryName" class="form-control">
+            <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" v-model="currentItem.exclusiveYn"> 배타선택 여부
+          </label>
+        </div>
+      </template>
+      <template #footer>
         <MaterialButton @click="saveMenuOptionGroup" class="btn btn-primary">저장</MaterialButton>
         <MaterialButton @click="closeEditDialogGroup" class="btn btn-secondary">취소</MaterialButton>
         <MaterialButton @click="deleteMenuOptionGroup" class="btn btn-danger">삭제</MaterialButton>
-      </div>
-    </Modal>
+      </template>
+    </MenuOptionGroupManageModal>
 
     <!-- Edit Dialog for 옵션 -->
-    <Modal v-if="editDialogOption" @close="closeEditDialogOption">
-      <h2>메뉴 옵션 수정하기</h2>
-      <div class="form-group">
-        <label>메뉴 옵션 이름</label>
-        <input type="text" v-model="currentItem.name" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>메뉴 옵션 그룹</label>
-        <select v-model="currentItem.group" class="form-control">
-          <option v-for="group in menuOptionGroups" :key="group.id">{{ group.name }}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>추가금액</label>
-        <input type="number" v-model="currentItem.price" class="form-control">
-      </div>
-      <div class="actions">
+    <MenuOptionGroupManageModal v-if="editDialogOption" @update:modelValue="editDialogOption = false">
+      <template #header>
+        <h2>메뉴 옵션 수정하기</h2>
+      </template>
+      <template #body>
+        <div class="form-group">
+          <label>메뉴 옵션 이름</label>
+          <input type="text" v-model="currentItem.name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>메뉴 옵션 그룹</label>
+          <select v-model="currentItem.group" class="form-control">
+            <option v-for="group in menuOptionGroups" :key="group.id">{{ group.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>추가금액</label>
+          <input type="number" v-model="currentItem.price" class="form-control">
+        </div>
+      </template>
+      <template #footer>
         <MaterialButton @click="saveMenuOption" class="btn btn-primary">저장</MaterialButton>
         <MaterialButton @click="closeEditDialogOption" class="btn btn-secondary">취소</MaterialButton>
         <MaterialButton @click="deleteMenuOption" class="btn btn-danger">삭제</MaterialButton>
-      </div>
-    </Modal>
+      </template>
+    </MenuOptionGroupManageModal>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import Modal from './Modal.vue';
+import MenuOptionGroupManageModal from '../views/MenuOptionGroupManageModal';
 
 const addDialogGroup = ref(false);
 const addDialogOption = ref(false);

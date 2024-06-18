@@ -12,8 +12,8 @@ export default {
   name: "MaterialButton",
   props: {
     color: {
-      type: String,
-      default: "success",
+      type: String
+      // default: "white",
     },
     size: {
       type: String,
