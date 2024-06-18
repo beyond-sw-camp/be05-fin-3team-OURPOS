@@ -83,7 +83,7 @@
             <v-text-field
               v-model="tempSubAddress.name"
               :rules="nameRules"
-              label="이름"
+              label="주소 이름"
             />
             <v-text-field
               v-model="tempSubAddress.receiverName"
@@ -93,7 +93,7 @@
             <v-text-field
               v-model="tempSubAddress.telNo"
               label="전화번호"
-              :rules="requiredRules"
+              :rules="telNoRules"
             />
             <v-btn color="warning" @click="execDaumPostcode('sub')"
               >우편번호 찾기</v-btn
@@ -102,11 +102,13 @@
               v-model="tempSubAddress.zipcode"
               label="우편번호"
               :rules="requiredRules"
+              readonly
             />
             <v-text-field
               v-model="tempSubAddress.addressBase"
               label="주소"
               :rules="requiredRules"
+              readonly
             />
             <v-text-field
               v-model="tempSubAddress.addressDetail"
@@ -136,7 +138,7 @@
           <v-form ref="addSubAddressForm" v-model="isAddSubAddressFormValid">
             <v-text-field
               v-model="newSubAddress.name"
-              label="이름"
+              label="주소 이름"
               :rules="requiredRules"
             />
             <v-text-field
@@ -147,7 +149,7 @@
             <v-text-field
               v-model="newSubAddress.telNo"
               label="전화번호"
-              :rules="requiredRules"
+              :rules="telNoRules"
             />
             <v-btn color="warning" @click="execDaumPostcode('new')"
               >우편번호 찾기</v-btn
@@ -156,11 +158,13 @@
               v-model="newSubAddress.zipcode"
               label="우편번호"
               :rules="requiredRules"
+              readonly
             />
             <v-text-field
               v-model="newSubAddress.addressBase"
               label="주소"
               :rules="requiredRules"
+              readonly
             />
             <v-text-field
               v-model="newSubAddress.addressDetail"
@@ -254,6 +258,12 @@ export default {
       isSubAddressFormValid: false,
       isAddSubAddressFormValid: false,
       requiredRules: [(value) => !!value || "This field is required"],
+      telNoRules:[
+        (value) => !!value || "전화번호를 입력해주세요",
+        (value) => /^[0-9]*$/.test(value) || "전화번호는 숫자만 입력 가능합니다.",
+        (value) => !value.includes('-') || "전화번호는 '-' 없이 입력해주세요",
+        
+      ]
     };
   },
   async mounted() {
