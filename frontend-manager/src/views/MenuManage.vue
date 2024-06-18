@@ -1,29 +1,29 @@
 <template>
   <div>
-    <div class="navigation-bar">
-      <h1>OUR POS</h1>
-      <router-link to="/">
-        <MaterialButton  class="icon-MaterialButton">
-          <i class="mdi mdi-export"></i>
-        </MaterialButton>
+    <nav class="navbar navbar-dark bg-dark navigation-bar">
+      <span class="navbar-brand">OUR POS</span>
+      <router-link to="/owner" class="ml-auto">
+        <button class="btn btn-outline-light">
+          <i class="mdi mdi-export">뒤로 가기</i>
+        </button>
       </router-link>
-    </div>
+    </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-3">
+        <div class="col-2">
           <div class="category-list">
-            <MaterialButton 
+            <material-button
               v-for="category in categories"
               :key="category.id"
               @click="filterMenus(category)"
-              :class="selectedCategory === category.name ? 'category-MaterialButton primary' : 'category-MaterialButton default'"
+              :class="['btn', selectedCategory === category ? 'btn-primary' : 'btn-light', 'category-button']"
             >
               {{ category.name }}
-            </MaterialButton>
-            <MaterialButton  @click="openDialog('addCategory')" class="action-MaterialButton">카테고리 추가</MaterialButton>
-            <MaterialButton  @click="openDialog('editCategory')" class="action-MaterialButton">카테고리 수정</MaterialButton>
-            <MaterialButton  @click="openDialog('deleteCategory')" class="action-MaterialButton">카테고리 삭제</MaterialButton>
-            <MaterialButton  @click="openDialog('addMenu')" class="action-MaterialButton">메뉴 추가</MaterialButton>
+            </material-button>
+            <material-button  @click="openDialog('addCategory')" class="action-material-button">카테고리 추가</material-button>
+            <material-button  @click="openDialog('editCategory')" class="action-material-button">카테고리 수정</material-button>
+            <material-button  @click="openDialog('deleteCategory')" class="action-material-button">카테고리 삭제</material-button>
+            <material-button  @click="openDialog('addMenu')" class="action-material-button">메뉴 추가</material-button>
           </div>
         </div>
         <div class="col-9">
@@ -46,8 +46,8 @@
       <h2>추가할 카테고리</h2>
       <input v-model="newCategory" placeholder="카테고리 이름" />
       <div class="actions">
-        <MaterialButton  @click="addCategory">확인</MaterialButton>
-        <MaterialButton  @click="closeDialog">취소</MaterialButton>
+        <material-button  @click="addCategory">확인</material-button>
+        <material-button  @click="closeDialog">취소</material-button>
       </div>
     </Modal>
 
@@ -59,8 +59,8 @@
       </select>
       <input v-model="updatedCategoryName" placeholder="변경 후 카테고리 이름" />
       <div class="actions">
-        <MaterialButton @click="editCategory">확인</MaterialButton>
-        <MaterialButton @click="closeDialog">취소</MaterialButton>
+        <material-button @click="editCategory">확인</material-button>
+        <material-button @click="closeDialog">취소</material-button>
       </div>
     </Modal>
 
@@ -71,8 +71,8 @@
         <option v-for="name in categoryNames" :key="name">{{ name }}</option>
       </select>
       <div class="actions">
-        <MaterialButton @click="deleteCategory">확인</MaterialButton>
-        <MaterialButton @click="closeDialog">취소</MaterialButton>
+        <material-button @click="deleteCategory">확인</material-button>
+        <material-button @click="closeDialog">취소</material-button>
       </div>
     </Modal>
 
@@ -89,12 +89,12 @@
           <input v-model="newMenu.price" placeholder="가격" />
           <input v-model="newMenu.image" placeholder="사진 URL" />
           <input type="file" ref="fileInput" @change="handleFileChange" style="display: none" />
-          <MaterialButton @click="triggerFileInput">Browse</MaterialButton>
+          <material-button @click="triggerFileInput">Browse</material-button>
           <textarea v-model="newMenu.description" placeholder="메뉴 설명"></textarea>
         </div>
         <div class="col-6">
-          <MaterialButton @click="addMenu">메뉴 추가</MaterialButton>
-          <MaterialButton @click="closeDialog">취소</MaterialButton>
+          <material-button @click="addMenu">메뉴 추가</material-button>
+          <material-button @click="closeDialog">취소</material-button>
         </div>
       </div>
     </Modal>
@@ -112,13 +112,13 @@
           <input v-model="selectedMenu.price" placeholder="가격" />
           <input v-model="selectedMenu.pictureUrl" placeholder="사진 URL" />
           <input type="file" ref="fileInputUpdate" @change="handleFileChangeUpdate" style="display: none" />
-          <MaterialButton @click="triggerFileInputUpdate">Browse</MaterialButton>
+          <material-button @click="triggerFileInputUpdate">Browse</material-button>
           <textarea v-model="selectedMenu.description" placeholder="메뉴 설명"></textarea>
         </div>
         <div class="col-6">
-          <MaterialButton @click="updateMenu">수정 반영</MaterialButton>
-          <MaterialButton @click="deleteMenu">메뉴 삭제</MaterialButton>
-          <MaterialButton @click="closeDialog">뒤로가기</MaterialButton>
+          <material-button @click="updateMenu">수정 반영</material-button>
+          <material-button @click="deleteMenu">메뉴 삭제</material-button>
+          <material-button @click="closeDialog">뒤로가기</material-button>
         </div>
       </div>
     </Modal>
@@ -129,6 +129,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Modal from './Modal.vue';
+import MaterialButton from '../components/MaterialButton.vue';
 
 const categories = ref([]);
 const categoryNames = ref([]);
@@ -468,7 +469,7 @@ onMounted(() => {
   flex-direction: column;
 }
 
-.category-MaterialButton, .action-MaterialButton {
+.category-material-button, .action-material-button {
   font-size: 16px;
   padding: 10px 20px;
   margin: 10px 0;
@@ -513,7 +514,7 @@ onMounted(() => {
   margin-top: 20px;
 }
 
-.icon-MaterialButton {
+.icon-material-button {
   font-size: 16px;
   padding: 10px 20px;
   margin: 10px 0;

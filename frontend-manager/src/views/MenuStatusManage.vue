@@ -3,9 +3,9 @@
     <nav class="navbar navbar-dark bg-dark navigation-bar">
       <span class="navbar-brand">OUR POS</span>
       <router-link to="/manager" class="ml-auto">
-        <button class="btn btn-outline-light">
+        <material-button class="btn btn-outline-light">
           <i class="mdi mdi-export">뒤로 가기</i>
-        </button>
+        </material-button>
       </router-link>
     </nav>
 

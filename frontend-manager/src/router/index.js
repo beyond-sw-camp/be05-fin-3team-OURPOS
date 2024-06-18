@@ -103,13 +103,13 @@ const routes = [
     meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] , hideSidenav: true}
   },
   {
-    path:"/head-office-landing/menu-manage",
+    path:"/menu-manage",
     name:"MenuManage",
     component:MenuManage,
     meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] , hideSidenav: true}
   },
   {
-    path:"/head-office-landing/menu-option-group-manage",
+    path:"/menu-option-group-manage",
     name:"MenuOptionGroupManage",
     component:MenuOptionGroupManage,
     meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] , hideSidenav: true}
