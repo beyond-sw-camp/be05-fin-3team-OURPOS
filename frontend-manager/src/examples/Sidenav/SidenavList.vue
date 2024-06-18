@@ -19,6 +19,19 @@
       </li>
       <li class="nav-item">
         <sidenav-collapse
+            url="#"
+            :aria-controls="''"
+            v-bind:collapse="false"
+            collapseRef="supplies"
+            navText="Supplies Manage"
+        >
+          <template v-slot:icon>
+            <i class="material-icons-round opacity-10 fs-5">receipt_long</i>
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
@@ -35,21 +48,8 @@
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="billing"
-          navText="Billing"
-        >
-          <template v-slot:icon>
-            <i class="material-icons-round opacity-10 fs-5">receipt_long</i>
-          </template>
-        </sidenav-collapse>
-      </li>
-      <li class="nav-item">
-        <sidenav-collapse
-          url="#"
-          :aria-controls="''"
-          v-bind:collapse="false"
-          collapseRef="rtl-page"
-          navText="Rtl"
+          collapseRef="infra"
+          navText="new franchies"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5"

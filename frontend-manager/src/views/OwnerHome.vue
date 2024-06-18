@@ -6,26 +6,14 @@
 
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-            <mini-statistics-card :title="{ text: 'New Clients', value: '3,462' }"
-              detail="<span class='text-danger text-sm font-weight-bolder'>-2%</span> than yesterday" :icon="{
+            <mini-statistics-card :title="{ text: '현재 지점수', value: '5' }"
+              detail="<span class='text-danger text-sm font-weight-bolder'></span>" :icon="{
                 name: 'person',
                 color: 'text-white',
                 background: 'success',
               }" />
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-            <mini-statistics-card :title="{ text: 'Sales', value: '$103,430' }"
-              detail="<span class='text-success text-sm font-weight-bolder'>+5%</span> Just updated" :icon="{
-                name: 'weekend',
-                color: 'text-white',
-                background: 'info',
-              }" />
-              <button @click="goToStore">지점 이동</button>
-          </div>
         </div>
-
-
-
 
 
         <div class="row mb-4 col-lg-12">

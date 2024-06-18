@@ -22,6 +22,7 @@ import HeadOfficeLanding from "../views/HeadOfficeLanding.vue";
 import MenuManage from "../views/MenuManage.vue";
 import MenuOptionGroupManage from "../views/MenuOptionGroupManage.vue";
 import ManagerInsight from "@/views/ManagerInsight.vue";
+import InfraAnalysis from "@/views/InfraAnalysis.vue";
 
 const routes = [
   {
@@ -127,9 +128,9 @@ const routes = [
   },
   {
     name: 'storeordercheck_company',
-    path: '/storeorder/:storeId/check',
+    path: '/supplies',
     component: StoreOrderCheck_company,
-    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
   },
   {
     name: 'storeordercheck_store',
@@ -149,6 +150,12 @@ const routes = [
     component: StoreOrder,
     meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
+  {
+    name: 'InfraAnalysis',
+    path: '/infra',
+    component: InfraAnalysis,
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
+  }
 
 ];
 
