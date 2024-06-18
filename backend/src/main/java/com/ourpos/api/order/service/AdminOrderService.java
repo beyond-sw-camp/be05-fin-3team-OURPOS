@@ -135,10 +135,11 @@ public class AdminOrderService {
     // 아침에 들어온 재고 고정량 조회(보류)
 
     // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)
-    public List<StoreStockResponseDto> getIncomingStock(Long storeId) {
-        Store store = storeRepository.findById(storeId)
+    public List<StoreStockResponseDto> getIncomingStock(String adminLoginId) {
+        Store store = storeRepository.findByManagerLoginId(adminLoginId)
             .orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
 
+        Long storeId=store.getId();
         List<StoreOrder> storeOrders = storeOrderRepository.findByStoreId(storeId);
         if (storeOrders.isEmpty()) {
             throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
@@ -169,7 +170,11 @@ public class AdminOrderService {
 
     // 배송 완료 반영된 재고량 조회 (기타 입출고 포함)
     @Transactional(readOnly = true)
-    public List<StoreStockCheckResponseDto> getAllStoreStocks() {
+    public List<StoreStockCheckResponseDto> getAllStoreStocks(String adminLoginId) {
+        Store store = storeRepository.findByManagerLoginId(adminLoginId)
+        .orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
+
+        Long storeId=store.getId();
         List<StoreStock> storeStocks = storeStockRepository.findAll();
         return storeStocks.stream()
             .map(StoreStockCheckResponseDto::new)
