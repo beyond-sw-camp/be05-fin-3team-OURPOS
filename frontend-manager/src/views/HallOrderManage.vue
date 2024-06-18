@@ -70,6 +70,7 @@
                   <div v-for="(detail, index) in selectedOrderDetail.orderDetailResponseDtos" :key="index">
                     <div><strong>상품명:</strong> {{ detail.menuName }}</div>
                     <div><strong>가격:</strong> {{ detail.menuPrice }}</div>
+                    <div><strong>수량:</strong> {{ detail.quantity }}</div>
                     <!-- 추가적인 세부 정보 표시 -->
                     <div v-if="Array.isArray(detail.orderOptionGroupResponseDtos)">
                       <div v-for="(optionGroup, idx) in detail.orderOptionGroupResponseDtos" :key="idx">
