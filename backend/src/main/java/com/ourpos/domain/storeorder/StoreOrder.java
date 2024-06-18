@@ -1,5 +1,6 @@
 package com.ourpos.domain.storeorder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,9 @@ public class StoreOrder extends BaseEntity {
     @OneToMany(mappedBy = "storeOrder", cascade = CascadeType.ALL)
     private List<StoreOrderDetail> storeOrderDetails = new ArrayList<>();
 
+    @Column(name = "delivery_date")
+    private LocalDateTime deliveryDate;
+
     @Builder
     protected StoreOrder(Integer price, Integer quantity, Store store) {
         this.price = price;
@@ -76,6 +80,7 @@ public class StoreOrder extends BaseEntity {
             throw new IllegalArgumentException("대기중인 주문만 배달 가능합니다.");
         }
         this.status = StoreOrderStatus.DELIVERING;
+        this.deliveryDate = LocalDateTime.now(); 
 
     }
 
