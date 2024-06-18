@@ -139,16 +139,16 @@ public class AdminOrderController {
         }
     }
         */
-        // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)-> 직영점
-        @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-        @GetMapping("/store/incoming-stock/my")
-        public Result<List<StoreStockResponseDto>> getIncomingStockforstore() {
-	       String adminLoginId = getManagerLoginId();
+    // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)-> 직영점
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/store/incoming-stock/my")
+    public Result<List<StoreStockResponseDto>> getIncomingStockforstore() {
+	    String adminLoginId = getManagerLoginId();
 
-            log.info("가게 입고 예정량 조회: {}", adminLoginId);
-            log.debug("getIncomingStock 메서드 호출됨");
-            List<StoreStockResponseDto> incomingStockList = adminOrderService.getIncomingStock(adminLoginId);
-            return new Result<>(HttpStatus.OK.value(), "입고 예정량 목록을 불러옵니다", incomingStockList);
+        log.info("가게 입고 예정량 조회: {}", adminLoginId);
+        log.debug("getIncomingStock 메서드 호출됨");
+        List<StoreStockResponseDto> incomingStockList = adminOrderService.getIncomingStock(adminLoginId);
+        return new Result<>(HttpStatus.OK.value(), "입고 예정량 목록을 불러옵니다", incomingStockList);
             
 
         }

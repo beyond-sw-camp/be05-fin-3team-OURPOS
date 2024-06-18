@@ -36,6 +36,7 @@ import com.ourpos.domain.storeorder.StoreOrder;
 import com.ourpos.domain.storeorder.StoreOrderRepository;
 import com.ourpos.domain.storeorder.StoreOrderStatus;
 
+import io.jsonwebtoken.lang.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -156,8 +157,8 @@ public class AdminOrderService {
             }
         }
 
-        return incomingStockList;
-    }
+    return incomingStockList;
+}
 
     // 기타 입고(점주가 배송된 상품의 상태 확인 후 임의로 재고 변경)
     @Transactional
