@@ -1,10 +1,12 @@
 <template>
   <div>
     <nav class="navbar navbar-dark bg-dark navigation-bar">
-      <span class="navbar-brand">OUR POS</span>
+      <div class="mr-auto">
+        <div class="POS-name">OUR POS</div>
+      </div>
       <router-link to="/owner" class="ml-auto">
         <button class="btn btn-outline-light">
-          <i class="mdi mdi-export"></i> 뒤로 가기
+          <i class="mdi mdi-export">뒤로 가기</i> 
         </button>
       </router-link>
     </nav>
@@ -474,11 +476,11 @@ onMounted(() => {
 }
 
 .category-material-button, .action-material-button {
-  font-size: 16px;
+  font-size: 2rem; /* Increased font size */
   padding: 10px 20px;
   margin: 10px 0;
   width: 100%;
-  height: 60px; /* Adjust the height as needed */
+  
 }
 
 .primary {
@@ -524,5 +526,14 @@ onMounted(() => {
   font-size: 16px;
   padding: 10px 20px;
   margin: 10px 0;
+}
+
+.POS-name {
+  font-size: 3rem; /* Increased font size */
+  color: aliceblue;
+}
+
+.mdi {
+  font-size: 1.25rem; /* Increased font size */
 }
 </style>

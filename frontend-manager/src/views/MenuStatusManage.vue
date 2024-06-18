@@ -1,9 +1,11 @@
 <template>
   <div>
     <nav class="navbar navbar-dark bg-dark navigation-bar">
-      <span class="navbar-brand">OUR POS</span>
+      <div class="mr-auto">
+        <div class="POS-name">OUR POS</div>
+      </div>
       <router-link to="/manager" class="ml-auto">
-        <material-button class="btn btn-outline-light">
+        <material-button class="exit-btn btn-outline-light">
           <i class="mdi mdi-export">뒤로 가기</i>
         </material-button>
       </router-link>
@@ -213,5 +215,18 @@ onMounted(() => {
 .deactivated {
   background-color: gray;
   opacity: 0.6;
+}
+
+.mdi {
+  font-size: 1.25rem; /* Increased font size */
+}
+
+.btn {
+  font-size: 3rem; /* Increased font size */
+}
+
+.POS-name {
+  font-size: 3rem; /* Increased font size */
+  color: aliceblue;
 }
 </style>

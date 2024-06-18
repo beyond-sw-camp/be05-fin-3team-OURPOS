@@ -1,33 +1,33 @@
 <template>
   <div>
-    <div class="navigation-bar">
-      <h1>OUR POS</h1>
-      <router-link to="/head-office-landing">
-        <MaterialButton class="icon-MaterialButton">
-          <i class="mdi mdi-export"></i>
-        </MaterialButton>
+    <nav class="navbar navbar-dark bg-dark navigation-bar">
+      <span class="navbar-brand">OUR POS</span>
+      <router-link to="/owner" class="ml-auto">
+        <button class="btn btn-outline-light">
+          <i class="mdi mdi-export"></i> 뒤로 가기
+        </button>
       </router-link>
-    </div>
+    </nav>
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-3">
-          <MaterialButton
-            :class="selectedCategory.value === 'group' ? 'btn primary' : 'btn'"
+        <div class="col-2">
+          <material-button
+            :class="['btn', { 'btn-primary-selected': selectedCategory.value === 'group' }]"
             @click="selectCategory('group')"
           >
             메뉴 옵션 그룹
-          </MaterialButton>
-          <MaterialButton
-            :class="selectedCategory.value === 'option' ? 'btn primary' : 'btn'"
+          </material-button>
+          <material-button
+            :class="['btn', { 'btn-primary-selected': selectedCategory.value === 'option' }]"
             @click="selectCategory('option')"
           >
             메뉴 옵션
-          </MaterialButton>
+          </material-button>
         </div>
-        <div class="col-9">
+        <div class="col-10">
           <div class="row">
-            <div class="col-12 col-sm-4" v-for="(item, index) in selectedItems" :key="index">
+            <div class="col-12 col-sm-3" v-for="(item, index) in selectedItems" :key="index">
               <div class="card" @click="openEditDialog(item, index)">
                 <h2>{{ item.name }}</h2>
                 <h3>{{ item.description }}</h3>
@@ -168,7 +168,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import MenuOptionGroupManageModal from '../views/MenuOptionGroupManageModal';
-
+import MaterialButton from '../components/MaterialButton.vue';
 
 const addDialogGroup = ref(false);
 const addDialogOption = ref(false);
@@ -464,13 +464,14 @@ onMounted(() => {
   display: block;
   width: 100%;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 20px; /* Increased padding for height */
+  font-size: 1.25rem; /* Increased font size */
   text-align: center;
   cursor: pointer;
 }
 
-.btn.primary {
-  background-color: #3f51b5;
+.btn-primary-selected {
+  background-color: #3f51b5; /* Selected state color */
   color: white;
 }
 
@@ -487,8 +488,9 @@ onMounted(() => {
   color: white;
   border: none;
   border-radius: 50%;
-  width: 56px;
-  height: 56px;
+  width: 70px; /* Increased width */
+  height: 70px; /* Increased height */
+  font-size: 1.5rem; /* Increased font size */
   cursor: pointer;
 }
 
@@ -498,6 +500,18 @@ onMounted(() => {
   border-radius: 8px;
   cursor: pointer;
   margin-bottom: 16px;
+}
+
+.card h2 {
+  font-size: 1.75rem; /* Increased font size */
+}
+
+.card h3 {
+  font-size: 1.5rem; /* Increased font size */
+}
+
+.card p {
+  font-size: 1.25rem; /* Increased font size */
 }
 
 .actions {
