@@ -1,216 +1,231 @@
 <template>
   <div>
-    <nav class="navbar navbar-dark bg-dark navigation-bar">
-      <span class="navbar-brand">OUR POS</span>
-      <router-link to="/store-landing" class="ml-auto">
-        <button class="btn btn-outline-light">
-          <i class="mdi mdi-export"></i>
-        </button>
-      </router-link>
-    </nav>
-
-    <div class="container-fluid">
+    <div class="container mt-4">
+      <h2>주문 목록</h2>
+      <div class="row mb-3">
+        <div class="col">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a 
+                class="nav-link" 
+                :class="{ active: selectedTab === 'WAITING' }" 
+                @click="fetchOrders('WAITING')"
+                href="#"
+              >
+                대기중
+              </a>
+            </li>
+            <li class="nav-item">
+              <a 
+                class="nav-link" 
+                :class="{ active: selectedTab === 'COOKING' }" 
+                @click="fetchOrders('COOKING')"
+                href="#"
+              >
+                조리중
+              </a>
+            </li>
+            <li class="nav-item">
+              <a 
+                class="nav-link" 
+                :class="{ active: selectedTab === 'DELIVERING' }" 
+                @click="fetchOrders('DELIVERING')"
+                href="#"
+              >
+                배달중
+              </a>
+            </li>
+            <li class="nav-item">
+              <a 
+                class="nav-link" 
+                :class="{ active: selectedTab === 'COMPLETED' }" 
+                @click="fetchOrders('COMPLETED')"
+                href="#"
+              >
+                배달완료
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
       <div class="row">
         <div class="col-9">
-          <div class="card p-4 order-list">
-            <div class="row">
-              <div class="col">
-                <button
-                  :class="['btn', selectedTab === '대기' ? 'btn-success' : 'btn-light']"
-                  @click="selectTab('대기')"
-                >
-                  대기
-                </button>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">주문 리스트</h5>
+              <div class="row">
+                <div class="col"><strong>주문 번호</strong> </div>
+                <div class="col"><strong>주문 일시</strong> </div>
+                <div class="col"><strong>주문 금액</strong> </div>
+                <div class="col"><strong>주문 상태</strong> </div>
               </div>
-              <div class="col">
-                <button
-                  :class="['btn', selectedTab === '조리중' ? 'btn-success' : 'btn-light']"
-                  @click="selectTab('조리중')"
-                >
-                  조리중
-                </button>
-              </div>
-              <div class="col">
-                <button
-                  :class="['btn', selectedTab === '배달중' ? 'btn-success' : 'btn-light']"
-                  @click="selectTab('배달중')"
-                >
-                  배달중
-                </button>
-              </div>
-              <div class="col">
-                <button
-                  :class="['btn', selectedTab === '배달완료' ? 'btn-success' : 'btn-light']"
-                  @click="selectTab('배달완료')"
-                >
-                  배달완료
-                </button>
-              </div>
-            </div>
-            <div class="row mt-4">
-              <div class="col">
-                <div class="order-title">주문번호</div>
-              </div>
-              <div class="col">
-                <div class="order-title">주문일시</div>
-              </div>
-              <div class="col">
-                <div class="order-title">경과시간</div>
-              </div>
-              <div class="col">
-                <div class="order-title">결제수단</div>
-              </div>
-              <div class="col">
-                <div class="order-title">주문 금액</div>
-              </div>
-              <div class="col">
-                <div class="order-title">주문 상태</div>
-              </div>
-            </div>
-            <hr class="my-2">
-            <div
-              v-for="order in filteredOrders"
-              :key="order.id"
-              @click="selectOrder(order)"
-              class="row order-card"
-            >
-              <div class="col">{{ order.id }}</div>
-              <div class="col">{{ order.date }}</div>
-              <div class="col">{{ order.elapsedTime }}</div>
-              <div class="col">{{ order.payment }}</div>
-              <div class="col">{{ order.amount }}</div>
-              <div class="col">{{ order.status }}</div>
+              <ul class="list-group">
+                <li v-for="order in orders" :key="order.orderId" class="list-group-item">
+                  <div class="row">
+                    <div class="col"><strong></strong> {{ order.orderId }}</div>
+                    <div class="col"><strong></strong> {{ order.orderCreatedDateTime }}</div>
+                    <!--<div class="col"><strong>경과 시간</strong> {{ order.price }}</div>-->
+                    <!--<div class="col"><strong>결제 수단:</strong> {{ order.price }}</div>-->
+                    <div class="col"><strong></strong> {{ order.price }}</div>
+                    <div class="col">
+                      <a href="#" @click="showOrderDetail(order)">
+                        {{ order.deliveryOrderStatus }}
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-        <div class="col-3">
-          <div class="card p-4 order-detail">
-            <div v-if="selectedOrder">
-              <div>
-                <strong>총 금액:</strong> {{ selectedOrder.totalAmount }}
-              </div>
-              <div>
-                <strong>주문 일시:</strong> {{ selectedOrder.date }}
-              </div>
-              <div>
-                <strong>주문 주소:</strong> {{ selectedOrder.address }}
-              </div>
-              <div>
-                <strong>연락처:</strong> {{ selectedOrder.contact }}
-              </div>
-              <div>
-                <strong>고객요청:</strong> {{ selectedOrder.customerRequest }}
-              </div>
-              <div>
-                <strong>라이더요청:</strong> {{ selectedOrder.riderRequest }}
-              </div>
-            </div>
-            <hr class="my-2">
-            <div v-if="selectedTab === '대기'">
-              <div class="row">
-                <div class="col">
-                  <button class="btn btn-primary" @click="acceptOrder">주문수락</button>
-                </div>
-                <div class="col">
-                  <button class="btn btn-danger" @click="rejectOrder">주문거절</button>
-                </div>
-              </div>
-            </div>
-            <div v-else-if="selectedTab === '조리중'">
-              <button class="btn btn-primary" @click="callRider">기사호출</button>
-            </div>
-            <div v-else-if="selectedTab === '배달중'">
-              <button class="btn btn-primary" @click="trackRider">라이더 위치확인</button>
+        <!-- 세부 정보 표시 -->
+        <div class="col-3" v-if="selectedOrderDetail">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">주문 세부 정보</h5>
+      <!-- 주문 주소 및 연락처 정보 표시 -->
+      <div v-if="selectedOrderDetail.orderAddressResponseDto">
+        <div><strong>주문 주소:</strong> {{ selectedOrderDetail.orderAddressResponseDto.addressBase }} {{ selectedOrderDetail.orderAddressResponseDto.addressDetail }}</div>
+        <div><strong>연락처:</strong> {{ selectedOrderDetail.orderAddressResponseDto.telNo }}</div>
+      </div>
+      <!-- 고객 요청 및 라이더 요청 표시 -->
+      <div><strong>고객 요청:</strong> {{ selectedOrderDetail.ownerMessage }}</div>
+      <div><strong>라이더 요청:</strong> {{ selectedOrderDetail.riderMessage }}</div>
+      <!-- 주문 상세 정보 표시 -->
+      <div v-if="Array.isArray(selectedOrderDetail.orderDetailResponseDtos)">
+        <div v-for="(detail, index) in selectedOrderDetail.orderDetailResponseDtos" :key="index">
+          <div><strong>상품명:</strong> {{ detail.menuName }}</div>
+          <div><strong>가격:</strong> {{ detail.menuPrice }}</div>
+          <!-- 추가적인 세부 정보 표시 -->
+          <div v-if="Array.isArray(detail.orderOptionGroupResponseDtos)">
+            <div v-for="(optionGroup, idx) in detail.orderOptionGroupResponseDtos" :key="idx">
+              <div><strong>{{ optionGroup.optionGroupName }}:</strong></div>
+              <ul>
+                <li v-for="(option, i) in optionGroup.orderOptionResponseDtos" :key="i">
+                  {{ option.optionName }}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
+      <!-- 주문 상태 변경 버튼 추가 -->
+      <div class="mt-3" v-if="selectedOrderDetail.deliveryOrderStatus === 'WAITING'">
+        <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'accept')" class="btn btn-success btn-sm">COOKING</button>
+        <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'cancel')" class="btn btn-warning btn-sm">CANCEL</button>
+      </div>
+      <div class="mt-3" v-if="selectedOrderDetail.deliveryOrderStatus === 'COOKING'">
+        <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'deliver')" class="btn btn-primary btn-sm">DELIVERING</button>
+      </div>
+      <div class="mt-3" v-if="selectedOrderDetail.deliveryOrderStatus === 'DELIVERING'">
+        <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'complete')" class="btn btn-primary btn-sm">COMPLETE</button>
+      </div>
     </div>
   </div>
+</div>
+</div>
+</div>
+</div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue';
+<script>
+import axios from 'axios';
 
-const orders = ref([
-  {
-    id: 1, date: '2023-06-09 12:00', elapsedTime: '10분', amount: '10,000원', status: '대기', payment :'카드',
-    totalAmount: '10,000원', address: '123 Main St', contact: '010-1234-5678', customerRequest: 'Extra ketchup', riderRequest: 'Call upon arrival'
+export default {
+  data() {
+    return {
+      orders: [],
+      loading: false,
+      error: null,
+      selectedOrderDetail: null, // 선택된 주문의 세부 정보를 저장할 상태
+      selectedTab: 'WAITING', 
+    };
   },
-  {
-    id: 2, date: '2023-06-09 12:05', elapsedTime: '5분', amount: '8,000원', status: '대기', payment : '카드',
-    totalAmount: '8,000원', address: '456 Elm St', contact: '010-8765-4321', customerRequest: 'No onions', riderRequest: 'Leave at door'
-  }
-]);
+  created() {
+    this.fetchOrders(this.selectedTab);
+  },
+  methods: {
+    async fetchOrders(status) {
+      this.loading = true;
+      this.error = null;
+      this.selectedTab = status;
+      const token = localStorage.getItem('token');
 
-const selectedOrder = ref(null);
-const selectedTab = ref('대기');
+      if (!token) {
+        this.error = 'No token found in local storage';
+        this.loading = false;
+        return;
+      }
 
-const filteredOrders = computed(() => {
-  return orders.value.filter(order => order.status === selectedTab.value);
-});
+      try {
+        const response = await axios.get(`http://localhost:8080/api/v1/orders/delivery/my`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+          },
+          withCredentials: true,
+          params: {
+            status: status
+          }
+        });
+        this.orders = response.data.data.content;
+        console.log(response.data.data.content);
+      } catch (error) {
+        this.error = 'Error fetching orders';
+        console.error('Error fetching orders:', error);
 
-const selectOrder = (order) => {
-  selectedOrder.value = order;
-};
+        if (error.response && error.response.status === 401) {
+          this.error = 'Unauthorized: Invalid or expired token';
+          console.error('Unauthorized: Invalid or expired token');
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
 
-const selectTab = (tab) => {
-  selectedTab.value = tab;
-  selectedOrder.value = null;
-};
+    showOrderDetail(order) {
+      // 선택된 주문의 세부 정보를 저장하고 표시
+      this.selectedOrderDetail = order;
+    },
 
-const acceptOrder = () => {
-  if (selectedOrder.value) {
-    selectedOrder.value.status = '조리중';
-    const orderIndex = orders.value.findIndex(order => order.id === selectedOrder.value.id);
-    orders.value[orderIndex].status = '조리중';
-  }
-};
+    async changeOrderStatus(orderId, action) {
+      const token = localStorage.getItem('token');
 
-const rejectOrder = () => {
-  if (selectedOrder.value) {
-    orders.value = orders.value.filter(order => order.id !== selectedOrder.value.id);
-    selectedOrder.value = null;
-  }
-};
+      if (!token) {
+        this.error = 'No token found in local storage';
+        return;
+      }
 
-const callRider = () => {
-  if (selectedOrder.value) {
-    selectedOrder.value.status = '배달중';
-    const orderIndex = orders.value.findIndex(order => order.id === selectedOrder.value.id);
-    orders.value[orderIndex].status = '배달중';
-  }
-};
+      let url = `http://localhost:8080/api/v1/orders/delivery/${orderId}`;
+      if (action === 'accept') {
+        url += '/accept';
+      } else if (action === 'cancel') {
+        url += '/cancel';
+      } else if (action === 'deliver') {
+        url += '/deliver';
+      }else if (action === 'complete') {
+        url += '/complete';
+      }
 
-const trackRider = () => {
-  alert("Tracking rider for order: " + selectedOrder.value.id);
+      try {
+        await axios.put(url, {}, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+          },
+          withCredentials: true
+        });
+        this.selectedOrderDetail = null; // 상태 변경 후 세부 정보 탭 숨기기
+        this.fetchOrders(this.selectedTab); // 상태 변경 후 주문 목록 새로고침
+      } catch (error) {
+        this.error = `Error changing order status: ${error.message}`;
+        console.error('Error changing order status:', error);
+      }
+    },
+  },
 };
 </script>
 
-<style scoped>
-.order-title {
-  font-weight: bold;
-  background-color: lightgray;
-  padding: 8px 0;
-}
+<style>
 
-.order-card {
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.order-card:hover {
-  background-color: #f5f5f5;
-}
-
-.order-list {
-  min-height: 80vh;
-}
-
-.order-detail {
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
 </style>

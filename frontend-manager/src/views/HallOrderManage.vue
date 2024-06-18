@@ -48,6 +48,7 @@
                     <div class="row">
                       <div class="col"><strong>주문 번호:</strong> {{ order.orderId }}</div>
                       <div class="col"><strong>주문 일시:</strong> {{ order.orderCreatedDateTime }}</div>
+                      <div class="col"><strong>경과 시간:</strong> {{ order.cookingTime }}</div>
                       <div class="col"><strong>주문 금액:</strong> {{ order.price }}</div>
                       <div class="col">
                         <a href="#" @click="showOrderDetail(order)">
