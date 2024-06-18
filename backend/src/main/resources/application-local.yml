@@ -41,3 +41,5 @@ logging.level:
 # 프로필 사진이 저장되는 위치 설정
 file:
   dir: /Users/sangcheol/image/
+
+# 윈도우는 /Users/sangcheol/image\ 
