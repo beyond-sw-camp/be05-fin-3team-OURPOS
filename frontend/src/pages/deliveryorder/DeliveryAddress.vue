@@ -60,7 +60,7 @@
           <v-icon>mdi-alert-box-outline</v-icon>
         </v-card-title>
         <v-card-text>
-          <v-text-field v-model="tempSubAddress.name" label="이름"/>
+          <v-text-field v-model="tempSubAddress.name" label="주소 이름"/>
           <v-text-field v-model="tempSubAddress.receiverName" label="수령인 이름"/>
           <v-text-field v-model="tempSubAddress.telNo" label="전화번호"/>
           <v-btn color="warning" @click="execDaumPostcode('sub')">우편번호 찾기</v-btn>
@@ -82,7 +82,7 @@
       <v-card>
         <v-card-title>서브주소 추가</v-card-title>
         <v-card-text>
-          <v-text-field v-model="newSubAddress.name" label="이름"/>
+          <v-text-field v-model="newSubAddress.name" label="주소 이름"/>
           <v-text-field v-model="newSubAddress.receiverName" label="수령인 이름"/>
           <v-text-field v-model="newSubAddress.telNo" label="전화번호"/>
           <v-btn color="warning" @click="execDaumPostcode('new')">우편번호 찾기</v-btn>
