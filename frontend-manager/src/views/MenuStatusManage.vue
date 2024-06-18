@@ -2,16 +2,16 @@
   <div>
     <nav class="navbar navbar-dark bg-dark navigation-bar">
       <span class="navbar-brand">OUR POS</span>
-      <router-link to="/store-landing" class="ml-auto">
+      <router-link to="/manager" class="ml-auto">
         <material-button class="btn btn-outline-light">
-          <i class="mdi mdi-export">나가기</i>
+          <i class="mdi mdi-export">뒤로 가기</i>
         </material-button>
       </router-link>
     </nav>
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-3">
+        <div class="col-2">
           <div class="category-list">
             <material-button
               v-for="category in categories"
@@ -23,7 +23,7 @@
             </material-button>
           </div>
         </div>
-        <div class="col-9">
+        <div class="col-10">
           <div class="row">
             <div class="col-4 mb-4" v-for="menu in filteredMenus" :key="menu.id">
               <div
