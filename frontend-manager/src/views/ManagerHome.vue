@@ -5,11 +5,10 @@
       <div class="ml-auto">
         <router-link to="/">
           <button class="btn btn-outline-light">
-            <i class="mdi mdi-export"></i>
+            <i class="mdi mdi-export"></i> 뒤로 가기
           </button>
         </router-link>
       </div>
-
     </nav>
 
     <div class="container-fluid">
@@ -82,15 +81,15 @@
   </div>
 </template>
 
-<script setup>
-</script>
-
 <style scoped>
 .landing-page {
   height: 100vh;
 }
 
 .navigation-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 10vh;
   margin-bottom: 10px;
 }
@@ -100,7 +99,7 @@
 }
 
 .same-card {
-  height: calc(90vh/2 - 8px);
+  height: calc(90vh / 2 - 8px);
   border: 1px solid #ccc;
   margin-top: 4px;
 }
