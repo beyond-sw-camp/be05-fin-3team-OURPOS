@@ -50,24 +50,26 @@
       :isOpen="dialog.addCategory"
       title="카테고리 추가"
       @close="closeDialog"
-      @confirm="addCategory"
-    >
-      <input v-model="newCategory" placeholder="카테고리 이름" />
+      @confirm="addCategory">
+      <MaterialInput model="newCategory" placeholder="카테고리 이름" />
     </MenuManageModal>
 
-    <!-- Edit Category Modal -->
-    <MenuManageModal
-      v-if="dialog.editCategory"
-      :isOpen="dialog.editCategory"
-      title="카테고리 수정"
-      @close="closeDialog"
-      @confirm="editCategory"
-    >
-      <select v-model="selectedEditCategory">
+  <!-- Edit Category Modal -->
+  <MenuManageModal
+    v-if="dialog.editCategory"
+    :isOpen="dialog.editCategory"
+    title="카테고리 수정"
+    @close="closeDialog"
+    @confirm="editCategory"
+  >
+    <div class="form-group">
+      <select v-model="selectedEditCategory" class="form-control">
+        <option value="" disabled selected>수정할 카테고리 선택</option>
         <option v-for="name in categoryNames" :key="name">{{ name }}</option>
       </select>
-      <input v-model="updatedCategoryName" placeholder="변경 후 카테고리 이름" />
-    </MenuManageModal>
+      <input v-model="updatedCategoryName" placeholder="변경 후 카테고리 이름" class="form-control" />
+    </div>
+  </MenuManageModal>
 
     <!-- Delete Category Modal -->
     <MenuManageModal
@@ -142,6 +144,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import MenuManageModal from '../views/MenuManageModal.vue';
 import MaterialButton from '../components/MaterialButton.vue';
+import MaterialInput from '../components/MaterialInput.vue';
 
 const categories = ref([]);
 const categoryNames = ref([]);
@@ -476,7 +479,7 @@ onMounted(() => {
 }
 
 .category-material-button, .action-material-button {
-  font-size: 2rem; /* Increased font size */
+  font-size: 1.25rem; /* Increased font size */
   padding: 10px 20px;
   margin: 10px 0;
   width: 100%;
@@ -536,4 +539,6 @@ onMounted(() => {
 .mdi {
   font-size: 1.25rem; /* Increased font size */
 }
+
+
 </style>
