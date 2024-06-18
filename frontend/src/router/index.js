@@ -18,7 +18,7 @@ import CustomerOrderCheckPage from "@/pages/CustomerOrderCheckPage.vue";
 import MenusPage from "@/pages/hallorder/MenusPage.vue";
 import MenuOnePage from "@/pages/hallorder/MenuOnePage.vue";
 import MainPage from "@/pages/MainPage.vue";
-import CartPage from "@/pages/hallorder/hallorder/CartPage.vue";
+import CartPage from "@/pages/hallorder/CartPage.vue";
 import StoreLandingPage from '@/pages/StoreLandingPage.vue';
 import HallOrderManagePage from '@/pages/HallOrderManagePage.vue';
 import DeliveryOrderManagePage from '@/pages/DeliveryOrderManagePage.vue';
