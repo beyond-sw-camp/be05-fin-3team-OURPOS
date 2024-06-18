@@ -20,8 +20,6 @@
 <script setup>
 import {computed, ref} from 'vue';
 import {useRouter} from 'vue-router';
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 import {defineProps} from 'vue';
 
 // Setup router
