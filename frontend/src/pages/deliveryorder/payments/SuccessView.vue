@@ -19,7 +19,7 @@
           <v-card-text>
             <v-row>
               <v-col cols="12">
-                <h3>{{ deliveryOrder.storeName }} - {{ deliveryOrder.orderTakeoutYn ? '테이크아웃' : '배달' }}</h3>
+                <h3>{{ deliveryOrder.storeName }} - 배달</h3>
               </v-col>
               <v-col cols="12">
                 <h4>고객 정보</h4>
@@ -74,13 +74,9 @@ import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { confirmPayment } from "@/confirmPayment";
 import axios from "axios";
-import AppHeader from "@/components/AppHeader.vue";
 import { deleteTempOrder } from "@/services/apiService";
 
 export default {
-  components: {
-    AppHeader,
-  },
   setup() {
     const deliveryOrder = ref(JSON.parse(localStorage.getItem('deliveryOrder')) || {});
     const orderDetailDtos = ref(deliveryOrder.value.orderDetailDtos || []);

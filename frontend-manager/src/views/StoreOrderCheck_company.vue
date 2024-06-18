@@ -160,7 +160,7 @@ export default {
         const response = await axios.get(`http://localhost:8080/api/v1/storeorder/1/check`, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `${token}`
+            'Authorization': localStorage.getItem('token')
           },
           withCredentials: true,
           params: {
