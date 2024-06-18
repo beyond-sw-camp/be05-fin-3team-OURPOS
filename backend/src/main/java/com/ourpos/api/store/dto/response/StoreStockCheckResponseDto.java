@@ -33,6 +33,7 @@ public class StoreStockCheckResponseDto {
         this.stockAmount = storeStock.getQuantity();
         this.stockingTime = storeStock.getCreatedAt().format(formatter);
         
+        
     }
     
 }
