@@ -3,9 +3,9 @@
     <nav class="navbar navbar-dark bg-dark navigation-bar">
       <span class="navbar-brand">OUR POS</span>
       <router-link to="/manager" class="ml-auto">
-        <material-button class="btn btn-outline-light">
+        <button class="btn btn-outline-light">
           <i class="mdi mdi-export">뒤로 가기</i>
-        </material-button>
+        </button>
       </router-link>
     </nav>
 
@@ -25,7 +25,7 @@
         </div>
         <div class="col-10">
           <div class="row">
-            <div class="col-4 mb-4" v-for="menu in filteredMenus" :key="menu.id">
+            <div class="col-3 mb-4" v-for="menu in filteredMenus" :key="menu.id">
               <div
                 class="card"
                 :class="{ 'deactivated': !menu.available }"
@@ -43,16 +43,32 @@
         </div>
       </div>
     </div>
+
+    <Modal
+      :isOpen="showConfirmModal"
+      :title="modalTitle"
+      @close="closeModal"
+      @confirm="handleConfirm"
+    >
+      {{ modalMessage }}
+    </Modal>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-
+import MaterialButton from '../components/MaterialButton.vue';
+import Modal from '../views/Modal.vue';
 
 const categories = ref([]);
 const selectedCategory = ref(null);
+const menus = ref([]);
+const filteredMenus = ref([]);
+const showConfirmModal = ref(false);
+const modalTitle = ref('');
+const modalMessage = ref('');
+let confirmAction = null;
 
 const fetchCategories = async () => {
   try {
@@ -69,9 +85,6 @@ const fetchCategories = async () => {
     console.error('Error fetching categories:', error);
   }
 };
-
-const menus = ref([]);
-const filteredMenus = ref([]);
 
 const fetchMenus = async () => {
   try {
@@ -146,15 +159,28 @@ const activateMenu = async (menuId) => {
 };
 
 const confirmDeactivateMenu = (menuId) => {
-  if (confirm("이 메뉴를 비활성화 시키시겠습니까?")) {
-    deactivateMenu(menuId);
-  }
+  modalTitle.value = 'Deactivate Menu';
+  modalMessage.value = '이 메뉴를 비활성화 시키시겠습니까?';
+  confirmAction = () => deactivateMenu(menuId);
+  showConfirmModal.value = true;
 };
 
 const confirmActivateMenu = (menuId) => {
-  if (confirm("이 메뉴를 활성화 시키시겠습니까?")) {
-    activateMenu(menuId);
+  modalTitle.value = 'Activate Menu';
+  modalMessage.value = '이 메뉴를 활성화 시키시겠습니까?';
+  confirmAction = () => activateMenu(menuId);
+  showConfirmModal.value = true;
+};
+
+const handleConfirm = () => {
+  if (confirmAction) {
+    confirmAction();
   }
+  showConfirmModal.value = false;
+};
+
+const closeModal = () => {
+  showConfirmModal.value = false;
 };
 
 onMounted(() => {

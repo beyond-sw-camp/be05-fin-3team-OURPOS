@@ -1,20 +1,40 @@
-<!-- Modal.vue -->
 <template>
-  <div class="modal-overlay" @click.self="close">
+  <div v-if="isOpen" class="modal-overlay">
     <div class="modal-content">
-      <button class="close-button" @click="close">X</button>
-      <slot></slot>
+      <div class="modal-bar">
+        <h5 class="modal-title">{{ title }}</h5>
+      </div>
+      <div class="modal-body">
+        <slot></slot>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" @click="confirmAction">Confirm</button>
+        <button type="button" class="btn btn-secondary" @click="closeModal">Cancel</button>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { defineEmits } from 'vue';
-
-const emit = defineEmits(['close']);
-
-const close = () => {
-  emit('close');
+<script>
+export default {
+  props: {
+    isOpen: {
+      type: Boolean,
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    closeModal() {
+      this.$emit('close');
+    },
+    confirmAction() {
+      this.$emit('confirm');
+    }
+  }
 };
 </script>
 
@@ -29,25 +49,33 @@ const close = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
 }
 
 .modal-content {
   background: white;
-  padding: 20px;
+  padding: 0;
   border-radius: 5px;
+  width: 400px;
   position: relative;
-  max-width: 500px;
-  width: 100%;
+  overflow: hidden;
 }
 
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.2em;
-  cursor: pointer;
+.modal-bar {
+  background-color: #3f51b5;
+  color: white;
+  padding: 10px;
+}
+
+.modal-body {
+  padding: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
 }
 </style>
