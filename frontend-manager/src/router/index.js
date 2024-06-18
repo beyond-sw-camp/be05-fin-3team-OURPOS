@@ -130,7 +130,7 @@ const routes = [
     name: 'storeordercheck_company',
     path: '/supplies',
     component: StoreOrderCheck_company,
-    meta: { requiredRoles: ['ROLE_SUPER_SUPER_ADMIN'] }
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
   },
   {
     name: 'storeordercheck_store',

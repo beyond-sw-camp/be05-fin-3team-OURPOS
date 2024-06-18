@@ -178,12 +178,14 @@ const router = createRouter({
     {
       name: 'storeordercheck_store',
       path: '/storeorder/:storeId/checkforstore',
-      component: StoreOrderCheck_store
+      component: StoreOrderCheck_store,
+      meta: {requiredRoles: ['ROLE_ADMIN']}
     },
     {
       name: 'storeordercheck_company',
       path: '/storeorder/:storeId/check',
-      component: StoreOrderCheck_company
+      component: StoreOrderCheck_company,
+      meta: {requiredRoles: ['ROLE_ADMIN']}
     },
     {
       name: 'nfhome',
