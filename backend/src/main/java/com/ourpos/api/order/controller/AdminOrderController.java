@@ -175,7 +175,7 @@ public class AdminOrderController {
     }
     */
 
-    // 기타 입고 (점주가 배송된 상품의 상태 확인 후 임의로 재고 변경)
+    // 기타 입고 (점주가 배송된 상품의 상태 확인 후 임의로 재고 변경)-> 직영점
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/storestocks/{storeStockId}/decrease")
     public ResponseEntity<String> decreaseStock(
