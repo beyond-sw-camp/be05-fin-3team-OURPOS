@@ -105,6 +105,7 @@
         <div class="form-group">
           <label for="menuName">제품명</label>
           <input id="menuName" v-model="newMenu.name" @input="validateAddMenuName" placeholder="제품명" />
+          <!-- Ensure error message is displayed only if it exists -->
           <span v-if="AddMenuNameErrorMessage" class="error-message">{{ AddMenuNameErrorMessage }}</span>
         </div>
         <div class="form-group">
@@ -254,7 +255,8 @@ const validateUpdateCategoryName = () => {
 };
 
 const validateAddMenuName = () => {
-  const regex = /^[가-힣]*$/; // This regex allows only Korean characters
+
+  const regex = /^[ㄱ-ㅎ|가-힣]+$/; // Regex to allow only Korean characters
   if (!regex.test(newMenu.value.name)) {
     AddMenuNameErrorMessage.value = '한글만 입력 가능합니다';
   } else {
@@ -281,7 +283,7 @@ const validateAddMenuDescription = () => {
 };
 
 const validateUpdateMenuName = () => {
-  const regex = /^[가-힣\s]*$/; // This regex allows only Korean characters and spaces
+  const regex = /^[ㄱ-ㅎ|가-힣]+$/; // This regex allows only Korean characters and spaces
   if (!regex.test(selectedMenu.value.name)) {
     UpdateMenuNameErrorMessage.value = '한글만 입력 가능합니다';
   } else {
