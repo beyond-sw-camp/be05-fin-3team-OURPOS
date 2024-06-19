@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 import com.ourpos.domain.BaseEntity;
+import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.manager.Manager;
 
 import lombok.AccessLevel;
@@ -38,6 +39,10 @@ public class Store extends BaseEntity {
     @JoinColumn(name = "store_address_id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private StoreAddress address;
+
+    @JoinColumn(name = "kiosk_customer_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Customer kioskCustomer;
 
     @Column(name = "store_name")
     private String name;
@@ -64,10 +69,11 @@ public class Store extends BaseEntity {
     private LocalDateTime closedDateTime;
 
     @Builder
-    private Store(Manager manager, StoreAddress address, String name, String phone, LocalTime openTime,
-        LocalTime closeTime, Integer minimumOrderPrice, String pictureUrl) {
+    private Store(Manager manager, StoreAddress address, Customer kioskCustomer, String name, String phone,
+        LocalTime openTime, LocalTime closeTime, Integer minimumOrderPrice, String pictureUrl) {
         this.manager = manager;
         this.address = address;
+        this.kioskCustomer = kioskCustomer;
         this.name = name;
         this.phone = phone;
         this.openTime = openTime;
@@ -75,5 +81,10 @@ public class Store extends BaseEntity {
         this.minimumOrderPrice = minimumOrderPrice;
         this.pictureUrl = pictureUrl;
         this.closeYn = false;
+    }
+
+    public void closeStore() {
+        this.closeYn = true;
+        this.closedDateTime = LocalDateTime.now();
     }
 }

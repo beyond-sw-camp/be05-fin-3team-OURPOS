@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.ourpos.api.storeorder.dto.response.StoreOrderCheckResponseDto;
 import com.ourpos.api.storeorder.dto.response.StoreOrderResponseDto;
 import com.ourpos.api.storeorder.service.StoreCommServiceImpl;
 import com.ourpos.api.storeorder.service.StoreOrderServiceImpl;
+import com.ourpos.auth.dto.manager.ManagerUserDetails;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderDetailRepository;
 import com.ourpos.domain.storeorder.StoreOrderRepository;
@@ -69,10 +71,13 @@ public class StoreOrderController implements StoreOrderControllerDocs {
 
     //비품, 식자재 주문 확인 (직영점)
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/storeorder/{storeId}/checkforstore")
-    public Result<List<StoreOrderCheckResponseDto>> getStoreOrdercheckforstore(@PathVariable Long storeId) {
-        log.info("가게 식자재, 비품 주문: {}", storeId);
-        List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheck(storeId);
+    @GetMapping("/storeorder/checkforstore/my")
+    public Result<List<StoreOrderCheckResponseDto>> getStoreOrdercheckforstore() {
+        String adminLoginId = getManagerLoginId();
+
+        log.info("가게 식자재, 비품 주문: {}", adminLoginId);
+        log.debug("getStoreOrdercheckforstore 메서드 호출됨");
+        List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheckforstore(adminLoginId);
         return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", storeOrderList );
     }
 
@@ -153,6 +158,13 @@ public class StoreOrderController implements StoreOrderControllerDocs {
         log.info("가게 식자재, 비품 주문 수정: {}", storeOrderId);
         storeOrderService.completeStoreOrder(storeOrderId);
         return new Result<>(HttpStatus.OK.value(), "배달이 완료되었습니다.", null);
+    }
+
+    private String getManagerLoginId() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ManagerUserDetails managerUserDetails = (ManagerUserDetails)principal;
+
+        return managerUserDetails.getUsername();
     }
 
 }
