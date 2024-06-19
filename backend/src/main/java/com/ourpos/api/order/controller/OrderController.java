@@ -50,7 +50,7 @@ public class OrderController {
         return new Result<>(HttpStatus.OK.value(), "배달 주문이 완료되었습니다.", null);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("/temp-order")
     public Result<TempOrder> saveTempOrder(@RequestBody Map<String, Object> request) {
         String tempOrderId = (String)request.get("orderId");
@@ -60,6 +60,7 @@ public class OrderController {
         return new Result<>(HttpStatus.OK.value(), "임시 주문이 저장되었습니다.", tempOrder);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @DeleteMapping("/temp-order")
     public Result<Void> deleteTempOrder(@RequestBody Map<String, String> request) {
         String orderId = request.get("orderId");

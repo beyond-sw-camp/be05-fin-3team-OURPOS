@@ -252,12 +252,12 @@ public class OrderServiceImpl implements OrderService {
             () -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
     }
 
-    private Store getStore(Long hallOrderRequestDto) {
-        return storeRepository.findById(hallOrderRequestDto).orElseThrow(
+    private Store getStore(Long storeId) {
+        return storeRepository.findById(storeId).orElseThrow(
             () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
     }
 
-    private List<OrderDetail> createOrderDetails(List<OrderDetailRequestDto> orderDetailRequestDtos) {
+    List<OrderDetail> createOrderDetails(List<OrderDetailRequestDto> orderDetailRequestDtos) {
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (OrderDetailRequestDto orderDetailDto : orderDetailRequestDtos) {
             Menu menu = menuRepository.findById(orderDetailDto.getMenuId()).orElseThrow(

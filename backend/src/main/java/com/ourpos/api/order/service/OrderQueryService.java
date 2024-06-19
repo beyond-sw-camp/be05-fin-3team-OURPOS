@@ -2,6 +2,7 @@ package com.ourpos.api.order.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,8 +39,9 @@ public class OrderQueryService {
         return hallOrders.map(HallOrderResponseDto::new);
     }
 
-    public Page<DeliveryOrderResponseDto> findDeliveryOrderByLoginId(String loginId, String status, Pageable pageable) {
-        Page<DeliveryOrder> deliveryOrders = orderQueryRepository.findDeliveryOrdersByLoginId(loginId, status,
+    public Slice<DeliveryOrderResponseDto> findDeliveryOrderByLoginId(String loginId, String status,
+        Pageable pageable) {
+        Slice<DeliveryOrder> deliveryOrders = orderQueryRepository.findDeliveryOrdersByLoginId(loginId, status,
             pageable);
 
         return deliveryOrders.map(DeliveryOrderResponseDto::new);
