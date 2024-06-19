@@ -17,11 +17,11 @@
           <v-container fluid>
             <v-row>
               <v-col cols="12">
-                <v-card >
+                <v-card>
                   <v-card-title>
-                    <h2> Hall Orders </h2>
+                    
                   </v-card-title>
-                  <v-list>
+                  <v-list v-if="hallOrders.length">
                     <v-list-item v-for="hallOrder in hallOrders" :key="hallOrder.orderId" @click="showOrderDetails(hallOrder)">
                       <v-list-item-avatar>
                         <v-icon>mdi-food</v-icon> <!-- 홀 주문 아이콘 -->
@@ -38,6 +38,7 @@
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
+                  <v-card-text v-else><v-icon>mdi-alpha-x-box-outline</v-icon>주문내역이 존재하지 않습니다</v-card-text>
                 </v-card>
               </v-col>
             </v-row>
@@ -47,11 +48,11 @@
           <v-container fluid>
             <v-row>
               <v-col cols="12">
-                <v-card >
+                <v-card>
                   <v-card-title>
-                    <h2> Delivery Orders </h2>
+                    
                   </v-card-title>
-                  <v-list>
+                  <v-list v-if="deliveryOrders.length">
                     <v-list-item v-for="deliveryOrder in deliveryOrders" :key="deliveryOrder.orderId" @click="showOrderDetails(deliveryOrder)">
                       <v-list-item-avatar>
                         <v-icon>mdi-motorbike</v-icon> <!-- 배달 주문 아이콘 -->
@@ -68,6 +69,7 @@
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
+                  <v-card-text v-else><v-icon>mdi-alpha-x-box-outline</v-icon>주문내역이 존재하지 않습니다</v-card-text>
                 </v-card>
               </v-col>
             </v-row>

@@ -47,10 +47,12 @@
   </v-container>
 
 <!--  <BottomButton/>-->
+<BottomNav />
 
 </template>
 
 <script setup>
+import BottomNav from "@/components/BottomNav.vue";
 import axios from "axios";
 import {ref} from "vue";
 import router from "@/router";

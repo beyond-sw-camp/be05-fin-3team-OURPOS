@@ -86,9 +86,11 @@
       </v-container>
     </v-main>
   </v-app>
+  <BottomNav />
 </template>
 
 <script setup>
+import BottomNav from "@/components/BottomNav.vue";
 import { ref, computed, watch } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
