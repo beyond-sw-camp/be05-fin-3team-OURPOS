@@ -2,9 +2,9 @@
   <div v-if="isOpen" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-bar">
-        <h5 class="modal-title">{{ title }}</h5>
-      </div>
-      <div class="modal-header">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="modal-title">{{ title }}</h5>
+        </div>
       </div>
       <div class="modal-body">
         <slot></slot>
@@ -55,34 +55,26 @@ export default {
 
 .modal-content {
   background: white;
-  padding: 20px;
+  padding: 0;
   border-radius: 5px;
   width: 400px;
   position: relative;
+  overflow: hidden;
 }
 
 .modal-bar {
   background-color: #3f51b5;
   color: white;
-  padding: 10px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-.modal-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  border-bottom: 1px solid #dee2e6;
-  padding-bottom: 10px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: white;
-}
-
 .modal-body {
-  padding: 50px 0 20px 0;
+  padding: 20px;
   font-weight: bold;
 }
 
@@ -90,6 +82,17 @@ export default {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 20px;
+  padding: 10px;
+  border-top: 1px solid #dee2e6;
+}
+
+.POS-name {
+  font-size: 1.25rem; /* Increased font size */
+  color: aliceblue;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  color: #dee2e6;
 }
 </style>
