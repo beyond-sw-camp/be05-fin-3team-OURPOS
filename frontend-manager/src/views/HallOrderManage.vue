@@ -162,7 +162,7 @@ export default {
           withCredentials: true,
           params: {
             status: status,
-            page: page - 1, // Spring Data JPA는 0-based 페이지 인덱스를 사용합니다.
+            page: page - 1,
             size: size
           }
         });
