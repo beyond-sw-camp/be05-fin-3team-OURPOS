@@ -9,3 +9,9 @@
 <script setup>
   //
 </script>
+
+<style>
+body {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+</style>
