@@ -70,11 +70,13 @@
           </div>
         </div>
         <div class="col-3">
-          <div class="card double-height-card">
-            <div class="card-body">
-              <h5 class="card-title">재고 관리</h5>
+          <router-link to="/stock-insight">
+            <div class="card double-height-card">
+              <div class="card-body">
+                <h5 class="card-title">재고 관리</h5>
+              </div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -110,3 +112,5 @@
   margin-top: 4px;
 }
 </style>
+<script setup lang="ts">
+</script>
