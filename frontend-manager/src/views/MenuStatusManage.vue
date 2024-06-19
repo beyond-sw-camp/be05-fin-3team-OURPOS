@@ -222,7 +222,7 @@ onMounted(() => {
 }
 
 .btn {
-  font-size: 3rem; /* Increased font size */
+  font-size: 1.25rem; /* Increased font size */
 }
 
 .POS-name {

@@ -22,7 +22,7 @@
             >
               {{ category.name }}
             </material-button>
-            <material-button  @click="openDialog('addCategory')" class="action-material-button">카테고리 추가</material-button>
+            <material-button @click="openAddCategoryModal" class="action-material-button">카테고리 추가</material-button>
             <material-button  @click="openDialog('editCategory')" class="action-material-button">카테고리 수정</material-button>
             <material-button  @click="openDialog('deleteCategory')" class="action-material-button">카테고리 삭제</material-button>
             <material-button  @click="openDialog('addMenu')" class="action-material-button">메뉴 추가</material-button>
@@ -44,14 +44,14 @@
     </div>
 
 
-    <!-- Add Category MenuManageModal -->
+        <!-- Add Category MenuManageModal -->
     <MenuManageModal
-      v-if="dialog.addCategory"
-      :isOpen="dialog.addCategory"
+      v-if="isAddCategoryModalOpen"
+      :isOpen="isAddCategoryModalOpen"
       title="카테고리 추가"
-      @close="closeDialog"
+      :validationEnabled="true"
+      @close="closeAddCategoryModal"
       @confirm="addCategory">
-      <MaterialInput model="newCategory" placeholder="카테고리 이름" />
     </MenuManageModal>
 
   <!-- Edit Category Modal -->
@@ -59,15 +59,16 @@
     v-if="dialog.editCategory"
     :isOpen="dialog.editCategory"
     title="카테고리 수정"
+    :validationEnabled="true"
     @close="closeDialog"
     @confirm="editCategory"
   >
     <div class="form-group">
-      <select v-model="selectedEditCategory" class="form-control">
-        <option value="" disabled selected>수정할 카테고리 선택</option>
-        <option v-for="name in categoryNames" :key="name">{{ name }}</option>
+      <select v-model="selectedEditCategory" class="form-control border-visible">
+          <option v-for="name in categoryNames" :key="name">{{ name }}</option>
       </select>
-      <input v-model="updatedCategoryName" placeholder="변경 후 카테고리 이름" class="form-control" />
+      <input v-model="updatedCategoryName" @input="validateUpdatedCategoryName" placeholder="변경 후 카테고리 이름" class="form-control" />
+      <span v-if="errorMessage" class="error-message">{{ errorMessage }}</span>
     </div>
   </MenuManageModal>
 
@@ -144,7 +145,9 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import MenuManageModal from '../views/MenuManageModal.vue';
 import MaterialButton from '../components/MaterialButton.vue';
-import MaterialInput from '../components/MaterialInput.vue';
+// import MaterialInput from '../components/MaterialInput.vue';
+
+
 
 const categories = ref([]);
 const categoryNames = ref([]);
@@ -153,6 +156,48 @@ const menus = ref([]);
 const selectedCategory = ref(null);
 
 const filteredMenus = ref([]); // Make sure this is correctly initialized
+
+const isAddCategoryModalOpen = ref(false);
+
+const openAddCategoryModal = () => {
+  isAddCategoryModalOpen.value = true;
+};
+
+const closeAddCategoryModal = () => {
+  isAddCategoryModalOpen.value = false;
+};
+
+
+const addCategory = async (categoryName) => {
+  if (categoryName) {
+    try {
+    const response = await axios.post(
+      'http://localhost:8080/api/v1/categories',
+      {
+        name: categoryName,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
+        }
+      }
+    );
+    if (response.status === 200) {
+      // Update categories after successfully adding
+      await fetchCategoriesAndMenus();
+      newCategory.value = '';
+      closeAddCategoryModal();
+    } else {
+      console.error('Error adding category:', response);
+    }
+  } catch (error) {
+    console.error('Error adding category:', error);
+  }
+    closeAddCategoryModal();
+  }
+};
+
 
 // Dialogs state
 const dialog = ref({
@@ -214,32 +259,7 @@ const closeDialog = () => {
   dialog.value.updateMenu = false;
 };
 
-const addCategory = async () => {
-  try {
-    const response = await axios.post(
-      'http://localhost:8080/api/v1/categories',
-      {
-        name: newCategory.value,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('token')
-        }
-      }
-    );
-    if (response.status === 200) {
-      // Update categories after successfully adding
-      fetchCategoriesAndMenus();
-      newCategory.value = '';
-      closeDialog();
-    } else {
-      console.error('Error adding category:', response);
-    }
-  } catch (error) {
-    console.error('Error adding category:', error);
-  }
-};
+
 
 const editCategory = async () => {
   try {
