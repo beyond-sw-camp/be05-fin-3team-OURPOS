@@ -71,6 +71,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
 
     //비품, 식자재 주문 확인 (직영점)
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
+
     @GetMapping("/storeorder/checkforstore/my")
     public Result<List<StoreOrderCheckResponseDto>> getStoreOrdercheckforstore() {
         String adminLoginId = getManagerLoginId();

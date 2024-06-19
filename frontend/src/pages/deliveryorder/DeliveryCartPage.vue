@@ -72,10 +72,12 @@
       </v-container>
     </v-main>
   </v-app>
+  <BottomNav />
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import BottomNav from "@/components/BottomNav.vue";
+import { ref, computed, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import AppDeliveryHeader from "@/components/AppDeliveryHeader.vue";
 

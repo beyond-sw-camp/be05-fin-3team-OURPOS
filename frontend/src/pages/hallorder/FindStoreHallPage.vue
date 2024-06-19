@@ -76,9 +76,11 @@
       </v-card>
     </v-dialog>
   </v-container>
+  <BottomNav />
 </template>
 
 <script setup>
+import BottomNav from "@/components/BottomNav.vue";
 import {ref} from 'vue';
 import axios from 'axios';
 import {useRouter} from 'vue-router';

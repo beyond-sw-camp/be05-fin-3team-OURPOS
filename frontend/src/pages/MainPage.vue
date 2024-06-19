@@ -1,5 +1,6 @@
 <template>
   <v-app>
+  
     <v-app-bar app>
       <v-spacer></v-spacer>
       <v-menu offset-y>
@@ -41,12 +42,14 @@
       </v-container>
     </v-main>
   </v-app>
+  <BottomNav />
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router';
 import axios from "axios";
 import { onMounted, ref } from "vue";
+import BottomNav from "@/components/BottomNav.vue";
 
 const router = useRouter();
 const customer = ref({});
