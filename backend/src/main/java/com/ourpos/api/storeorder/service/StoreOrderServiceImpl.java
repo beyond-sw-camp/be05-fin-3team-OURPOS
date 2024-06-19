@@ -188,10 +188,12 @@ public class StoreOrderServiceImpl {
 	*/
 	
 	//비품, 식자재 주문 확인(직영점)
-	public List<StoreOrderCheckResponseDto>getStoreOrdercheckforstore(Long storeId){
+	public List<StoreOrderCheckResponseDto>getStoreOrdercheckforstore(String adminLoginId){
+		Store store = storeRepository.findByManagerLoginId(adminLoginId)
+            .orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
 		System.out.println("StoreOrderService.getStoreOrdercheck");
-		Store store= storeRepository.findById(storeId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
+
+		Long storeId=store.getId();
 		List<StoreOrder> storeOrders= storeOrderRepository.findByStoreId(storeId);
 		if(storeOrders.isEmpty()){
 			throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");

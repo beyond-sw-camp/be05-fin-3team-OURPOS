@@ -4,7 +4,7 @@
       <span class="navbar-brand">OUR POS</span>
       <router-link to="/owner" class="ml-auto">
         <button class="btn btn-outline-light">
-          <i class="mdi mdi-export">뒤로 가기</i>
+          <i class="mdi mdi-export"></i> 뒤로 가기
         </button>
       </router-link>
     </nav>
@@ -15,8 +15,8 @@
             <material-button
               v-for="category in categories"
               :key="category.id"
-              @click="filterMenus(category)"
-              :class="['btn', selectedCategory === category ? 'btn-primary' : 'btn-light', 'category-button']"
+              @click="selectCategory(category)"
+              :class="['category-material-button', { primary: selectedCategory === category, default: selectedCategory !== category }]"
             >
               {{ category.name }}
             </material-button>
@@ -26,11 +26,11 @@
             <material-button  @click="openDialog('addMenu')" class="action-material-button">메뉴 추가</material-button>
           </div>
         </div>
-        <div class="col-9">
+        <div class="col-10">
           <div class="row">
-            <div class="col-4 mb-4" v-for="menu in filteredMenus" :key="menu.id">
+            <div class="col-3 mb-4" v-for="menu in filteredMenus" :key="menu.id">
               <div class="card" @click="openUpdateMenuDialog(menu)">
-                <img :src="getMenuImageUrl(menu.pictureUrl)" height="200px" />
+                <img :src="getMenuImageUrl(menu.pictureUrl)" style="height: 200px; object-fit: cover;" />
                 <h2>{{ menu.name }}</h2>
                 <h3>{{ menu.price }}</h3>
                 <p>{{ menu.description }}</p>
@@ -41,44 +41,53 @@
       </div>
     </div>
 
-    <!-- Add Category Modal -->
-    <Modal v-if="dialog.addCategory" @close="closeDialog">
-      <h2>추가할 카테고리</h2>
+
+    <!-- Add Category MenuManageModal -->
+    <MenuManageModal
+      v-if="dialog.addCategory"
+      :isOpen="dialog.addCategory"
+      title="카테고리 추가"
+      @close="closeDialog"
+      @confirm="addCategory"
+    >
       <input v-model="newCategory" placeholder="카테고리 이름" />
-      <div class="actions">
-        <material-button  @click="addCategory">확인</material-button>
-        <material-button  @click="closeDialog">취소</material-button>
-      </div>
-    </Modal>
+    </MenuManageModal>
 
     <!-- Edit Category Modal -->
-    <Modal v-if="dialog.editCategory" @close="closeDialog">
-      <h2>카테고리 수정</h2>
+    <MenuManageModal
+      v-if="dialog.editCategory"
+      :isOpen="dialog.editCategory"
+      title="카테고리 수정"
+      @close="closeDialog"
+      @confirm="editCategory"
+    >
       <select v-model="selectedEditCategory">
         <option v-for="name in categoryNames" :key="name">{{ name }}</option>
       </select>
       <input v-model="updatedCategoryName" placeholder="변경 후 카테고리 이름" />
-      <div class="actions">
-        <material-button @click="editCategory">확인</material-button>
-        <material-button @click="closeDialog">취소</material-button>
-      </div>
-    </Modal>
+    </MenuManageModal>
 
     <!-- Delete Category Modal -->
-    <Modal v-if="dialog.deleteCategory" @close="closeDialog">
-      <h2>카테고리 삭제</h2>
+    <MenuManageModal
+      v-if="dialog.deleteCategory"
+      :isOpen="dialog.deleteCategory"
+      title="카테고리 삭제"
+      @close="closeDialog"
+      @confirm="deleteCategory"
+    >
       <select v-model="selectedDeleteCategory">
         <option v-for="name in categoryNames" :key="name">{{ name }}</option>
       </select>
-      <div class="actions">
-        <material-button @click="deleteCategory">확인</material-button>
-        <material-button @click="closeDialog">취소</material-button>
-      </div>
-    </Modal>
+    </MenuManageModal>
 
     <!-- Add Menu Modal -->
-    <Modal v-if="dialog.addMenu" @close="closeDialog">
-      <h2>메뉴 추가</h2>
+    <MenuManageModal
+      v-if="dialog.addMenu"
+      :isOpen="dialog.addMenu"
+      title="메뉴 추가"
+      @close="closeDialog"
+      @confirm="addMenu"
+    >
       <div class="row">
         <div class="col-6">
           <img :src="newMenu.image" height="200px" />
@@ -92,16 +101,17 @@
           <material-button @click="triggerFileInput">Browse</material-button>
           <textarea v-model="newMenu.description" placeholder="메뉴 설명"></textarea>
         </div>
-        <div class="col-6">
-          <material-button @click="addMenu">메뉴 추가</material-button>
-          <material-button @click="closeDialog">취소</material-button>
-        </div>
       </div>
-    </Modal>
+    </MenuManageModal>
 
-        <!-- Update Menu Modal -->
-        <Modal v-if="dialog.updateMenu" @close="closeDialog">
-      <h2>메뉴 수정</h2>
+    <!-- Update Menu Modal -->
+    <MenuManageModal
+      v-if="dialog.updateMenu"
+      :isOpen="dialog.updateMenu"
+      title="메뉴 수정"
+      @close="closeDialog"
+      @confirm="updateMenu"
+    >
       <div class="row">
         <div class="col-6">
           <img :src="getMenuImageUrl(selectedMenu.pictureUrl)" height="200px" />
@@ -121,14 +131,14 @@
           <material-button @click="closeDialog">뒤로가기</material-button>
         </div>
       </div>
-    </Modal>
+    </MenuManageModal>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import Modal from './Modal.vue';
+import MenuManageModal from '../views/MenuManageModal.vue';
 import MaterialButton from '../components/MaterialButton.vue';
 
 const categories = ref([]);
@@ -148,6 +158,11 @@ const dialog = ref({
   updateMenu: false,
 });
 
+const selectCategory = (category) => {
+  selectedCategory.value = category;
+  filterMenus(category);
+};
+
 const filterMenus = (category) => {
   selectedCategory.value = category;
   filteredMenus.value = menus.value.filter(menu => menu.category === category.name);
@@ -157,8 +172,6 @@ const filterMenus = (category) => {
 const getMenuImageUrl = (imagePath) => {
   return `http://localhost:8080/images/${imagePath}`;
 };
-
-
 
 const newCategory = ref('');
 const selectedEditCategory = ref(null);
@@ -195,8 +208,6 @@ const closeDialog = () => {
   dialog.value.addMenu = false;
   dialog.value.updateMenu = false;
 };
-
-
 
 const addCategory = async () => {
   try {
@@ -338,9 +349,6 @@ const updateMenu = async () => {
   formData.append('menuUpdateDto', new Blob([JSON.stringify(menuUpdateDto)], { type: 'application/json' }));
   formData.append('multipartFile', selectedMenuFile.value);
 
-  console.log('Updating menu with ID:', selectedMenu.value.id); // Add logging
-  console.log('FormData:', formData); // Add logging
-
   try {
     const response = await axios.post(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}`, formData, {
       headers: {
@@ -358,9 +366,6 @@ const updateMenu = async () => {
     console.error('Error updating menu:', error);
   }
 };
-
-
-
 
 const deleteMenu = async () => {
   try {
@@ -458,7 +463,6 @@ onMounted(() => {
 });
 </script>
 
-
 <style scoped>
 .navigation-bar {
   background-color: #3f51b5;
@@ -473,6 +477,8 @@ onMounted(() => {
   font-size: 16px;
   padding: 10px 20px;
   margin: 10px 0;
+  width: 100%;
+  height: 60px; /* Adjust the height as needed */
 }
 
 .primary {
@@ -485,7 +491,7 @@ onMounted(() => {
   color: black;
 }
 
-.modal {
+.MenuManageModal {
   background: white;
   padding: 20px;
   border-radius: 5px;
@@ -495,7 +501,7 @@ onMounted(() => {
   z-index: 1000;
 }
 
-.modal-overlay {
+.MenuManageModal-overlay {
   position: fixed;
   top: 0;
   left: 0;

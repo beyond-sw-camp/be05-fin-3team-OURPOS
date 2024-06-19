@@ -53,20 +53,14 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">주문 리스트</h5>
-              <div class="row">
-                <div class="col"><strong>주문 번호</strong> </div>
-                <div class="col"><strong>주문 일시</strong> </div>
-                <div class="col"><strong>주문 금액</strong> </div>
-                <div class="col"><strong>주문 상태</strong> </div>
-              </div>
               <ul class="list-group">
                 <li v-for="order in orders" :key="order.orderId" class="list-group-item">
                   <div class="row">
-                    <div class="col"><strong></strong> {{ order.orderId }}</div>
-                    <div class="col"><strong></strong> {{ order.orderCreatedDateTime }}</div>
+                    <div class="col"><strong>주문 번호</strong> {{ order.orderId }}</div>
+                    <div class="col"><strong>주문 일시</strong> {{ order.orderCreatedDateTime }}</div>
                     <!--<div class="col"><strong>경과 시간</strong> {{ order.price }}</div>-->
                     <!--<div class="col"><strong>결제 수단:</strong> {{ order.price }}</div>-->
-                    <div class="col"><strong></strong> {{ order.price }}</div>
+                    <div class="col"><strong>주문 금액</strong> {{ order.price }}</div>
                     <div class="col">
                       <a href="#" @click="showOrderDetail(order)">
                         {{ order.deliveryOrderStatus }}
@@ -75,6 +69,21 @@
                   </div>
                 </li>
               </ul>
+              <div class="mt-3 d-flex justify-content-center">
+                <button @click="fetchOrders(selectedTab, pageNumber - 1, pageSize)" :disabled="pageNumber === 1" class="btn btn-outline-secondary btn-sm">prev</button>
+                 
+                
+                <button 
+                  v-for="page in totalPages" 
+                  :key="page" 
+                  @click="fetchOrders(selectedTab, page, pageSize)" 
+                  class="btn btn-link text-secondary btn-sm"
+                  :class="{ 'text-dark': page === pageNumber }"
+                >
+                  {{ page }}
+                </button>
+                <button @click="fetchOrders(selectedTab, pageNumber + 1, pageSize)" :disabled="pageNumber === totalPages" class="btn btn-outline-secondary btn-sm">next</button>
+            </div>
             </div>
           </div>
         </div>
@@ -96,6 +105,7 @@
         <div v-for="(detail, index) in selectedOrderDetail.orderDetailResponseDtos" :key="index">
           <div><strong>상품명:</strong> {{ detail.menuName }}</div>
           <div><strong>가격:</strong> {{ detail.menuPrice }}</div>
+          <div><strong>수량:</strong> {{ detail.quantity }}</div>
           <!-- 추가적인 세부 정보 표시 -->
           <div v-if="Array.isArray(detail.orderOptionGroupResponseDtos)">
             <div v-for="(optionGroup, idx) in detail.orderOptionGroupResponseDtos" :key="idx">
@@ -139,13 +149,16 @@ export default {
       error: null,
       selectedOrderDetail: null, // 선택된 주문의 세부 정보를 저장할 상태
       selectedTab: 'WAITING', 
+      pageNumber: 1,
+      pageSize: 5,
+      totalPage: 1
     };
   },
   created() {
-    this.fetchOrders(this.selectedTab);
+    this.fetchOrders(this.selectedTab, this.pageNumber, this.pageSize);
   },
   methods: {
-    async fetchOrders(status) {
+    async fetchOrders(status, page, size) {
       this.loading = true;
       this.error = null;
       this.selectedTab = status;
@@ -165,10 +178,15 @@ export default {
           },
           withCredentials: true,
           params: {
-            status: status
+            status: status,
+            page: page - 1,
+            size: size
           }
         });
         this.orders = response.data.data.content;
+        this.pageNumber = response.data.data.pageable.pageNumber +1 ;
+        this.pageSize = response.data.data.pageable.pageSize;
+        this.totalPages = response.data.data.totalPages;
         console.log(response.data.data.content);
       } catch (error) {
         this.error = 'Error fetching orders';

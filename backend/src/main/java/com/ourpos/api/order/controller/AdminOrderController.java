@@ -123,7 +123,8 @@ public class AdminOrderController {
 
     // 아침에 들어온 재고 고정량 조회
 
-    // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)
+    // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)-> 본사
+    /* 
     @GetMapping("/store/{storeId}/incoming-stock")
     public Result<List<StoreStockResponseDto>> getIncomingStock(@PathVariable Long storeId) {
         log.info("가게 입고 예정량 조회: {}", storeId);
@@ -137,30 +138,23 @@ public class AdminOrderController {
             return new Result<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "입고 예정량을 불러오는 중에 오류가 발생했습니다", null);
         }
     }
-    /*
-    // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)->관리자가 로그인한 경우
+        */
+    // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)-> 직영점
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/store/incoming-stock/my")
-    public Result<List<StoreStockResponseDto>> getIncomingStock() {
-        String adminLoginId = getAdminLoginId();
+    public Result<List<StoreStockResponseDto>> getIncomingStockforstore() {
+	    String adminLoginId = getManagerLoginId();
 
-        log.info("로그인된 관리자의 가게 입고 예정량 조회: {}", adminLoginId);
-        try {
-            // adminLoginId를 사용하여 storeId를 가져오는 로직
-            Long storeId = adminOrderService.getStoreIdByAdminLoginId(adminLoginId);
-            log.debug("getIncomingStock 메서드 호출됨, storeId: {}", storeId);
+        log.info("가게 입고 예정량 조회: {}", adminLoginId);
+        log.debug("getIncomingStock 메서드 호출됨");
+        List<StoreStockResponseDto> incomingStockList = adminOrderService.getIncomingStock(adminLoginId);
+        return new Result<>(HttpStatus.OK.value(), "입고 예정량 목록을 불러옵니다", incomingStockList);
+            
 
-            List<StoreStockResponseDto> incomingStockList = adminOrderService.getIncomingStock(storeId);
-            log.debug("입고 예정량 데이터 로드 성공: {}", incomingStockList);
-            return new Result<>(HttpStatus.OK.value(), "입고 예정량 목록을 불러옵니다", incomingStockList);
-        } catch (Exception e) {
-            // 로그 추가: 데이터 로드 실패 로그
-            log.error("입고 예정량 데이터 로드 실패", e);
-            return new Result<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "입고 예정량을 불러오는 중에 오류가 발생했습니다", null);
         }
-    }
-    */
 
-    // 기타 입고 (점주가 배송된 상품의 상태 확인 후 임의로 재고 변경)
+    // 기타 입고 (점주가 배송된 상품의 상태 확인 후 임의로 재고 변경)-> 직영점
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/storestocks/{storeStockId}/decrease")
     public ResponseEntity<String> decreaseStock(
         @PathVariable Long storeStockId,
@@ -169,12 +163,26 @@ public class AdminOrderController {
         adminOrderService.decreaseStock(storeStockId, quantity);
         return ResponseEntity.status(HttpStatus.OK).body("재고가 감소되었습니다.");
     }
-
-    // 배송 완료 반영된 재고량 조회 (기타 입출고 포함)
+    /* 
+    // 배송 완료 반영된 재고량 조회 (기타 입출고 포함)-> 본사
     @GetMapping("/storestocks")
     public ResponseEntity<List<StoreStockCheckResponseDto>> getAllStoreStocks() {
         List<StoreStockCheckResponseDto> storeStocks = adminOrderService.getAllStoreStocks();
         return ResponseEntity.status(HttpStatus.OK).body(storeStocks);
+    }
+    */
+
+    // 배송 완료 반영된 재고량 조회 (기타 입출고 포함)->직영점
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/storestocks/my")
+    public ResponseEntity<List<StoreStockCheckResponseDto>> getAllStoreStocksforstore() {
+        String adminLoginId = getManagerLoginId();
+
+        log.info("가게 입고 예정량 조회: {}", adminLoginId);
+        log.debug("getIncomingStock 메서드 호출됨");
+
+        List<StoreStockCheckResponseDto> storestocks  = adminOrderService.getAllStoreStocks(adminLoginId);
+        return ResponseEntity.status(HttpStatus.OK).body(storestocks);
     }
 
     private String getManagerLoginId() {
@@ -183,5 +191,7 @@ public class AdminOrderController {
 
         return managerUserDetails.getUsername();
     }
+    
+
 
 }
