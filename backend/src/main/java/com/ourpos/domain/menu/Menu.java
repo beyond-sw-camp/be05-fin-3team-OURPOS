@@ -60,12 +60,11 @@ public class Menu extends BaseEntity {
         this.deletedYn = false;
     }
 
-    public void update(Category category, String name, Integer price, String description, String pictureUrl) {
+    public void update(Category category, String name, Integer price, String description) {
         this.category = category;
         this.name = name;
         this.price = price;
         this.description = description;
-        this.pictureUrl = pictureUrl;
     }
 
     public void delete(LocalDateTime deletedDateTime) {

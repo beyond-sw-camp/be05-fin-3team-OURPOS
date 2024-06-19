@@ -3,33 +3,21 @@
     <div class="modal-content">
       <div class="modal-bar">
         <span>{{ title }}</span>
+        <button @click="$emit('close')">X</button>
       </div>
       <div class="modal-body">
-        <div v-if="validationEnabled" class="form-group">
-          <label for="category-name">추가할 카테고리 이름</label>
-          <input 
-            id="category-name" 
-            type="text" 
-            class="form-control" 
-            v-model="categoryName" 
-            @input="validateInput" 
-            placeholder="카테고리 이름을 입력하세요">
-          <span v-if="errorMessage" class="error-message">{{ errorMessage }}</span>
-        </div>
         <slot></slot> <!-- Placeholder for other modal content -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" @click="confirmAction">확인</button>
-        <button type="button" class="btn btn-secondary" @click="closeModal">취소</button>
+        <button type="button" class="btn btn-primary" @click="$emit('confirm')">확인</button>
+        <button type="button" class="btn btn-secondary" @click="$emit('close')">취소</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits } from 'vue';
-
-const props = defineProps({
+defineProps({
   isOpen: {
     type: Boolean,
     required: true
@@ -37,42 +25,6 @@ const props = defineProps({
   title: {
     type: String,
     required: true
-  },
-  validationEnabled: {
-    type: Boolean,
-    default: false
-  }
-});
-
-const emit = defineEmits(['close', 'confirm']);
-
-const categoryName = ref('');
-const errorMessage = ref('');
-
-const closeModal = () => {
-  emit('close');
-};
-
-const confirmAction = () => {
-  if (props.validationEnabled && errorMessage.value) {
-    return;
-  }
-  emit('confirm', props.validationEnabled ? categoryName.value : null);
-};
-
-const validateInput = () => {
-  const regex = /^[a-zA-Z]*$/;
-  if (!regex.test(categoryName.value)) {
-    errorMessage.value = '영어만 입력 가능합니다';
-  } else {
-    errorMessage.value = '';
-  }
-};
-
-watch(() => props.isOpen, (newVal) => {
-  if (newVal) {
-    categoryName.value = '';
-    errorMessage.value = '';
   }
 });
 </script>
@@ -94,9 +46,10 @@ watch(() => props.isOpen, (newVal) => {
   background: white;
   padding: 0;
   border-radius: 5px;
-  width: 400px;
+  width: 600px; /* Increased width */
+  max-height: 90vh; /* Ensure it fits within the viewport */
+  overflow-y: auto; /* Enable scrolling if content overflows */
   position: relative;
-  overflow: hidden;
 }
 
 .modal-bar {
@@ -119,25 +72,6 @@ watch(() => props.isOpen, (newVal) => {
   align-items: center;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.form-control {
-  margin-bottom: 10px;
-  height: 40px;
-  width: 100%;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-}
-
-.error-message {
-  color: red;
-  font-size: 0.875em;
-}
-
 .modal-footer {
   display: flex;
   justify-content: center;
@@ -146,20 +80,5 @@ watch(() => props.isOpen, (newVal) => {
   border-top: 1px solid #dee2e6;
 }
 
-.modal-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  border-bottom: 1px solid #dee2e6;
-  padding-bottom: 10px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: white;
-}
 
-.modal-title {
-  font-size: 1.25rem;
-  color: #dee2e6;
-}
 </style>
