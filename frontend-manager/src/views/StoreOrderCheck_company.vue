@@ -58,7 +58,7 @@
                   <div class="row">
                     <div class="col"><strong>주문 번호:</strong> {{ order.storeOrderId }}</div>
                     <div class="col"><strong>주문 일시:</strong> {{ order.storeOrderDate }}</div>
-                    <div class="col"><strong>주문 금액:</strong> {{ order.storeOrderPrice }}</div>
+                    <div class="col"><strong>주문 금액:</strong> {{ order.storeCommPrice }}</div>
                     <div class="col"><strong>지점명:</strong> {{ order.storeName }}</div>
                     <div class="col">
                       <a href="#" @click="showOrderDetail(order)">
@@ -78,8 +78,10 @@
               <h5 class="card-title">주문 세부 정보</h5>
               <div>
                 <div><strong>상품명:</strong> {{ selectedOrderDetail.storeCommName }}</div>
+                <div><strong>상품 수량:</strong> {{ selectedOrderDetail.storeOrderDetailQuantity }}</div>
+                <div><strong>상품 단위:</strong> {{ selectedOrderDetail.storeCommArticleUnit }}</div>
                 <div><strong>주문 날짜:</strong> {{ selectedOrderDetail.storeOrderDate }}</div>
-                <div><strong>주문 가격:</strong> {{ selectedOrderDetail.storeOrderPrice }}</div>
+                <div><strong>주문 가격:</strong> {{ selectedOrderDetail.storeCommPrice }}</div>
                 <div><strong>지점명:</strong> {{ selectedOrderDetail.storeName }}</div>
                 <div><strong>지점 주소:</strong> {{ selectedOrderDetail.addressDetail }}</div>
                 <div><strong>전화번호:</strong> {{ selectedOrderDetail.storePhone }}</div>

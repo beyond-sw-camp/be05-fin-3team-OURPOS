@@ -134,7 +134,7 @@ const routes = [
   },
   {
     name: 'storeordercheck_store',
-    path: '/storeorder/:storeId/checkforstore',
+    path: '/storeordercheck',
     component: StoreOrderCheck_store,
     meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },

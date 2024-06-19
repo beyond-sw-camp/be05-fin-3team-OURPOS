@@ -94,7 +94,7 @@
     methods: {
       async fetchOrders() {
         try {
-          const response = await axios.get('http://localhost:8080/api/v1/storeorder/1/checkforstore',{
+          const response = await axios.get('http://localhost:8080/api/v1/storeorder/checkforstore/my',{
             headers: {
               'Content-Type': 'application/json',
               'Authorization': localStorage.getItem('token')
