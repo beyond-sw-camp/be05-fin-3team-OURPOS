@@ -58,7 +58,6 @@
         <v-card-text>
           <p><FontAwesomeIcon :icon="faPhone"/> 전화번호: {{ selectedStore.storePhone }}</p>
           <p><FontAwesomeIcon :icon="faClock"/> 영업 시간: {{ selectedStore.openTime }} - {{ selectedStore.closeTime }}</p>
-          <p><FontAwesomeIcon :icon="faShoppingBag"/> 최소 주문 가격: {{ Number(selectedStore.minimumOrderPrice).toLocaleString() }}원</p>
           <p><FontAwesomeIcon :icon="faMapLocation"/> 거리: {{ formatDistance(selectedStore.distance) }}</p>
         </v-card-text>
         <v-card-actions>
@@ -99,7 +98,7 @@ const openOrderTypeDialog = (store) => {
 };
 
 const setOrderType = (orderTakeoutYn) => {
-  viewStore(selectedStore.value.storeId, selectedStore.value.storeName, orderTakeoutYn, selectedStore.value.minimumOrderPrice);
+  viewStore(selectedStore.value.storeId, selectedStore.value.storeName, orderTakeoutYn);
   orderTypeDialog.value = false;
 };
 
@@ -161,16 +160,15 @@ const findItems = async (latitude, longitude) => {
   }
 };
 
-const viewStore = (storeId, storeName, orderTakeoutYn, minOrderAmount) => {
+const viewStore = (storeId, storeName, orderTakeoutYn) => {
   let storageFullOrder = localStorage.getItem('fullOrder');
   if (storageFullOrder !== null) {
-    storageFullOrder = JSON.parse(storageFullOrder); // JSON 문자열을 객체로 변환
+    storageFullOrder = JSON.parse(storageFullOrder);
     storageFullOrder.storeId = storeId;
     storageFullOrder.storeName = storeName;
-    storageFullOrder.orderTakeoutYn = orderTakeoutYn; // 누락된 속성 추가
-    storageFullOrder.minOrderAmount = minOrderAmount; // 누락된 속성 추가
+    storageFullOrder.orderTakeoutYn = orderTakeoutYn;
     console.log('storageFullOrder:', storageFullOrder);
-    localStorage.setItem('fullOrder', JSON.stringify(storageFullOrder)); // 객체를 JSON 문자열로 변환하여 저장
+    localStorage.setItem('fullOrder', JSON.stringify(storageFullOrder));
     router.push('/stores/' + storeId + '/menus');
     return;
   }
@@ -179,7 +177,6 @@ const viewStore = (storeId, storeName, orderTakeoutYn, minOrderAmount) => {
     storeId: storeId,
     storeName: storeName,
     orderTakeoutYn: orderTakeoutYn,
-    minOrderAmount: minOrderAmount,
     orderDetailDtos: []
   };
 
