@@ -52,8 +52,8 @@
           @confirm="addCategory"
         >
           <div class="form-group">
-            <input v-model="newCategoryName" @input="validateCategoryName" placeholder="카테고리 이름을 입력하세요" class="form-control" />
-            <span v-if="CategoryNameErrorMessage" class="error-message">{{ CategoryNameErrorMessage }}</span>
+            <input v-model="newCategoryName" @input="validateAddCategoryName" placeholder="카테고리 이름을 입력하세요" class="form-control" />
+            <span v-if="AddCategoryNameErrorMessage" class="error-message">{{ AddCategoryNameErrorMessage }}</span>
           </div>
     </MenuManageModal>
 
@@ -66,11 +66,12 @@
         @confirm="editCategory"
       >
         <div class="form-group">
-          <select v-model="selectedEditCategory" class="form-control border-visible">
-            <option v-for="name in categoryNames" :key="name" disabled>{{ name }}</option>
+          <label for="selectEditCategory">카테고리 선택</label>
+          <select id="selectEditCategory" v-model="selectedEditCategory" class="form-control border-visible">
+            <option v-for="name in categoryNames" :key="name">{{ name }}</option>
           </select>
-          <input v-model="updatedCategoryName" @input="validateCategoryName" placeholder="변경 후 카테고리 이름" class="form-control" />
-          <span v-if="CategoryNameErrorMessage" class="error-message">{{ CategoryNameErrorMessage }}</span>
+          <input v-model="updatedCategoryName" @input="validateUpdateCategoryName" placeholder="변경 후 카테고리 이름" class="form-control" />
+          <span v-if="UpdateCategoryNameErrorMessage" class="error-message">{{ UpdateCategoryNameErrorMessage }}</span>
         </div>
     </MenuManageModal>
 
@@ -80,63 +81,99 @@
       :isOpen="dialog.deleteCategory"
       title="카테고리 삭제"
       @close="closeDialog"
-      @confirm="deleteCategory"
-    >
-      <select v-model="selectedDeleteCategory">
+      @confirm="deleteCategory"> 
+      <div class="form-group">
+        <label for="deleteCategoryName">카테고리 선택</label>
+        <select id="deleteCategoryName" v-model="selectedDeleteCategory">
+          <option v-for="name in categoryNames" :key="name">{{ name }}</option>
+        </select>
+      </div>
+    </MenuManageModal>
+
+   <!-- Add Menu Modal -->
+  <MenuManageModal
+    v-if="dialog.addMenu"
+    :isOpen="dialog.addMenu"
+    title="메뉴 추가"
+    @close="closeDialog"
+    @confirm="addMenu"
+  >
+    <div class="row">
+      <div class="col-6">
+        <img :src="newMenu.image" height="200px" />
+        
+        <div class="form-group">
+          <label for="menuName">제품명</label>
+          <input id="menuName" v-model="newMenu.name" @input="validateAddMenuName" placeholder="제품명" />
+          <span v-if="AddMenuNameErrorMessage" class="error-message">{{ AddMenuNameErrorMessage }}</span>
+        </div>
+        <div class="form-group">
+          <label for="AddMenuCategory">카테고리 선택</label>
+          <select id="AddMenuCategory" v-model="newMenu.category">
+            <option v-for="name in categoryNames" :key="name">{{ name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="AddMenuPrice">가격 입력</label>
+          <input id="AddMenuPrice" v-model="newMenu.price" @input="validateAddMenuPrice" placeholder="가격" />
+          <span v-if="AddMenuPriceErrorMessage" class="error-message">{{ AddMenuPriceErrorMessage }}</span>
+        </div>
+        <div class="form-group">
+          <label for="AddMenuImage">사진 URL</label>
+          <input id="AddMenuImage" v-model="newMenu.image" placeholder="사진 URL" />
+        </div>
+        <div class="form-group">
+          <input id="fileInput" type="file" ref="fileInput" @change="handleFileChange" style="display: none" />
+          <material-button @click="triggerFileInput">Browse</material-button>
+        </div>
+        <div class="form-group">
+          <label for="AddMenuDescription">설명 입력</label>
+          <textarea id="AddMenuDescription" v-model="newMenu.description" @input="validateAddMenuDescription" placeholder="메뉴 설명"></textarea>
+          <span v-if="AddMenuDescriptionErrorMessage" class="error-message">{{ AddMenuDescriptionErrorMessage }}</span>
+        </div>
+      </div>
+    </div>
+  </MenuManageModal>
+
+<!-- Update Menu Modal -->
+<MenuManageModal
+  v-if="dialog.updateMenu"
+  :isOpen="dialog.updateMenu"
+  title="메뉴 수정"
+  @close="closeDialog"
+  @confirm="updateMenu"
+>
+  <div class="row">
+    <div class="col-6">
+      <img :src="newMenu.image" height="200px" />
+
+      <div class="form-group">
+        <label for="updateMenuName">제품명 입력</label>
+        <input id="updateMenuName" v-model="selectedMenu.name" @input="validateUpdateMenuName" placeholder="제품명"/>
+        <span v-if="UpdateMenuNameErrorMessage" class="error-message">{{ UpdateMenuNameErrorMessage }}</span>
+      </div>
+      
+      <select v-model="selectedMenu.category">
         <option v-for="name in categoryNames" :key="name">{{ name }}</option>
       </select>
-    </MenuManageModal>
-
-    <!-- Add Menu Modal -->
-    <MenuManageModal
-      v-if="dialog.addMenu"
-      :isOpen="dialog.addMenu"
-      title="메뉴 추가"
-      @close="closeDialog"
-      @confirm="addMenu"
-    >
-      <div class="row">
-        <div class="col-6">
-          <img :src="newMenu.image" height="200px" />
-          <input v-model="newMenu.name" @input="validateMenuName" placeholder="제품명" />
-          <span v-if="MenuNameErrorMessage" class="error-message">{{ MenuNameErrorMessage }}</span>
-          <div></div>
-          <select v-model="newMenu.category">
-            <option v-for="name in categoryNames" :key="name">{{ name }}</option>
-          </select>
-          <input v-model="newMenu.price" @input="validatePrice" placeholder="가격" />
-          <span v-if="MenuPriceErrorMessage" class="error-message">{{ MenuPriceErrorMessage }}</span>
-          <input v-model="newMenu.image" placeholder="사진 URL" />
-          <input type="file" ref="fileInput" @change="handleFileChange" style="display: none" />
-          <material-button @click="triggerFileInput">Browse</material-button>
-          <textarea v-model="newMenu.description" @input="validateDescription" placeholder="메뉴 설명"></textarea>
-          <span v-if="MenuDescriptionErrorMessage" class="error-message">{{ MenuDescriptionErrorMessage }}</span>
-        </div>
+      <div class="form-group">
+        <label for="updateMenuPrice">가격 입력</label>
+        <input id="updateMenuPrice" v-model="selectedMenu.price" @input="validateUpdateMenuPrice" placeholder="가격"/>
+        <span v-if="UpdateMenuPriceErrorMessage" class="error-message">{{ UpdateMenuPriceErrorMessage }}</span>
       </div>
-    </MenuManageModal>
-
-    <!-- Update Menu Modal -->
-    <MenuManageModal
-      v-if="dialog.updateMenu"
-      :isOpen="dialog.updateMenu"
-      title="메뉴 수정"
-      @close="closeDialog"
-      @confirm="updateMenu"
-    >
-      <div class="row">
-        <div class="col-6">
-          <input v-model="selectedMenu.name" placeholder="제품명" />
-          <select v-model="selectedMenu.category">
-            <option v-for="name in categoryNames" :key="name">{{ name }}</option>
-          </select>
-          <input v-model="selectedMenu.price" placeholder="가격" />
-          <textarea v-model="selectedMenu.description" placeholder="메뉴 설명"></textarea>
-        </div>
-        <div class="col-6">
-          <material-button @click="deleteMenu">메뉴 삭제</material-button>
-        </div>
+      <div class="form-group">
+        <label for="updateMenuDescription">설명 입력</label>
+        <textarea id="updateMenuDescription" v-model="selectedMenu.description" @input="validateUpdateMenuDescription" placeholder="메뉴 설명"></textarea>
+        <span v-if="UpdateMenuDescriptionErrorMessage" class="error-message">{{ UpdateMenuDescriptionErrorMessage }}</span>
       </div>
-    </MenuManageModal>
+        
+    </div>
+    <div class="col-6">
+      <material-button @click="deleteMenu">메뉴 삭제</material-button>
+    </div>
+  </div>
+</MenuManageModal>
+
   </div>
 </template>
 
@@ -164,14 +201,16 @@ const selectedCategory = ref(null);
 
 const filteredMenus = ref([]); // Make sure this is correctly initialized
 
-// const isAddCategoryModalOpen = ref(false);
-
 const errorMessage = ref('');
 
-const CategoryNameErrorMessage = ref('');
-const MenuNameErrorMessage = ref('');
-const MenuPriceErrorMessage = ref('');
-const MenuDescriptionErrorMessage = ref('');
+const AddCategoryNameErrorMessage = ref('');
+const UpdateCategoryNameErrorMessage = ref('');
+const AddMenuNameErrorMessage = ref('');
+const AddMenuPriceErrorMessage = ref('');
+const AddMenuDescriptionErrorMessage = ref('');
+const UpdateMenuNameErrorMessage = ref('');
+const UpdateMenuPriceErrorMessage = ref('');
+const UpdateMenuDescriptionErrorMessage = ref('');
 
 const newCategoryName = ref('');
 
@@ -196,43 +235,77 @@ const selectedMenu = ref({
   description: ''
 });
 
-const validateCategoryName = () => {
+const validateAddCategoryName = () => {
   const regex = /^[a-zA-Z]*$/;
   if (!regex.test(newCategoryName.value)) {
-    CategoryNameErrorMessage.value = '영어만 입력 가능합니다';
+    AddCategoryNameErrorMessage.value = '영어만 입력 가능합니다';
   } else {
-    errorMessage.value = '';
+    AddCategoryNameErrorMessage.value = '';
   }
 };
 
-const validateMenuName = () => {
-  const regex = /^[가-힣]*$/; // This regex allows only Korean characters
-  if (!regex.test(newMenu.value.name)) { // Corrected to check newMenu.value.name
-    MenuNameErrorMessage.value = ' 한글만 입력 가능합니다';
+const validateUpdateCategoryName = () => {
+  const regex = /^[a-zA-Z]*$/;
+  if (!regex.test(updatedCategoryName.value)) {
+    UpdateCategoryNameErrorMessage.value = '영어만 입력 가능합니다';
   } else {
-    errorMessage.value = '';
+    UpdateCategoryNameErrorMessage.value = '';
   }
-}
+};
 
-const validateDescription = () => {
+const validateAddMenuName = () => {
   const regex = /^[가-힣]*$/; // This regex allows only Korean characters
-  if (!regex.test(newMenu.value.description)) { // Corrected to check newMenu.value.name
-    MenuDescriptionErrorMessage.value = ' 한글만 입력 가능합니다';
+  if (!regex.test(newMenu.value.name)) {
+    AddMenuNameErrorMessage.value = '한글만 입력 가능합니다';
   } else {
-    errorMessage.value = '';
+    AddMenuNameErrorMessage.value = '';
   }
-}
+};
 
-const validatePrice = () => {
+const validateAddMenuPrice = () => {
   const regex = /^[0-9]*$/; // This regex allows only numbers
   if (!regex.test(newMenu.value.price)) {
-    MenuPriceErrorMessage.value = '숫자만 입력 가능합니다';
+    AddMenuPriceErrorMessage.value = '숫자만 입력 가능합니다';
   } else {
-    errorMessage.value = '';
+    AddMenuPriceErrorMessage.value = '';
   }
 };
 
+const validateAddMenuDescription = () => {
+  const regex = /^[가-힣\s]*$/; // This regex allows only Korean characters and spaces
+  if (!regex.test(newMenu.value.description)) {
+    AddMenuDescriptionErrorMessage.value = '한글만 입력 가능합니다';
+  } else {
+    AddMenuDescriptionErrorMessage.value = '';
+  }
+};
 
+const validateUpdateMenuName = () => {
+  const regex = /^[가-힣\s]*$/; // This regex allows only Korean characters and spaces
+  if (!regex.test(selectedMenu.value.name)) {
+    UpdateMenuNameErrorMessage.value = '한글만 입력 가능합니다';
+  } else {
+    UpdateMenuNameErrorMessage.value = '';
+  }
+};
+
+const validateUpdateMenuDescription = () => {
+  const regex = /^[가-힣\s]*$/; // This regex allows only Korean characters and spaces
+  if (!regex.test(selectedMenu.value.description)) {
+    UpdateMenuDescriptionErrorMessage.value = '한글만 입력 가능합니다';
+  } else {
+    UpdateMenuDescriptionErrorMessage.value = '';
+  }
+};
+
+const validateUpdateMenuPrice = () => {
+  const regex = /^[0-9]*$/; // This regex allows only numbers
+  if (!regex.test(selectedMenu.value.price)) {
+    UpdateMenuPriceErrorMessage.value = '숫자만 입력 가능합니다';
+  } else {
+    UpdateMenuPriceErrorMessage.value = '';
+  }
+};
 
 
 
@@ -583,10 +656,20 @@ onMounted(() => {
   font-size: 1.25rem; /* Increased font size */
 }
 
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
 .error-message {
   color: red;
   font-size: 0.875em;
-  margin-top: -10px; /* Adjust as needed to ensure visibility */
+  margin-top: 5px; /* Add some margin to space it from the input field */
 }
-
 </style>
