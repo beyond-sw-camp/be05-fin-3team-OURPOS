@@ -1,5 +1,6 @@
 <template>
   <div class="landing-page">
+    <!-- 네비게이션 바 -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark navigation-bar">
       <a class="navbar-brand" href="#">OUR POS</a>
       <div class="ml-auto">
@@ -11,11 +12,16 @@
       </div>
     </nav>
 
+    <!-- 메인 콘텐츠 -->
     <div class="container-fluid">
       <div class="row no-gutters">
-        <div class="col-9 card-group">
+
+        <!-- 왼쪽 콘텐츠 영역 - 메인 컨텐츠 -->
+
+        <div class="col-lg-4">
           <div class="row">
-            <div class="col-4">
+            <!-- 첫 번째 카드 - 홀 주문 관리 -->
+            <div class="col-6">
               <router-link to="/admin/storeLanding/hallOrderManage">
                 <div class="card same-card">
                   <div class="card-body">
@@ -24,7 +30,8 @@
                 </div>
               </router-link>
             </div>
-            <div class="col-4">
+            <!-- 두 번째 카드 - 배달 주문 관리 -->
+            <div class="col-6">
               <router-link to="/store-landing/delivery-order-manage">
                 <div class="card same-card">
                   <div class="card-body">
@@ -33,16 +40,11 @@
                 </div>
               </router-link>
             </div>
-            <div class="col-4">
-              <router-link to="/manager/insight">
-                <div class="card same-card">
-                  <div class="card-body">
-                    <h5 class="card-title">비즈니스 인사이트 확인</h5>
-                  </div>
-                </div>
-              </router-link>
-            </div>
-            <div class="col-4">
+          </div>
+
+          <div class="row">
+            <!-- 세 번째 카드 - 메뉴 상태 관리 -->
+            <div class="col-6">
               <router-link to="/store-landing/menu-status-manage">
                 <div class="card same-card">
                   <div class="card-body">
@@ -51,7 +53,8 @@
                 </div>
               </router-link>
             </div>
-            <div class="col-4">
+            <!-- 네 번째 카드 - 비품/식자재 주문 -->
+            <div class="col-6">
               <router-link to="/storeorder">
                 <div class="card same-card">
                   <div class="card-body">
@@ -60,23 +63,38 @@
                 </div>
               </router-link>
             </div>
-            <div class="col-4">
+          </div>
+        </div>
+
+
+        <!-- 오른쪽 콘텐츠 영역 - 서브 컨텐츠 -->
+        <div class="col-lg-8">
+          <!-- 첫 번째 열 - 재고 관리 -->
+          <div class="row">
+            <div class="col-3">
+              <router-link to="/manager/insight">
+                <div class="card double-height-card">
+                  <div class="card-body">
+                    <h5 class="card-title">비즈니스 인사이트</h5>
+                  </div>
+                </div>
+              </router-link>
+            </div>
+
+            <!-- 두 번째 열 - 새로운 기능 추가 -->
+            <div class="col-9">
               <div class="card same-card">
                 <div class="card-body">
-                  <h5 class="card-title">라이더 위치 확인</h5>
+                  <h5 class="card-title">새로운 기능 추가</h5>
+                  <p>이 곳에 새로운 기능을 추가할 내용을 작성하세요.</p>
                 </div>
               </div>
             </div>
+
+
+
+
           </div>
-        </div>
-        <div class="col-3">
-          <router-link to="/stock-insight">
-            <div class="card double-height-card">
-              <div class="card-body">
-                <h5 class="card-title">재고 관리</h5>
-              </div>
-            </div>
-          </router-link>
         </div>
       </div>
     </div>
@@ -96,21 +114,20 @@
   margin-bottom: 10px;
 }
 
-.card-group {
-  height: 90vh;
-}
-
 .same-card {
-  height: calc(90vh / 2 - 8px);
+  height: calc(40vh - 4px);
   border: 1px solid #ccc;
   margin-top: 4px;
 }
 
 .double-height-card {
-  height: 90vh;
+  height: calc(80vh - 8px);
   border: 1px solid #ccc;
   margin-top: 4px;
 }
+
+
 </style>
+
 <script setup lang="ts">
 </script>
