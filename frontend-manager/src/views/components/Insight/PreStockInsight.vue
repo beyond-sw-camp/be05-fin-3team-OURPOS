@@ -3,8 +3,6 @@
     <table class="stock-table">
       <thead>
       <tr>
-        <th>Store ID</th>
-        <th>Store Name</th>
         <th>Stock Name</th>
         <th>Stock Amount</th>
         <th>Status</th>
@@ -14,8 +12,6 @@
       </thead>
       <tbody>
       <tr v-for="(item, index) in incomingStockList" :key="index">
-        <td>{{ item.storeId }}</td>
-        <td>{{ item.storeName }}</td>
         <td>{{ item.stockName }}</td>
         <td>{{ item.stockAmount }}</td>
         <td>{{ item.status }}</td>

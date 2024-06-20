@@ -175,14 +175,14 @@ public class AdminOrderController {
     // db 재고량 조회 ( 주문 시, 반영되는 재고량 )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/storestocks/my")
-    public ResponseEntity<List<StoreStockCheckResponseDto>> getAllStoreStocksforstore() {
+    public Result<Page<StoreStockCheckResponseDto>> getAllStoreStocksforstore(@RequestParam int page) {
         String adminLoginId = getManagerLoginId();
 
         log.info("가게 입고 예정량 조회: {}", adminLoginId);
         log.debug("getIncomingStock 메서드 호출됨");
 
-        List<StoreStockCheckResponseDto> storestocks  = adminOrderService.getAllStoreStocks(adminLoginId);
-        return ResponseEntity.status(HttpStatus.OK).body(storestocks);
+        Page<StoreStockCheckResponseDto> storestocks  = adminOrderService.getAllStoreStocks(adminLoginId, page);
+        return new Result<>(HttpStatus.OK.value(), "현재 재고량 목록을 불러옵니다", storestocks);
     }
 
     private String getManagerLoginId() {

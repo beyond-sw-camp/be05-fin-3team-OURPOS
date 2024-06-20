@@ -178,14 +178,15 @@ public class AdminOrderService {
 
     // 배송 완료 반영된 재고량 조회 (기타 입출고 포함)
     @Transactional(readOnly = true)
-    public List<StoreStockCheckResponseDto> getAllStoreStocks(String adminLoginId) {
+    public Page<StoreStockCheckResponseDto> getAllStoreStocks(String adminLoginId, int page) {
+
+        Pageable pageable = PageRequest.of(page, 5);
+
         Store store = storeRepository.findByManagerLoginId(adminLoginId)
         .orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
 
         Long storeId=store.getId();
-        List<StoreStock> storeStocks = storeStockRepository.findAll();
-        return storeStocks.stream()
-            .map(StoreStockCheckResponseDto::new)
-            .collect(Collectors.toList());
+        Page<StoreStock> storeStocks = storeStockRepository.findAllByStoreId(storeId, pageable);
+        return storeStocks.map(StoreStockCheckResponseDto::new);
     }
 }
