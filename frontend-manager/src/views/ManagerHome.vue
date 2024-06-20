@@ -85,6 +85,7 @@
             <div class="col-9">
               <h4>입고 예정 재고량</h4>
               <PreStock/>
+              <NowStock/>
             </div>
 
 
@@ -127,6 +128,7 @@
 
 <script setup>
 
-import PreStock from "./PreStockInsight.vue";
+import PreStock from "./components/Insight/PreStockInsight.vue";
+import NowStock from "./components/Insight/NowStockInsight.vue";
 
 </script>

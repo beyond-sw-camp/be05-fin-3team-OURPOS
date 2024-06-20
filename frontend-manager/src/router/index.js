@@ -23,7 +23,7 @@ import MenuManage from "../views/MenuManage.vue";
 import MenuOptionGroupManage from "../views/MenuOptionGroupManage.vue";
 import ManagerInsight from "@/views/ManagerInsight.vue";
 import InfraAnalysis from "@/views/InfraAnalysis.vue";
-import StockInsight from "@/views/PreStockInsight.vue";
+import StockInsight from "@/views/components/Insight/PreStockInsight.vue";
 
 const routes = [
   {
