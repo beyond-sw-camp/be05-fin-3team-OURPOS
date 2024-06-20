@@ -2,6 +2,7 @@ package com.ourpos.api.order.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -143,22 +144,24 @@ public class AdminOrderService {
         Store store = storeRepository.findByManagerLoginId(adminLoginId)
             .orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
 
+        List<StoreOrderStatus> statusList = Arrays.asList(
+            StoreOrderStatus.WAITING,
+            StoreOrderStatus.ACCEPTED,
+            StoreOrderStatus.DELIVERING
+        );
+
         Long storeId=store.getId();
         log.info("getIncomingStock service , {} {}", storeId, store.getName());
-        Page<StoreOrder> storeOrders = storeOrderRepository.findByStoreId(storeId, pageable);
+        Page<StoreOrder> storeOrders = storeOrderRepository.findByStoreIdAndStatusIn(storeId, statusList, pageable);
+
         if (storeOrders.isEmpty()) {
             throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
         }
 
         List<StoreStockResponseDto> incomingStockList = new ArrayList<>();
         for (StoreOrder storeOrder : storeOrders) {
-            if (storeOrder.getStatus() == StoreOrderStatus.WAITING ||
-                storeOrder.getStatus() == StoreOrderStatus.ACCEPTED ||
-                storeOrder.getStatus() == StoreOrderStatus.DELIVERING) {
-
-                StoreStockResponseDto dto = new StoreStockResponseDto(storeOrder);
-                incomingStockList.add(dto);
-            }
+            StoreStockResponseDto dto = new StoreStockResponseDto(storeOrder);
+            incomingStockList.add(dto);
         }
 
         return new PageImpl<>(incomingStockList, pageable, storeOrders.getTotalElements());

@@ -172,7 +172,7 @@ public class AdminOrderController {
     */
 
     // 배송 완료 반영된 재고량 조회 (기타 입출고 포함)->직영점
-    // db 재고량 조회
+    // db 재고량 조회 ( 주문 시, 반영되는 재고량 )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/storestocks/my")
     public ResponseEntity<List<StoreStockCheckResponseDto>> getAllStoreStocksforstore() {
