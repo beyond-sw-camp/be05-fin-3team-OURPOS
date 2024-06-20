@@ -142,15 +142,14 @@ public class AdminOrderController {
     // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)-> 직영점
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/store/incoming-stock/my")
-    public Result<List<StoreStockResponseDto>> getIncomingStockforstore() {
+    public Result<Page<StoreStockResponseDto>> getIncomingStockforstore(@RequestParam int page) {
 	    String adminLoginId = getManagerLoginId();
 
         log.info("가게 입고 예정량 조회: {}", adminLoginId);
         log.debug("getIncomingStock 메서드 호출됨");
-        List<StoreStockResponseDto> incomingStockList = adminOrderService.getIncomingStock(adminLoginId);
-        return new Result<>(HttpStatus.OK.value(), "입고 예정량 목록을 불러옵니다", incomingStockList);
-            
+        Page<StoreStockResponseDto> incomingStockList = adminOrderService.getIncomingStock(adminLoginId, page);
 
+        return new Result<>(HttpStatus.OK.value(), "입고 예정량 목록을 불러옵니다", incomingStockList);
         }
 
     // 기타 입고 (점주가 배송된 상품의 상태 확인 후 임의로 재고 변경)-> 직영점
@@ -173,16 +172,17 @@ public class AdminOrderController {
     */
 
     // 배송 완료 반영된 재고량 조회 (기타 입출고 포함)->직영점
+    // db 재고량 조회 ( 주문 시, 반영되는 재고량 )
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/storestocks/my")
-    public ResponseEntity<List<StoreStockCheckResponseDto>> getAllStoreStocksforstore() {
+    public Result<Page<StoreStockCheckResponseDto>> getAllStoreStocksforstore(@RequestParam int page) {
         String adminLoginId = getManagerLoginId();
 
         log.info("가게 입고 예정량 조회: {}", adminLoginId);
         log.debug("getIncomingStock 메서드 호출됨");
 
-        List<StoreStockCheckResponseDto> storestocks  = adminOrderService.getAllStoreStocks(adminLoginId);
-        return ResponseEntity.status(HttpStatus.OK).body(storestocks);
+        Page<StoreStockCheckResponseDto> storestocks  = adminOrderService.getAllStoreStocks(adminLoginId, page);
+        return new Result<>(HttpStatus.OK.value(), "현재 재고량 목록을 불러옵니다", storestocks);
     }
 
     private String getManagerLoginId() {

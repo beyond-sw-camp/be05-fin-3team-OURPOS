@@ -23,6 +23,7 @@ import MenuManage from "../views/MenuManage.vue";
 import MenuOptionGroupManage from "../views/MenuOptionGroupManage.vue";
 import ManagerInsight from "@/views/ManagerInsight.vue";
 import InfraAnalysis from "@/views/InfraAnalysis.vue";
+import StockInsight from "@/views/components/Insight/PreStockInsight.vue";
 
 const routes = [
   {
@@ -106,13 +107,13 @@ const routes = [
     path:"/menu-manage",
     name:"MenuManage",
     component:MenuManage,
-    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] , hideSidenav: true}
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] },
   },
   {
     path:"/menu-option-group-manage",
     name:"MenuOptionGroupManage",
     component:MenuOptionGroupManage,
-    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] , hideSidenav: true}
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] },
   },
   {
     path:"/manager/insight",
@@ -155,6 +156,12 @@ const routes = [
     path: '/infra',
     component: InfraAnalysis,
     meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
+  },
+  {
+    name: 'storeStockInsight',
+    path: '/stock-insight',
+    component: StockInsight,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   }
 
 ];
