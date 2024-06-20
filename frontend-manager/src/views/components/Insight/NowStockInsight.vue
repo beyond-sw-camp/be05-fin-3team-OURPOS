@@ -1,11 +1,12 @@
 <template>
-  <div class="pre-stock">
+  <div class="now-stock">
+    <h5>현재 재고량</h5>
     <table class="stock-table">
       <thead>
       <tr>
-        <th>Stock Name</th>
-        <th>Stock Amount</th>
-        <th>Stocking Time</th>
+        <th>식자재/비품명</th>
+        <th>수량</th>
+        <th>입고일</th>
       </tr>
       </thead>
       <tbody>
@@ -73,10 +74,15 @@ onMounted(() => {
 
 .pagination {
   margin-top: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 .pagination button {
   margin-right: 5px;
   cursor: pointer;
+}
+.now-stock{
+  height: calc(40vh - 8px);
 }
 </style>

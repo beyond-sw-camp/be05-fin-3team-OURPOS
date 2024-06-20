@@ -18,7 +18,7 @@
 
         <!-- 왼쪽 콘텐츠 영역 - 메인 컨텐츠 -->
 
-        <div class="col-lg-4">
+        <div class="col-lg-5">
           <div class="row">
             <!-- 첫 번째 카드 - 홀 주문 관리 -->
             <div class="col-6">
@@ -68,10 +68,10 @@
 
 
         <!-- 오른쪽 콘텐츠 영역 - 서브 컨텐츠 -->
-        <div class="col-lg-8">
+        <div class="col-lg-7">
           <!-- 첫 번째 열 - 재고 관리 -->
           <div class="row">
-            <div class="col-3">
+            <div class="col-4">
               <router-link to="/manager/insight">
                 <div class="card double-height-card">
                   <div class="card-body">
@@ -82,8 +82,7 @@
             </div>
 
             <!-- 두 번째 열 - 새로운 기능 추가 -->
-            <div class="col-9">
-              <h4>입고 예정 재고량</h4>
+            <div class="col-8">
               <PreStock/>
               <NowStock/>
             </div>
