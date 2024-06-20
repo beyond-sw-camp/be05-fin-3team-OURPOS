@@ -10,14 +10,14 @@
               <v-card-title class="d-flex justify-space-between align-center">
                 {{ orderDetail.menuName }}
                 <div class="d-flex align-center">
-                  <v-btn variant="plain" icon small @click="decrementQuantity(index)" :disabled="orderDetail.quantity <= 1">
+                  <v-btn variant="plain" small @click="decrementQuantity(index)" :disabled="orderDetail.quantity <= 1">
                     <v-icon>mdi-minus</v-icon>
                   </v-btn>
                   <span class="mx-2">{{ orderDetail.quantity }}</span>
-                  <v-btn variant="plain" icon small @click="incrementQuantity(index)">
+                  <v-btn variant="plain" small @click="incrementQuantity(index)">
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
-                  <v-btn variant="plain" icon small @click="deleteOrderDetail(index)">
+                  <v-btn variant="plain" small @click="deleteOrderDetail(index)">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </div>
@@ -47,13 +47,13 @@
         <v-container class="d-flex flex-column justify-end">
           <v-row v-if="orderDetailDtos.length > 0">
             <v-col cols="12" md="4" sm="6">
-              <v-progress-linear :value="orderCompletionPercentage" class="mb-2" color="primary"></v-progress-linear>
-              <v-btn :disabled="!canOrder" @click="goToPayment" rounded="lg" size="x-large" block class="mb-4">
+              <v-btn @click="goToPayment" rounded="lg" size="x-large"
+                     block
+                     class="mb-4"
+                      color="primary"
+              >
                 {{ Number(totalOrderPrice).toLocaleString() }}원 주문하기
               </v-btn>
-              <div v-if="!canOrder" class="text-right">
-                최소 주문 금액: {{ Number(minOrderPrice).toLocaleString() }}원
-              </div>
             </v-col>
           </v-row>
           <v-row v-else class="text-center">
@@ -64,21 +64,6 @@
           </v-row>
         </v-container>
 
-        <!-- Success message bottom sheet -->
-        <v-bottom-sheet v-model="orderSuccessSheet" inset>
-          <v-card class="text-center py-4">
-            <v-card-text>
-              <div>
-                <v-icon color="green" size="36">mdi-check-circle</v-icon>
-                <div>주문이 완료되었습니다!</div>
-              </div>
-              <v-btn variant="text" @click="orderSuccessSheet = false">
-                닫기
-              </v-btn>
-            </v-card-text>
-          </v-card>
-        </v-bottom-sheet>
-
         <!-- Error alert -->
         <v-alert v-model="orderErrorAlert" type="error" dismissible>
           {{ orderErrorMessage }}
@@ -86,39 +71,26 @@
       </v-container>
     </v-main>
   </v-app>
+  <BottomNav />
 </template>
 
 <script setup>
+import BottomNav from "@/components/BottomNav.vue";
 import { ref, computed, watch } from 'vue';
-import axios from 'axios';
 import { useRouter } from 'vue-router';
 import AppHeader from "@/components/AppHeader.vue";
 
 let fullOrder = ref(JSON.parse(localStorage.getItem('fullOrder')) || {});
 let orderDetailDtos = ref(fullOrder.value.orderDetailDtos || []);
-const orderSuccessSheet = ref(false);
 const orderErrorAlert = ref(false);
 const orderErrorMessage = ref('');
 const router = useRouter();
-
-// Set the minimum order price (replace this with actual value if available)
-const minOrderPrice = ref(15000); // example minimum order price
 
 // Compute the total price of the order
 const totalOrderPrice = computed(() => {
   return orderDetailDtos.value.reduce((total, orderDetail) => {
     return total + orderDetail.totalPrice;
   }, 0);
-});
-
-// Check if the order can be placed
-const canOrder = computed(() => {
-  return totalOrderPrice.value >= minOrderPrice.value;
-});
-
-// Calculate the percentage of the minimum order amount achieved
-const orderCompletionPercentage = computed(() => {
-  return Math.min((totalOrderPrice.value / minOrderPrice.value) * 100, 100);
 });
 
 const deleteOrderDetail = (index) => {

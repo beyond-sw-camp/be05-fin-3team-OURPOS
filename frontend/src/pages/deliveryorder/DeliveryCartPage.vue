@@ -10,14 +10,14 @@
               <v-card-title class="d-flex justify-space-between align-center">
                 {{ orderDetail.menuName }}
                 <div class="d-flex align-center">
-                  <v-btn variant="plain" icon small @click="decrementQuantity(index)" :disabled="orderDetail.quantity <= 1">
+                  <v-btn variant="plain" small @click="decrementQuantity(index)" :disabled="orderDetail.quantity <= 1">
                     <v-icon>mdi-minus</v-icon>
                   </v-btn>
                   <span class="mx-2">{{ orderDetail.quantity }}</span>
-                  <v-btn variant="plain" icon small @click="incrementQuantity(index)">
+                  <v-btn variant="plain" small @click="incrementQuantity(index)">
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
-                  <v-btn variant="plain" icon small @click="deleteOrderDetail(index)">
+                  <v-btn variant="plain" small @click="deleteOrderDetail(index)">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </div>
@@ -48,7 +48,10 @@
           <v-row v-if="orderDetailDtos.length > 0">
             <v-col cols="12" md="4" sm="6">
               <v-progress-linear :value="orderCompletionPercentage" class="mb-2" color="primary"></v-progress-linear>
-              <v-btn :disabled="!canOrder" @click="goToPayment" rounded="lg" size="x-large" block class="mb-4">
+              <v-btn
+                :disabled="!canOrder" @click="goToPayment"
+                color="primary"
+                rounded="lg" size="x-large" block class="mb-4">
                 {{ Number(totalOrderPrice).toLocaleString() }}원 주문하기
               </v-btn>
               <div v-if="!canOrder" class="text-right">
@@ -69,9 +72,11 @@
       </v-container>
     </v-main>
   </v-app>
+  <BottomNav />
 </template>
 
 <script setup>
+import BottomNav from "@/components/BottomNav.vue";
 import { ref, computed, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import AppDeliveryHeader from "@/components/AppDeliveryHeader.vue";

@@ -1,43 +1,32 @@
 <template>
-  <div v-if="isOpen" class="modal-overlay">
+  <div class="modal-overlay" v-if="isOpen">
     <div class="modal-content">
       <div class="modal-bar">
-        <h5 class="modal-title">{{ title }}</h5>
-      </div>
-      <div class="modal-header">
+        <span>{{ title }}</span>
+        <button @click="$emit('close')">X</button>
       </div>
       <div class="modal-body">
-        <slot></slot>
+        <slot></slot> <!-- Placeholder for other modal content -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" @click="confirmAction">Confirm</button>
-        <button type="button" class="btn btn-secondary" @click="closeModal">Cancel</button>
+        <button type="button" class="btn btn-primary" @click="$emit('confirm')">확인</button>
+        <button type="button" class="btn btn-secondary" @click="$emit('close')">취소</button>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    isOpen: {
-      type: Boolean,
-      required: true
-    },
-    title: {
-      type: String,
-      required: true
-    }
+<script setup>
+defineProps({
+  isOpen: {
+    type: Boolean,
+    required: true
   },
-  methods: {
-    closeModal() {
-      this.$emit('close');
-    },
-    confirmAction() {
-      this.$emit('confirm');
-    }
+  title: {
+    type: String,
+    required: true
   }
-};
+});
 </script>
 
 <style scoped>
@@ -55,41 +44,41 @@ export default {
 
 .modal-content {
   background: white;
-  padding: 20px;
+  padding: 0;
   border-radius: 5px;
-  width: 400px;
+  width: 600px; /* Increased width */
+  max-height: 90vh; /* Ensure it fits within the viewport */
+  overflow-y: auto; /* Enable scrolling if content overflows */
   position: relative;
 }
 
 .modal-bar {
   background-color: #3f51b5;
   color: white;
-  padding: 10px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-.modal-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  border-bottom: 1px solid #dee2e6;
-  padding-bottom: 10px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: white;
-}
-
 .modal-body {
-  padding: 50px 0 20px 0;
+  padding: 20px;
   font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-footer {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 20px;
+  padding: 10px;
+  border-top: 1px solid #dee2e6;
 }
+
+
 </style>

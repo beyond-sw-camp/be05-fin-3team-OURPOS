@@ -13,7 +13,7 @@
               <v-list-item class="address-item">
                 <v-list-item-content>
                   <v-icon>mdi-map-marker</v-icon>
-                  <v-list-item-title>기본주소</v-list-item-title>
+                  <v-list-item-title><h3>기본주소</h3></v-list-item-title>
                   <v-list-item-subtitle>{{ mainAddress.addressBase }}</v-list-item-subtitle>
                   <v-list-item-subtitle>{{ mainAddress.addressDetail }}</v-list-item-subtitle>
                 </v-list-item-content>
@@ -35,26 +35,25 @@
                   <v-btn
                     small
                     outlined
-                    color="amber-lighten-4"
-                    class="rounded-btn"
+                    class="rounded-btn mr-2"
                     @click="editSubAddress(address, index)"
                   >
                     수정
                   </v-btn>
+                  
                   <v-btn
                     small
                     outlined
-                    color="amber-lighten-4"
-                    class="rounded-btn"
+                    class="rounded-btn mr-2"
                     @click="deleteSubAddress(address.customerAddressId)"
                   >
                     삭제
                   </v-btn>
+                 
                   <v-btn
                     small
                     outlined
-                    color="amber-lighten-4"
-                    class="rounded-btn"
+                    class="rounded-btn mr-2"
                     @click="updateSubAddress(index)"
                   >
                     기본주소로 변경
@@ -458,14 +457,22 @@ export default {
 .mb-4 {
   margin-bottom: 1rem;
 }
+
 .rounded-btn {
-  border-radius: 40px;
+  
   font-size: 0.6rem;
-  font-color: #fff;
-  padding: 1px 5px;
+  color: #000000; /* 글자 색깔 */
+  padding: 2px 5px;
   min-width: 40px;
   height: 24px;
+  border-color: orange; /* 아웃라인 색깔 */
+  background-color: #fff; /* 버튼 내부 색깔 */
+  border-width: 2px; /* 아웃라인 굵기 */
+  border-radius: 12px;
+  margin-top: 8px; /* 위쪽 공백 설정 */
 }
+
+
 .ml-2 {
   margin-left: 8px;
 }

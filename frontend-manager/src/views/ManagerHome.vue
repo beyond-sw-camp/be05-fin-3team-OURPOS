@@ -1,8 +1,9 @@
 <template>
   <div class="landing-page">
-    <!-- 네비게이션 바 -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark navigation-bar">
-      <a class="navbar-brand" href="#">OUR POS</a>
+      <div class="mr-auto">
+        <div class="POS-name">OUR POS</div>
+      </div>
       <div class="ml-auto">
         <router-link to="/">
           <button class="btn btn-outline-light">
@@ -87,9 +88,6 @@
               <NowStock/>
             </div>
 
-
-
-
           </div>
         </div>
       </div>
@@ -98,6 +96,21 @@
 </template>
 
 <style scoped>
+.POS-name {
+  font-size: 3rem; /* Increased font size */
+  color: aliceblue;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 20px; /* Increased padding for height */
+  font-size: 1.25rem; /* Increased font size */
+  text-align: center;
+  cursor: pointer;
+}
+
 .landing-page {
   height: 100vh;
 }
@@ -110,16 +123,24 @@
   margin-bottom: 10px;
 }
 
+.card {
+  height: 100%; /* Make the card fill its container */
+}
+
 .same-card {
   height: calc(40vh - 4px);
   border: 1px solid #ccc;
   margin-top: 4px;
+  align-items: center;
+
 }
 
 .double-height-card {
   height: calc(80vh - 8px);
   border: 1px solid #ccc;
   margin-top: 4px;
+
+
 }
 
 

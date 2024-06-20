@@ -6,6 +6,8 @@
       <h2>결제를 완료했어요</h2>
       <p v-if="jsonData">주문번호: {{ jsonData.orderId }}</p>
       <p v-if="jsonData">결제승인번호: {{ jsonData.paymentKey }}</p>
+      <p v-if="jsonData">결제 일시: {{ new Date(jsonData.approvedAt).toLocaleString() }}</p>
+
       <p v-if="jsonData && jsonData.balanceAmount !== null">결제금액: {{ Number(jsonData.balanceAmount).toLocaleString() }}원</p>
 
       <button class="button" @click="goToMain">주문 페이지로 돌아가기</button>

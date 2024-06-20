@@ -13,6 +13,6 @@ public interface MenuService {
 
     public void deleteMenu(Long menuId);
 
-    public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto, MultipartFile multipartFile);
+    public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto);
 
 }
