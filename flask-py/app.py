@@ -14,7 +14,7 @@ def home():
 #     dong_code = request.args.get('dong_code')
 #     return jsonify({"dong_code": dong_code})
 
-if __name__ == '__main__':  
+if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
 
 @app.route('/api/v1/calculator') #get echo api
@@ -25,7 +25,7 @@ def load_pdf():
     print("dong_code", dong_code)
 
     print("서버 연결 완료")
-    
+
     # PDF 생성 함수 호출
     create_report(dong_code)
     print("pdf 다운 함수 호출")
@@ -61,29 +61,17 @@ def create_report(dong_code):
     print("pdf 생성 함수 시작")
 
 
+    fonts_dir = os.path.join(os.path.dirname(__file__), 'fonts')
+
+# 폰트 등록
+    pdfmetrics.registerFont(TTFont("맑은고딕", os.path.join(fonts_dir, "malgun.ttf")))
+
     # 폰트 등록
     pdfmetrics.registerFont(TTFont("맑은고딕", "malgun.ttf"))
-    FONT_FILE = '%s/Fonts/%s' % (os.environ['WINDIR'], 'BATANG.TTC') 
-    FONT_NAME = '바탕'
-    pdfmetrics.registerFont(TTFont(FONT_NAME, FONT_FILE))
-    FONT_FILE = '%s/Fonts/%s' % (os.environ['WINDIR'], 'gulim.TTC') 
-    FONT_NAME = '굴림'
-    pdfmetrics.registerFont(TTFont(FONT_NAME, FONT_FILE))
-    FONT_FILE = '%s/Fonts/%s' % (os.environ['WINDIR'], 'Hancom Gothic Bold.ttf') 
-    FONT_NAME = '한컴고딕굵게'
-    pdfmetrics.registerFont(TTFont(FONT_NAME, FONT_FILE))
-    FONT_FILE = '%s/Fonts/%s' % (os.environ['WINDIR'], 'Hancom Gothic Regular.ttf') 
-    FONT_NAME = '한컴고딕보통'
-    pdfmetrics.registerFont(TTFont(FONT_NAME, FONT_FILE))
-    # FONT_FILE = '%s/Fonts/%s' % (os.environ['WINDIR'], 'a르네상스.ttf') 
-    # FONT_NAME = 'a르네상스'
-    # pdfmetrics.registerFont(TTFont(FONT_NAME, FONT_FILE))
-    # FONT_FILE = '%s/Fonts/%s' % (os.environ['WINDIR'], 'a카레이서.ttf') 
-    # FONT_NAME = 'a카레이서'
-    # pdfmetrics.registerFont(TTFont(FONT_NAME, FONT_FILE))
-    # FONT_FILE = '%s/Fonts/%s' % (os.environ['WINDIR'], 'a긴고딕5.ttf') 
-    # FONT_NAME = 'a긴고딕5'
-    # pdfmetrics.registerFont(TTFont(FONT_NAME, FONT_FILE))
+    pdfmetrics.registerFont(TTFont("바탕", os.path.join(fonts_dir, "batang.ttc")))
+    pdfmetrics.registerFont(TTFont("굴림", os.path.join(fonts_dir, "gulim.ttc")))
+    pdfmetrics.registerFont(TTFont("한컴고딕굵게", os.path.join(fonts_dir, "Hancom Gothic Bold.ttf")))
+    pdfmetrics.registerFont(TTFont("한컴고딕보통", os.path.join(fonts_dir, "Hancom Gothic Regular.ttf")))
 
 
     pdf = canvas.Canvas("예상매출액보고서.pdf", pagesize=letter)
@@ -117,7 +105,7 @@ def create_report(dong_code):
     pdf.setFont("한컴고딕보통", 30)
     expected_sales_intro = "예상 연간 매출액은"
     expected_sales_amounts = "{}원~\n{}원입니다.".format(int(exp_sales*0.7),int(exp_sales*1.3))
-    
+
 
     ## 그림자 글씨
     # 첫 번째 라인
