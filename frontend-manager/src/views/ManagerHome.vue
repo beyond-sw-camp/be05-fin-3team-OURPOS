@@ -83,12 +83,8 @@
 
             <!-- 두 번째 열 - 새로운 기능 추가 -->
             <div class="col-9">
-              <div class="card same-card">
-                <div class="card-body">
-                  <h5 class="card-title">새로운 기능 추가</h5>
-                  <p>이 곳에 새로운 기능을 추가할 내용을 작성하세요.</p>
-                </div>
-              </div>
+              <h4>입고 예정 재고량</h4>
+              <PreStock/>
             </div>
 
 
@@ -129,5 +125,8 @@
 
 </style>
 
-<script setup lang="ts">
+<script setup>
+
+import PreStock from "./PreStockInsight.vue";
+
 </script>
