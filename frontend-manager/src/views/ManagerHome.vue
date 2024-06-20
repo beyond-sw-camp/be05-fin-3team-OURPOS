@@ -98,7 +98,8 @@
 <style scoped>
 .POS-name {
   font-size: 3rem; /* Increased font size */
-  color: aliceblue;
+  color: #f0f0f0;
+  text-shadow: 1px 1px 2px #000;
 }
 
 .btn {
@@ -109,10 +110,15 @@
   font-size: 1.25rem; /* Increased font size */
   text-align: center;
   cursor: pointer;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
 }
 
 .landing-page {
   height: 100vh;
+  background-color: #f5f5f5;
 }
 
 .navigation-bar {
@@ -121,29 +127,53 @@
   align-items: center;
   height: 10vh;
   margin-bottom: 10px;
+  background-color: #2c3e50;
 }
 
 .card {
   height: 100%; /* Make the card fill its container */
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  margin-top: 4px;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .same-card {
   height: calc(40vh - 4px);
-  border: 1px solid #ccc;
-  margin-top: 4px;
+  display: flex;
+  justify-content: center;
   align-items: center;
-
 }
 
 .double-height-card {
   height: calc(80vh - 8px);
-  border: 1px solid #ccc;
-  margin-top: 4px;
-
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.card-title {
+  font-size: 1.5rem;
+  color: #333;
+}
 
+.container-fluid {
+  padding: 0 20px;
+}
+
+.row {
+  margin: 0 -10px;
+}
+
+.col-4, .col-6, .col-8, .col-lg-5, .col-lg-7 {
+  padding: 0 10px;
+}
 </style>
 
 <script setup>

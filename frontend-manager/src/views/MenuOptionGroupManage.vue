@@ -1,16 +1,8 @@
 <template>
   <div>
-    <nav class="navbar navbar-dark bg-dark navigation-bar">
-      <div class="mr-auto">
-        <div class="POS-name">OUR POS</div>
-      </div>
-      <router-link to="/owner" class="ml-auto">
-        <button class="btn btn-outline-light">
-          <i class="mdi mdi-export">뒤로 가기</i>
-        </button>
-      </router-link>
-    </nav>
-
+    <div class="container mt-5">
+      <h2>메뉴 옵션 관리</h2>
+      <hr class="styled-line">
     <div class="container-fluid">
       <div class="row">
         <div class="col-2">
@@ -135,6 +127,7 @@
       </div>
       <MaterialButton @click="deleteMenuOption" class="btn btn-danger">삭제</MaterialButton>
     </MenuManageModal>
+  </div>
   </div>
 </template>
 
@@ -527,7 +520,7 @@ onMounted(() => {
 }
 
 .primary {
-  background-color: #3f51b5; /* Selected state color */
+  background-color: #28282B; /* Selected state color */
   color: white;
 }
 
@@ -540,7 +533,7 @@ onMounted(() => {
   position: fixed;
   bottom: 16px;
   right: 16px;
-  background-color: #3f51b5;
+  background-color: #28282B;
   color: white;
   border: none;
   border-radius: 50%;
@@ -606,7 +599,7 @@ onMounted(() => {
 }
 
 .primary {
-  background-color: #3f51b5;
+  background-color: #28282B;
   color: white;
 }
 

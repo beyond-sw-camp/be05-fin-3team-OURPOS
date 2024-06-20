@@ -53,7 +53,7 @@ defineProps({
 }
 
 .modal-bar {
-  background-color: #3f51b5;
+  background-color: #28282B;
   color: white;
   padding: 10px 20px;
   display: flex;

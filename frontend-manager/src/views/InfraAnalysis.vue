@@ -7,7 +7,7 @@
           <div class="col-lg-6 col-md-6 col-sm-6 mt-lg-0 mt-4">
             <mini-statistics-card :title="{ text: '현재 지점수', value: '5' }"
                                   detail="<span class='text-danger text-sm font-weight-bolder'></span>" :icon="{
-                name: 'person',
+                name: 'logo-ct',
                 color: 'text-white',
                 background: 'success',
               }" />

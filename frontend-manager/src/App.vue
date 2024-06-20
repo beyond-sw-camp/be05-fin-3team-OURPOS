@@ -21,35 +21,34 @@ Coded by www.creative-tim.com
   <main
     class="main-content position-relative max-height-vh-100 h-100 overflow-x-hidden"
   >
-    <!-- nav -->
-    <navbar
-      :class="[isNavFixed ? navbarFixed : '', isAbsolute ? absolute : '']"
-      :color="isAbsolute ? 'text-white opacity-8' : ''"
-      :minNav="navbarMinimize"
-      v-if="showNavbar"
-    />
+<!--    <navbar-->
+<!--      :class="[isNavFixed ? navbarFixed : '', isAbsolute ? absolute : '']"-->
+<!--      :color="isAbsolute ? 'text-white opacity-8' : ''"-->
+<!--      :minNav="navbarMinimize"-->
+<!--      v-if="showNavbar"-->
+<!--    />-->
+<!--    <Navbar2/>-->
     <router-view />
-    <app-footer v-show="showFooter" />
-    <configurator
-      :toggle="toggleConfigurator"
-      :class="[showConfig ? 'show' : '', hideConfigButton ? 'd-none' : '']"
-    />
+<!--    <configurator-->
+<!--      :toggle="toggleConfigurator"-->
+<!--      :class="[showConfig ? 'show' : '', hideConfigButton ? 'd-none' : '']"-->
+<!--    />-->
   </main>
 </template>
 <script>
 import Sidenav from "./examples/Sidenav";
-import Configurator from "@/examples/Configurator.vue";
-import Navbar from "@/examples/Navbars/Navbar.vue";
-import AppFooter from "@/examples/Footer.vue";
+// import Configurator from "@/examples/Configurator.vue";
+// import Navbar from "@/examples/Navbars/Navbar.vue";
+// import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "App",
   components: {
+    // Navbar2,
     Sidenav,
-    Configurator,
-    Navbar,
-    AppFooter,
+    // Configurator,
+    // Navbar,
   },
   methods: {
     ...mapMutations(["toggleConfigurator", "navbarMinimize"]),
