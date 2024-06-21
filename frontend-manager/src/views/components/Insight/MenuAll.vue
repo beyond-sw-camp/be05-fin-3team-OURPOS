@@ -4,7 +4,6 @@
                        update="실시간 업데이트"  color="dark">
         <div class="canvas">
             <canvas id="menuPreferAllChart"></canvas>
-            <p>Store ID: {{ storeId }}</p>
         </div>
     </chart-holder-card>
 </template>

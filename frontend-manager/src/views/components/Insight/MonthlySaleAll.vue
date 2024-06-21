@@ -8,7 +8,6 @@
   >
     <div class="canvas">
       <canvas id="monthAllChart"></canvas>
-      <p>Store ID: {{ storeId }}</p>
     </div>
   </chart-holder-card>
 </template>

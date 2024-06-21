@@ -7,7 +7,6 @@
     >
     <div class = "canvas">
       <canvas id="mealTimeAllChart"></canvas>
-      <p>Store ID: {{ storeId }}</p>
       </div>
     </chart-holder-card>
   </template>

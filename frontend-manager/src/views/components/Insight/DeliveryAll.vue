@@ -6,7 +6,6 @@
       subtitle="행정구역 기준으로 배달 위치를 분석하여 시각화한 자료"
     >
     <div id="map" style="height: 796px;"></div>
-    <p>Store ID: {{ storeId }}</p>
     </chart-holder-card>
   </template>
   

@@ -32,15 +32,15 @@ export default {
 .btn {
   display: block;
   width: 100%;
-  height: 12vh;
+  height: 8vh;
   margin: 15px;
   font-size: 1.25rem; /* Increased font size */
   text-align: center;
   cursor: pointer;
-  background-color: #E5E6D9;
-  color: #344767;
-  border: none;
-  border-radius: 0;
+  background-color: #344767;
+  color: #E5E6D9;
+  border: #E5E6D9;
+  border-radius: 10px;
 }
 
 </style>
