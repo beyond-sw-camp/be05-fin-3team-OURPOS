@@ -9,7 +9,7 @@
               <a 
                 class="nav-link" 
                 :class="{ active: selectedTab === 'WAITING' }" 
-                @click="fetchOrders('WAITING')"
+                @click="fetchOrders('WAITING', 0)"
                 href="#"
               >
                 대기중
@@ -19,7 +19,7 @@
               <a 
                 class="nav-link" 
                 :class="{ active: selectedTab === 'ACCEPTED' }" 
-                @click="fetchOrders('ACCEPTED')"
+                @click="fetchOrders('ACCEPTED', 0)"
                 href="#"
               >
                 주문승인
@@ -29,7 +29,7 @@
               <a 
                 class="nav-link" 
                 :class="{ active: selectedTab === 'DELIVERING' }" 
-                @click="fetchOrders('DELIVERING')"
+                @click="fetchOrders('DELIVERING', 0)"
                 href="#"
               >
                 배송중
@@ -39,7 +39,7 @@
               <a 
                 class="nav-link" 
                 :class="{ active: selectedTab === 'COMPLETED' }" 
-                @click="fetchOrders('COMPLETED')"
+                @click="fetchOrders('COMPLETED', 0)"
                 href="#"
               >
                 배송 완료
@@ -58,7 +58,7 @@
                   <div class="row">
                     <div class="col"><strong>주문 번호:</strong> {{ order.storeOrderId }}</div>
                     <div class="col"><strong>주문 일시:</strong> {{ order.storeOrderDate }}</div>
-                    <div class="col"><strong>주문 금액:</strong> {{ order.storeCommPrice }}</div>
+                    <div class="col"><strong>주문 금액:</strong> {{ order.storeOrderDetailPrice }}</div>
                     <div class="col"><strong>지점명:</strong> {{ order.storeName }}</div>
                     <div class="col">
                       <a href="#" @click="showOrderDetail(order)">
@@ -68,6 +68,20 @@
                   </div>
                 </li>
               </ul>
+              <!-- 페이지 네이션 -->
+              <div class="mt-3 d-flex justify-content-center">
+                <button @click="fetchOrders(selectedTab, currentPage - 1)" :disabled="currentPage === 0" class="btn btn-outline-secondary btn-sm">prev</button>
+                <button 
+                  v-for="page in totalPages" 
+                  :key="page" 
+                  @click="fetchOrders(selectedTab, page - 1)" 
+                  class="btn btn-link text-secondary btn-sm"
+                  :class="{ 'text-dark': page === currentPage + 1 }"
+                >
+                  {{ page }}
+                </button>
+                <button @click="fetchOrders(selectedTab, currentPage + 1)" :disabled="currentPage === totalPages - 1" class="btn btn-outline-secondary btn-sm">next</button>
+              </div>
             </div>
           </div>
         </div>
@@ -108,6 +122,15 @@
           </div>
         </div>
       </div>
+      <!-- 로딩 및 에러 메시지 표시 -->
+      <div v-if="loading" class="text-center mt-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div v-if="error" class="alert alert-danger mt-3">
+        {{ error }}
+      </div>
     </div>
   </div>
 </template>
@@ -123,30 +146,21 @@ export default {
       error: null,
       selectedOrderDetail: null, // 선택된 주문의 세부 정보를 저장할 상태
       selectedTab: 'WAITING', // 현재 선택된 탭의 상태
+      currentPage: 0, // 현재 페이지
+      totalPages: 0 // 총 페이지 수
     };
   },
   computed: {
     // 현재 선택된 탭에 해당하는 주문 가져오기
     filteredOrders() {
-      return this.orders.filter(order => {
-        if (this.selectedTab === 'WAITING') {
-          return order.storeOrderStatus === 'WAITING';
-        } else if (this.selectedTab === 'ACCEPTED') {
-          return order.storeOrderStatus === 'ACCEPTED';
-        } else if (this.selectedTab === 'DELIVERING') {
-          return order.storeOrderStatus === 'DELIVERING';
-        } else if (this.selectedTab === 'COMPLETED') {
-          return order.storeOrderStatus === 'COMPLETED';
-        }
-        return false;
-      });
+      return this.orders;
     }
   },
   created() {
-    this.fetchOrders(this.selectedTab);
+    this.fetchOrders(this.selectedTab, this.currentPage);
   },
   methods: {
-    async fetchOrders(status) {
+    async fetchOrders(status, page) {
       this.loading = true;
       this.error = null;
       this.selectedTab = status;
@@ -162,14 +176,18 @@ export default {
         const response = await axios.get(`http://localhost:8080/api/v1/storeorder/1/check`, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
+            'Authorization': token
           },
           withCredentials: true,
           params: {
-            status: status
+            status: status,
+            page: page,
+            size: 5 // 페이지 당 항목 수
           }
         });
-        this.orders = response.data.data;
+        this.orders = response.data.data.content;
+        this.currentPage = response.data.data.number;
+        this.totalPages = response.data.data.totalPages;
         console.log(response.data.data);
       
       } catch (error) {
@@ -216,7 +234,7 @@ export default {
           withCredentials: true
         });
         this.selectedOrderDetail = null; // 상태 변경 후 세부 정보 탭 숨기기
-        this.fetchOrders(this.selectedTab); // 상태 변경 후 주문 목록 새로고침
+        this.fetchOrders(this.selectedTab, this.currentPage); // 상태 변경 후 주문 목록 새로고침
       } catch (error) {
         this.error = `Error changing order status: ${error.message}`;
         console.error('Error changing order status:', error);
@@ -226,6 +244,6 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+/* 필요한 스타일 추가 */
 </style>
