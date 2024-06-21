@@ -1,16 +1,6 @@
 <template>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark navigation-bar">
-    <a class="navbar-brand" href="#">OUR POS</a>
-    <div class="ml-auto">
-      <router-link to="/manager">
-        <button class="btn btn-outline-light">
-          <i class="mdi mdi-export"></i>
-        </button>
-      </router-link>
-    </div>
-
-  </nav>
+  <Navbar2/>
 
   <div class="py-4 container-fluid">
     <div class="row mb-4">
@@ -63,12 +53,10 @@ import Menu from "./components/Insight/Menu.vue";
 import Type from "./components/Insight/Type.vue";
 import HourlySale from "@/views/components/Insight/HourlySale.vue";
 import MonthlySale from "@/views/components/Insight/MonthlySale.vue";
+import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
 </script>
 
 <style>
-.navigation-bar {
-  height: 10vh;
-  margin-bottom: 10px;
-}
+
 </style>

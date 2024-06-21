@@ -1,17 +1,7 @@
 <template>
   <div class="landing-page">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navigation-bar">
-      <div class="mr-auto">
-        <div class="POS-name">OUR POS</div>
-      </div>
-      <div class="ml-auto">
-        <router-link to="/">
-          <button class="btn btn-outline-light">
-            <i class="mdi mdi-export"></i> 뒤로 가기
-          </button>
-        </router-link>
-      </div>
-    </nav>
+
+    <Navbar2/>
 
     <!-- 메인 콘텐츠 -->
     <div class="container-fluid">
@@ -23,7 +13,7 @@
           <div class="row">
             <!-- 첫 번째 카드 - 홀 주문 관리 -->
             <div class="col-6">
-              <router-link to="/admin/storeLanding/hallOrderManage">
+              <router-link to="/hallOrderManage">
                 <div class="card same-card">
                   <div class="card-body">
                     <h5 class="card-title">홀 주문 관리</h5>
@@ -96,39 +86,14 @@
 </template>
 
 <style scoped>
-.POS-name {
-  font-size: 3rem; /* Increased font size */
-  color: #f0f0f0;
-  text-shadow: 1px 1px 2px #000;
-}
 
-.btn {
-  display: block;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 20px; /* Increased padding for height */
-  font-size: 1.25rem; /* Increased font size */
-  text-align: center;
-  cursor: pointer;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-}
 
 .landing-page {
   height: 100vh;
   background-color: #f5f5f5;
 }
 
-.navigation-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 10vh;
-  margin-bottom: 10px;
-  background-color: #2c3e50;
-}
+
 
 .card {
   height: 100%; /* Make the card fill its container */
@@ -180,5 +145,6 @@
 
 import PreStock from "./components/Insight/PreStockInsight.vue";
 import NowStock from "./components/Insight/NowStockInsight.vue";
+import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
 </script>
