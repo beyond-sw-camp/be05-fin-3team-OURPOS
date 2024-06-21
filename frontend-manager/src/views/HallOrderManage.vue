@@ -59,10 +59,9 @@
                   </div>
                 </li>
               </ul>
+              
               <div class="mt-3 d-flex justify-content-center">
                 <button @click="fetchOrders(selectedTab, pageNumber - 1, pageSize)" :disabled="pageNumber === 1" class="btn btn-outline-secondary btn-sm">prev</button>
-                 
-                
                 <button 
                   v-for="page in totalPages" 
                   :key="page" 

@@ -25,7 +25,7 @@ public class StoreCommServiceImpl implements StoreCommService {
     public void addStoreComm(StoreCommRequestDto storeCommRequestDto) {
         saveStoreComm(storeCommRequestDto);
     }
-
+    
     @Override
     public List<StoreCommResponseDto> getStoreComms() {
         List<StoreComm> storeComms = storeCommRepository.findAll();
