@@ -1,9 +1,9 @@
 <template>
 
     <chart-holder-card
-      title="Deliver/Hall Prefer Report"
-      subtitle="Sales Trends Across All Locations"
-      update="real-time update"
+        title="식사유형 선호도"
+        subtitle="배달/매장 소비 트랜드 분석자료"
+        update="실시간 업데이트"
       color="dark"
     >
     <div class = "canvas">

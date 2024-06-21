@@ -1,9 +1,8 @@
 <template>
   <chart-holder-card
       color="white"
-      update="real-time update"
-      title="Frequency of Delivery Request Occurrence"
-      subtitle="행정구역 기준"
+      update="실시간 업데이트"
+      title="배달 발생 지역 시각화"
   >
     <div id="map" style="height: 796px;"></div>
     <p>Store ID: {{ storeId }}</p>

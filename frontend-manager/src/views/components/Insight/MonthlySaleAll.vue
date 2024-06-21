@@ -1,9 +1,9 @@
 <template>
 
   <chart-holder-card
-      title="Monthly Sales Volume Report"
-      subtitle="Sales Trends Across All Locations"
-      update="real-time update"
+      title="월별 매출량"
+      subtitle="월 단위 소비 트랜드 분석자료"
+      update="실시간 업데이트"
       color="light"
   >
     <div class="canvas">

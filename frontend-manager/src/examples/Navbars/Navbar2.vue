@@ -14,7 +14,7 @@ export default {
     </div>
     <div class="ml-auto">
         <button class="btn btn-outline-light" @click="goBack">
-          <i class="mdi mdi-export"></i> 뒤로가기
+          <i class="mdi mdi-export"></i>뒤로가기
         </button>
     </div>
   </nav>
