@@ -1,10 +1,15 @@
 package com.ourpos.api.storeorder.controller;
 
+import static com.ourpos.domain.store.QStore.store;
+
 import java.util.List;
 
 import jakarta.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,13 +47,24 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     private final StoreOrderRepository storeOrderRepository;
     private final StoreOrderServiceImpl storeOrderService;
 
-    // 판매 비품, 식자재 목록 확인
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    // 판매 비품, 식자재 목록 확인(페이징 처리 x)
+    /* 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/storecomms")
     public Result<List<StoreCommResponseDto>> checkStoreComms() {
         log.info("비품/식자재 목록 출력");
         List<StoreCommResponseDto> storeCommsList = storeCommService.getStoreComms();
         return new Result<>(HttpStatus.OK.value(), " 목록을 불러옵니다.", storeCommsList);
+    }
+    */
+     // 판매 비품, 식자재 목록 확인(페이징 처리 o)
+    @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/storecomms")
+    public Result<Page<StoreCommResponseDto>> checkStoreComms(Pageable pageable) {
+        log.info("비품/식자재 목록 출력");
+        Page<StoreCommResponseDto> storeCommsPage = storeOrderService.checkStoreComms(pageable);
+        return new Result<>(HttpStatus.OK.value(), " 목록을 불러옵니다.", storeCommsPage);
     }
 
     // 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영) ?-> price가 반영 안됨
@@ -71,16 +87,19 @@ public class StoreOrderController implements StoreOrderControllerDocs {
 
     //비품, 식자재 주문 확인 (직영점)
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
-
     @GetMapping("/storeorder/checkforstore/my")
-    public Result<List<StoreOrderCheckResponseDto>> getStoreOrdercheckforstore() {
+    public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrdercheckforstore(Pageable pageable) {
         String adminLoginId = getManagerLoginId();
 
         log.info("가게 식자재, 비품 주문: {}", adminLoginId);
         log.debug("getStoreOrdercheckforstore 메서드 호출됨");
-        List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheckforstore(adminLoginId);
-        return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", storeOrderList );
+
+        Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrdercheckforstore(adminLoginId, pageable.getPageNumber(), pageable.getPageSize());
+        Result<Page<StoreOrderCheckResponseDto>> result = new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다.", storeOrderPage);
+        return ResponseEntity.ok(result);
     }
+
+   
 
 
     /*
@@ -115,21 +134,18 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     //비품, 식자재 주문 확인 (본사)
     //@PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @GetMapping("/storeorder/{storeId}/check")
-    public Result<List<StoreOrderCheckResponseDto>> getStoreOrderCheck(@PathVariable Long storeId) {
+    public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheck(@PathVariable Long storeId, Pageable pageable) {
         log.info("가게 식자재, 비품 주문: {}", storeId);
         log.debug("getStoreOrderCheck 메서드 호출됨");
-        try {
-            List<StoreOrderCheckResponseDto> storeOrderList = storeOrderService.getStoreOrdercheck(storeId);
+        
+            Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrdercheck(storeId, pageable.getPageNumber(),pageable.getPageSize());
     
             // 로그 추가: 데이터 로드 성공 로그
-            log.debug("주문 목록 데이터 로드 성공: {}", storeOrderList);
+            log.debug("주문 목록 데이터 로드 성공: {}", storeOrderPage);
     
-            return new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다", storeOrderList);
-        } catch (Exception e) {
-            // 로그 추가: 데이터 로드 실패 로그
-            log.error("주문 목록 데이터 로드 실패", e);
-            return new Result<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "주문 목록을 불러오는 중에 오류가 발생했습니다", null);
-        }
+            Result<Page<StoreOrderCheckResponseDto>> result = new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다.", storeOrderPage);
+            return ResponseEntity.ok(result);
+        
     }
 
     //비품, 식자재 주문 상태 변경
