@@ -1,15 +1,8 @@
 <template>
   <div>
-    <nav class="navbar navbar-dark bg-dark navigation-bar">
-      <div class="mr-auto">
-        <div class="POS-name">OUR POS</div>
-      </div>
-      <router-link to="/owner" class="ml-auto">
-        <button class="btn btn-outline-light">
-          <i class="mdi mdi-export">뒤로 가기</i> 
-        </button>
-      </router-link>
-    </nav>
+    <div class="container mt-5">
+      <h2>메뉴 관리</h2>
+      <hr class="styled-line">
     <div class="container-fluid">
       <div class="row">
         <div class="col-2">
@@ -175,6 +168,7 @@
   </div>
 </MenuManageModal>
 
+  </div>
   </div>
 </template>
 
@@ -596,12 +590,6 @@ onMounted(() => {
   border: 2px solid #000; /* Making the border more visible */
 }
 
-
-
-.navigation-bar {
-  background-color: #3f51b5;
-}
-
 .category-list {
   display: flex;
   flex-direction: column;
@@ -616,7 +604,7 @@ onMounted(() => {
 }
 
 .primary {
-  background-color: #3f51b5;
+  background-color: #2A2A2D;
   color: white;
 }
 

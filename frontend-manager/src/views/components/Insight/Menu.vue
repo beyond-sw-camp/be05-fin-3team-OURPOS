@@ -1,6 +1,9 @@
 <template>
-  <chart-holder-card title="Menu Preference Report" subtitle="Sales Trends Across All Locations"
-                     update="real-time update" color="dark">
+  <chart-holder-card
+      title="메뉴 선호도"
+      subtitle="메뉴별 소비 트랜드 분석자료"
+      update="실시간 업데이트"
+      color="dark">
     <div class="canvas">
       <canvas id="menuPreferChart"></canvas>
     </div>

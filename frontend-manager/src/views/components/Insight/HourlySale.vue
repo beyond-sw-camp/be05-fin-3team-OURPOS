@@ -1,8 +1,8 @@
 <template>
   <chart-holder-card
-      title="Hourly Sales Volume Report"
-      subtitle="Sales Trends Across All Locations"
-      update="real-time update"
+      title="시간대별 매출량"
+      subtitle="시간 단위 소비 트랜드 분석자료"
+      update="실시간 업데이트"
       color="light"
   >
     <div class = "canvas">

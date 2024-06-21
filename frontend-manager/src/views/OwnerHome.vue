@@ -62,31 +62,7 @@
                       :projects="franchises"
         />
       </div>
-      <div class="col-lg-4 col-md-6">
-        <timeline-list class="h-100" title="Orders overview" description="<i class='fa fa-arrow-up text-success' aria-hidden='true'></i>
-        <span class='font-weight-bold'>24%</span> this month">
-          <timeline-item :icon="{
-            component: 'notifications',
-            class: 'text-success',
-          }" title="$2400 Design changes" date-time="22 DEC 7:20 PM" />
-          <TimelineItem :icon="{
-            component: 'code',
-            class: 'text-danger',
-          }" title="New order #1832412" date-time="21 DEC 11 PM" />
-          <TimelineItem :icon="{
-            component: 'shopping_cart',
-            class: 'text-info',
-          }" title="Server payments for April" date-time="21 DEC 9:34 PM" />
-          <TimelineItem :icon="{
-            component: 'credit_card',
-            class: 'text-warning',
-          }" title="New card added for order #4395133" date-time="20 DEC 2:20 AM" />
-          <TimelineItem :icon="{
-            component: 'vpn_key',
-            class: 'text-primary',
-          }" title="Unlock packages for development" date-time="18 DEC 4:54 AM" class="pb-1" />
-        </timeline-list>
-      </div>
+
     </div>
   </div>
 </template>
@@ -95,46 +71,45 @@
 
   import MiniStatisticsCard from "./components/MiniStatisticsCard.vue";
   import ProjectCard from "./components/ProjectCard.vue";
-  import TimelineList from "@/examples/Cards/TimelineList.vue";
-  import TimelineItem from "@/examples/Cards/TimelineItem.vue";
   import MonthlySaleAll from "./components/Insight/MonthlySaleAll.vue";
   import HourlySaleAll from "./components/Insight/HourlySaleAll.vue";
   import TypeAll from "./components/Insight/TypeAll.vue";
   import DeliveryAll from "./components/Insight/DeliveryAll.vue";
   import MenuAll from "./components/Insight/MenuAll.vue";
   import {ref} from "vue";
-  
+  import logo from "@/assets/img/logos/store-check-outline.png";
+
 
   const franchises = ref([
     {
-      logo: ' ',
+      logo: logo,
       title: "강남역점",
       dashboard: "강남역점 대시보드",
       address: "서울 특별시 서초구 강남대로 435",
       storeId: "1", // 각 프랜차이즈에 해당하는 storeId 설정
     },
     {
-      logo: ' ',
+      logo: logo,
       title: "고속터미널점",
       dashboard: "고속터미널점 대시보드",
       address: "서울특별시 서초구 신반포로 176",
       storeId: "2",
     },{
-      logo: ' ',
+      logo: logo,
       title: '서울역점',
       dashboard: '서울역점 대시보드',
       address: '서울특별시 중구 한강대로 405 2층',
       storeId: "3",
     },
     {
-      logo: ' ',
+      logo: logo,
       title: '여의도점',
       dashboard: '여의도점 대시보드',
       address: '서울특별시 영등포구 여의대로 108 더현대 서울 B1',
       storeId: "4",
     },
     {
-      logo: ' ',
+      logo: logo,
       title: '신대방삼거리점',
       dashboard: '신대방삼거리점 대시보드',
       address: '서울특별시 동작구 보라매로 87',
