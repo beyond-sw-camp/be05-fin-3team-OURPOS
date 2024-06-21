@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navbar2/>
     <div class="container mt-4">
       <h2>주문 목록</h2>
       <div class="row mb-3">
@@ -122,8 +123,10 @@
 
 <script>
 import axios from 'axios';
+import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
 export default {
+  components: {Navbar2},
   data() {
     return {
       orders: [],

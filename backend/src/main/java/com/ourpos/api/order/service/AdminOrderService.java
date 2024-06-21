@@ -2,12 +2,15 @@ package com.ourpos.api.order.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -136,28 +139,32 @@ public class AdminOrderService {
     // 아침에 들어온 재고 고정량 조회(보류)
 
     // 식자재, 비품 입고 예정량 조회 (접수완료, 대기중, 배송중)
-    public List<StoreStockResponseDto> getIncomingStock(String adminLoginId) {
+    public Page<StoreStockResponseDto> getIncomingStock(String adminLoginId, int page) {
+        Pageable pageable = PageRequest.of(page, 5);
         Store store = storeRepository.findByManagerLoginId(adminLoginId)
             .orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
 
+        List<StoreOrderStatus> statusList = Arrays.asList(
+            StoreOrderStatus.WAITING,
+            StoreOrderStatus.ACCEPTED,
+            StoreOrderStatus.DELIVERING
+        );
+
         Long storeId=store.getId();
-        List<StoreOrder> storeOrders = storeOrderRepository.findByStoreId(storeId);
+        log.info("getIncomingStock service , {} {}", storeId, store.getName());
+        Page<StoreOrder> storeOrders = storeOrderRepository.findByStoreIdAndStatusIn(storeId, statusList, pageable);
+
         if (storeOrders.isEmpty()) {
             throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
         }
 
         List<StoreStockResponseDto> incomingStockList = new ArrayList<>();
         for (StoreOrder storeOrder : storeOrders) {
-            if (storeOrder.getStatus() == StoreOrderStatus.WAITING ||
-                storeOrder.getStatus() == StoreOrderStatus.ACCEPTED ||
-                storeOrder.getStatus() == StoreOrderStatus.DELIVERING) {
-
-                StoreStockResponseDto dto = new StoreStockResponseDto(storeOrder);
-                incomingStockList.add(dto);
-            }
+            StoreStockResponseDto dto = new StoreStockResponseDto(storeOrder);
+            incomingStockList.add(dto);
         }
 
-    return incomingStockList;
+        return new PageImpl<>(incomingStockList, pageable, storeOrders.getTotalElements());
 }
 
     // 기타 입고(점주가 배송된 상품의 상태 확인 후 임의로 재고 변경)
@@ -171,14 +178,15 @@ public class AdminOrderService {
 
     // 배송 완료 반영된 재고량 조회 (기타 입출고 포함)
     @Transactional(readOnly = true)
-    public List<StoreStockCheckResponseDto> getAllStoreStocks(String adminLoginId) {
+    public Page<StoreStockCheckResponseDto> getAllStoreStocks(String adminLoginId, int page) {
+
+        Pageable pageable = PageRequest.of(page, 5);
+
         Store store = storeRepository.findByManagerLoginId(adminLoginId)
         .orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
 
         Long storeId=store.getId();
-        List<StoreStock> storeStocks = storeStockRepository.findAll();
-        return storeStocks.stream()
-            .map(StoreStockCheckResponseDto::new)
-            .collect(Collectors.toList());
+        Page<StoreStock> storeStocks = storeStockRepository.findAllByStoreId(storeId, pageable);
+        return storeStocks.map(StoreStockCheckResponseDto::new);
     }
 }

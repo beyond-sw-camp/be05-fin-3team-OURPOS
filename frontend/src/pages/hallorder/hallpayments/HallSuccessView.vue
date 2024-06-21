@@ -83,6 +83,13 @@ export default {
 
     const submitOrder = async () => {
 
+      if (fullOrder.value.orderDetailDtos.length === 0) {
+        let message = '이미 처리된 주문입니다.';
+        console.error(message);
+        router.push(`/hall/fail?message=${message}`);
+        return;
+      }
+
       try {
         const response = await axios.post(
           'http://localhost:8080/api/v1/orders/hall',

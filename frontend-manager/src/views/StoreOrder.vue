@@ -1,4 +1,7 @@
 <template>
+<div>
+<Navbar2/>
+<div class="container mt-5">
   <div class="container-fluid">
     <div class="row">
       <div class="col-9">
@@ -84,12 +87,17 @@
       </div>
     </div>
   </div>
+</div>
+</div>
+
 </template>
 
 <script>
 import axios from 'axios';
+import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
 export default {
+  components: {Navbar2},
   data() {
     return {
       selectedTab: 0,

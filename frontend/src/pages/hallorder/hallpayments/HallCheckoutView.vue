@@ -32,7 +32,6 @@ const orderData = ref({});
 const paymentWidget = ref(null);
 const paymentMethodWidget = ref(null);
 const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
-const orderId = nanoid();
 const inputEnabled = ref(false);
 const customer = ref({});
 
@@ -46,6 +45,7 @@ const loadOrderData = () => {
 
 const requestPayment = async () => {
   try {
+    const orderId = nanoid();
     const response = await saveTempOrder(orderId, totalOrderPrice.value);
 
     if (response.code === 200) {

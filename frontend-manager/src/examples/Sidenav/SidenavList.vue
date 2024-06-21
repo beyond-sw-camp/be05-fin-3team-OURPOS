@@ -10,7 +10,7 @@
           :aria-controls="''"
           v-bind:collapse="false"
           collapseRef="owner"
-          navText="Dashboard"
+          navText="비즈니스 인사이트"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">dashboard</i>
@@ -23,7 +23,7 @@
             :aria-controls="''"
             v-bind:collapse="false"
             collapseRef="supplies"
-            navText="Supplies Manage"
+            navText="비품/식자재 관리"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">receipt_long</i>
@@ -36,7 +36,7 @@
           :aria-controls="''"
           v-bind:collapse="false"
           collapseRef="menu-manage"
-          navText="Menu Manage"
+          navText="메뉴 관리"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">table_view</i>
@@ -49,7 +49,7 @@
           :aria-controls="''"
           v-bind:collapse="false"
           collapseRef="menu-option-group-manage"
-          navText="Menu Option Group Manage"
+          navText="메뉴 옵션 관리"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">table_view</i>
@@ -62,7 +62,7 @@
           :aria-controls="''"
           v-bind:collapse="false"
           collapseRef="infra"
-          navText="new franchies"
+          navText="신규 매출 전망"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5"
@@ -84,19 +84,6 @@
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="profile"
-          navText="Profile"
-        >
-          <template v-slot:icon>
-            <i class="material-icons-round opacity-10 fs-5">person</i>
-          </template>
-        </sidenav-collapse>
-      </li>
-      <li class="nav-item">
-        <sidenav-collapse
-          url="#"
-          :aria-controls="''"
-          v-bind:collapse="false"
           collapseRef="sign-up"
           navText="Login"
         >
@@ -106,16 +93,7 @@
         </sidenav-collapse>
       </li>
     </ul>
-    <div class="sidenav-footer position-absolute w-100 bottom-0">
-      <div class="mx-3">
-        <a
-          class="btn mt-4 w-100"
-          :class="`bg-gradient-${this.$store.state.color}`"
-          href="https://www.creative-tim.com/product/vue-material-dashboard-2-pro"
-          >Upgrade to pro</a
-        >
-      </div>
-    </div>
+
   </div>
 </template>
 <script>

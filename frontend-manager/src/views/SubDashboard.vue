@@ -12,7 +12,9 @@
                 color: 'text-white',
                 background: 'info',
               }" />
+              <button class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4" @click="goToBack">뒤로가기</button>
             </div>
+
           </div>
 
           <div class="row mb-4 col-lg-12">
@@ -41,7 +43,6 @@
                   <DeliveryAll :storeId='storeId'/>
                 </div>
               </div>
-              <button @click="goToBack">GO TO BACK</button>
             </div>
           </div>
   

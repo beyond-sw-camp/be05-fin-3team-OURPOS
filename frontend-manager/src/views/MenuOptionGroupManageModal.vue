@@ -1,29 +1,32 @@
 <template>
-  <div class="modal-overlay" @click.self="closeModal">
+  <div class="modal-overlay" v-if="isOpen">
     <div class="modal-content">
-      <header class="modal-header">
-        <slot name="header">Default Header</slot>
-      </header>
-      <section class="modal-body">
-        <slot name="body">Default Body</slot>
-      </section>
-      <footer class="modal-footer">
-        <slot name="footer">
-          <MaterialButton class="btn btn-secondary" @click="closeModal">Close</MaterialButton>
-        </slot>
-      </footer>
+      <div class="modal-bar">
+        <span>{{ title }}</span>
+        <button @click="$emit('close')">X</button>
+      </div>
+      <div class="modal-body">
+        <slot></slot> <!-- Placeholder for other modal content -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" @click="$emit('confirm')">확인</button>
+        <button type="button" class="btn btn-secondary" @click="$emit('close')">취소</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineEmits } from 'vue';
-
-const emit = defineEmits(['update:modelValue']);
-
-const closeModal = () => {
-  emit('update:modelValue', false);
-};
+defineProps({
+  isOpen: {
+    type: Boolean,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true
+  }
+});
 </script>
 
 <style scoped>
@@ -31,30 +34,49 @@ const closeModal = () => {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
 }
 
 .modal-content {
   background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 500px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  border-radius: 5px;
+  width: 600px; /* Increased width */
+  max-height: 90vh; /* Ensure it fits within the viewport */
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  position: relative;
 }
 
-.modal-header,
-.modal-footer {
-  padding-bottom: 10px;
+.modal-bar {
+  background-color: #28282B;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .modal-body {
-  padding: 10px 0;
+  padding: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  border-top: 1px solid #dee2e6;
 }
 </style>

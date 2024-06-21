@@ -1,13 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-dark bg-dark navigation-bar">
-      <span class="navbar-brand">OUR POS</span>
-      <router-link to="/manager" class="ml-auto">
-        <material-button class="btn btn-outline-light">
-          <i class="mdi mdi-export">뒤로 가기</i>
-        </material-button>
-      </router-link>
-    </nav>
+    <Navbar2/>
 
     <div class="container-fluid">
       <div class="row">
@@ -55,6 +48,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import MaterialButton from '../components/MaterialButton.vue';
 import Modal from '../views/Modal.vue';
+import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
 const categories = ref([]);
 const selectedCategory = ref(null);
@@ -185,9 +179,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.navigation-bar {
-  background-color: #3f51b5;
-}
 
 .category-list {
   display: flex;
@@ -200,18 +191,13 @@ onMounted(() => {
   margin: 10px 0;
 }
 
-.btn-light {
-  background-color: white;
-  color: black;
-}
-
-.btn-primary {
-  background-color: #3f51b5;
-  color: white;
-}
-
 .deactivated {
   background-color: gray;
   opacity: 0.6;
 }
+
+.btn {
+  font-size: 1.25rem; /* Increased font size */
+}
+
 </style>
