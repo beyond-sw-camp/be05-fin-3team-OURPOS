@@ -44,7 +44,10 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">주문 리스트</h5>
-              <ul class="list-group">
+              <div v-if="orders.length === 0" class="d-flex justify-content-center align-items-center" style="height: 200px;">
+                <p>"주문이 없습니다"</p>
+              </div>
+              <ul v-else class="list-group">
                 <li v-for="order in orders" :key="order.orderId" class="list-group-item">
                   <div class="row">
                     <div class="col"><strong>주문 번호:</strong> {{ order.orderId }}</div>
@@ -72,7 +75,7 @@
                   {{ page }}
                 </button>
                 <button @click="fetchOrders(selectedTab, pageNumber + 1, pageSize)" :disabled="pageNumber === totalPages" class="btn btn-outline-secondary btn-sm">next</button>
-            </div>
+              </div>
 
             </div>
           </div>
@@ -120,6 +123,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';

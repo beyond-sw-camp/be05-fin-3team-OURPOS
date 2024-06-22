@@ -69,6 +69,9 @@
                   </div>
                 </li>
               </ul>
+
+              <p v-if="filteredOrders.length === 0" class="text-center mt-3">주문이 없습니다.</p>
+
               <!-- 페이지 네이션 -->
               <div class="mt-3 d-flex justify-content-center">
                 <button @click="fetchOrders(selectedTab, currentPage - 1)" :disabled="currentPage === 0" class="btn btn-outline-secondary btn-sm">prev</button>
@@ -154,7 +157,7 @@ export default {
   computed: {
     // 현재 선택된 탭에 해당하는 주문 가져오기
     filteredOrders() {
-      return this.orders;
+      return this.orders.filter(order => order.storeOrderStatus === this.selectedTab);
     }
   },
   created() {
@@ -162,47 +165,49 @@ export default {
   },
   methods: {
     async fetchOrders(status, page) {
-      this.loading = true;
-      this.error = null;
-      this.selectedTab = status;
-      const token = localStorage.getItem('token');
+  this.loading = true;
+  this.error = null;
+  this.selectedTab = status;
+  this.currentPage = page; // currentPage 초기화
+  const token = localStorage.getItem('token');
 
-      if (!token) {
-        this.error = 'No token found in local storage';
-        this.loading = false;
-        return;
+  if (!token) {
+    this.error = 'No token found in local storage';
+    this.loading = false;
+    return;
+  }
+
+  try {
+    const response = await axios.get(`http://localhost:8080/api/v1/storeorder/1/check`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      withCredentials: true,
+      params: {
+        status: status,
+        page: page,
+        size: 5 // 페이지 당 항목 수
       }
+    });
+    this.orders = response.data.data.content;
+    this.currentPage = response.data.data.number;
+    this.totalPages = response.data.data.totalPages;
+    console.log(response.data.data);
+  
+  } catch (error) {
+    this.error = 'Error fetching orders';
+    console.error('Error fetching orders:', error);
 
-      try {
-        const response = await axios.get(`http://localhost:8080/api/v1/storeorder/1/check`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token
-          },
-          withCredentials: true,
-          params: {
-            status: status,
-            page: page,
-            size: 5 // 페이지 당 항목 수
-          }
-        });
-        this.orders = response.data.data.content;
-        this.currentPage = response.data.data.number;
-        this.totalPages = response.data.data.totalPages;
-        console.log(response.data.data);
-      
-      } catch (error) {
-        this.error = 'Error fetching orders';
-        console.error('Error fetching orders:', error);
+    if (error.response && error.response.status === 401) {
+      this.error = 'Unauthorized: Invalid or expired token';
+      console.error('Unauthorized: Invalid or expired token');
+    }
+  } finally {
+    this.loading = false;
+  }
+},
 
-        if (error.response && error.response.status === 401) {
-          this.error = 'Unauthorized: Invalid or expired token';
-          console.error('Unauthorized: Invalid or expired token');
-        }
-      } finally {
-        this.loading = false;
-      }
-    },
 
     showOrderDetail(order) {
       // 선택된 주문의 세부 정보를 저장, 표시
@@ -246,5 +251,7 @@ export default {
 </script>
 
 <style scoped>
-/* 필요한 스타일 추가 */
+.text-center {
+  text-align: center;
+}
 </style>

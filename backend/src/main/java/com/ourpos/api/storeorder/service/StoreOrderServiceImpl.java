@@ -34,7 +34,7 @@ import com.ourpos.domain.storeorder.StoreOrderStatus;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.function.Function;
-
+import java.time.format.DateTimeFormatter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -145,6 +145,7 @@ public class StoreOrderServiceImpl {
 		if (storeOrders.isEmpty()) {
 			throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
 		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
 
 		//페이지의 주문 상세를 DTO로 매핑해서 반환
 		List<StoreOrderCheckResponseDto> orderDetails= storeOrderPage.getContent().stream()
@@ -153,8 +154,8 @@ public class StoreOrderServiceImpl {
 
 			return storeOrderDetails.stream()
 			       .map(detail -> new StoreOrderCheckResponseDto(
-					storeOrder.getId(),
-                            storeOrder.getCreatedDateTime().toString(),
+							storeOrder.getId(),
+							storeOrder.getCreatedDateTime().format(formatter), 
                             storeOrder.getPrice(),
                             storeOrder.getStatus(),
                             store.getAddress().getAddressBase(),
@@ -175,7 +176,7 @@ public class StoreOrderServiceImpl {
 
 				   .collect(Collectors.toList());
 				   return new PageImpl<>(orderDetails, pageable, storeOrderPage.getTotalElements());
-				   
+
 	}
 
 	 
@@ -236,6 +237,9 @@ public class StoreOrderServiceImpl {
             throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
         }
 
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
+
+
         // 페이지의 주문 상세를 DTO로 매핑하여 반환
 		List<StoreOrderCheckResponseDto> orderDetails = storeOrderPage.getContent().stream()
 		.flatMap(storeOrder -> {
@@ -244,8 +248,9 @@ public class StoreOrderServiceImpl {
         
             return storeOrderDetails.stream()
                     .map(detail -> new StoreOrderCheckResponseDto(
+						
                             storeOrder.getId(),
-                            storeOrder.getCreatedDateTime().toString(),
+                            storeOrder.getCreatedDateTime().format(formatter), 
                             storeOrder.getPrice(),
                             storeOrder.getStatus(),
                             store.getAddress().getAddressBase(),

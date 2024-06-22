@@ -40,12 +40,12 @@ class MenuTest {
             .build();
 
         // when
-        menu.update(category2, "메뉴2", 20000, "맛있는 메뉴2", "menu2.jpg");
+        menu.update(category2, "메뉴2", Integer.valueOf(20000), "맛있는 메뉴2");
 
         // then
         assertThat(menu)
-            .extracting("category", "name", "price", "description", "pictureUrl")
-            .containsExactly(category2, "메뉴2", 20000, "맛있는 메뉴2", "menu2.jpg");
+            .extracting("category", "name", "price", "description" )
+            .containsExactly(category2, "메뉴2", Integer.valueOf(20000), "맛있는 메뉴2");
     }
 
     @DisplayName("메뉴를 삭제하면 삭제 여부가 true가 되고 삭제시간이 설정된다.")

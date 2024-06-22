@@ -54,6 +54,9 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">주문 리스트</h5>
+              <div v-if="orders.length === 0" class="d-flex justify-content-center align-items-center" style="height: 200px;">
+                <p>"주문이 없습니다"</p>
+              </div>
               <ul class="list-group">
                 <li v-for="order in orders" :key="order.orderId" class="list-group-item">
                   <div class="row">
