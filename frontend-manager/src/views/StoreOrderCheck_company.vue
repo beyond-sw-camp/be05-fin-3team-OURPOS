@@ -209,6 +209,7 @@ export default {
 },
 
 
+
     showOrderDetail(order) {
       // 선택된 주문의 세부 정보를 저장, 표시
       this.selectedOrderDetail = order;

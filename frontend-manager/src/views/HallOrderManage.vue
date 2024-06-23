@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Navbar2/>
+  
+
     <div class="container mt-4">
       <h2>주문 목록</h2>
       <div class="row mb-3">
@@ -10,7 +10,7 @@
               <a 
                 class="nav-link" 
                 :class="{ active: selectedTab === 'WAITING' }" 
-                @click="fetchOrders('WAITING', 1, pageSize)"
+                @click.prevent="fetchOrders('WAITING', 1, pageSize)"
                 href="#"
               >
                 대기중
@@ -20,7 +20,7 @@
               <a 
                 class="nav-link" 
                 :class="{ active: selectedTab === 'COOKING' }" 
-                @click="fetchOrders('COOKING', 1, pageSize)"
+                @click.prevent="fetchOrders('COOKING', 1, pageSize)"
                 href="#"
               >
                 조리중
@@ -30,12 +30,16 @@
               <a 
                 class="nav-link" 
                 :class="{ active: selectedTab === 'COMPLETED' }" 
-                @click="fetchOrders('COMPLETED', 1, pageSize)"
+                @click.prevent="fetchOrders('COMPLETED', 1, pageSize)"
                 href="#"
               >
                 조리완료
               </a>
             </li>
+            <!-- 뒤로 가기 버튼 -->
+          <li class="nav-item "> <!-- ml-auto는 왼쪽 여백을 자동으로 조절하여 오른쪽으로 이동시킵니다 -->
+            <button @click.prevent="goBack()" class="btn btn-outline-secondary btn-sm">뒤로가기</button>
+          </li>
           </ul>
         </div>
       </div>
@@ -47,22 +51,21 @@
               <div v-if="orders.length === 0" class="d-flex justify-content-center align-items-center" style="height: 200px;">
                 <p>"주문이 없습니다"</p>
               </div>
-              <ul v-else class="list-group">
+              <ul class="list-group">
                 <li v-for="order in orders" :key="order.orderId" class="list-group-item">
                   <div class="row">
                     <div class="col"><strong>주문 번호:</strong> {{ order.orderId }}</div>
                     <div class="col"><strong>주문 일시:</strong> {{ order.orderCreatedDateTime }}</div>
                     <div class="col"><strong>경과 시간:</strong> {{ order.cookingTime }}</div>
-                    <div class="col"><strong>주문 금액:</strong> {{ order.price }}</div>
+                    <div class="col"><strong>주문 금액:</strong> {{ order.price }} 원</div>
                     <div class="col">
-                      <a href="#" @click="showOrderDetail(order)">
+                      <a href="#" @click.prevent="showOrderDetail(order)">
                         {{ order.hallOrderStatus }}
                       </a>
                     </div>
                   </div>
                 </li>
               </ul>
-              
               <div class="mt-3 d-flex justify-content-center">
                 <button @click="fetchOrders(selectedTab, pageNumber - 1, pageSize)" :disabled="pageNumber === 1" class="btn btn-outline-secondary btn-sm">prev</button>
                 <button 
@@ -76,7 +79,6 @@
                 </button>
                 <button @click="fetchOrders(selectedTab, pageNumber + 1, pageSize)" :disabled="pageNumber === totalPages" class="btn btn-outline-secondary btn-sm">next</button>
               </div>
-
             </div>
           </div>
         </div>
@@ -88,7 +90,7 @@
               <div v-if="Array.isArray(selectedOrderDetail.orderDetailResponseDtos)">
                 <div v-for="(detail, index) in selectedOrderDetail.orderDetailResponseDtos" :key="index">
                   <div><strong>상품명:</strong> {{ detail.menuName }}</div>
-                  <div><strong>가격:</strong> {{ detail.menuPrice }}</div>
+                  <div><strong>가격:</strong> {{ detail.menuPrice }} 원</div>
                   <div><strong>수량:</strong> {{ detail.quantity }}</div>
                   <!-- 추가적인 세부 정보 표시 -->
                   <div v-if="Array.isArray(detail.orderOptionGroupResponseDtos)">
@@ -105,7 +107,7 @@
               </div>
               <div v-else>
                 <div><strong>상품명:</strong> {{ selectedOrderDetail.menuName }}</div>
-                <div><strong>가격:</strong> {{ selectedOrderDetail.price }}</div>
+                <div><strong>가격:</strong> {{ selectedOrderDetail.price }} 원</div>
                 <!-- 추가적인 세부 정보 표시 -->
               </div>
               <!-- 주문 상태 변경 버튼 추가 -->
@@ -121,16 +123,15 @@
         </div>
       </div>
     </div>
-  </div>
-</template>
 
+</template>
 
 <script>
 import axios from 'axios';
-import Navbar2 from "@/examples/Navbars/Navbar2.vue";
+
 
 export default {
-  components: {Navbar2},
+  
   data() {
     return {
       orders: [],
@@ -163,7 +164,7 @@ export default {
         const response = await axios.get(`http://localhost:8080/api/v1/orders/hall/my`, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `${token}`
+            'Authorization': `${token}` 
           },
           withCredentials: true,
           params: {
@@ -176,6 +177,7 @@ export default {
         this.pageNumber = response.data.data.pageable.pageNumber + 1;
         this.pageSize = response.data.data.pageable.pageSize;
         this.totalPages = response.data.data.totalPages;
+        console.log(response.data.data.content);
       } catch (error) {
         this.error = 'Error fetching orders';
         console.error('Error fetching orders:', error);
@@ -215,7 +217,7 @@ export default {
         await axios.put(url, {}, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `${token}`
+            'Authorization': `${token}` 
           },
           withCredentials: true
         });
@@ -225,11 +227,18 @@ export default {
         this.error = `Error changing order status: ${error.message}`;
         console.error('Error changing order status:', error);
       }
+    },
+    goBack() {
+      // 뒤로 가기 버튼 클릭 시 이전 페이지로 이동
+      this.$router.go(-1); // Vue Router를 사용하여 이전 페이지로 이동합니다
     }
+
   }
 };
 </script>
 
 <style>
-
+.nav-link.active {
+  font-weight: bold;
+}
 </style>

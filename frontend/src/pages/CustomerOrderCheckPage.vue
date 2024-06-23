@@ -17,7 +17,7 @@
           <v-container fluid>
             <v-row>
               <v-col cols="12">
-                <v-card>
+               
                   <v-card-title>
                     
                   </v-card-title>
@@ -39,7 +39,7 @@
                     </v-list-item>
                   </v-list>
                   <v-card-text v-else><v-icon>mdi-alpha-x-box-outline</v-icon>주문내역이 존재하지 않습니다</v-card-text>
-                </v-card>
+                
               </v-col>
             </v-row>
           </v-container>
@@ -48,7 +48,7 @@
           <v-container fluid>
             <v-row>
               <v-col cols="12">
-                <v-card>
+                
                   <v-card-title>
                     
                   </v-card-title>
@@ -70,7 +70,7 @@
                     </v-list-item>
                   </v-list>
                   <v-card-text v-else><v-icon>mdi-alpha-x-box-outline</v-icon>주문내역이 존재하지 않습니다</v-card-text>
-                </v-card>
+               
               </v-col>
             </v-row>
           </v-container>

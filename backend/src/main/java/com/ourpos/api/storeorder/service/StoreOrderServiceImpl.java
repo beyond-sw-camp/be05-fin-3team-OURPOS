@@ -140,7 +140,8 @@ public class StoreOrderServiceImpl {
         List<StoreOrderStatus> statuses = Arrays.asList(
             StoreOrderStatus.WAITING,
             StoreOrderStatus.ACCEPTED,
-            StoreOrderStatus.DELIVERING
+            StoreOrderStatus.DELIVERING,
+            StoreOrderStatus.COMPLETED
         );
         Page<StoreOrder> storeOrderPage = storeOrderRepository.findByStoreIdAndStatusIn(storeId, statuses, pageable);
 
@@ -238,7 +239,8 @@ public class StoreOrderServiceImpl {
         List<StoreOrderStatus> statuses = Arrays.asList(
             StoreOrderStatus.WAITING,
             StoreOrderStatus.ACCEPTED,
-            StoreOrderStatus.DELIVERING
+            StoreOrderStatus.DELIVERING,
+            StoreOrderStatus.COMPLETED
         );
         Page<StoreOrder> storeOrderPage = storeOrderRepository.findByStoreIdAndStatusIn(storeId, statuses, pageable);
 
