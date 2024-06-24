@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar2/>
+  <Navbar2/>
     <div class="container mt-5">
       <div class="container-fluid">
         <div class="row">

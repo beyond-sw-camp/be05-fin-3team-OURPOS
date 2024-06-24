@@ -1,6 +1,7 @@
 <template>
   <div>
   <Navbar2/>
+
     <div class="container mt-4">
       <h2>주문 목록</h2>
       <div class="row mb-3">
@@ -235,7 +236,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .nav-link.active {
   font-weight: bold;
 }
