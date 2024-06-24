@@ -23,6 +23,7 @@ import com.ourpos.domain.store.Store;
 import com.ourpos.domain.store.StoreRepository;
 import com.ourpos.domain.store.StoreStockRepository;
 import com.ourpos.domain.storeorder.StoreComm;
+import com.ourpos.domain.storeorder.StoreCommCategory;
 import com.ourpos.domain.storeorder.StoreCommRepository;
 import com.ourpos.domain.storeorder.StoreOrder;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
@@ -61,6 +62,7 @@ public class StoreOrderServiceImpl {
     }
      */
     // 판매 비품, 식자재 목록 확인 (페이징 처리 o)
+    /* 
     public Page<StoreCommResponseDto> checkStoreComms(Pageable pageable) {
         Page<StoreComm> storeCommPage = storeCommRepository.findAll(pageable);
         List<StoreCommResponseDto> storeCommResponseDtos = storeCommPage.stream()
@@ -68,13 +70,18 @@ public class StoreOrderServiceImpl {
             .collect(Collectors.toList());
         return new PageImpl<>(storeCommResponseDtos, pageable, storeCommPage.getTotalElements());
     }
-
+    */
+    
+    // 판매 비품, 식자재 목록 확인2 (페이징 처리 o)
+    public Page<StoreComm> getStoreCommsByCategory(StoreCommCategory category, Pageable pageable) {
+    return storeCommRepository.findByCategory(category, pageable);
+}
     // 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영)
-    public void createStoreOrder(StoreOrderRequestDto requestDto) {
+    public void createStoreOrder(String adminLoginId, StoreOrderRequestDto requestDto) {
 
-        // StoreOrder 생성
-        Store store = storeRepository.findById(requestDto.getStoreId())
-            .orElseThrow(() -> new IllegalArgumentException("해당 store를 찾을 수 없습니다."));
+        Store store = storeRepository.findByManagerLoginId(adminLoginId)
+            .orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
+
         // StoreOrder 생성
         StoreOrder storeOrder = StoreOrder.builder()
             .price(requestDto.getStoreCommPrice())
@@ -126,6 +133,7 @@ public class StoreOrderServiceImpl {
     }
 
     //비품, 식자재 주문 확인(본사)
+    /* 
     public Page<StoreOrderCheckResponseDto> getStoreOrdercheck(Long storeId, int pageNumber, int pageSize) {
         System.out.println("StoreOrderService.getStoreOrdercheck");
 
@@ -138,10 +146,7 @@ public class StoreOrderServiceImpl {
 
         //store의 주문을 페이지로 조회
         List<StoreOrderStatus> statuses = Arrays.asList(
-            StoreOrderStatus.WAITING,
-            StoreOrderStatus.ACCEPTED,
-            StoreOrderStatus.DELIVERING,
-            StoreOrderStatus.COMPLETED
+            StoreOrderStatus.WAITING
         );
         Page<StoreOrder> storeOrderPage = storeOrderRepository.findByStoreIdAndStatusIn(storeId, statuses, pageable);
 
@@ -182,45 +187,192 @@ public class StoreOrderServiceImpl {
 				   return new PageImpl<>(orderDetails, pageable, storeOrderPage.getTotalElements());
 
 	}
+                   */
+    //대기중
+    public Page<StoreOrderCheckResponseDto> getStoreOrdercheckw(int pageNumber, int pageSize) {
+        System.out.println("StoreOrderService.getStoreOrdercheckw");
+        //Pageable 객체 생성
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+         // ACCEPTED 상태인 주문을 조회할 상태 리스트 생성
+        List<StoreOrderStatus> statuses = Arrays.asList(StoreOrderStatus.WAITING);
+        // 상태가 ACCEPTED인 모든 주문을 페이지로 조회
+        Page<StoreOrder> storeOrderPage = storeOrderRepository.findByStatusIn(statuses, pageable);
+        if (storeOrderPage.isEmpty()) {
+            throw new IllegalArgumentException("주문을 찾을 수 없습니다.");
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
+        //페이지의 주문 상세를 DTO로 매핑해서 반환
+        List<StoreOrderCheckResponseDto> orderDetails = storeOrderPage.getContent().stream()
+            .flatMap(storeOrder -> {
+                List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(
+                    storeOrder.getId());
+
+			return storeOrderDetails.stream()
+			       .map(detail -> new StoreOrderCheckResponseDto(
+							storeOrder.getId(),
+							storeOrder.getCreatedDateTime().format(formatter), 
+                            storeOrder.getPrice(),
+                            storeOrder.getStatus(),
+                            storeOrder.getStore().getAddress().getAddressBase(),
+                            storeOrder.getStore().getAddress().getAddressDetail(),
+                            storeOrder.getStore().getAddress().getZipcode(),
+                            storeOrder.getStore().getName(),
+                            storeOrder.getStore().getPhone(),
+                            storeOrder.getStore().getId(),
+                            detail.getStoreMenu().getName(),
+                            storeOrder.getPrice(),
+                            detail.getStoreMenu().getArticleUnit(),
+                            detail.getStoreMenu().getPictureUrl(),
+                            storeOrder.getQuantity(),
+                            detail.getStoreMenu().getPrice()
+
+                    ));
+            })
+
+				   .collect(Collectors.toList());
+				   return new PageImpl<>(orderDetails, pageable, storeOrderPage.getTotalElements());
+
+	}
 
 	 
-	/* 
-	public List<StoreOrderCheckResponseDto>getStoreOrdercheck(Long storeId){
-		System.out.println("StoreOrderService.getStoreOrdercheck");
+	//주문 승인
+    public Page<StoreOrderCheckResponseDto> getStoreOrderchecka(int pageNumber, int pageSize) {
+        System.out.println("StoreOrderService.getStoreOrdercheckw");
+        //Pageable 객체 생성
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+         // ACCEPTED 상태인 주문을 조회할 상태 리스트 생성
+        List<StoreOrderStatus> statuses = Arrays.asList(StoreOrderStatus.ACCEPTED);
+        // 상태가 ACCEPTED인 모든 주문을 페이지로 조회
+        Page<StoreOrder> storeOrderPage = storeOrderRepository.findByStatusIn(statuses, pageable);
+        if (storeOrderPage.isEmpty()) {
+            throw new IllegalArgumentException("주문을 찾을 수 없습니다.");
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
+        //페이지의 주문 상세를 DTO로 매핑해서 반환
+        List<StoreOrderCheckResponseDto> orderDetails = storeOrderPage.getContent().stream()
+            .flatMap(storeOrder -> {
+                List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(
+                    storeOrder.getId());
 
-		Store store= storeRepository.findById(storeId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다."));
-		List<StoreOrder> storeOrders= storeOrderRepository.findByStoreId(storeId);
-		if(storeOrders.isEmpty()){
-			throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
-		}
-		List<StoreOrderCheckResponseDto> storeOrderCheckResponseDtos = new ArrayList<>();
-		for (StoreOrder storeOrder : storeOrders){
-			if(storeOrder.getStatus() != StoreOrderStatus.COMPLETED){
-				List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(storeOrder.getId());
-				for (StoreOrderDetail storeOrderDetail : storeOrderDetails){
-					StoreOrderCheckResponseDto dto = new StoreOrderCheckResponseDto(
-						storeOrder.getId(),
-						storeOrder.getCreatedDateTime().toString(),
-						storeOrder.getPrice(),
-						storeOrder.getStatus(),
-						store.getId(),
-						storeOrderDetail.getStoreMenu().getName(),
-						storeOrder.getPrice(),
-						storeOrderDetail.getStoreMenu().getArticleUnit(),
-						storeOrderDetail.getStoreMenu().getPictureUrl(),
-						storeOrder.getQuantity(),
-						storeOrderDetail.getStoreMenu().getPrice()
-						
-					);
-					storeOrderCheckResponseDtos.add(dto);
+			return storeOrderDetails.stream()
+			       .map(detail -> new StoreOrderCheckResponseDto(
+							storeOrder.getId(),
+							storeOrder.getCreatedDateTime().format(formatter), 
+                            storeOrder.getPrice(),
+                            storeOrder.getStatus(),
+                            storeOrder.getStore().getAddress().getAddressBase(),
+                            storeOrder.getStore().getAddress().getAddressDetail(),
+                            storeOrder.getStore().getAddress().getZipcode(),
+                            storeOrder.getStore().getName(),
+                            storeOrder.getStore().getPhone(),
+                            storeOrder.getStore().getId(),
+                            detail.getStoreMenu().getName(),
+                            storeOrder.getPrice(),
+                            detail.getStoreMenu().getArticleUnit(),
+                            detail.getStoreMenu().getPictureUrl(),
+                            storeOrder.getQuantity(),
+                            detail.getStoreMenu().getPrice()
 
-				}
-			}
-		}
-		return storeOrderCheckResponseDtos;
+                    ));
+            })
+
+				   .collect(Collectors.toList());
+				   return new PageImpl<>(orderDetails, pageable, storeOrderPage.getTotalElements());
+
 	}
-	*/
+    //배송중
+    public Page<StoreOrderCheckResponseDto> getStoreOrdercheckd(int pageNumber, int pageSize) {
+        System.out.println("StoreOrderService.getStoreOrdercheckd");
+        //Pageable 객체 생성
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+         // ACCEPTED 상태인 주문을 조회할 상태 리스트 생성
+        List<StoreOrderStatus> statuses = Arrays.asList(StoreOrderStatus.DELIVERING);
+        // 상태가 ACCEPTED인 모든 주문을 페이지로 조회
+        Page<StoreOrder> storeOrderPage = storeOrderRepository.findByStatusIn(statuses, pageable);
+        if (storeOrderPage.isEmpty()) {
+            throw new IllegalArgumentException("주문을 찾을 수 없습니다.");
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
+        //페이지의 주문 상세를 DTO로 매핑해서 반환
+        List<StoreOrderCheckResponseDto> orderDetails = storeOrderPage.getContent().stream()
+            .flatMap(storeOrder -> {
+                List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(
+                    storeOrder.getId());
+
+			return storeOrderDetails.stream()
+			       .map(detail -> new StoreOrderCheckResponseDto(
+							storeOrder.getId(),
+							storeOrder.getCreatedDateTime().format(formatter), 
+                            storeOrder.getPrice(),
+                            storeOrder.getStatus(),
+                            storeOrder.getStore().getAddress().getAddressBase(),
+                            storeOrder.getStore().getAddress().getAddressDetail(),
+                            storeOrder.getStore().getAddress().getZipcode(),
+                            storeOrder.getStore().getName(),
+                            storeOrder.getStore().getPhone(),
+                            storeOrder.getStore().getId(),
+                            detail.getStoreMenu().getName(),
+                            storeOrder.getPrice(),
+                            detail.getStoreMenu().getArticleUnit(),
+                            detail.getStoreMenu().getPictureUrl(),
+                            storeOrder.getQuantity(),
+                            detail.getStoreMenu().getPrice()
+
+                    ));
+            })
+
+				   .collect(Collectors.toList());
+				   return new PageImpl<>(orderDetails, pageable, storeOrderPage.getTotalElements());
+
+	}
+    //배송완료
+    public Page<StoreOrderCheckResponseDto> getStoreOrdercheckdc(int pageNumber, int pageSize) {
+        System.out.println("StoreOrderService.getStoreOrdercheckdc");
+        //Pageable 객체 생성
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+         // ACCEPTED 상태인 주문을 조회할 상태 리스트 생성
+        List<StoreOrderStatus> statuses = Arrays.asList(StoreOrderStatus.COMPLETED);
+        // 상태가 ACCEPTED인 모든 주문을 페이지로 조회
+        Page<StoreOrder> storeOrderPage = storeOrderRepository.findByStatusIn(statuses, pageable);
+        if (storeOrderPage.isEmpty()) {
+            throw new IllegalArgumentException("주문을 찾을 수 없습니다.");
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
+        //페이지의 주문 상세를 DTO로 매핑해서 반환
+        List<StoreOrderCheckResponseDto> orderDetails = storeOrderPage.getContent().stream()
+            .flatMap(storeOrder -> {
+                List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(
+                    storeOrder.getId());
+
+			return storeOrderDetails.stream()
+			       .map(detail -> new StoreOrderCheckResponseDto(
+							storeOrder.getId(),
+							storeOrder.getCreatedDateTime().format(formatter), 
+                            storeOrder.getPrice(),
+                            storeOrder.getStatus(),
+                            storeOrder.getStore().getAddress().getAddressBase(),
+                            storeOrder.getStore().getAddress().getAddressDetail(),
+                            storeOrder.getStore().getAddress().getZipcode(),
+                            storeOrder.getStore().getName(),
+                            storeOrder.getStore().getPhone(),
+                            storeOrder.getStore().getId(),
+                            detail.getStoreMenu().getName(),
+                            storeOrder.getPrice(),
+                            detail.getStoreMenu().getArticleUnit(),
+                            detail.getStoreMenu().getPictureUrl(),
+                            storeOrder.getQuantity(),
+                            detail.getStoreMenu().getPrice()
+
+                    ));
+            })
+
+				   .collect(Collectors.toList());
+				   return new PageImpl<>(orderDetails, pageable, storeOrderPage.getTotalElements());
+
+	}
+    
+
+
 
     //비품, 식자재 주문 확인(직영점)
     public Page<StoreOrderCheckResponseDto> getStoreOrdercheckforstore(String adminLoginId, int pageNumber,

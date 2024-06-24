@@ -107,7 +107,7 @@ onMounted(() => {
 }
 
 .v-main.main-background {
-  background: url('https://s1.r29static.com/bin/entry/cc4/0,0,2000,2400/720x864,85/1793971/image.webp') no-repeat center center fixed;
+  background: url('https://cambridgeleisure.co.uk/sites/cambridge_leisure/files/styles/whats_on_gallery_small/public/images/shops/gallery/five_guys.jpg?itok=YKUdHJuQ') no-repeat center center fixed;
   background-size: cover;
 }
 
