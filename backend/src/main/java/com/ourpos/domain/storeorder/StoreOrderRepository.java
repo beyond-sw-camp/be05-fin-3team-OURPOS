@@ -8,7 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface StoreOrderRepository extends JpaRepository<StoreOrder, Long> {
+	
 	List<StoreOrder> findByStoreId(Long storeId);
+
+	Page<StoreOrder> findByStoreId(Long storeId, Pageable pageable);
 
 	@Query("SELECT so FROM StoreOrder so WHERE so.store.id = :storeId " +
 		"AND so.status IN (:statuses)")

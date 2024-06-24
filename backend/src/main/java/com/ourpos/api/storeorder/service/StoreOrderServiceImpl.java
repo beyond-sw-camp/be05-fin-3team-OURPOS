@@ -29,7 +29,10 @@ import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderDetailRepository;
 import com.ourpos.domain.storeorder.StoreOrderRepository;
 import com.ourpos.domain.storeorder.StoreOrderStatus;
-
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.function.Function;
+import java.time.format.DateTimeFormatter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -137,13 +140,15 @@ public class StoreOrderServiceImpl {
         List<StoreOrderStatus> statuses = Arrays.asList(
             StoreOrderStatus.WAITING,
             StoreOrderStatus.ACCEPTED,
-            StoreOrderStatus.DELIVERING
+            StoreOrderStatus.DELIVERING,
+            StoreOrderStatus.COMPLETED
         );
         Page<StoreOrder> storeOrderPage = storeOrderRepository.findByStoreIdAndStatusIn(storeId, statuses, pageable);
 
-        if (storeOrders.isEmpty()) {
-            throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
-        }
+		if (storeOrders.isEmpty()) {
+			throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
+		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
 
         //페이지의 주문 상세를 DTO로 매핑해서 반환
         List<StoreOrderCheckResponseDto> orderDetails = storeOrderPage.getContent().stream()
@@ -151,32 +156,32 @@ public class StoreOrderServiceImpl {
                 List<StoreOrderDetail> storeOrderDetails = storeOrderDetailRepository.findByStoreOrderId(
                     storeOrder.getId());
 
-                return storeOrderDetails.stream()
-                    .map(detail -> new StoreOrderCheckResponseDto(
-                        storeOrder.getId(),
-                        storeOrder.getCreatedDateTime().toString(),
-                        storeOrder.getPrice(),
-                        storeOrder.getStatus(),
-                        store.getAddress().getAddressBase(),
-                        store.getAddress().getAddressDetail(),
-                        store.getAddress().getZipcode(),
-                        store.getName(),
-                        store.getPhone(),
-                        storeId,
-                        detail.getStoreMenu().getName(),
-                        storeOrder.getPrice(),
-                        detail.getStoreMenu().getArticleUnit(),
-                        detail.getStoreMenu().getPictureUrl(),
-                        storeOrder.getQuantity(),
-                        detail.getStoreMenu().getPrice()
+			return storeOrderDetails.stream()
+			       .map(detail -> new StoreOrderCheckResponseDto(
+							storeOrder.getId(),
+							storeOrder.getCreatedDateTime().format(formatter), 
+                            storeOrder.getPrice(),
+                            storeOrder.getStatus(),
+                            store.getAddress().getAddressBase(),
+                            store.getAddress().getAddressDetail(),
+                            store.getAddress().getZipcode(),
+                            store.getName(),
+                            store.getPhone(),
+                            storeId,
+                            detail.getStoreMenu().getName(),
+                            storeOrder.getPrice(),
+                            detail.getStoreMenu().getArticleUnit(),
+                            detail.getStoreMenu().getPictureUrl(),
+                            storeOrder.getQuantity(),
+                            detail.getStoreMenu().getPrice()
 
                     ));
             })
 
-            .collect(Collectors.toList());
-        return new PageImpl<>(orderDetails, pageable, storeOrderPage.getTotalElements());
+				   .collect(Collectors.toList());
+				   return new PageImpl<>(orderDetails, pageable, storeOrderPage.getTotalElements());
 
-    }
+	}
 
 	 
 	/* 
@@ -234,13 +239,17 @@ public class StoreOrderServiceImpl {
         List<StoreOrderStatus> statuses = Arrays.asList(
             StoreOrderStatus.WAITING,
             StoreOrderStatus.ACCEPTED,
-            StoreOrderStatus.DELIVERING
+            StoreOrderStatus.DELIVERING,
+            StoreOrderStatus.COMPLETED
         );
         Page<StoreOrder> storeOrderPage = storeOrderRepository.findByStoreIdAndStatusIn(storeId, statuses, pageable);
 
         if (storeOrderPage.isEmpty()) {
             throw new IllegalArgumentException("해당 상점의 주문을 찾을 수 없습니다.");
         }
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
+
 
         // 페이지의 주문 상세를 DTO로 매핑하여 반환
         List<StoreOrderCheckResponseDto> orderDetails = storeOrderPage.getContent().stream()
@@ -250,22 +259,23 @@ public class StoreOrderServiceImpl {
 
                 return storeOrderDetails.stream()
                     .map(detail -> new StoreOrderCheckResponseDto(
-                        storeOrder.getId(),
-                        storeOrder.getCreatedDateTime().toString(),
-                        storeOrder.getPrice(),
-                        storeOrder.getStatus(),
-                        store.getAddress().getAddressBase(),
-                        store.getAddress().getAddressDetail(),
-                        store.getAddress().getZipcode(),
-                        store.getName(),
-                        store.getPhone(),
-                        storeId,
-                        detail.getStoreMenu().getName(),
-                        storeOrder.getPrice(),
-                        detail.getStoreMenu().getArticleUnit(),
-                        detail.getStoreMenu().getPictureUrl(),
-                        storeOrder.getQuantity(),
-                        detail.getStoreMenu().getPrice()
+						
+                            storeOrder.getId(),
+                            storeOrder.getCreatedDateTime().format(formatter), 
+                            storeOrder.getPrice(),
+                            storeOrder.getStatus(),
+                            store.getAddress().getAddressBase(),
+                            store.getAddress().getAddressDetail(),
+                            store.getAddress().getZipcode(),
+                            store.getName(),
+                            store.getPhone(),
+                            storeId,
+                            detail.getStoreMenu().getName(),
+                            storeOrder.getPrice(),
+                            detail.getStoreMenu().getArticleUnit(),
+                            detail.getStoreMenu().getPictureUrl(),
+                            storeOrder.getQuantity(),
+                            detail.getStoreMenu().getPrice()
                     ));
 
             })
