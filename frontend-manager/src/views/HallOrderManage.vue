@@ -1,6 +1,6 @@
 <template>
-  
-
+  <div>
+  <Navbar2/>
     <div class="container mt-4">
       <h2>주문 목록</h2>
       <div class="row mb-3">
@@ -36,10 +36,6 @@
                 조리완료
               </a>
             </li>
-            <!-- 뒤로 가기 버튼 -->
-          <li class="nav-item "> <!-- ml-auto는 왼쪽 여백을 자동으로 조절하여 오른쪽으로 이동시킵니다 -->
-            <button @click.prevent="goBack()" class="btn btn-outline-secondary btn-sm">뒤로가기</button>
-          </li>
           </ul>
         </div>
       </div>
@@ -123,14 +119,16 @@
         </div>
       </div>
     </div>
-
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
 
 export default {
+  components: {Navbar2},
   
   data() {
     return {
