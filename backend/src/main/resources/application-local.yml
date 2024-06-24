@@ -4,9 +4,9 @@ spring:
       on-profile: local
 
   datasource:
-    url: jdbc:h2:tcp://localhost/~/ourpos
-    username: sa
-    password:
+    url: ${local.datasource.url}
+    username: ${local.datasource.username}
+    password: ${local.datasource.password}
     driver-class-name: org.h2.Driver
 
   jpa:

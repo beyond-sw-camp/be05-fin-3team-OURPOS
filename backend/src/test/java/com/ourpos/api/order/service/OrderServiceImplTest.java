@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ourpos.api.order.dto.request.HallOrderRequestDto;
@@ -32,7 +31,6 @@ import com.ourpos.domain.storeorder.StoreComm;
 import com.ourpos.domain.storeorder.StoreCommCategory;
 import com.ourpos.domain.storeorder.StoreCommRepository;
 
-@ActiveProfiles("test")
 @Transactional
 @SpringBootTest
 class OrderServiceImplTest {
