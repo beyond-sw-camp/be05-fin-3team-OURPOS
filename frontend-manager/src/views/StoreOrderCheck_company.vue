@@ -3,7 +3,6 @@
     <div class="container mt-5">
       <h2>식자재/비품 주문</h2>
       <div class="row mb-3">
-
         <div class="col">
           <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -59,7 +58,7 @@
                   <div class="row">
                     <div class="col"><strong>주문 번호:</strong> {{ order.storeOrderId }}</div>
                     <div class="col"><strong>주문 일시:</strong> {{ order.storeOrderDate }}</div>
-                    <div class="col"><strong>주문 금액:</strong> {{ order.storeOrderDetailPrice }}</div>
+                    <div class="col"><strong>주문 금액:</strong> {{ order.storeCommPrice }}</div>
                     <div class="col"><strong>지점명:</strong> {{ order.storeName }}</div>
                     <div class="col">
                       <a href="#" @click="showOrderDetail(order)">
@@ -70,21 +69,21 @@
                 </li>
               </ul>
 
-              <p v-if="filteredOrders.length === 0" class="text-center mt-3">주문이 없습니다.</p>
+              <p v-if="filteredOrders.length === 0 && !loading" class="text-center mt-3">주문이 없습니다.</p>
 
               <!-- 페이지 네이션 -->
               <div class="mt-3 d-flex justify-content-center">
-                <button @click="fetchOrders(selectedTab, currentPage - 1)" :disabled="currentPage === 0" class="btn btn-outline-secondary btn-sm">prev</button>
+                <button @click="fetchOrders(selectedTab, currentPage - 1)" :disabled="currentPage === 1" class="btn btn-outline-secondary btn-sm">prev</button>
                 <button 
                   v-for="page in totalPages" 
                   :key="page" 
-                  @click="fetchOrders(selectedTab, page - 1)" 
+                  @click="fetchOrders(selectedTab, page-1)" 
                   class="btn btn-link text-secondary btn-sm"
-                  :class="{ 'text-dark': page === currentPage + 1 }"
+                  :class="{ 'text-dark': page === currentPage }"
                 >
                   {{ page }}
                 </button>
-                <button @click="fetchOrders(selectedTab, currentPage + 1)" :disabled="currentPage === totalPages - 1" class="btn btn-outline-secondary btn-sm">next</button>
+                <button @click="fetchOrders(selectedTab, currentPage + 1)" :disabled="currentPage === totalPages" class="btn btn-outline-secondary btn-sm">next</button>
               </div>
             </div>
           </div>
@@ -150,74 +149,87 @@ export default {
       error: null,
       selectedOrderDetail: null, // 선택된 주문의 세부 정보를 저장할 상태
       selectedTab: 'WAITING', // 현재 선택된 탭의 상태
-      currentPage: 0, // 현재 페이지
-      totalPages: 0 // 총 페이지 수
+      currentPage: {
+        WAITING: 1,
+        ACCEPTED: 1,
+        DELIVERING: 1,
+        COMPLETED: 1
+      }, // 각 탭 별 현재 페이지 (1부터 시작)
+      totalPages: {
+        WAITING: 0,
+        ACCEPTED: 0,
+        DELIVERING: 0,
+        COMPLETED: 0
+      }, // 각 탭 별 총 페이지 수
+      pageSize: 5, // 페이지 당 항목 수
     };
   },
   computed: {
-    // 현재 선택된 탭에 해당하는 주문 가져오기
+    // 현재 선택된 탭에 해당하는 주문 필터링
     filteredOrders() {
       return this.orders.filter(order => order.storeOrderStatus === this.selectedTab);
     }
   },
   created() {
-    this.fetchOrders(this.selectedTab, this.currentPage);
+    this.fetchOrders('WAITING', 0); // 초기화 시 대기중 주문 조회
+    this.fetchOrders('ACCEPTED', 0); // 초기화 시 주문승인 조회
+    this.fetchOrders('DELIVERING', 0); // 초기화 시 배송중 조회
+    this.fetchOrders('COMPLETED', 0); // 초기화 시 배송 완료 조회
   },
   methods: {
     async fetchOrders(status, page) {
-  this.loading = true;
-  this.error = null;
-  this.selectedTab = status;
-  this.currentPage = page; // currentPage 초기화
-  const token = localStorage.getItem('token');
+      
+      this.loading = true;
+      this.error = null;
+      this.selectedTab = status;
+      this.currentPage = page;
+      
 
-  if (!token) {
-    this.error = 'No token found in local storage';
-    this.loading = false;
-    return;
-  }
-
-  try {
-    const response = await axios.get(`http://localhost:8080/api/v1/storeorder/1/check`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token
-      },
-      withCredentials: true,
-      params: {
-        status: status,
-        page: page,
-        size: 5 // 페이지 당 항목 수
+      const token = localStorage.getItem('token');
+      if (!token) {
+        this.error = 'No token found in local storage';
+        this.loading = false;
+        return;
       }
-    });
-    this.orders = response.data.data.content;
-    this.currentPage = response.data.data.number;
-    this.totalPages = response.data.data.totalPages;
-    console.log(response.data.data);
-  
-  } catch (error) {
-    this.error = 'Error fetching orders';
-    console.error('Error fetching orders:', error);
 
-    if (error.response && error.response.status === 401) {
-      this.error = 'Unauthorized: Invalid or expired token';
-      console.error('Unauthorized: Invalid or expired token');
-    }
-  } finally {
-    this.loading = false;
-  }
-},
+      try {
+        const response = await axios.get(`http://localhost:8080/api/v1/storeorder/1/check`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          },
+          withCredentials: true,
+          params: {
+            status: status,
+            page: page,
+            size: this.pageSize
+          }
+        });
 
+        this.orders = response.data.data.content;
+        this.currentPage = response.data.data.number + 1;
+        this.totalPages = response.data.data.totalPages;
 
+      } catch (error) {
+        this.error = 'Error fetching orders';
+        console.error('Error fetching orders:', error);
+
+        if (error.response && error.response.status === 401) {
+          this.error = 'Unauthorized: Invalid or expired token';
+          console.error('Unauthorized: Invalid or expired token');
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
 
     showOrderDetail(order) {
-      // 선택된 주문의 세부 정보를 저장, 표시
+      // 선택된 주문의 세부 정보 표시
       this.selectedOrderDetail = order;
     },
 
     async changeOrderStatus(storeOrderId, action) {
       const token = localStorage.getItem('token');
-
       if (!token) {
         this.error = 'No token found in local storage';
         return;
@@ -236,23 +248,25 @@ export default {
         await axios.put(url, {}, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `${token}`
+            'Authorization':'${token}'
           },
-          withCredentials: true
+          withCredentials:true
         });
-        this.selectedOrderDetail = null; // 상태 변경 후 세부 정보 탭 숨기기
-        this.fetchOrders(this.selectedTab, this.currentPage); // 상태 변경 후 주문 목록 새로고침
-      } catch (error) {
-        this.error = `Error changing order status: ${error.message}`;
+        this.selectedOrderDetail = null; //상태 변경 후 세부 정보 탭 숨기기
+        this.fetchOrders(this.selectedTab,
+        this.currentPage);
+      }catch(error){
+        this.error=`Error changing order status: ${error.message}`;
         console.error('Error changing order status:', error);
       }
+      },
     },
-  },
-};
-</script>
+  };
+  </script>
 
-<style scoped>
-.text-center {
-  text-align: center;
-}
-</style>
+  <style scoped>
+  .text-center {
+    text-align: center;
+  }
+  </style>
+

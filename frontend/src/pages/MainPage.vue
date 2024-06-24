@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="no-scroll">
     <v-app-bar app class="transparent-app-bar">
       <v-spacer></v-spacer>
       <v-menu offset-y>
@@ -19,13 +19,11 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-main>
-      <!-- 배경 이미지가 적용된 v-main -->
+    <v-main class="main-background">
       <div class="hero">
         <h1>Welcome to our pos!</h1>
         <p>Explore our menu and place your orders.</p>
       </div>
-  
 
       <v-container class="main-container">
         <v-row justify="center">
@@ -47,8 +45,8 @@
         </v-row>
       </v-container>
     </v-main>
+    <BottomNav />
   </v-app>
-  <BottomNav />
 </template>
 
 <script setup>
@@ -108,20 +106,17 @@ onMounted(() => {
   background-color: rgba(255, 255, 255, 0.5); /* 흰색 배경에 50% 불투명도 */
 }
 
-/* 배경 이미지 스타일 추가 */
-.v-main {
+.v-main.main-background {
   background: url('https://s1.r29static.com/bin/entry/cc4/0,0,2000,2400/720x864,85/1793971/image.webp') no-repeat center center fixed;
   background-size: cover;
 }
 
-/* v-container 아래로 내리기 */
 .main-container {
   background-color: rgba(255, 255, 255, 0.8); 
   border-radius: 10px;
   padding: 20px;
-  margin-top: 235px; 
+  margin-top: 220px; 
 }
-
 
 .hero {
   margin-top: 250px; 
@@ -137,5 +132,14 @@ onMounted(() => {
 .transparent-app-bar {
   background-color: transparent !important;
   box-shadow: none;
+}
+
+.no-scroll {
+  overflow: hidden; 
+  height: 100vh; 
+}
+.bottom-nav{
+  height: 65px;
+  flex-shrink: 0;
 }
 </style>
