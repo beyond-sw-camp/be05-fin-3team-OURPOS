@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ourpos.domain.customer.Customer;
@@ -21,7 +20,6 @@ import com.ourpos.domain.customer.CustomerRepository;
 import com.ourpos.domain.store.Store;
 import com.ourpos.domain.store.StoreRepository;
 
-@ActiveProfiles("test")
 @Transactional
 @SpringBootTest
 class OrderQueryRepositoryTest {

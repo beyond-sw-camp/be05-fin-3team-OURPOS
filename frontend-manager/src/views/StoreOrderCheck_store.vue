@@ -1,12 +1,15 @@
 <template>
+  <div>
+    <Navbar2/>
   <div class="container-fluid text-center">
-    <div class="row">
-      <div class="col">
+     <!-- 주문 내역 테이블 -->
+     <div class="row justify-content-center">
+        <div class="col-md-8">
         <div class="card">
           <h5 class="card-header">주문 내역</h5>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-bordered">
+              <table class="table ">
                 <thead>
                   <tr>
                     <th style="width: 20%;">주문 번호</th>
@@ -61,7 +64,7 @@
           </div>
           <div class="modal-body">
             <div class="table-responsive">
-              <table class="table table-bordered">
+              <table class="table ">
                 <thead>
                   <tr>
                     <th>이름</th>
@@ -86,12 +89,15 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
 import axios from "axios";
+import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
 export default {
+  components: {Navbar2},
   data() {
     return {
       orders: [],
@@ -164,5 +170,5 @@ export default {
 </script>
 
 <style scoped>
-/* 필요한 스타일 추가 */
+
 </style>

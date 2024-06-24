@@ -6,6 +6,7 @@ import com.ourpos.domain.storeorder.StoreCommStatus;
 import com.ourpos.domain.storeorder.StoreOrder;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderStatus;
+import java.time.format.DateTimeFormatter;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,6 +40,8 @@ public class StoreOrderCheckResponseDto {
 
 
 	public StoreOrderCheckResponseDto(StoreOrder storeOrder, StoreOrderDetail storeOrderDetail){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
+
 		this.storeId = storeOrder.getStore().getId();
 		this.storeCommName= storeOrderDetail.getStoreMenu().getName();
 		//this.storeCommPrice = storeOrderDetail.getStoreMenu().getPrice();
@@ -49,7 +52,7 @@ public class StoreOrderCheckResponseDto {
 		this.storeOrderDetailQuantity = storeOrderDetail.getStoreOrder().getQuantity();
 		// 추가
 		this.storeOrderId = storeOrder.getId();
-		this.storeOrderDate = storeOrder.getCreatedDateTime().toString();
+		this.storeOrderDate = storeOrder.getCreatedDateTime().format(formatter);
 		this.storeOrderPrice = storeOrder.getPrice();
 		this.storeOrderStatus = storeOrder.getStatus();
 		// 2차 추가
