@@ -130,12 +130,12 @@
 
 <script>
 import axios from 'axios';
-
+import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
 
 
 export default {
-
+  components: {Navbar2},
 
   data() {
     return {
