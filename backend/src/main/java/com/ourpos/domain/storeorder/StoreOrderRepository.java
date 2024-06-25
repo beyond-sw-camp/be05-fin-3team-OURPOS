@@ -13,6 +13,8 @@ public interface StoreOrderRepository extends JpaRepository<StoreOrder, Long> {
 
 	Page<StoreOrder> findByStoreId(Long storeId, Pageable pageable);
 
+	Page<StoreOrder> findByStatusIn(List<StoreOrderStatus> statuses, Pageable pageable);
+
 	@Query("SELECT so FROM StoreOrder so WHERE so.store.id = :storeId " +
 		"AND so.status IN (:statuses)")
 	Page<StoreOrder> findByStoreIdAndStatusIn(Long storeId, List<StoreOrderStatus> statuses, Pageable pageable);

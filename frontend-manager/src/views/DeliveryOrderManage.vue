@@ -62,9 +62,9 @@
                   <div class="row">
                     <div class="col"><strong>주문 번호</strong> {{ order.orderId }}</div>
                     <div class="col"><strong>주문 일시</strong> {{ order.orderCreatedDateTime }}</div>
-                    <!--<div class="col"><strong>경과 시간</strong> {{ order.price }}</div>-->
+                    <div class="col"><strong>경과 시간</strong> {{ order.formattedCookingTime }}</div>
                     <!--<div class="col"><strong>결제 수단:</strong> {{ order.price }}</div>-->
-                    <div class="col"><strong>주문 금액</strong> {{ order.price }}</div>
+                    <div class="col"><strong>주문 금액</strong> {{ order.price }}원</div>
                     <div class="col">
                       <a href="#" @click="showOrderDetail(order)">
                         {{ order.deliveryOrderStatus }}
@@ -73,6 +73,19 @@
                   </div>
                 </li>
               </ul>
+              <div class="mt-3 d-flex justify-content-center">
+                <button @click="fetchOrders(selectedTab, pageNumber - 1, pageSize)" :disabled="pageNumber === 1" class="btn btn-outline-secondary btn-sm">prev</button>
+                <button 
+                  v-for="page in totalPages" 
+                  :key="page" 
+                  @click="fetchOrders(selectedTab, page, pageSize)" 
+                  class="btn btn-link text-secondary btn-sm"
+                  :class="{ 'text-dark': page === pageNumber }"
+                >
+                  {{ page }}
+                </button>
+                <button @click="fetchOrders(selectedTab, pageNumber + 1, pageSize)" :disabled="pageNumber === totalPages" class="btn btn-outline-secondary btn-sm">next</button>
+              </div>
             </div>
           </div>
         </div>
@@ -109,15 +122,15 @@
                 </div>
               </div>
               <!-- 주문 상태 변경 버튼 추가 -->
-              <div class="mt-3" v-if="selectedOrderDetail.deliveryOrderStatus === 'WAITING'">
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'accept')" class="btn btn-success btn-sm">COOKING</button>
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'cancel')" class="btn btn-warning btn-sm">CANCEL</button>
+              <div class="mt-3 text-center" v-if="selectedOrderDetail.deliveryOrderStatus === 'WAITING'">
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'accept')" class="btn btn-success btn-sm">조리시작</button>
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'cancel')" class="btn btn-warning btn-sm">주문취소</button>
               </div>
-              <div class="mt-3" v-if="selectedOrderDetail.deliveryOrderStatus === 'COOKING'">
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'deliver')" class="btn btn-primary btn-sm">DELIVERING</button>
+              <div class="mt-3 text-center" v-if="selectedOrderDetail.deliveryOrderStatus === 'COOKING'">
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'deliver')" class="btn btn-primary btn-sm">배달시작</button>
               </div>
-              <div class="mt-3" v-if="selectedOrderDetail.deliveryOrderStatus === 'DELIVERING'">
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'complete')" class="btn btn-primary btn-sm">COMPLETE</button>
+              <div class="mt-3 text-center" v-if="selectedOrderDetail.deliveryOrderStatus === 'DELIVERING'">
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'complete')" class="btn btn-primary btn-sm">배달완료</button>
               </div>
             </div>
           </div>
@@ -130,12 +143,12 @@
 
 <script>
 import axios from 'axios';
-
+import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
 
 
 export default {
-
+  components: {Navbar2},
 
   data() {
     return {
@@ -143,14 +156,17 @@ export default {
       loading: false,
       error: null,
       selectedOrderDetail: null,
-      selectedTab: 'WAITING'
+      selectedTab: 'WAITING',
+      pageNumber: 1,
+      pageSize: 5,
+      totalPages: 1
     };
   },
   created() {
-    this.fetchOrders(this.selectedTab);
+    this.fetchOrders(this.selectedTab,this.pageNumber, this.pageSize);
   },
   methods: {
-    async fetchOrders(status) {
+    async fetchOrders(status, page, size) {
       this.loading = true;
       this.error = null;
       this.selectedTab = status;
@@ -170,11 +186,17 @@ export default {
           },
           withCredentials: true,
           params: {
-            status: status
+            status: status,
+            page: page - 1,
+            size: size
           }
         });
 
         this.orders = response.data.data.content;
+        console.log(response.data.data.content);
+        this.pageNumber = response.data.data.pageable.pageNumber + 1;
+        this.pageSize = response.data.data.pageable.pageSize;
+        this.totalPages = response.data.data.totalPages;
         console.log(response.data.data.content);
       } catch (error) {
         this.error = 'Error fetching orders';
@@ -224,11 +246,14 @@ export default {
         });
 
         this.selectedOrderDetail = null;
-        this.fetchOrders(this.selectedTab); // 페이지 번호와 사이즈를 함께 전달
+        this.fetchOrders(this.selectedTab,this.pageNumber, this.pageSize); 
       } catch (error) {
         this.error = `Error changing order status: ${error.message}`;
         console.error('Error changing order status:', error);
       }
+    },
+    goBack() {
+      this.$router.go(-1); 
     }
   }
 };

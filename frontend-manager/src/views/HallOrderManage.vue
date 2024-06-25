@@ -1,6 +1,7 @@
 <template>
-  
-
+  <div>
+  <Navbar2/>
+  <div>
     <div class="container mt-4">
       <h2>주문 목록</h2>
       <div class="row mb-3">
@@ -36,10 +37,6 @@
                 조리완료
               </a>
             </li>
-            <!-- 뒤로 가기 버튼 -->
-          <li class="nav-item "> <!-- ml-auto는 왼쪽 여백을 자동으로 조절하여 오른쪽으로 이동시킵니다 -->
-            <button @click.prevent="goBack()" class="btn btn-outline-secondary btn-sm">뒤로가기</button>
-          </li>
           </ul>
         </div>
       </div>
@@ -56,7 +53,7 @@
                   <div class="row">
                     <div class="col"><strong>주문 번호:</strong> {{ order.orderId }}</div>
                     <div class="col"><strong>주문 일시:</strong> {{ order.orderCreatedDateTime }}</div>
-                    <div class="col"><strong>경과 시간:</strong> {{ order.cookingTime }}</div>
+                    <div class="col"><strong>경과 시간:</strong> {{ order.formattedCookingTime }}</div>
                     <div class="col"><strong>주문 금액:</strong> {{ order.price }} 원</div>
                     <div class="col">
                       <a href="#" @click.prevent="showOrderDetail(order)">
@@ -111,26 +108,29 @@
                 <!-- 추가적인 세부 정보 표시 -->
               </div>
               <!-- 주문 상태 변경 버튼 추가 -->
-              <div class="mt-3" v-if="selectedOrderDetail.hallOrderStatus === 'WAITING'">
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'accept')" class="btn btn-success btn-sm">COOKING</button>
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'cancel')" class="btn btn-warning btn-sm">CANCEL</button>
+              <div class="mt-3 text-center" v-if="selectedOrderDetail.hallOrderStatus === 'WAITING'">
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'accept')" class="btn btn-success btn-sm">조리시작</button>
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'cancel')" class="btn btn-warning btn-sm">주문취소</button>
               </div>
-              <div class="mt-3" v-if="selectedOrderDetail.hallOrderStatus === 'COOKING'">
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'complete')" class="btn btn-primary btn-sm">COMPLETE</button>
+              <div class="mt-3 text-center" v-if="selectedOrderDetail.hallOrderStatus === 'COOKING'">
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'complete')" class="btn btn-primary btn-sm">조리완료</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
+  </div>
+</div>
 </template>
 
 <script>
 import axios from 'axios';
+import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
 
 export default {
+  components: {Navbar2},
   
   data() {
     return {
@@ -229,15 +229,15 @@ export default {
       }
     },
     goBack() {
-      // 뒤로 가기 버튼 클릭 시 이전 페이지로 이동
-      this.$router.go(-1); // Vue Router를 사용하여 이전 페이지로 이동합니다
+     
+      this.$router.go(-1); 
     }
 
   }
 };
 </script>
 
-<style>
+<style scoped>
 .nav-link.active {
   font-weight: bold;
 }

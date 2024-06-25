@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ourpos.api.Result;
@@ -29,6 +30,10 @@ import com.ourpos.api.storeorder.dto.response.StoreOrderResponseDto;
 import com.ourpos.api.storeorder.service.StoreCommServiceImpl;
 import com.ourpos.api.storeorder.service.StoreOrderServiceImpl;
 import com.ourpos.auth.dto.manager.ManagerUserDetails;
+import com.ourpos.domain.store.Store;
+import com.ourpos.domain.store.StoreRepository;
+import com.ourpos.domain.storeorder.StoreComm;
+import com.ourpos.domain.storeorder.StoreCommCategory;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderDetailRepository;
 import com.ourpos.domain.storeorder.StoreOrderRepository;
@@ -46,6 +51,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     private final StoreOrderDetailRepository storeOrderDetailRepository;
     private final StoreOrderRepository storeOrderRepository;
     private final StoreOrderServiceImpl storeOrderService;
+    private final StoreRepository storeRepository;
 
     // 판매 비품, 식자재 목록 확인(페이징 처리 x)
     /* 
@@ -58,6 +64,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     }
     */
      // 판매 비품, 식자재 목록 확인(페이징 처리 o)
+    /* 
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/storecomms")
@@ -66,15 +73,41 @@ public class StoreOrderController implements StoreOrderControllerDocs {
         Page<StoreCommResponseDto> storeCommsPage = storeOrderService.checkStoreComms(pageable);
         return new Result<>(HttpStatus.OK.value(), " 목록을 불러옵니다.", storeCommsPage);
     }
+    */
 
-    // 비품, 식자재 주문 (비품,식자재 주문 관리에서 배달완료 시 재고에 반영) ?-> price가 반영 안됨
+    // 판매 비품, 식자재 목록 확인2 (페이징 처리 o)
+    
+    @GetMapping("/storecomms/ingredients")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Result<Page<StoreCommResponseDto>> getIngredients(Pageable pageable) {
+        Page<StoreComm> ingredientsPage = storeOrderService.getStoreCommsByCategory(StoreCommCategory.INGREDIENT, pageable);
+        return new Result<>(HttpStatus.OK.value(), "식자재 목록을 불러옵니다.", convertToDtoPage(ingredientsPage));
+    }
+
+    @GetMapping("/storecomms/supplies")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Result<Page<StoreCommResponseDto>> getSupplies(Pageable pageable) {
+        Page<StoreComm> suppliesPage = storeOrderService.getStoreCommsByCategory(StoreCommCategory.SUPPLIES, pageable);
+        return new Result<>(HttpStatus.OK.value(), "비품 목록을 불러옵니다.", convertToDtoPage(suppliesPage));
+    }
+
+    private Page<StoreCommResponseDto> convertToDtoPage(Page<StoreComm> page) {
+        return page.map(StoreCommResponseDto::new);
+    }
+    
+
+    // 비품, 식자재 주문 (로그인 구현)
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/storecomms/order")
     public Result<Void> createStoreOrder(@Valid @RequestBody StoreOrderRequestDto storeOrderRequestDto) {
+
+        String adminLoginId = getManagerLoginId();
         log.info("가게 식자재, 비품 주문: {}", storeOrderRequestDto);
-        storeOrderService.createStoreOrder(storeOrderRequestDto);
+        storeOrderService.createStoreOrder(adminLoginId,storeOrderRequestDto);
         return new Result<>(HttpStatus.CREATED.value(), "식자재, 비품 주문이 완료되었습니다.", null);
     }
+
+    
 
     // 비품, 식자재 주문 내역 확인 ? 주문 내역  개별 조회 o
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -132,13 +165,78 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     }
 
     //비품, 식자재 주문 확인 (본사)
-    //@PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
-    @GetMapping("/storeorder/{storeId}/check")
-    public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheck(@PathVariable Long storeId, Pageable pageable) {
+    /*
+     *  @GetMapping("/storeorder/waiting")
+    public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheckw( Long storeId, Pageable pageable) {
         log.info("가게 식자재, 비품 주문: {}", storeId);
         log.debug("getStoreOrderCheck 메서드 호출됨");
         
-            Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrdercheck(storeId, pageable.getPageNumber(),pageable.getPageSize());
+            Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrdercheckw(storeId, pageable.getPageNumber(),pageable.getPageSize());
+    
+            // 로그 추가: 데이터 로드 성공 로그
+            log.debug("주문 목록 데이터 로드 성공: {}", storeOrderPage);
+    
+            Result<Page<StoreOrderCheckResponseDto>> result = new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다.", storeOrderPage);
+            return ResponseEntity.ok(result);
+        
+    }
+     */
+    //대기중
+    //@PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @GetMapping("/storeorder/waiting")
+    public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheckw( Pageable pageable) {
+        log.info("가게 식자재, 비품 주문: {}");
+        log.debug("getStoreOrderCheck 메서드 호출됨");
+        
+            Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrdercheckw( pageable.getPageNumber(),pageable.getPageSize());
+    
+            // 로그 추가: 데이터 로드 성공 로그
+            log.debug("주문 목록 데이터 로드 성공: {}", storeOrderPage);
+    
+            Result<Page<StoreOrderCheckResponseDto>> result = new Result<>(HttpStatus.OK.value(), "대기중인 식자재, 비품 주문 목록을 불러옵니다.", storeOrderPage);
+            return ResponseEntity.ok(result);
+        
+    }
+    //주문승인
+    //@PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @GetMapping("/storeorder/accepted")
+    public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderChecka(Pageable pageable) {
+        log.info("가게 식자재, 비품 주문: {}");
+        log.debug("getStoreOrderCheck 메서드 호출됨");
+        
+            Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrderchecka( pageable.getPageNumber(),pageable.getPageSize());
+    
+            // 로그 추가: 데이터 로드 성공 로그
+            log.debug("주문 목록 데이터 로드 성공: {}", storeOrderPage);
+    
+            Result<Page<StoreOrderCheckResponseDto>> result = new Result<>(HttpStatus.OK.value(), " 주문 승인 된 식자재, 비품 주문 목록을 불러옵니다.", storeOrderPage);
+            return ResponseEntity.ok(result);
+        
+    }
+    //배송중
+    //@PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @GetMapping("/storeorder/delivering")
+    public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheckd( Pageable pageable) {
+        log.info("가게 식자재, 비품 주문: {}");
+        log.debug("getStoreOrderCheck 메서드 호출됨");
+        
+            Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrdercheckd(pageable.getPageNumber(),pageable.getPageSize());
+    
+            // 로그 추가: 데이터 로드 성공 로그
+            log.debug("주문 목록 데이터 로드 성공: {}", storeOrderPage);
+    
+            Result<Page<StoreOrderCheckResponseDto>> result = new Result<>(HttpStatus.OK.value(), "식자재, 비품 주문 목록을 불러옵니다.", storeOrderPage);
+            return ResponseEntity.ok(result);
+        
+    }
+    //배송완료
+    //@PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @GetMapping("/storeorder/completed")
+    public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheckdk( Pageable pageable) {
+        log.info("가게 식자재, 비품 주문: {}");
+        log.debug("getStoreOrderCheck 메서드 호출됨");
+        
+            Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrdercheckdc(pageable.getPageNumber(),pageable.getPageSize());
     
             // 로그 추가: 데이터 로드 성공 로그
             log.debug("주문 목록 데이터 로드 성공: {}", storeOrderPage);
@@ -183,5 +281,17 @@ public class StoreOrderController implements StoreOrderControllerDocs {
 
         return managerUserDetails.getUsername();
     }
+
+    //매니저 로그인 id로 storeId 찾기
+    @GetMapping("/findStoreId/my")
+    public Long findStoreIdByManagerLoginId() {
+        String adminLoginId = getManagerLoginId();
+        // 관리자 로그인 ID를 사용하여 관련된 상점 조회
+        Store store = storeRepository.findByManagerLoginId(adminLoginId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 관리자에 대한 상점을 찾을 수 없습니다."));
+
+        return store.getId(); // 상점의 ID(storeId) 반환
+    }
+
 
 }

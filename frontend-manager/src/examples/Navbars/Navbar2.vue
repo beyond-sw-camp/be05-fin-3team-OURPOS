@@ -7,15 +7,16 @@ export default {
   }
 }
 </script>
+
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark navigation-bar">
+  <nav class="navigation-bar">
     <div class="mr-auto">
       <img class="POS-name" src ="@/assets/img/logos/ourpos.-removebg-preview.png" />
     </div>
     <div class="ml-auto">
-        <button class="btn btn-outline-light" @click="goBack">
-          <i class="mdi mdi-export"></i>뒤로가기
-        </button>
+      <button class="btn" @click="goBack">
+        <i class="mdi mdi-export"></i>뒤로가기
+      </button>
     </div>
   </nav>
 </template>
@@ -26,21 +27,29 @@ export default {
   justify-content: space-between;
   align-items: center;
   height: 12vh;
+  padding: 0 20px;
   margin-bottom: 10px;
-  background-color: #F9F0D3;
+  background-color: #344767;
 }
+
+.POS-name {
+  height: 12vh;
+}
+
 .btn {
   display: block;
-  width: 100%;
-  height: 8vh;
-  margin: 15px;
-  font-size: 1.25rem; /* Increased font size */
+  width: auto;
+  padding: 10px 20px;
+  font-size: 1.25rem;
   text-align: center;
   cursor: pointer;
   background-color: #344767;
   color: #E5E6D9;
-  border: #E5E6D9;
+  border: 1px solid #E5E6D9;
   border-radius: 10px;
 }
 
+.btn i {
+  margin-right: 5px;
+}
 </style>
