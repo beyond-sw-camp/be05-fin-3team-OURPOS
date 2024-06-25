@@ -1,4 +1,5 @@
 <template>
+  <div>
   <Navbar2/>
   <div>
     <div class="container mt-4">
@@ -120,6 +121,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
