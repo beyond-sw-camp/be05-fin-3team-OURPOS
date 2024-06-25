@@ -55,7 +55,7 @@
                     <h5 class="card-title">{{ item.storeCommName }}</h5>
                     <p class="card-text">{{ item.storeCommPrice }} 원</p>
                     
-                    <button class="btn btn-primary" @click="addToCart(item)">담기</button>
+                    <button class="btn btn-outline-warning" @click="addToCart(item)">담기</button>
                   </div>
                 </div>
               </div>
@@ -78,7 +78,7 @@
                     <h5 class="card-title">{{ item.storeCommName }}</h5>
                     <p class="card-text">{{ item.storeCommPrice }} 원</p>
                     
-                    <button class="btn btn-primary" @click="addToCart(item)">담기</button>
+                    <button class="btn btn-outline-secondary " @click="addToCart(item)">담기</button>
                   </div>
                 </div>
               </div>

@@ -172,6 +172,7 @@ export default {
       .then(response => {
         console.log(`Order ${orderId} status updated to ${newStatus}`);
         // Update local orders list or refetch orders
+        console.log('Response:', response.data);
         this.fetchOrders();
         this.closeModal();
       })
@@ -208,12 +209,12 @@ export default {
 }
 
 .pagination .page-item.active .page-link {
-  background-color: #76c250;
-  border-color: #76c250;
+  background-color: #333333;
+  border-color: #333333;
 }
 
 .pagination .page-link {
-  color: #76c250;
+  color: ##333333;
 }
 
 .pagination .page-link:hover {
