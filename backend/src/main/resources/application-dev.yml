@@ -27,4 +27,4 @@ logging.level:
   org.hibernate.orm.jdbc.bind: trace
 
 file:
-  dir: /Users/sangcheol/image/
+  dir: /home/ubuntu/images/
