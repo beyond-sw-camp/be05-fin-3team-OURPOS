@@ -85,7 +85,7 @@
             </div>
           </div>
 
-          <!-- Pagination Controls -->
+          <!-- 페이징 -->
           <div class="mt-3 d-flex justify-content-center">
             <button
               @click="fetchData(currentCategory, pageNumber - 1)"
@@ -113,7 +113,7 @@
           </div>
         </div>
 
-        <!-- Cart Section -->
+        <!-- 장바구니 -->
         <div class="col-lg-4">
           <div class="cart sticky-top mt-3">
             <h5>장바구니</h5>
@@ -153,7 +153,7 @@ export default {
       currentCategory: 'ingredients',
       pageNumber: 1,
       totalPages: 1,
-      pageSize: 5, // 페이지 크기를 정의합니다.
+      pageSize: 5, // 페이지 크기 정의
     };
   },
   computed: {
@@ -272,8 +272,8 @@ export default {
   padding: 15px;
   border-radius: 5px;
   background-color: #f9f9f9;
-  max-height: 400px; /* 장바구니 섹션의 최대 높이를 조정합니다 */
-  overflow-y: auto; /* 섹션이 넘칠 경우 스크롤바를 표시합니다 */
+  max-height: 400px; 
+  overflow-y: auto; /* 스크롤바 */
 }
 .sticky-top {
   position: sticky;

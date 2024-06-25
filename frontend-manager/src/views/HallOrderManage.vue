@@ -227,8 +227,8 @@ export default {
       }
     },
     goBack() {
-      // 뒤로 가기 버튼 클릭 시 이전 페이지로 이동
-      this.$router.go(-1); // Vue Router를 사용하여 이전 페이지로 이동합니다
+     
+      this.$router.go(-1); 
     }
 
   }

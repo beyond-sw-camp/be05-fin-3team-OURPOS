@@ -246,15 +246,14 @@ export default {
         });
 
         this.selectedOrderDetail = null;
-        this.fetchOrders(this.selectedTab,this.pageNumber, this.pageSize); // 페이지 번호와 사이즈를 함께 전달
+        this.fetchOrders(this.selectedTab,this.pageNumber, this.pageSize); 
       } catch (error) {
         this.error = `Error changing order status: ${error.message}`;
         console.error('Error changing order status:', error);
       }
     },
     goBack() {
-      // 뒤로 가기 버튼 클릭 시 이전 페이지로 이동
-      this.$router.go(-1); // Vue Router를 사용하여 이전 페이지로 이동합니다
+      this.$router.go(-1); 
     }
   }
 };

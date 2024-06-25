@@ -137,7 +137,7 @@ export default {
     },
     changeTab(tab) {
       this.activeTab = tab;
-      this.currentPage = 1; // Reset current page when tab changes
+      this.currentPage = 1; 
       this.fetchOrders();
     },
     goToPage(page) {
@@ -161,7 +161,7 @@ export default {
       this.showModal = true;
     },
     closeModal() {
-      this.selectedOrder = null; // Clear selectedOrder when modal is closed
+      this.selectedOrder = null; 
       this.showModal = false;
     },
     updateOrderStatus(orderId, newStatus) {
@@ -173,14 +173,14 @@ export default {
       })
       .then(response => {
         console.log(`Order ${orderId} status updated to ${newStatus}`);
-        // Update local orders list or refetch orders
+        // Update 
         console.log('Response:', response.data);
         this.fetchOrders();
         this.closeModal();
       })
       .catch(error => {
         console.error(`Error updating order ${orderId} status:`, error);
-        // Handle error
+        
       });
     }
   },
