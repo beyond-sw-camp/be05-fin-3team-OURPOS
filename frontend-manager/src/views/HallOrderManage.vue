@@ -1,7 +1,6 @@
 <template>
   <div>
   <Navbar2/>
-
     <div class="container mt-4">
       <h2>주문 목록</h2>
       <div class="row mb-3">
@@ -53,7 +52,7 @@
                   <div class="row">
                     <div class="col"><strong>주문 번호:</strong> {{ order.orderId }}</div>
                     <div class="col"><strong>주문 일시:</strong> {{ order.orderCreatedDateTime }}</div>
-                    <div class="col"><strong>경과 시간:</strong> {{ order.cookingTime }}</div>
+                    <div class="col"><strong>경과 시간:</strong> {{ order.formattedCookingTime }}</div>
                     <div class="col"><strong>주문 금액:</strong> {{ order.price }} 원</div>
                     <div class="col">
                       <a href="#" @click.prevent="showOrderDetail(order)">
@@ -228,8 +227,8 @@ export default {
       }
     },
     goBack() {
-      // 뒤로 가기 버튼 클릭 시 이전 페이지로 이동
-      this.$router.go(-1); // Vue Router를 사용하여 이전 페이지로 이동합니다
+     
+      this.$router.go(-1); 
     }
 
   }

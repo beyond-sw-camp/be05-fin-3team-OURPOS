@@ -1,5 +1,6 @@
 package com.ourpos.domain.order;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -116,5 +117,9 @@ public class DeliveryOrder extends Order {
             throw new IllegalArgumentException("대기중 또는 조리중인 주문만 배달 예상 시간을 설정할 수 있습니다.");
         }
         this.estimatedTime = estimatedTime;
+    }
+    //주문 경과 시간
+    public Duration getElapsedTime(){
+        return Duration.between(super.getCreatedDateTime(), LocalDateTime.now());
     }
 }

@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StoreCommRepository extends JpaRepository<StoreComm, Long> {
     Page<StoreComm> findAll(Pageable pageable);
+    Page<StoreComm> findByCategory(StoreCommCategory category, Pageable pageable);
 }

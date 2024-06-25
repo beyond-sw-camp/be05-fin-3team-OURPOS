@@ -34,8 +34,16 @@ public interface StoreOrderControllerDocs {
 
 	@Operation(summary = "비품, 식자재 목록 확인", description = "직영점의 사장은 주문 가능한 비품 및 식자재의 목록을 확인 할 수 있습니다.")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = StoreCommResponseDto.class)))
-	@GetMapping("/checkstorecomms")
-	public abstract Result<Page<StoreCommResponseDto>> checkStoreComms(Pageable pageable);
+	@GetMapping("/checkstorecomms/ingredients")
+	public Result<Page<StoreCommResponseDto>> getIngredients(Pageable pageable);
+	
+	@Operation(summary = "비품, 식자재 목록 확인", description = "직영점의 사장은 주문 가능한 비품 및 식자재의 목록을 확인 할 수 있습니다.")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = StoreCommResponseDto.class)))
+	@GetMapping("/checkstorecomms/supplies")
+	public Result<Page<StoreCommResponseDto>> getSupplies(Pageable pageable);
+	
+
+	
 
 	@Operation(summary = "비품, 식자재 주문", description = "직영점의 사장은 필요한 비품이나 식자재를 본사에 요청(주문) 할 수 있다.")
 	@Parameters(value = {
@@ -65,7 +73,23 @@ public interface StoreOrderControllerDocs {
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "식자재, 비품 주문 목록을 불러옵니다.", content = @Content(schema = @Schema(implementation = StoreOrderCheckResponseDto.class)))
 	})
-	public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheck(@PathVariable Long storeId, Pageable pageable);
+	public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheckw( Pageable pageable);
+
+	@Operation(summary = "비품, 식자재 주문 확인 (본사)", description = "본사의 관리자는 직영점에서 주문한 비품 및 식자재에 대한 주문 내역을 확인 할 수 있습니다.")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "식자재, 비품 주문 목록을 불러옵니다.", content = @Content(schema = @Schema(implementation = StoreOrderCheckResponseDto.class)))
+	})
+	public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderChecka( Pageable pageable);
+	@Operation(summary = "비품, 식자재 주문 확인 (본사)", description = "본사의 관리자는 직영점에서 주문한 비품 및 식자재에 대한 주문 내역을 확인 할 수 있습니다.")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "식자재, 비품 주문 목록을 불러옵니다.", content = @Content(schema = @Schema(implementation = StoreOrderCheckResponseDto.class)))
+	})
+	public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheckd( Pageable pageable);
+	@Operation(summary = "비품, 식자재 주문 확인 (본사)", description = "본사의 관리자는 직영점에서 주문한 비품 및 식자재에 대한 주문 내역을 확인 할 수 있습니다.")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "식자재, 비품 주문 목록을 불러옵니다.", content = @Content(schema = @Schema(implementation = StoreOrderCheckResponseDto.class)))
+	})
+	public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheckdk( Pageable pageable);
 
 	@Operation(summary="비품, 식자재 주문 상태 변경( WAITING -> ACCEPTED)")
 	@ApiResponses(value = {

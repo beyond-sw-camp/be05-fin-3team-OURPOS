@@ -1,5 +1,6 @@
 package com.ourpos.api.order.dto.response;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -25,6 +26,7 @@ public class DeliveryOrderResponseDto {
     private String riderMessage;
     private Integer tip;
     private Boolean disposableYn;
+    private String formattedCookingTime;
     private LocalTime orderEstimatedTime;
     private List<OrderDetailResponseDto> orderDetailResponseDtos;
 
@@ -40,9 +42,16 @@ public class DeliveryOrderResponseDto {
         this.riderMessage = order.getRiderMessage();
         this.tip = order.getTip();
         this.disposableYn = order.getDisposableYn();
+        this.formattedCookingTime = formatDuration(order.getElapsedTime());
         this.orderEstimatedTime = order.getEstimatedTime();
         this.orderDetailResponseDtos = order.getOrderDetails().stream()
             .map(OrderDetailResponseDto::new)
             .toList();
+    }
+    private String formatDuration(Duration duration) {
+        long hours = duration.toHours();
+        long minutes = duration.toMinutes() % 60;
+        long seconds = duration.getSeconds() % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 }
