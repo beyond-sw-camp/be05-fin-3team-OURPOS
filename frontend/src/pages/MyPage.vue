@@ -47,7 +47,7 @@
                   <v-list-item-subtitle>{{ userInfo.data.ageRange }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
-             
+
 
               <v-list-item>
                 <v-list-item-content class="text-center">
@@ -80,8 +80,8 @@ import axios from 'axios';
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080', 
-  withCredentials: true, 
+  baseURL: 'https://ourpos.org',
+  withCredentials: true,
 });
 
 export default {
@@ -97,13 +97,13 @@ export default {
 
     // 페이지가 마운트될 때 고객 정보를 요청
     this.fetchCustomerInfo();
-    
+
   },
   methods: {
     fetchCustomerInfo(){
-      
+
       // Axios를 사용하여 백엔드 API에 요청을 보냄
-      axiosInstance.get('http://localhost:8080/api/v1/customers/my')
+      axiosInstance.get('https://ourpos.org/api/v1/customers/my')
       .then(response => {
         this.userInfo = response.data;
         console.log("Error fetching customer info:",response.data);

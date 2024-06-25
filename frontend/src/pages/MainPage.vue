@@ -67,7 +67,7 @@ const deliveryOrder = () => {
 };
 
 const getMyInfo = async () => {
-  await axios.get('http://localhost:8080/api/v1/customers/my', {
+  await axios.get('https://ourpos.org/api/v1/customers/my', {
     withCredentials: true
   }).then((response) => {
     if (response.data.code === 200) {
@@ -79,7 +79,7 @@ const getMyInfo = async () => {
 };
 
 const logout = () => {
-  axios.post('http://localhost:8080/logout', {}, {
+  axios.post('https://ourpos.org/logout', {}, {
     withCredentials: true
   }).then(() => {
     localStorage.clear();
@@ -98,8 +98,8 @@ onMounted(() => {
 }
 
 .fill-width {
-  object-fit: cover; 
-  width: 100%; 
+  object-fit: cover;
+  width: 100%;
 }
 
 .v-carousel .v-btn--icon::before {
@@ -112,17 +112,17 @@ onMounted(() => {
 }
 
 .main-container {
-  background-color: rgba(255, 255, 255, 0.8); 
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   padding: 20px;
-  margin-top: 220px; 
+  margin-top: 220px;
 }
 
 .hero {
-  margin-top: 250px; 
-  text-align: center; 
-  color: white; 
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+  margin-top: 250px;
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .mt-5 {
@@ -135,8 +135,8 @@ onMounted(() => {
 }
 
 .no-scroll {
-  overflow: hidden; 
-  height: 100vh; 
+  overflow: hidden;
+  height: 100vh;
 }
 .bottom-nav{
   height: 65px;

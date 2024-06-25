@@ -16,27 +16,27 @@
       </v-row>
     </v-container>
   </template>
-  
+
   <script setup>
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import { Chart, registerables } from 'chart.js';
-  
+
   const sales = ref([]);
   const isLoading = ref(false);
   const myChart = ref(null);
   Chart.register(...registerables);
-  
-  
+
+
   const colorMap = {
     '맛집': 'rgba(255, 99, 132, 1)',
     '강남치킨': 'rgba(54, 162, 235, 1)',
   };
-  
+
   const fetchData = async () => {
     isLoading.value = true;
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/orders/monthly', {
+      const response = await axios.get('https://ourpos.org/api/v1/orders/monthly', {
       withCredentials: true
     });
       sales.value = response.data.data;
@@ -68,7 +68,7 @@
       isLoading.value = false;
     }
   };
-  
+
   const updateChart = (labels, datasets) => {
     const ctx = document.getElementById('monthAllChart').getContext('2d');
     if (myChart.value) {
@@ -97,21 +97,20 @@
       });
     }
   };
-  
+
   onMounted(() => {
     fetchData();
   });
   </script>
-  
+
   <style scoped>
   .canvas-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   .canvas {
     height: 300px;
   }
   </style>
-  

@@ -119,7 +119,7 @@ import router from "@/router";
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://ourpos.org',
   withCredentials: true, // 쿠키를 전송하기 위해 필요
 });
 
@@ -186,7 +186,7 @@ export default {
   methods: {
     async loadAddresses() {
       try {
-        const response = await axiosInstance.get('http://localhost:8080/api/v1/customers/my/addresses');
+        const response = await axiosInstance.get('https://ourpos.org/api/v1/customers/my/addresses');
         const addresses = response.data.data;
 
         // 응답 데이터가 배열인지 확인
@@ -218,7 +218,7 @@ export default {
         const addressId = this.subAddresses[index].customerAddressId;
 
         // 서브 주소를 기본 주소로 변경
-        await axiosInstance.put(`http://localhost:8080/api/v1/customers/addresses/${addressId}/default`);
+        await axiosInstance.put(`https://ourpos.org/api/v1/customers/addresses/${addressId}/default`);
 
         // 기존의 기본주소를 서브주소 리스트에 추가
         if (this.mainAddress.customerAddressId) {
@@ -248,7 +248,7 @@ export default {
     async saveSubAddress() {
       try {
         const addressId = this.subAddresses[this.editIndex].customerAddressId;
-        await axiosInstance.put(`http://localhost:8080/api/v1/customers/addresses/${addressId}`, this.tempSubAddress);
+        await axiosInstance.put(`https://ourpos.org/api/v1/customers/addresses/${addressId}`, this.tempSubAddress);
         this.subAddresses[this.editIndex] = {...this.tempSubAddress};
         this.dialogSubAddress = false;
       } catch (error) {
@@ -257,7 +257,7 @@ export default {
     },
     async deleteSubAddress(addressId) {
       try {
-        await axiosInstance.delete(`http://localhost:8080/api/v1/customers/addresses/${addressId}`);
+        await axiosInstance.delete(`https://ourpos.org/api/v1/customers/addresses/${addressId}`);
         this.subAddresses = this.subAddresses.filter(address => address.customerAddressId !== addressId);
       } catch (error) {
         console.error('Error deleting sub address:', error);
@@ -290,7 +290,7 @@ export default {
       }
       try {
         if (this.newSubAddress.addressBase) {
-          await axiosInstance.post('http://localhost:8080/api/v1/customers/addresses', this.newSubAddress);
+          await axiosInstance.post('https://ourpos.org/api/v1/customers/addresses', this.newSubAddress);
           await this.loadAddresses();
           this.dialogAddSubAddress = false;
         }
