@@ -51,7 +51,7 @@ const selectedCategory = ref(null);
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/categories');
+    const response = await axios.get('https://ourpos.org/api/v1/categories');
     categories.value = response.data.data.map(category => category.name);
     selectedCategory.value = categories.value[0]; // Set default selected category
     filterMenus(selectedCategory.value);
@@ -65,7 +65,7 @@ const filteredMenus = ref([]);
 
 const fetchMenus = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/menus/all');
+    const response = await axios.get('https://ourpos.org/api/v1/menus/all');
     menus.value = response.data.data.map(menu => ({
       id: menu.id,
       name: menu.name,

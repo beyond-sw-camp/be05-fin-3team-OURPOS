@@ -30,7 +30,7 @@
                     size="110"
                     class="my-2 ml-2"
                   >
-                    <v-img :src="'http://localhost:8080/images/' + store.pictureUrl"></v-img>
+                    <v-img :src="'https://ourpos.org/images/' + store.pictureUrl"></v-img>
                   </v-avatar>
                 </v-col>
                 <v-col>
@@ -54,7 +54,7 @@
       <v-card>
         <v-card-title>{{ selectedStore.storeName }}</v-card-title>
         <v-card-subtitle>{{ selectedStore.addressResponseDto.addressBase }}</v-card-subtitle>
-        <v-img :src="'http://localhost:8080/images/' + selectedStore.pictureUrl"></v-img>
+        <v-img :src="'https://ourpos.org/images/' + selectedStore.pictureUrl"></v-img>
         <v-card-text>
           <p><FontAwesomeIcon :icon="faPhone"/> 전화번호: {{ selectedStore.storePhone }}</p>
           <p><FontAwesomeIcon :icon="faClock"/> 영업 시간: {{ selectedStore.openTime }} - {{ selectedStore.closeTime }}</p>
@@ -142,7 +142,7 @@ const findItems = async (latitude, longitude) => {
   }
 
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/stores/hall', {
+    const response = await axios.get('https://ourpos.org/api/v1/stores/hall', {
       withCredentials: true,
       params: {
         latitude: latitude,

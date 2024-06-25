@@ -41,12 +41,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         if (customCustomerDetails.isNewUser() && role.equals("ROLE_USER")) {
             response.addCookie(createCookie(token));
-            response.sendRedirect("http://localhost:3000/signup-success");
+            response.sendRedirect("https://m.ourpos.org/signup-success");
             return;
         }
 
         response.addCookie(createCookie(token));
-        response.sendRedirect("http://localhost:3000/");
+        response.sendRedirect("https://m.ourpos.org");
     }
 
     private Cookie createCookie(String value) {
