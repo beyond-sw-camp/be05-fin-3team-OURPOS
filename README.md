@@ -103,6 +103,7 @@
 ><details>
 ><summary><h3>✴️ ourpos 프로그램 사양서 (API 명세서)</h3></summary>
 >[모바일 어플리케이션, 키오스크 API명세서 Link] (https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit#gid=1805938231)
+
 >[점주용 POS, 본사용 POS API명세서 Link] (https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit#gid=1026222313)
 ></details>
 
