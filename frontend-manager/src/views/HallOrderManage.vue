@@ -107,12 +107,12 @@
                 <!-- 추가적인 세부 정보 표시 -->
               </div>
               <!-- 주문 상태 변경 버튼 추가 -->
-              <div class="mt-3 text-center" v-if="selectedOrderDetail.hallOrderStatus === 'WAITING'">
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'accept')" class="btn btn-success btn-sm">조리시작</button>
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'cancel')" class="btn btn-warning btn-sm">주문취소</button>
+              <div class="mt-3" v-if="selectedOrderDetail.hallOrderStatus === 'WAITING'">
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'accept')" class="btn btn-success btn-sm">COOKING</button>
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'cancel')" class="btn btn-warning btn-sm">CANCEL</button>
               </div>
-              <div class="mt-3 text-center" v-if="selectedOrderDetail.hallOrderStatus === 'COOKING'">
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'complete')" class="btn btn-primary btn-sm">조리완료</button>
+              <div class="mt-3" v-if="selectedOrderDetail.hallOrderStatus === 'COOKING'">
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'complete')" class="btn btn-primary btn-sm">COMPLETE</button>
               </div>
             </div>
           </div>
