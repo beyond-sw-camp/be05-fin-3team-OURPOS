@@ -1,5 +1,4 @@
 <template>
-
   <div class="row mb-4 col-lg-12">
     <div class="col-lg-12 position-relative z-index-2">
       <div class="row mt-4">
@@ -14,16 +13,14 @@
           </div>
           <button @click="openPostcode">주소 선택</button>
           <div v-if="address">선택한 주소: {{ address }}</div>
+
           <button @click="getCode">행정동 코드 받기</button>
 
+          <div v-if="isServiceAvailable">
+            서비스 이용 가능 지역입니다.
+            <a :href="downloadUrl">Download PDF</a>
+          </div>
 
-          <a :href="downloadUrl()">Download PDF</a>
-
-          <project-card title="Current States Of Franchise"
-                        description="<i class='fa fa-check text-info' aria-hidden='true'></i> <span class='font-weight-bold ms-1'>5 franchies</span> real time"
-                        :headers="['Branch', ' ', 'Address']"
-                        :projects="franchises"
-          />
         </div>
         <div class="col-lg-5 col-md-6 mt-4">
           <h5>입점 하고자 하는 건물의 주소 선택 후, 예상 매출액 다운로드 시 입점 하고자 하는 건물의 예상 매출액을 분석하여 다음과 같은 pdf로 제공됩니다.</h5>
@@ -38,54 +35,33 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup>
-
 import ChartHolderCard from "@/views/components/ChartHolderCard.vue";
 import { ref, onMounted } from 'vue';
 import MiniStatisticsCard from "@/views/components/MiniStatisticsCard.vue";
 import axios from "axios";
-import ProjectCard from "@/views/components/ProjectCard.vue";
+import Papa from 'papaparse';
+
 const address = ref('');
 const code = ref('');
 const codes = ref([]);
-
+const csvData = ref([]);
+const isServiceAvailable = ref(false);
 const isLoading = ref(false);
 
-const downloadUrl = () => {
-  return `http://127.0.0.1:5000/api/v1/calculator?dong_code=${encodeURIComponent(code.value)}`;
+const downloadUrl = `http://127.0.0.1:5000/api/v1/calculator?dong_code=${encodeURIComponent(code.value)}`;
+
+const loadCsvData = async () => {
+  const response = await axios.get('/filtered_sample_rfr_all.csv');
+  Papa.parse(response.data, {
+    header: true,
+    complete: (results) => {
+      csvData.value = results.data.map(row => row['행정동_코드']);
+    }
+  });
 };
-
-
-const franchises = ref([
-  {
-    logo: ' ',
-    title: "강남역점",
-    address: "서울 특별시 서초구 강남대로 435",
-  },
-  {
-    logo: ' ',
-    title: "고속터미널점",
-    address: "서울특별시 서초구 신반포로 176",
-  },{
-    logo: ' ',
-    title: '서울역점',
-    address: '서울특별시 중구 한강대로 405 2층',
-  },
-  {
-    logo: ' ',
-    title: '여의도점',
-    address: '서울특별시 영등포구 여의대로 108 더현대 서울 B1',
-  },
-  {
-    logo: ' ',
-    title: '신대방삼거리점',
-    address: '서울특별시 동작구 보라매로 87',
-  },
-]);
-
 
 const getCode = async () => {
   isLoading.value = true;
@@ -105,18 +81,21 @@ const getCode = async () => {
     console.log(response.data);
 
     codes.value = response.data.data;
-    codes.value.forEach(record =>{
-      if(record.region_type == 'H'){
+    codes.value.forEach(record => {
+      if (record.region_type == 'H') {
         code.value = record.code.slice(0, -2);
       }
     });
     console.log(code.value);
+
+    isServiceAvailable.value = csvData.value.includes(code.value);
   } catch (error) {
     console.error('데이터를 가져오는 중 에러가 발생했습니다:', error);
   } finally {
     isLoading.value = false;
   }
 };
+
 const loadDaumPostcodeScript = () => {
   return new Promise((resolve, reject) => {
     if (document.getElementById('daum-postcode-script')) {
@@ -151,12 +130,12 @@ onMounted(() => {
   loadDaumPostcodeScript().catch((error) => {
     console.error('Failed to load Daum Postcode script:', error);
   });
+  loadCsvData();
 });
 </script>
 
-
 <style scoped>
- img {
+img {
   display: flex;
   justify-content: center; /* 수평 정렬 */
   align-items: center; /* 수직 정렬 */
