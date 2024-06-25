@@ -64,7 +64,9 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">주문 상세 정보</h5>
-            <button type="button" class="close" @click="closeModal">&times;</button>
+            <button type="button" class="close" @click="closeModal">
+            <i class="fas fa-times"></i>
+          </button>
           </div>
           <div class="modal-body" v-if="selectedOrder">
             <p><strong>상품명:</strong> {{ selectedOrder.storeCommName }}</p>
@@ -214,7 +216,7 @@ export default {
 }
 
 .pagination .page-link {
-  color: ##333333;
+  color: #333333;
 }
 
 .pagination .page-link:hover {

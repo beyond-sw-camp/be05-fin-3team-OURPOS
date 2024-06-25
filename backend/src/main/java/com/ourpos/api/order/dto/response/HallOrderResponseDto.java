@@ -22,7 +22,7 @@ public class HallOrderResponseDto {
     private LocalDateTime orderCreatedDateTime;
     private HallStatus hallOrderStatus;
     private Boolean orderTakeoutYn;
-    private Duration CookingTime;
+    private String formattedCookingTime;
     private List<OrderDetailResponseDto> orderDetailResponseDtos = new ArrayList<>();
     
 
@@ -34,9 +34,15 @@ public class HallOrderResponseDto {
         this.orderCreatedDateTime = order.getCreatedDateTime();
         this.hallOrderStatus = order.getStatus();
         this.orderTakeoutYn = order.getOrderTakeoutYn();
-        this.CookingTime = order.getElapsedTime();
+        this.formattedCookingTime = formatDuration(order.getElapsedTime());
         this.orderDetailResponseDtos = order.getOrderDetails().stream()
             .map(OrderDetailResponseDto::new)
             .toList();
+    }
+    private String formatDuration(Duration duration) {
+        long hours = duration.toHours();
+        long minutes = duration.toMinutes() % 60;
+        long seconds = duration.getSeconds() % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 }
