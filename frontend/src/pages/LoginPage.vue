@@ -2,12 +2,12 @@
   <v-container>
     <!--    <HeaderPage title="로그인"/>-->
     <v-card-text class="mx-auto pl-12 pr-12" max-width="400" rounded="lg">
-      <v-img class="mx-auto my-8" max-width="228" src="../img/Five-Guys-logo.png"></v-img>
+      <v-img class="mx-auto my-8" max-width="228" src="/public/img/Five-Guys-Logo.png"></v-img>
 
       <v-img
         class="mx-auto my-8 kakao-login-button"
         width="228"
-        src="../img/login_kakao.png"
+        src="/public/img/login_kakao.png"
         @click="onKakaoLogin"
         @mousedown="scaleUp"
         @mouseup="scaleDown"
@@ -17,7 +17,7 @@
       <v-img
         class="mx-auto my-8 naver-login-button"
         width="228"
-        src="../img/login_naver_2.png"
+        src="/public/img/login_naver_2.png"
         @click="onNaverLogin"
         @mousedown="scaleUp"
         @mouseup="scaleDown"
