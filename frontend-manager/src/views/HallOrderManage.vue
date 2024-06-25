@@ -1,6 +1,6 @@
 <template>
-  <div>
   <Navbar2/>
+  <div>
     <div class="container mt-4">
       <h2>주문 목록</h2>
       <div class="row mb-3">

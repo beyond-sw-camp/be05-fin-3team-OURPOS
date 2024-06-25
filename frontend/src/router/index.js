@@ -26,7 +26,6 @@ import MenuStatusManagePage from '@/pages/MenuStatusManagePage.vue';
 import HeadOfficeLandingPage from '@/pages/HeadOfficeLandingPage.vue';
 import AdminPage from "@/pages/AdminPage.vue";
 import {checkUserRole} from "@/utils/auth";
-import AdminLoginPage from "@/pages/AdminLoginPage.vue";
 import SignupSuccess from "@/pages/SignupSuccess.vue";
 import MenuManagePage from '@/pages/MenuManagePage.vue';
 import MenuOptionGroupManagePage from '@/pages/MenuOptionGroupManagePage.vue';
@@ -131,11 +130,6 @@ const router = createRouter({
       path: '/admin/storeLanding/menuStatusManage',
       component: MenuStatusManagePage,
       // meta: { requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
-    },
-    {
-      name: 'admin-login',
-      path: '/admin/login',
-      component: AdminLoginPage
     },
     {
       name: 'admin',
