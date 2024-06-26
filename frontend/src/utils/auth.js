@@ -1,5 +1,3 @@
-// utils/auth.js
-
 // JWT 토큰 디코딩 함수
 export function parseJwt(token) {
   try {
@@ -17,20 +15,14 @@ export function parseJwt(token) {
 
 // 쿠키에서 JWT 토큰을 가져오는 함수
 export function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    const cookies = document.cookie.split(';');
-    console.log('All cookies:', cookies); // 모든 쿠키를 출력
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
   }
-  console.log(`Cookie value for ${name}:`, cookieValue); // 찾은 쿠키 값을 출력
-  return cookieValue;
+  return null;
 }
 
 // 토큰의 만료 여부를 확인하는 함수
@@ -47,7 +39,7 @@ export function isTokenExpired(token) {
 // 페이지 접근 검증 함수
 export function checkUserRole(requiredRoles) {
   const token = getCookie('Authorization');
-  console.log('token:', token); // 토큰 값을 출력
+  console.log('Cookie value for Authorization:', token); // 쿠키 값을 출력
   if (token) {
     if (isTokenExpired(token)) {
       console.warn('Token expired');
