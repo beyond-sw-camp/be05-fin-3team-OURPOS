@@ -22,7 +22,7 @@
     L.geoJson(boundaryData).addTo(map);
 
     // Fetching location data with frequency information
-    const locationResponse = await axios.get('https://ourpos.org/api/v1/orders/delivery/frequency?storeId=1');
+    const locationResponse = await axios.get('https://api.ourpos.org/api/v1/orders/delivery/frequency?storeId=1');
     const locationData = locationResponse.data.data;
 
     // Extracting locations with frequency information

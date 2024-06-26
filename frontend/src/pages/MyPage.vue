@@ -80,7 +80,7 @@ import axios from 'axios';
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-  baseURL: 'https://ourpos.org',
+  baseURL: 'https://api.ourpos.org',
   withCredentials: true,
 });
 
@@ -103,7 +103,7 @@ export default {
     fetchCustomerInfo(){
 
       // Axios를 사용하여 백엔드 API에 요청을 보냄
-      axiosInstance.get('https://ourpos.org/api/v1/customers/my')
+      axiosInstance.get('https://api.ourpos.org/api/v1/customers/my')
       .then(response => {
         this.userInfo = response.data;
         console.log("Error fetching customer info:",response.data);

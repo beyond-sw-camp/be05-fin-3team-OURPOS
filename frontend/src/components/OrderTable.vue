@@ -103,9 +103,9 @@
       },
       async updateOrderStatus(action) {
         const actions = {
-          accepted: `https://ourpos.org/api/v1/storeorder/${this.selectedOrder.storeOrderId}/accepted`,
-          delivering: `https://ourpos.org/api/v1/storeorder/${this.selectedOrder.storeOrderId}/delivering`,
-          complete: `https://ourpos.org/api/v1/storeorder/${this.selectedOrder.storeOrderId}/complete`
+          accepted: `https://api.ourpos.org/api/v1/storeorder/${this.selectedOrder.storeOrderId}/accepted`,
+          delivering: `https://api.ourpos.org/api/v1/storeorder/${this.selectedOrder.storeOrderId}/delivering`,
+          complete: `https://api.ourpos.org/api/v1/storeorder/${this.selectedOrder.storeOrderId}/complete`
         };
 
         try {

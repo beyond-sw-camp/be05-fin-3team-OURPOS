@@ -130,7 +130,7 @@ export default {
             storeId: 1, // 예시로 1로 설정합니다.
             storeOrderDetailQuantity: item.quantity
           };
-          return axios.post('https://ourpos.org/api/v1/storecomms/order', orderData);
+          return axios.post('https://api.ourpos.org/api/v1/storecomms/order', orderData);
         });
 
         await Promise.all(promises);
@@ -149,7 +149,7 @@ export default {
     },
     async fetchStoreComms() {
       try {
-        const response = await axios.get('https://ourpos.org/api/v1/storecomms');
+        const response = await axios.get('https://api.ourpos.org/api/v1/storecomms');
         const items = response.data.data;
 
         this.foodItems = items.filter(item => item.storeCommCategory === 'INGREDIENT');
