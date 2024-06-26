@@ -43,7 +43,7 @@ const totalPages = ref(0);
 
 const fetchIncomingStock = async (page) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/v1/store/incoming-stock/my?page=${page}`, {
+    const response = await fetch(`https://api.ourpos.org/api/v1/store/incoming-stock/my?page=${page}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')

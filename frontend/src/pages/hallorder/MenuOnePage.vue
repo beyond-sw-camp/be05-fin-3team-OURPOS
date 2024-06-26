@@ -6,7 +6,7 @@
       <v-col cols="12" md="6" class="text-center">
         <v-img
           class="mx-auto my-4"
-          :src="'http://localhost:8080/images/' + menu.pictureUrl"
+          :src="'https://api.ourpos.org/images/' + menu.pictureUrl"
           max-height="228"
         ></v-img>
         <h1 class="mb-2">{{ menu.name }}</h1>
@@ -126,7 +126,7 @@ const optionTotalPrice = ref(0);
 
 const findMenu = async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/v1/menus/${menuId}`, {
+    const response = await axios.get(`https://api.ourpos.org/api/v1/menus/${menuId}`, {
       withCredentials: true
     });
     menu.value = response.data.data;
@@ -139,7 +139,7 @@ const findMenu = async () => {
 
 const findMenuOptionGroups = async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/v1/categories/${menu.value.categoryId}`, {
+    const response = await axios.get(`https://api.ourpos.org/api/v1/categories/${menu.value.categoryId}`, {
       withCredentials: true
     });
     menuOptionGroups.value = response.data.data.menuOptionGroupResponseDtos;

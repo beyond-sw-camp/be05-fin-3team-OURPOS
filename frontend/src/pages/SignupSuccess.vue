@@ -41,7 +41,7 @@ import confetti from 'canvas-confetti';
 const confettiCanvas = ref(null);
 
 const navigateHome = () => {
-  window.location.href = 'http://localhost:3000';
+  window.location.href = 'https://m.ourpos.org';
 };
 
 const launchConfetti = () => {

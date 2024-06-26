@@ -61,7 +61,7 @@ public class SecurityConfig {
 
                 CorsConfiguration configuration = new CorsConfiguration();
 
-                configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3001"));
+                configuration.setAllowedOrigins(List.of("https://m.ourpos.org", "https://admin.ourpos.org"));
                 configuration.setAllowedMethods(Collections.singletonList("*"));
                 configuration.setAllowCredentials(true);
                 configuration.setAllowedHeaders(Collections.singletonList("*"));

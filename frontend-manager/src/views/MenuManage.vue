@@ -318,7 +318,7 @@ const filterMenus = (category) => {
 
 // Helper method to get full URL of menu image
 const getMenuImageUrl = (imagePath) => {
-  return `http://localhost:8080/images/${imagePath}`;
+  return `https://api.ourpos.org/images/${imagePath}`;
 };
 
 
@@ -341,7 +341,7 @@ const addCategory = async () => {
   if (errorMessage.value)  return;
   try {
     const response = await axios.post(
-      'http://localhost:8080/api/v1/categories',
+      'https://api.ourpos.org/api/v1/categories',
       {
         name: newCategoryName.value,
       },
@@ -375,7 +375,7 @@ const editCategory = async () => {
       console.error('Category ID not found');
       return;
     }
-    const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/update`, {
+    const response = await axios.put(`https://api.ourpos.org/api/v1/categories/${categoryId}/update`, {
       name: updatedCategoryName.value
     },
     {
@@ -406,7 +406,7 @@ const deleteCategory = async () => {
       console.error('Category ID not found');
       return;
     }
-    const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/delete`,{},{
+    const response = await axios.put(`https://api.ourpos.org/api/v1/categories/${categoryId}/delete`,{},{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': localStorage.getItem('token')
@@ -439,7 +439,7 @@ const addMenu = async () => {
   formData.append('multipartFile', newMenuFile.value);
 
   try {
-    const response = await axios.post('http://localhost:8080/api/v1/menus', formData, {
+    const response = await axios.post('https://api.ourpos.org/api/v1/menus', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': localStorage.getItem('token')
@@ -478,7 +478,7 @@ const updateMenu = async () => {
   };
 
   try {
-    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/update`, menuUpdateDto, {
+    const response = await axios.put(`https://api.ourpos.org/api/v1/menus/${selectedMenu.value.id}/update`, menuUpdateDto, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -497,7 +497,7 @@ const updateMenu = async () => {
 
 const deleteMenu = async () => {
   try {
-    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/delete`,{},{
+    const response = await axios.put(`https://api.ourpos.org/api/v1/menus/${selectedMenu.value.id}/delete`,{},{
       headers: {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
@@ -535,7 +535,7 @@ const handleFileChange = (event) => {
 const fetchCategoriesAndMenus = async () => {
   try {
     // Fetch categories
-    const categoriesResponse = await axios.get('http://localhost:8080/api/v1/categories', {
+    const categoriesResponse = await axios.get('https://api.ourpos.org/api/v1/categories', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -548,7 +548,7 @@ const fetchCategoriesAndMenus = async () => {
     categoryNames.value = categories.value.map(category => category.name);
 
     // Fetch menus
-    const menusResponse = await axios.get('http://localhost:8080/api/v1/menus/all', {
+    const menusResponse = await axios.get('https://api.ourpos.org/api/v1/menus/all', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')

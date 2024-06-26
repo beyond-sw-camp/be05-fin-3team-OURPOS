@@ -161,7 +161,7 @@ export default {
       }
 
       try {
-        const response = await axios.get(`http://localhost:8080/api/v1/orders/hall/my`, {
+        const response = await axios.get(`https://api.ourpos.org/api/v1/orders/hall/my`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `${token}` 
@@ -204,7 +204,7 @@ export default {
         return;
       }
 
-      let url = `http://localhost:8080/api/v1/orders/hall/${orderId}`;
+      let url = `https://api.ourpos.org/api/v1/orders/hall/${orderId}`;
       if (action === 'accept') {
         url += '/accept';
       } else if (action === 'cancel') {

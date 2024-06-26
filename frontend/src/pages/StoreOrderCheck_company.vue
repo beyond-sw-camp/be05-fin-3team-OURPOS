@@ -1,5 +1,5 @@
 <template>
-  
+
   <v-container>
     <v-tabs v-model="tab">
       <v-tab v-for="status in statuses" :key="status.value">
@@ -12,7 +12,7 @@
       </v-tab-item>
     </v-tabs-items>
   </v-container>
-  
+
 </template>
 
 <script>
@@ -45,7 +45,7 @@ export default {
   methods: {
     async fetchOrders() {
       try {
-        const response = await fetch('http://localhost:8080/api/v1/storeorder/1/check', {credentials: 'include'}); 
+        const response = await fetch('https://api.ourpos.org/api/v1/storeorder/1/check', {credentials: 'include'});
         const result = await response.json();
         this.orders = result.data;
       } catch (error) {

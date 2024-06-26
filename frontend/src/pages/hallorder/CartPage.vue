@@ -25,7 +25,7 @@
               <v-row no-gutters>
                 <v-col cols="auto">
                   <v-avatar size="64" class="mx-2 my-2">
-                    <v-img :src="'http://localhost:8080/images/' + orderDetail.menuPictureUrl" cover></v-img>
+                    <v-img :src="'https://api.ourpos.org/images/' + orderDetail.menuPictureUrl" cover></v-img>
                   </v-avatar>
                 </v-col>
                 <v-col>
