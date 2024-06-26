@@ -121,7 +121,7 @@ export default {
   methods: {
     fetchOrders() {
       this.loading = true;
-      axios.get(`https://api.ourpos.org/api/v1/storeorder/${this.activeTab.toLowerCase()}?page=${this.currentPage - 1}&size=${this.pageSize}`, {
+      axios.get(`https://api.ourpos.org/api/v1/storeorder/${this.activeTab.toLowerCase()}?page=${this.currentPage - 1}&size=${this.pageSize}&sort=storeOrderDate,desc`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': localStorage.getItem('token')
