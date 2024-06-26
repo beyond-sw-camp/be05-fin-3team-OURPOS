@@ -1,5 +1,5 @@
 <template>
-  <v-app class="no-scroll">
+  <v-app>
     <v-app-bar app class="transparent-app-bar">
       <v-spacer></v-spacer>
       <v-menu offset-y>
@@ -134,10 +134,7 @@ onMounted(() => {
   box-shadow: none;
 }
 
-.no-scroll {
-  overflow: hidden; 
-  height: 100vh; 
-}
+
 .bottom-nav{
   height: 65px;
   flex-shrink: 0;

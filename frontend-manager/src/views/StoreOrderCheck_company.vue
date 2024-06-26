@@ -1,6 +1,8 @@
+storeordercheck_company
+
 <template>
-  <div class="container mt-4">
-    <h1 class="mb-4">비품, 식자재 관리</h1>
+  <div class="container mt-5">
+    <h2>비품, 식자재 관리</h2>
     
     <!-- 탭 네비게이션 -->
     <ul class="nav nav-tabs">

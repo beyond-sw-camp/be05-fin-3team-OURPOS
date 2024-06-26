@@ -23,7 +23,7 @@
             :aria-controls="''"
             v-bind:collapse="false"
             collapseRef="supplies"
-            navText="비품/식자재 관리"
+            navText="비품/식자재 주문 관리"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">receipt_long</i>
@@ -36,7 +36,7 @@
           :aria-controls="''"
           v-bind:collapse="false"
           collapseRef="menu-manage"
-          navText="메뉴 관리"
+          navText="메뉴/카테고리 관리"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">table_view</i>
@@ -49,7 +49,7 @@
           :aria-controls="''"
           v-bind:collapse="false"
           collapseRef="menu-option-group-manage"
-          navText="메뉴 옵션 관리"
+          navText="메뉴 옵션 및 옵션 그룹 관리"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">table_view</i>
@@ -62,7 +62,7 @@
           :aria-controls="''"
           v-bind:collapse="false"
           collapseRef="infra"
-          navText="신규 매출 전망"
+          navText="신규 점포 예상 매출액 산출"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5"
