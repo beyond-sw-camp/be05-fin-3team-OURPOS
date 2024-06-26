@@ -205,7 +205,7 @@ import axios from "axios";
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-  baseURL: "https://ourpos.org",
+  baseURL: "https://api.ourpos.org",
   withCredentials: true, // 쿠키를 전송하기 위해 필요
 });
 
@@ -281,7 +281,7 @@ export default {
     async loadAddresses() {
       try {
         const response = await axiosInstance.get(
-          "https://ourpos.org/api/v1/customers/my/addresses"
+          "https://api.ourpos.org/api/v1/customers/my/addresses"
         );
         const addresses = response.data.data;
 
@@ -316,7 +316,7 @@ export default {
 
         // 서브 주소를 기본 주소로 변경
         await axiosInstance.put(
-          `https://ourpos.org/api/v1/customers/addresses/${addressId}/default`
+          `https://api.ourpos.org/api/v1/customers/addresses/${addressId}/default`
         );
 
         // 기존의 기본주소를 서브주소 리스트에 추가
@@ -347,7 +347,7 @@ export default {
       try {
         const addressId = this.subAddresses[this.editIndex].customerAddressId;
         await axiosInstance.put(
-          `https://ourpos.org/api/v1/customers/addresses/${addressId}`,
+          `https://api.ourpos.org/api/v1/customers/addresses/${addressId}`,
           this.tempSubAddress
         );
         this.subAddresses[this.editIndex] = { ...this.tempSubAddress };
@@ -359,7 +359,7 @@ export default {
     async deleteSubAddress(addressId) {
       try {
         await axiosInstance.delete(
-          `https://ourpos.org/api/v1/customers/addresses/${addressId}`
+          `https://api.ourpos.org/api/v1/customers/addresses/${addressId}`
         );
         this.subAddresses = this.subAddresses.filter(
           (address) => address.customerAddressId !== addressId
@@ -395,7 +395,7 @@ export default {
       try {
         if (this.newSubAddress.addressBase) {
           await axiosInstance.post(
-            "https://ourpos.org/api/v1/customers/addresses",
+            "https://api.ourpos.org/api/v1/customers/addresses",
             this.newSubAddress
           );
           await this.loadAddresses();

@@ -67,7 +67,7 @@ const deliveryOrder = () => {
 };
 
 const getMyInfo = async () => {
-  await axios.get('https://ourpos.org/api/v1/customers/my', {
+  await axios.get('https://api.ourpos.org/api/v1/customers/my', {
     withCredentials: true
   }).then((response) => {
     if (response.data.code === 200) {
@@ -79,7 +79,7 @@ const getMyInfo = async () => {
 };
 
 const logout = () => {
-  axios.post('https://ourpos.org/logout', {}, {
+  axios.post('https://api.ourpos.org/logout', {}, {
     withCredentials: true
   }).then(() => {
     localStorage.clear();

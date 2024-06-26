@@ -112,7 +112,7 @@ import BottomNav from "@/components/BottomNav.vue";
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://ourpos.org',
+  baseURL: 'https://api.ourpos.org',
   withCredentials: true,
 });
 

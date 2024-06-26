@@ -97,7 +97,7 @@
     methods: {
       async fetchOrders() {
         try {
-          const response = await axios.get('https://ourpos.org/api/v1/storeorder/1/check');
+          const response = await axios.get('https://api.ourpos.org/api/v1/storeorder/1/check');
           this.orders = response.data.data;
         } catch (error) {
           console.error('Failed to fetch orders:', error);
@@ -105,7 +105,7 @@
       },
       async cancelOrder(storeOrderId) {
         try {
-          const response = await axios.delete(`https://ourpos.org/api/v1/storeorder/1`);
+          const response = await axios.delete(`https://api.ourpos.org/api/v1/storeorder/1`);
           if (response.status === 200) {
             this.orders = this.orders.filter(order => order.storeOrderId !== storeOrderId);
             alert('주문이 성공적으로 취소되었습니다.');
@@ -117,7 +117,7 @@
       },
       async viewOrderDetails(storeOrderId) {
         try {
-          const response = await axios.get(`https://ourpos.org/api/v1/storeorder/${storeOrderId}`);
+          const response = await axios.get(`https://api.ourpos.org/api/v1/storeorder/${storeOrderId}`);
           this.selectedOrderDetails = response.data;
           this.orderDetailDialog = true;
         } catch (error) {

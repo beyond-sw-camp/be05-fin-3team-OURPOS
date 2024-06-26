@@ -45,7 +45,7 @@ export default {
   methods: {
     async fetchOrders() {
       try {
-        const response = await fetch('https://ourpos.org/api/v1/storeorder/1/check', {credentials: 'include'});
+        const response = await fetch('https://api.ourpos.org/api/v1/storeorder/1/check', {credentials: 'include'});
         const result = await response.json();
         this.orders = result.data;
       } catch (error) {

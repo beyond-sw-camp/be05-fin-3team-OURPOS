@@ -31,7 +31,7 @@
   const fetchData = async () => {
     isLoading.value = true;
     try {
-      const response = await axios.get('https://ourpos.org/api/v1/orders/meal-time', {
+      const response = await axios.get('https://api.ourpos.org/api/v1/orders/meal-time', {
       withCredentials: true
     });
       sales.value = response.data.data;

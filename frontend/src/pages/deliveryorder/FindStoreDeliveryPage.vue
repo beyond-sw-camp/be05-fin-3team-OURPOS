@@ -46,7 +46,7 @@
                     size="110"
                     class="my-2 ml-2"
                   >
-                    <v-img :src="'https://ourpos.org/images/' + store.pictureUrl"></v-img>
+                    <v-img :src="'https://api.ourpos.org/images/' + store.pictureUrl"></v-img>
                   </v-avatar>
                 </v-col>
                 <v-col>
@@ -125,7 +125,7 @@ const findStores = async () => {
   }
 
   try {
-    const response = await axios.get('https://ourpos.org/api/v1/stores/delivery', {
+    const response = await axios.get('https://api.ourpos.org/api/v1/stores/delivery', {
       withCredentials: true
     });
     if (response.data.code === 400) {
@@ -180,7 +180,7 @@ function calculateTime(duration, distance) {
 }
 
 const findAddresses = () => {
-  axios.get('https://ourpos.org/api/v1/customers/my/addresses', {
+  axios.get('https://api.ourpos.org/api/v1/customers/my/addresses', {
     withCredentials: true
   }).then(response => {
     addresses.value = response.data.data;

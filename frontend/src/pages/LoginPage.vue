@@ -46,13 +46,13 @@ const route = useRoute();
 const onNaverLogin = () => {
   console.log('onNaverLogin');
   localStorage.clear();
-  window.location.href = 'https://ourpos.org/oauth2/authorization/naver';
+  window.location.href = 'https://api.ourpos.org/oauth2/authorization/naver';
 }
 
 const onKakaoLogin = () => {
   console.log('onKakaoLogin');
   localStorage.clear();
-  window.location.href = 'https://ourpos.org/oauth2/authorization/kakao';
+  window.location.href = 'https://api.ourpos.org/oauth2/authorization/kakao';
 }
 
 const scaleUp = (event) => {

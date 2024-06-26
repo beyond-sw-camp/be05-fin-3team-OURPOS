@@ -25,7 +25,7 @@
                       size="110"
                       class="my-2 ml-2"
                     >
-                      <v-img :src="'https://ourpos.org/images/' + menu.pictureUrl" cover></v-img>
+                      <v-img :src="'https://api.ourpos.org/images/' + menu.pictureUrl" cover></v-img>
                     </v-avatar>
                   </v-col>
                   <v-col>
@@ -68,7 +68,7 @@ const categories = ref([]);
 
 const findMenus = async (category) => {
   try {
-    const response = await axios.get('https://ourpos.org/api/v1/menus', {
+    const response = await axios.get('https://api.ourpos.org/api/v1/menus', {
       withCredentials: true,
       params: {
         category: category,
@@ -83,7 +83,7 @@ const findMenus = async (category) => {
 
 const findCategories = async () => {
   try {
-    const response = await axios.get('https://ourpos.org/api/v1/categories', {
+    const response = await axios.get('https://api.ourpos.org/api/v1/categories', {
       withCredentials: true
     });
     categories.value = response.data.data;
