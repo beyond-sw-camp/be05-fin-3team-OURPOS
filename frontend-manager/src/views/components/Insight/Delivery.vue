@@ -56,7 +56,7 @@ const loadMap = async () => {
 
   const getLocations = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/orders/delivery/frequency/my', {
+      const response = await axios.get('https://api.ourpos.org/api/v1/orders/delivery/frequency/my', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': localStorage.getItem('token')

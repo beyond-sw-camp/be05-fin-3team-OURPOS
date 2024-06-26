@@ -25,7 +25,7 @@ const myChart = ref(null);
 const fetchData = async () => {
   isLoading.value = true;
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/orders/monthly/my', {
+    const response = await axios.get('https://api.ourpos.org/api/v1/orders/monthly/my', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
