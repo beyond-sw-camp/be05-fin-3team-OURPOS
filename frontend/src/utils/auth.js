@@ -45,6 +45,7 @@ export function isTokenExpired(token) {
 // 페이지 접근 검증 함수
 export function checkUserRole(requiredRoles) {
   const token = getCookie('Authorization');
+  console.log('token:', token);
   if (token) {
     if (isTokenExpired(token)) {
       console.warn('Token expired');
