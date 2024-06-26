@@ -16,21 +16,21 @@
       </v-row>
     </v-container>
   </template>
-  
+
   <script setup>
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import { Chart, registerables } from 'chart.js';
-  
+
   const sales = ref([]);
   const isLoading = ref(false);
   const myChart = ref(null);
   Chart.register(...registerables);
-  
-  const fetchData = async () => {   
+
+  const fetchData = async () => {
     isLoading.value = true;
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/orders/menu-prefer', {
+      const response = await axios.get('https://api.ourpos.org/api/v1/orders/menu-prefer', {
       withCredentials: true
     });
       sales.value = response.data.data;
@@ -46,7 +46,7 @@
       isLoading.value = false;
     }
   };
-    
+
   const updateChart = (salesData) => {
     const ctx = document.getElementById('menuPreferAllChart').getContext('2d');
     if (myChart.value) {
@@ -88,7 +88,7 @@
               beginAtZero: true,
               ticks: {
                 callback: function(value) {
-                  return value; 
+                  return value;
                 }
               }
             }
@@ -97,21 +97,20 @@
       });
     }
   };
-    
+
   onMounted(() => {
     fetchData();
   });
   </script>
-  
+
   <style scoped>
   .canvas-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   .canvas {
     height: 300px;
   }
   </style>
-  

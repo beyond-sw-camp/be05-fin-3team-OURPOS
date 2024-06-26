@@ -158,7 +158,7 @@ const selectedCategory = ref(null);
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/categories');
+    const response = await axios.get('https://api.ourpos.org/api/v1/categories');
     categories.value = response.data.data.map(category => ({
       id: category.id,
       name: category.name
@@ -173,7 +173,7 @@ const fetchCategories = async () => {
 
 const fetchMenus = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/menus/all');
+    const response = await axios.get('https://api.ourpos.org/api/v1/menus/all');
     menus.value = response.data.data.map(menu => ({
       id: menu.id,
       name: menu.name,
@@ -197,7 +197,7 @@ const filterMenus = (category) => {
 
 // Helper method to get full URL of menu image
 const getMenuImageUrl = (imagePath) => {
-  return `http://localhost:8080/images/${imagePath}`;
+  return `https://api.ourpos.org/images/${imagePath}`;
 };
 
 // Dialogs state
@@ -245,7 +245,7 @@ const closeDialog = () => {
 
 const addCategory = async () => {
   try {
-    const response = await axios.post('http://localhost:8080/api/v1/categories', {
+    const response = await axios.post('https://api.ourpos.org/api/v1/categories', {
       name: newCategory.value
     });
     if (response.status === 200) {
@@ -268,7 +268,7 @@ const editCategory = async () => {
       console.error('Category ID not found');
       return;
     }
-    const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/update`, {
+    const response = await axios.put(`https://api.ourpos.org/api/v1/categories/${categoryId}/update`, {
       name: updatedCategoryName.value
     });
     if (response.status === 200) {
@@ -292,7 +292,7 @@ const deleteCategory = async () => {
       console.error('Category ID not found');
       return;
     }
-    const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/delete`);
+    const response = await axios.put(`https://api.ourpos.org/api/v1/categories/${categoryId}/delete`);
     if (response.status === 200) {
       // Update categories after successfully deleting
       fetchCategories();
@@ -319,7 +319,7 @@ const addMenu = async () => {
   formData.append('multipartFile', newMenuFile.value);
 
   try {
-    const response = await axios.post('http://localhost:8080/api/v1/menus', formData, {
+    const response = await axios.post('https://api.ourpos.org/api/v1/menus', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -359,7 +359,7 @@ const updateMenu = () => {
 
 const deleteMenu = async () => {
   try {
-    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/delete`);
+    const response = await axios.put(`https://api.ourpos.org/api/v1/menus/${selectedMenu.value.id}/delete`);
     if (response.status === 200) {
       fetchMenus();
       closeDialog();

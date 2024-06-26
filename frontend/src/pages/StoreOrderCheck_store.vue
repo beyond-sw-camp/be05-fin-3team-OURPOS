@@ -1,8 +1,8 @@
 <template>
-    <v-container class="text-center"> 
+    <v-container class="text-center">
       <v-row>
         <v-col cols="12">
-          
+
           <v-card>
             <v-card-title>주문 내역</v-card-title>
             <v-card-text>
@@ -14,7 +14,7 @@
                     <v-list-item-title style="width: 20%;">주문 일자</v-list-item-title>
                     <v-list-item-title style="width: 20%;">주문 금액</v-list-item-title>
                     <v-list-item-title style="width: 20%;">주문 상태</v-list-item-title>
-                    <v-list-item-title style="width: 20%;"></v-list-item-title> 
+                    <v-list-item-title style="width: 20%;"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <!-- 주문 내역 표시 -->
@@ -40,7 +40,7 @@
           </v-card>
         </v-col>
       </v-row>
-  
+
       <!-- 주문 상세 정보  -->
       <v-dialog v-model="orderDetailDialog" max-width="600px">
         <v-card>
@@ -79,10 +79,10 @@
       </v-dialog>
     </v-container>
   </template>
-  
+
   <script>
   import axios from "axios";
-  
+
   export default {
     data() {
       return {
@@ -97,7 +97,7 @@
     methods: {
       async fetchOrders() {
         try {
-          const response = await axios.get('http://localhost:8080/api/v1/storeorder/1/check');
+          const response = await axios.get('https://api.ourpos.org/api/v1/storeorder/1/check');
           this.orders = response.data.data;
         } catch (error) {
           console.error('Failed to fetch orders:', error);
@@ -105,7 +105,7 @@
       },
       async cancelOrder(storeOrderId) {
         try {
-          const response = await axios.delete(`http://localhost:8080/api/v1/storeorder/1`);
+          const response = await axios.delete(`https://api.ourpos.org/api/v1/storeorder/1`);
           if (response.status === 200) {
             this.orders = this.orders.filter(order => order.storeOrderId !== storeOrderId);
             alert('주문이 성공적으로 취소되었습니다.');
@@ -117,7 +117,7 @@
       },
       async viewOrderDetails(storeOrderId) {
         try {
-          const response = await axios.get(`http://localhost:8080/api/v1/storeorder/${storeOrderId}`);
+          const response = await axios.get(`https://api.ourpos.org/api/v1/storeorder/${storeOrderId}`);
           this.selectedOrderDetails = response.data;
           this.orderDetailDialog = true;
         } catch (error) {
@@ -127,7 +127,7 @@
     },
   };
   </script>
-  
+
   <style scoped>
   .list-item-content {
     display: flex;
