@@ -20,6 +20,7 @@ export function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
     const cookies = document.cookie.split(';');
+    console.log('All cookies:', cookies); // 모든 쿠키를 출력
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
       if (cookie.substring(0, name.length + 1) === (name + '=')) {
@@ -28,6 +29,7 @@ export function getCookie(name) {
       }
     }
   }
+  console.log(`Cookie value for ${name}:`, cookieValue); // 찾은 쿠키 값을 출력
   return cookieValue;
 }
 
@@ -45,7 +47,7 @@ export function isTokenExpired(token) {
 // 페이지 접근 검증 함수
 export function checkUserRole(requiredRoles) {
   const token = getCookie('Authorization');
-  console.log('token:', token);
+  console.log('token:', token); // 토큰 값을 출력
   if (token) {
     if (isTokenExpired(token)) {
       console.warn('Token expired');
