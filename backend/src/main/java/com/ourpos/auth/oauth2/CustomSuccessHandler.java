@@ -58,6 +58,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             .maxAge(1000 * 60 * 60 * 24 * 7)
             .domain(".ourpos.org")
             .path("/")
+            .sameSite("None")
             .secure(true)
             .build();
     }
