@@ -40,8 +40,8 @@ export function isTokenExpired(token) {
 export function checkUserRole(requiredRoles) {
   const token = getCookie('Authorization');
   console.log('Cookie value for Authorization:', token); // 쿠키 값을 출력
-  if (token) {
-    return true;
+  return true;
+  // if (token) {
   //   if (isTokenExpired(token)) {
   //     console.warn('Token expired');
   //     return false; // 토큰이 만료됨
@@ -61,5 +61,5 @@ export function checkUserRole(requiredRoles) {
   // } else {
   //   console.warn('JWT token not found');
   //   return false; // JWT 토큰이 없으므로 접근 거부
-  }
+  // }
 }
