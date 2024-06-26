@@ -167,9 +167,9 @@ export default {
       this.currentCategory = category;
       let url = '';
       if (category === 'ingredients') {
-        url = `http://localhost:8080/api/v1/storecomms/ingredients?page=${page - 1}&size=${this.pageSize}`;
+        url = `https://api.ourpos.org/api/v1/storecomms/ingredients?page=${page - 1}&size=${this.pageSize}`;
       } else if (category === 'supplies') {
-        url = `http://localhost:8080/api/v1/storecomms/supplies?page=${page - 1}&size=${this.pageSize}`;
+        url = `https://api.ourpos.org/api/v1/storecomms/supplies?page=${page - 1}&size=${this.pageSize}`;
       }
       try {
         const response = await axios.get(url, {
@@ -206,7 +206,7 @@ export default {
       try {
 
         // 관리자 로그인 ID를 사용하여 storeId 조회 API 호출
-        const storeIdResponse = await axios.get(`http://localhost:8080/api/v1/findStoreId/my`,{
+        const storeIdResponse = await axios.get(`https://api.ourpos.org/api/v1/findStoreId/my`,{
           headers: {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
@@ -222,7 +222,7 @@ export default {
             storeCommPrice: item.storeCommPrice * item.quantity
 
           };
-          return axios.post('http://localhost:8080/api/v1/storecomms/order', orderData, {
+          return axios.post('https://api.ourpos.org/api/v1/storecomms/order', orderData, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': localStorage.getItem('token')

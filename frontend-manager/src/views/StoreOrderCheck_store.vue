@@ -114,7 +114,7 @@ export default {
   methods: {
     async fetchOrders(page) {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/storeorder/checkforstore/my', {
+        const response = await axios.get('https://api.ourpos.org/api/v1/storeorder/checkforstore/my', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
@@ -133,7 +133,7 @@ export default {
     },
     async cancelOrder(storeOrderId) {
       try {
-        const response = await axios.delete(`http://localhost:8080/api/v1/storeorder/${storeOrderId}`, {
+        const response = await axios.delete(`https://api.ourpos.org/api/v1/storeorder/${storeOrderId}`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
@@ -150,7 +150,7 @@ export default {
     },
     async openOrderDetails(order) {
       try {
-        const response = await axios.get(`http://localhost:8080/api/v1/storeorder/${order.storeOrderId}`, {
+        const response = await axios.get(`https://api.ourpos.org/api/v1/storeorder/${order.storeOrderId}`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
