@@ -40,25 +40,26 @@ export function isTokenExpired(token) {
 export function checkUserRole(requiredRoles) {
   const token = getCookie('Authorization');
   console.log('Cookie value for Authorization:', token); // 쿠키 값을 출력
-  if (token) {
-    if (isTokenExpired(token)) {
-      console.warn('Token expired');
-      return false; // 토큰이 만료됨
-    }
-    const decoded = parseJwt(token);
-    if (decoded && decoded.role) {
-      if (requiredRoles.includes(decoded.role)) {
-        return true; // 접근 허용
-      } else {
-        console.warn(`Access Denied. Required Roles: ${requiredRoles}, User Role: ${decoded.role}`);
-        return false; // 접근 거부
-      }
-    } else {
-      console.warn('Invalid JWT payload');
-      return false; // JWT 토큰이 없으므로 접근 거부
-    }
-  } else {
-    console.warn('JWT token not found');
-    return false; // JWT 토큰이 없으므로 접근 거부
-  }
+  return true;
+  // if (token) {
+  //   if (isTokenExpired(token)) {
+  //     console.warn('Token expired');
+  //     return false; // 토큰이 만료됨
+  //   }
+  //   const decoded = parseJwt(token);
+  //   if (decoded && decoded.role) {
+  //     if (requiredRoles.includes(decoded.role)) {
+  //       return true; // 접근 허용
+  //     } else {
+  //       console.warn(`Access Denied. Required Roles: ${requiredRoles}, User Role: ${decoded.role}`);
+  //       return false; // 접근 거부
+  //     }
+  //   } else {
+  //     console.warn('Invalid JWT payload');
+  //     return false; // JWT 토큰이 없으므로 접근 거부
+  //   }
+  // } else {
+  //   console.warn('JWT token not found');
+  //   return false; // JWT 토큰이 없으므로 접근 거부
+  // }
 }
