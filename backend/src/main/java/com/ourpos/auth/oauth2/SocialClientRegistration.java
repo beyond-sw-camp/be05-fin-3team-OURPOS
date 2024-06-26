@@ -28,7 +28,7 @@ public class SocialClientRegistration {
         return ClientRegistration.withRegistrationId("naver")
             .clientId(naverClientId)
             .clientSecret(naverClientSecret)
-            .redirectUri("https://ourpos.org/login/oauth2/code/naver")
+            .redirectUri("https://m.ourpos.org/login/oauth2/code/naver")
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .scope("name", "nickname", "gender", "email", "age", "mobile", "profile_image")
             .authorizationUri("https://nid.naver.com/oauth2.0/authorize")
@@ -44,7 +44,7 @@ public class SocialClientRegistration {
             .clientId(kakaoClientId)
             .clientSecret(kakaoClientSecret)
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
-            .redirectUri("https://ourpos.org/login/oauth2/code/kakao")
+            .redirectUri("https://m.ourpos.org/login/oauth2/code/kakao")
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .scope("name", "profile_nickname", "gender", "age_range", "shipping_address", "phone_number",
                 "account_email", "profile_image", "talk_message")
