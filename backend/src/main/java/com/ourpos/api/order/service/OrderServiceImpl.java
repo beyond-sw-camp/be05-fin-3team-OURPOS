@@ -136,24 +136,6 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    //비활성화 된 메뉴 재활성화
-    /*
-    public void enableMenu(Menu menu, Store store) {
-        List<StoreRestrictedMenu> restrictedMenus = storeRestrictedMenuRepository.findByStore(store);
-        StoreRestrictedMenu restrictedMenuToRemove = null;
-        for (StoreRestrictedMenu restrictedMenu : restrictedMenus) {
-            if (restrictedMenu.getMenu().equals(menu)) {
-                restrictedMenuToRemove = restrictedMenu;
-                break;
-            }
-        }
-        if (restrictedMenuToRemove != null) {
-            storeRestrictedMenuRepository.delete(restrictedMenuToRemove);
-        }
-    }
-
-     */
-
     @Override
     public void cancelHallOrder(Long orderId) {
         HallOrder order = hallOrderRepository.findById(orderId)
@@ -247,11 +229,11 @@ public class OrderServiceImpl implements OrderService {
 
         DeliveryOrder order = deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
 
-        if (customer.getPhone() != null) {
-            smsService.sendOne(customer.getPhone(), "[OURPOS]\n" + store.getName() + " 배달 주문이 완료되었습니다.\n\n"
-                + "주문 상품: " + orderDetails.get(0).getMenu().getName() + " 외 " + (orderDetails.size() - 1) + "개\n"
-                + "총 가격: " + order.getPrice() + "원\n");
-        }
+        // if (customer.getPhone() != null) {
+        //     smsService.sendOne(customer.getPhone(), "[OURPOS]\n" + store.getName() + " 배달 주문이 완료되었습니다.\n\n"
+        //         + "주문 상품: " + orderDetails.get(0).getMenu().getName() + " 외 " + (orderDetails.size() - 1) + "개\n"
+        //         + "총 가격: " + String.format("%,d", order.getPrice()) + "원\n");
+        // }
 
         return order;
     }
