@@ -1,7 +1,7 @@
 import axios from "axios";
 import router from "@/router";
 
-const API_BASE_URL = "http://localhost:8080/api/v1";
+const API_BASE_URL = "https://api.ourpos.org/api/v1";
 const UNAUTHORIZED = 401;
 const FORBIDDEN = 403;
 
