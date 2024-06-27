@@ -12,6 +12,7 @@ import com.ourpos.api.map.MapService;
 import com.ourpos.api.order.dto.request.DeliveryOrderRequestDto;
 import com.ourpos.api.order.dto.request.HallOrderRequestDto;
 import com.ourpos.api.order.dto.request.OrderDetailRequestDto;
+import com.ourpos.api.sms.SmsService;
 import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerRepository;
 import com.ourpos.domain.menu.Menu;
@@ -55,6 +56,7 @@ public class OrderServiceImpl implements OrderService {
     private final MapService mapService;
     private final AdministrativeBuildingAddressRepository administrativeBuildingAddressRepository;
     private final TempOrderRepository tempOrderRepository;
+    private final SmsService smsService;
 
     @Override
     public Long createHallOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
@@ -231,6 +233,7 @@ public class OrderServiceImpl implements OrderService {
     private HallOrder createOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
         Customer customer = getCustomer(loginId);
         Store store = getStore(hallOrderRequestDto.getStoreId());
+        smsService.sendOne(customer.getPhone(), "[OURPOS]" + store.getName() + "점 홀/포장 주문이 완료되었습니다.");
 
         List<OrderDetail> orderDetails = createOrderDetails(hallOrderRequestDto.getOrderDetailDtos());
 
