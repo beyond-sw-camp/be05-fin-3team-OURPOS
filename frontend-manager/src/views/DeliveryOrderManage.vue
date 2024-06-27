@@ -66,7 +66,7 @@
                     <div class="col"><strong>주문 일시: </strong> {{ new Date(order.orderCreatedDateTime).toLocaleString() }}</div>
                     <div class="col"><strong>경과 시간: </strong> {{ order.formattedCookingTime }}</div>
                     <!--<div class="col"><strong>결제 수단:</strong> {{ order.price }}</div>-->
-                    <div class="col"><strong>주문 금액: </strong> {{ Number(order.pricejsonData.balanceAmount).toLocaleString() }}원</div>
+                    <div class="col"><strong>주문 금액: </strong> {{ Number(order.price.balanceAmount).toLocaleString() }}원</div>
                     <div class="col">
                       <button class="btn btn-danger" @click.prevent="showOrderDetail(order)">
                           {{ order.deliveryOrderStatus }}
