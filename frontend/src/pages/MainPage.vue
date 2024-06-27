@@ -77,7 +77,9 @@ const getMyInfo = async () => {
       router.push('/login')
     }
   })
-
+    .catch(() => {
+      router.push('/login')
+    });
 };
 
 const logout = () => {
