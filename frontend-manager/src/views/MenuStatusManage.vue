@@ -61,7 +61,7 @@ let confirmAction = null;
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/categories', {
+    const response = await axios.get('https://api.ourpos.org/api/v1/categories', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -77,7 +77,7 @@ const fetchCategories = async () => {
 
 const fetchMenus = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/menus/store', {
+    const response = await axios.get('https://api.ourpos.org/api/v1/menus/store', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -105,7 +105,7 @@ const filterMenus = (category) => {
 
 const deactivateMenu = async (menuId) => {
   try {
-    const response = await axios.post('http://localhost:8080/api/v1/menus/deactivate', {
+    const response = await axios.post('https://api.ourpos.org/api/v1/menus/deactivate', {
       menuId: menuId
     }, {
       headers: {
@@ -127,7 +127,7 @@ const deactivateMenu = async (menuId) => {
 
 const activateMenu = async (menuId) => {
   try {
-    const response = await axios.post('http://localhost:8080/api/v1/menus/activate', {
+    const response = await axios.post('https://api.ourpos.org/api/v1/menus/activate', {
       menuId: menuId
     }, {
       headers: {

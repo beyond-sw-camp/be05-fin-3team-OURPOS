@@ -1,5 +1,5 @@
 <template>
-  <v-app class="no-scroll">
+  <v-app>
     <v-app-bar app class="transparent-app-bar">
       <v-spacer></v-spacer>
       <v-menu offset-y>
@@ -19,7 +19,8 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-main class="main-background">
+    <v-main>
+       <!-- 배경 이미지가 적용된 v-main -->
       <div class="hero">
         <h1>Welcome to our pos!</h1>
         <p>Explore our menu and place your orders.</p>
@@ -45,8 +46,8 @@
         </v-row>
       </v-container>
     </v-main>
-    <BottomNav />
   </v-app>
+  <BottomNav />
 </template>
 
 <script setup>
@@ -67,7 +68,7 @@ const deliveryOrder = () => {
 };
 
 const getMyInfo = async () => {
-  await axios.get('http://localhost:8080/api/v1/customers/my', {
+  await axios.get('https://api.ourpos.org/api/v1/customers/my', {
     withCredentials: true
   }).then((response) => {
     if (response.data.code === 200) {
@@ -79,7 +80,7 @@ const getMyInfo = async () => {
 };
 
 const logout = () => {
-  axios.post('http://localhost:8080/logout', {}, {
+  axios.post('https://api.ourpos.org/logout', {}, {
     withCredentials: true
   }).then(() => {
     localStorage.clear();
@@ -98,31 +99,31 @@ onMounted(() => {
 }
 
 .fill-width {
-  object-fit: cover; 
-  width: 100%; 
+  object-fit: cover;
+  width: 100%;
 }
 
 .v-carousel .v-btn--icon::before {
   background-color: rgba(255, 255, 255, 0.5); /* 흰색 배경에 50% 불투명도 */
 }
 
-.v-main.main-background {
-  background: url('https://cambridgeleisure.co.uk/sites/cambridge_leisure/files/styles/whats_on_gallery_small/public/images/shops/gallery/five_guys.jpg?itok=YKUdHJuQ') no-repeat center center fixed;
+.v-main {
+  background: url('@/assets/shake.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 
 .main-container {
-  background-color: rgba(255, 255, 255, 0.8); 
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   padding: 20px;
-  margin-top: 220px; 
+  margin-top: 235px;
 }
 
 .hero {
-  margin-top: 250px; 
-  text-align: center; 
-  color: white; 
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+  margin-top: 250px;
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .mt-5 {
@@ -134,10 +135,7 @@ onMounted(() => {
   box-shadow: none;
 }
 
-.no-scroll {
-  overflow: hidden; 
-  height: 100vh; 
-}
+
 .bottom-nav{
   height: 65px;
   flex-shrink: 0;

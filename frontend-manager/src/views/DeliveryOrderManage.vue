@@ -1,6 +1,8 @@
+
 <template>
   <div>
   <Navbar2/>
+  <div>
     <div class="container mt-4">
       <h2>주문 목록</h2>
       <div class="row mb-3">
@@ -60,15 +62,15 @@
               <ul class="list-group">
                 <li v-for="order in orders" :key="order.orderId" class="list-group-item">
                   <div class="row">
-                    <div class="col"><strong>주문 번호</strong> {{ order.orderId }}</div>
-                    <div class="col"><strong>주문 일시</strong> {{ order.orderCreatedDateTime }}</div>
-                    <div class="col"><strong>경과 시간</strong> {{ order.formattedCookingTime }}</div>
+                    <div class="col"><strong>주문 번호: </strong> {{ order.orderId }}</div>
+                    <div class="col"><strong>주문 일시: </strong> {{ order.orderCreatedDateTime }}</div>
+                    <div class="col"><strong>경과 시간: </strong> {{ order.formattedCookingTime }}</div>
                     <!--<div class="col"><strong>결제 수단:</strong> {{ order.price }}</div>-->
-                    <div class="col"><strong>주문 금액</strong> {{ order.price }}원</div>
+                    <div class="col"><strong>주문 금액: </strong> {{ order.price }}원</div>
                     <div class="col">
-                      <a href="#" @click="showOrderDetail(order)">
-                        {{ order.deliveryOrderStatus }}
-                      </a>
+                      <button class="btn btn-danger" @click.prevent="showOrderDetail(order)">
+                          {{ order.deliveryOrderStatus }}
+                      </button>
                     </div>
                   </div>
                 </li>
@@ -91,7 +93,7 @@
         </div>
         <!-- 세부 정보 표시 -->
         <div class="col-3" v-if="selectedOrderDetail">
-          <div class="card">
+          <div class="card border-primary mb-6">
             <div class="card-body">
               <h5 class="card-title">주문 세부 정보</h5>
               <!-- 주문 주소 및 연락처 정보 표시 -->
@@ -123,7 +125,7 @@
               </div>
               <!-- 주문 상태 변경 버튼 추가 -->
               <div class="mt-3 text-center" v-if="selectedOrderDetail.deliveryOrderStatus === 'WAITING'">
-                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'accept')" class="btn btn-success btn-sm">조리시작</button>
+                <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'accept')" class="btn btn-success btn-sm" style="margin-right: 10px;">조리시작</button>
                 <button @click="changeOrderStatus(selectedOrderDetail.orderId, 'cancel')" class="btn btn-warning btn-sm">주문취소</button>
               </div>
               <div class="mt-3 text-center" v-if="selectedOrderDetail.deliveryOrderStatus === 'COOKING'">
@@ -138,6 +140,7 @@
       </div>
     </div>
   </div>
+</div>
 
 </template>
 
@@ -179,7 +182,7 @@ export default {
       }
 
       try {
-        const response = await axios.get(`http://localhost:8080/api/v1/orders/delivery/my`, {
+        const response = await axios.get(`https://api.ourpos.org/api/v1/orders/delivery/my`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `${token}`
@@ -223,7 +226,7 @@ export default {
         return;
       }
 
-      let url = `http://localhost:8080/api/v1/orders/delivery/${orderId}`;
+      let url = `https://api.ourpos.org/api/v1/orders/delivery/${orderId}`;
       if (action === 'accept') {
         url += '/accept';
       } else if (action === 'cancel') {

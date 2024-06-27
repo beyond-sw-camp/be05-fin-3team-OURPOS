@@ -253,7 +253,7 @@ if (!regex.test(currentItem.value.price)) {
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/categories', {
+    const response = await axios.get('https://api.ourpos.org/api/v1/categories', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -364,7 +364,7 @@ const addMenuOptionGroup = async () => {
   try {
     const category = categories.value.find(cat => cat.name === selectedCategoryName.value);
     if (category) {
-      await axios.post('http://localhost:8080/api/v1/menuOptionGroups', {
+      await axios.post('https://api.ourpos.org/api/v1/menuOptionGroups', {
         name: newItem.value.name,
         categoryId: category.id,
         exclusiveYn: newItem.value.exclusiveYn,
@@ -387,7 +387,7 @@ const addMenuOption = async () => {
   try {
     const group = menuOptionGroups.value.find(g => g.name === newItem.value.group);
     if (group) {
-      await axios.post('http://localhost:8080/api/v1/menuOptions', {
+      await axios.post('https://api.ourpos.org/api/v1/menuOptions', {
         menuOptionGroupId: group.id,
         name: newItem.value.name,
         price: newItem.value.price
@@ -411,7 +411,7 @@ const saveMenuOptionGroup = async () => {
     try {
       const category = categories.value.find(cat => cat.name === currentCategoryName.value);
       if (category) {
-        await axios.put(`http://localhost:8080/api/v1/menuOptionGroups/${currentItem.value.id}/update`, {
+        await axios.put(`https://api.ourpos.org/api/v1/menuOptionGroups/${currentItem.value.id}/update`, {
           name: currentItem.value.name,
           categoryId: category.id,
           exclusiveYn: currentItem.value.exclusiveYn,
@@ -436,7 +436,7 @@ const saveMenuOption = async () => {
     try {
       const group = menuOptionGroups.value.find(g => g.name === currentItem.value.group);
       if (group) {
-        await axios.put(`http://localhost:8080/api/v1/menuOptions/${currentItem.value.menuOptionId}/update`, {
+        await axios.put(`https://api.ourpos.org/api/v1/menuOptions/${currentItem.value.menuOptionId}/update`, {
           menuOptionGroupId: group.id,
           name: currentItem.value.name,
           price: currentItem.value.price
@@ -458,7 +458,7 @@ const saveMenuOption = async () => {
 const deleteMenuOptionGroup = async () => {
   if (currentItemIndex.value !== null) {
     try {
-      await axios.put(`http://localhost:8080/api/v1/menuOptionGroups/${currentItem.value.id}/delete`,{},{
+      await axios.put(`https://api.ourpos.org/api/v1/menuOptionGroups/${currentItem.value.id}/delete`,{},{
         headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -476,7 +476,7 @@ const deleteMenuOptionGroup = async () => {
 const deleteMenuOption = async () => {
   if (currentItemIndex.value !== null) {
     try {
-      await axios.put(`http://localhost:8080/api/v1/menuOptions/${currentItem.value.menuOptionId}/delete`,{},{
+      await axios.put(`https://api.ourpos.org/api/v1/menuOptions/${currentItem.value.menuOptionId}/delete`,{},{
         headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')

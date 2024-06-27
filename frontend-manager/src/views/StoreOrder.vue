@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <Navbar2 />
@@ -118,15 +119,22 @@
           <div class="cart sticky-top mt-3">
             <h5>장바구니</h5>
             <ul class="list-group">
-              <li v-if="cart.length === 0" class="list-group-item">장바구니가 비어 있습니다.</li>
-              <li v-for="(item, index) in cart" :key="index" class="list-group-item">
-                <div class="d-flex justify-content-between">
-                  <span>{{ item.storeCommName }}</span>
-                  <span>{{ item.storeCommPrice }} 원 x {{ item.quantity }}</span>
+            <li v-if="cart.length === 0" class="list-group-item">장바구니가 비어 있습니다.</li>
+            <li v-for="(item, index) in cart" :key="index" class="list-group-item">
+              <div class="row align-items-center">
+                <div class="col">
+                  <strong>{{ item.storeCommName }}</strong>
+                </div>
+                <div class="col">
+                  <span>{{ item.storeCommPrice }} 원</span> x <span>{{ item.quantity }}</span>
+                </div>
+                <div class="col-auto">
                   <button class="btn btn-danger btn-sm" @click="removeFromCart(index)">삭제</button>
                 </div>
-              </li>
-            </ul>
+              </div>
+            </li>
+          </ul>
+
             <div class="mt-3" v-if="cart.length > 0">
               <p class="text-end"><strong>총 금액: {{ totalCartPrice }} 원</strong></p>
               <button class="btn btn-primary w-100" @click="submitOrder">주문 요청</button>
@@ -167,9 +175,9 @@ export default {
       this.currentCategory = category;
       let url = '';
       if (category === 'ingredients') {
-        url = `http://localhost:8080/api/v1/storecomms/ingredients?page=${page - 1}&size=${this.pageSize}`;
+        url = `https://api.ourpos.org/api/v1/storecomms/ingredients?page=${page - 1}&size=${this.pageSize}`;
       } else if (category === 'supplies') {
-        url = `http://localhost:8080/api/v1/storecomms/supplies?page=${page - 1}&size=${this.pageSize}`;
+        url = `https://api.ourpos.org/api/v1/storecomms/supplies?page=${page - 1}&size=${this.pageSize}`;
       }
       try {
         const response = await axios.get(url, {
@@ -206,7 +214,7 @@ export default {
       try {
 
         // 관리자 로그인 ID를 사용하여 storeId 조회 API 호출
-        const storeIdResponse = await axios.get(`http://localhost:8080/api/v1/findStoreId/my`,{
+        const storeIdResponse = await axios.get(`https://api.ourpos.org/api/v1/findStoreId/my`,{
           headers: {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
@@ -222,7 +230,7 @@ export default {
             storeCommPrice: item.storeCommPrice * item.quantity
 
           };
-          return axios.post('http://localhost:8080/api/v1/storecomms/order', orderData, {
+          return axios.post('https://api.ourpos.org/api/v1/storecomms/order', orderData, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': localStorage.getItem('token')

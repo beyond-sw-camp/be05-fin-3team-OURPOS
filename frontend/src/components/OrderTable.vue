@@ -11,7 +11,7 @@
                <v-col><div>주문 금액</div></v-col>
                <v-col><div>지점명</div></v-col>
             </v-row>
-  
+
             <!-- chips, storeOrderId, storeOrderDate, storeOrderPrice, storeId -->
             <v-row>
               <v-col>
@@ -22,13 +22,13 @@
               <v-col><div>{{ order.storeOrderPrice }}</div></v-col>
               <v-col><div>{{ order.storeName }}</div></v-col>
             </v-row>
-  
+
             <!-- 간격조정 -->
             <v-divider v-if="index !== orders.length - 1" :key="'divider' + index"></v-divider>
           </v-list-item>
         </v-list-item-group>
       </v-list>
-  
+
       <v-dialog v-model="dialog" max-width="600px">
         <v-card>
               <v-card-title>
@@ -55,7 +55,7 @@
               </v-card-actions>
           </v-card>
       </v-dialog>
-  
+
       <v-tabs v-model="tab">
         <v-tab v-for="status in statuses" :key="status.value">{{ status.label }}</v-tab>
       </v-tabs>
@@ -66,10 +66,10 @@
       </v-tabs-items>
     </div>
   </template>
-  
+
   <script>
   import axios from 'axios';
-  
+
   export default {
     props: {
       orders: {
@@ -103,11 +103,11 @@
       },
       async updateOrderStatus(action) {
         const actions = {
-          accepted: `http://localhost:8080/api/v1/storeorder/${this.selectedOrder.storeOrderId}/accepted`,
-          delivering: `http://localhost:8080/api/v1/storeorder/${this.selectedOrder.storeOrderId}/delivering`,
-          complete: `http://localhost:8080/api/v1/storeorder/${this.selectedOrder.storeOrderId}/complete`
+          accepted: `https://api.ourpos.org/api/v1/storeorder/${this.selectedOrder.storeOrderId}/accepted`,
+          delivering: `https://api.ourpos.org/api/v1/storeorder/${this.selectedOrder.storeOrderId}/delivering`,
+          complete: `https://api.ourpos.org/api/v1/storeorder/${this.selectedOrder.storeOrderId}/complete`
         };
-  
+
         try {
           const response = await axios.put(actions[action]);
           if (response.status !== 200) throw new Error('Status update failed');

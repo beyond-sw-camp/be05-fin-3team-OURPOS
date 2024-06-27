@@ -7,6 +7,7 @@ import java.util.List;
 import jakarta.validation.Valid;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,7 @@ import com.ourpos.domain.storeorder.StoreCommCategory;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderDetailRepository;
 import com.ourpos.domain.storeorder.StoreOrderRepository;
+import org.springframework.data.domain.Sort;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -187,8 +189,8 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheckw( Pageable pageable) {
         log.info("가게 식자재, 비품 주문: {}");
         log.debug("getStoreOrderCheck 메서드 호출됨");
-        
-            Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrdercheckw( pageable.getPageNumber(),pageable.getPageSize());
+           
+        Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrdercheckw( pageable.getPageNumber(),pageable.getPageSize());
     
             // 로그 추가: 데이터 로드 성공 로그
             log.debug("주문 목록 데이터 로드 성공: {}", storeOrderPage);
@@ -219,6 +221,7 @@ public class StoreOrderController implements StoreOrderControllerDocs {
     public ResponseEntity<Result<Page<StoreOrderCheckResponseDto>>> getStoreOrderCheckd( Pageable pageable) {
         log.info("가게 식자재, 비품 주문: {}");
         log.debug("getStoreOrderCheck 메서드 호출됨");
+
         
             Page<StoreOrderCheckResponseDto> storeOrderPage = storeOrderService.getStoreOrdercheckd(pageable.getPageNumber(),pageable.getPageSize());
     

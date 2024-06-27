@@ -40,7 +40,7 @@
                   >
                     수정
                   </v-btn>
-                  
+
                   <v-btn
                     small
                     outlined
@@ -49,7 +49,7 @@
                   >
                     삭제
                   </v-btn>
-                 
+
                   <v-btn
                     small
                     outlined
@@ -205,7 +205,7 @@ import axios from "axios";
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://api.ourpos.org",
   withCredentials: true, // 쿠키를 전송하기 위해 필요
 });
 
@@ -261,7 +261,7 @@ export default {
         (value) => !!value || "전화번호를 입력해주세요",
         (value) => /^[0-9]*$/.test(value) || "전화번호는 숫자만 입력 가능합니다.",
         (value) => !value.includes('-') || "전화번호는 '-' 없이 입력해주세요",
-        
+
       ]
     };
   },
@@ -281,7 +281,7 @@ export default {
     async loadAddresses() {
       try {
         const response = await axiosInstance.get(
-          "http://localhost:8080/api/v1/customers/my/addresses"
+          "https://api.ourpos.org/api/v1/customers/my/addresses"
         );
         const addresses = response.data.data;
 
@@ -316,7 +316,7 @@ export default {
 
         // 서브 주소를 기본 주소로 변경
         await axiosInstance.put(
-          `http://localhost:8080/api/v1/customers/addresses/${addressId}/default`
+          `https://api.ourpos.org/api/v1/customers/addresses/${addressId}/default`
         );
 
         // 기존의 기본주소를 서브주소 리스트에 추가
@@ -347,7 +347,7 @@ export default {
       try {
         const addressId = this.subAddresses[this.editIndex].customerAddressId;
         await axiosInstance.put(
-          `http://localhost:8080/api/v1/customers/addresses/${addressId}`,
+          `https://api.ourpos.org/api/v1/customers/addresses/${addressId}`,
           this.tempSubAddress
         );
         this.subAddresses[this.editIndex] = { ...this.tempSubAddress };
@@ -359,7 +359,7 @@ export default {
     async deleteSubAddress(addressId) {
       try {
         await axiosInstance.delete(
-          `http://localhost:8080/api/v1/customers/addresses/${addressId}`
+          `https://api.ourpos.org/api/v1/customers/addresses/${addressId}`
         );
         this.subAddresses = this.subAddresses.filter(
           (address) => address.customerAddressId !== addressId
@@ -395,7 +395,7 @@ export default {
       try {
         if (this.newSubAddress.addressBase) {
           await axiosInstance.post(
-            "http://localhost:8080/api/v1/customers/addresses",
+            "https://api.ourpos.org/api/v1/customers/addresses",
             this.newSubAddress
           );
           await this.loadAddresses();
@@ -459,7 +459,7 @@ export default {
 }
 
 .rounded-btn {
-  
+
   font-size: 0.6rem;
   color: #000000; /* 글자 색깔 */
   padding: 2px 5px;

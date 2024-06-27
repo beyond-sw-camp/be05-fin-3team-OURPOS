@@ -3,10 +3,10 @@ package com.ourpos.auth.oauth2;
 import java.io.IOException;
 import java.util.Collection;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -40,24 +40,27 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String token = jwtUtil.createJwt(loginId, role, 1000 * 60L * 60 * 24 * 7);
 
         if (customCustomerDetails.isNewUser() && role.equals("ROLE_USER")) {
-            response.addCookie(createCookie(token));
-            response.sendRedirect("http://localhost:3000/signup-success");
+            ResponseCookie cookie = createCookie(token);
+            response.addHeader("Set-Cookie", cookie.toString());
+            response.sendRedirect("https://m.ourpos.org/signup-success");
             return;
         }
 
-        response.addCookie(createCookie(token));
-        response.sendRedirect("http://localhost:3000/");
+        ResponseCookie cookie = createCookie(token);
+        response.addHeader("Set-Cookie", cookie.toString());
+        response.sendRedirect("https://m.ourpos.org");
     }
 
-    private Cookie createCookie(String value) {
-        Cookie cookie = new Cookie("Authorization", value);
+    private ResponseCookie createCookie(String value) {
 
-        // cookie.setHttpOnly(true);
-        cookie.setMaxAge(1000 * 60 * 60 * 24 * 7);
-        cookie.setPath("/");
-        cookie.setSecure(true);
-
-        return cookie;
+        return ResponseCookie.from("Authorization", value)
+            .httpOnly(true)
+            .maxAge(1000 * 60 * 60 * 24 * 7)
+            .domain(".ourpos.org")
+            .path("/")
+            .sameSite("None")
+            .secure(true)
+            .build();
     }
 
 }

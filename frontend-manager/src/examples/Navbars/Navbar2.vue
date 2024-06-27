@@ -2,7 +2,7 @@
 export default {
   methods: {
     goBack() {
-      this.$router.go(-1);  // 이전 페이지로 이동
+      this.$router.push('/manager');  // 이전 페이지로 이동
     }
   }
 }
