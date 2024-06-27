@@ -233,13 +233,17 @@ public class OrderServiceImpl implements OrderService {
     private HallOrder createOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
         Customer customer = getCustomer(loginId);
         Store store = getStore(hallOrderRequestDto.getStoreId());
-        if (customer.getPhone() != null) {
-            smsService.sendOne(customer.getPhone(), "[OURPOS]" + store.getName() + "점 홀/포장 주문이 완료되었습니다.");
-        }
-
         List<OrderDetail> orderDetails = createOrderDetails(hallOrderRequestDto.getOrderDetailDtos());
 
-        return hallOrderRequestDto.toEntity(customer, store, orderDetails);
+        HallOrder order = hallOrderRequestDto.toEntity(customer, store, orderDetails);
+
+        if (customer.getPhone() != null) {
+            smsService.sendOne(customer.getPhone(), "[OURPOS]\n" + store.getName() + " 홀/포장 주문이 완료되었습니다.\n\n"
+                + "주문 상품: " + orderDetails.get(0).getMenu().getName() + " 외 " + (orderDetails.size() - 1) + "개\n"
+                + "총 가격: " + order.getPrice() + "원\n");
+        }
+
+        return order;
     }
 
     private DeliveryOrder createOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto) {
