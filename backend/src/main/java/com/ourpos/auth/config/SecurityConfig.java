@@ -114,11 +114,7 @@ public class SecurityConfig {
 
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/managers/join", "/managers/login", "/login", "/healthcheck", "/index.html",
-                    "/css/**",
-                    "/classes/**",
-                    "/packages/**",
-                    "/js/**").permitAll()
+                .requestMatchers("/managers/join", "/managers/login", "/login", "/healthcheck", "/test/**").permitAll()
                 .anyRequest().authenticated());
 
         http
