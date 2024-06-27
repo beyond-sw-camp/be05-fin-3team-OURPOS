@@ -29,8 +29,8 @@
               <div class="col-md-6">
                 <h5 class="card-title mb-1">주문 번호: {{ order.storeOrderId }}</h5>
                 <div class="d-flex justify-content-between">
-                  <p class="card-text text-muted mb-1">주문 일시: {{ formatDate(order.storeOrderDate) }}</p>
-                  <p class="card-text text-muted mb-1">주문 금액: {{ formatCurrency(order.storeCommPrice) }}</p>
+                  <p class="card-text text-muted mb-1">주문 일시: {{ formatDateTime(order.storeOrderDate) }}</p>
+                  <p class="card-text text-muted mb-1">주문 금액: {{ formatCurrency(order.storeCommPrice) }} 원</p>
                   <p class="card-text text-muted mb-1">지점명: {{ order.storeName }}</p>
                   <p class="card-text text-muted mb-1"> {{ order.storeOrderStatus }}</p>
                   
@@ -73,7 +73,7 @@
             <p><strong>상품명:</strong> {{ selectedOrder.storeCommName }}</p>
             <p><strong>상품 수량:</strong> {{ selectedOrder.storeOrderDetailQuantity }}</p>
             <p><strong>상품 단위:</strong> {{ selectedOrder.storeCommArticleUnit }}</p>
-            <p><strong>주문 날짜:</strong> {{ selectedOrder.formatDate(storeOrderDate) }}</p>
+            <p><strong>주문 날짜:</strong> {{ selectedOrder.formatDateTime(storeOrderDate) }}</p>
             <p><strong>주문 가격:</strong> {{ selectedOrder.formatCurrency(storeOrderPrice) }}원</p>
             <p><strong>지점명:</strong> {{ selectedOrder.storeName }}</p>
             <p><strong>지점 주소:</strong> {{ selectedOrder.addressBase }} {{ selectedOrder.addressDetail }}</p>
@@ -184,22 +184,10 @@ export default {
         
       });
     },
-    formatDate(dateString) {
-      const [datePart, timePart] = dateString.split('-');
-      const [year, month, day] = datePart.split('-');
-      const [hours, minutes, seconds] = timePart.split(':');
-
-      const date = new Date(year, month - 1, day, hours, minutes, seconds);
-      
-      const formattedYear = date.getFullYear();
-      const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0');
-      const formattedDay = date.getDate().toString().padStart(2, '0');
-      const period = date.getHours() < 12 ? '오전' : '오후';
-      const formattedHours = (date.getHours() % 12 || 12).toString().padStart(2, '0');
-      const formattedMinutes = date.getMinutes().toString().padStart(2, '0');
-      const formattedSeconds = date.getSeconds().toString().padStart(2, '0');
-
-      return `${formattedYear}.${formattedMonth}.${formattedDay} ${period} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    formatDateTime(dateTime) {
+      const date = new Date(dateTime);
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      return date.toLocaleString('ko-KR', options).replace(/\./g, '.');
     },
 
   formatCurrency(amount) {

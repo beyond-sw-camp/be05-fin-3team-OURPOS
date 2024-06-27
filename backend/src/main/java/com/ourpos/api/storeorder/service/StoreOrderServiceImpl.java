@@ -214,7 +214,7 @@ public class StoreOrderServiceImpl {
 			return storeOrderDetails.stream()
 			       .map(detail -> new StoreOrderCheckResponseDto(
 							storeOrder.getId(),
-							storeOrder.getCreatedDateTime().format(formatter), 
+							storeOrder.getCreatedDateTime(),
                             storeOrder.getPrice(),
                             storeOrder.getStatus(),
                             storeOrder.getStore().getAddress().getAddressBase(),
@@ -261,7 +261,7 @@ public class StoreOrderServiceImpl {
 			return storeOrderDetails.stream()
 			       .map(detail -> new StoreOrderCheckResponseDto(
 							storeOrder.getId(),
-							storeOrder.getCreatedDateTime().format(formatter), 
+							storeOrder.getCreatedDateTime(),
                             storeOrder.getPrice(),
                             storeOrder.getStatus(),
                             storeOrder.getStore().getAddress().getAddressBase(),
@@ -306,7 +306,7 @@ public class StoreOrderServiceImpl {
 			return storeOrderDetails.stream()
 			       .map(detail -> new StoreOrderCheckResponseDto(
 							storeOrder.getId(),
-							storeOrder.getCreatedDateTime().format(formatter), 
+							storeOrder.getCreatedDateTime(), 
                             storeOrder.getPrice(),
                             storeOrder.getStatus(),
                             storeOrder.getStore().getAddress().getAddressBase(),
@@ -351,7 +351,7 @@ public class StoreOrderServiceImpl {
 			return storeOrderDetails.stream()
 			       .map(detail -> new StoreOrderCheckResponseDto(
 							storeOrder.getId(),
-							storeOrder.getCreatedDateTime().format(formatter), 
+							storeOrder.getCreatedDateTime(), 
                             storeOrder.getPrice(),
                             storeOrder.getStatus(),
                             storeOrder.getStore().getAddress().getAddressBase(),
@@ -417,7 +417,7 @@ public class StoreOrderServiceImpl {
                     .map(detail -> new StoreOrderCheckResponseDto(
 						
                             storeOrder.getId(),
-                            storeOrder.getCreatedDateTime().format(formatter), 
+                            storeOrder.getCreatedDateTime(), 
                             storeOrder.getPrice(),
                             storeOrder.getStatus(),
                             store.getAddress().getAddressBase(),
