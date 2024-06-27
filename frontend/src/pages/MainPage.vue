@@ -1,5 +1,5 @@
 <template>
-  <v-app class="no-scroll">
+  <v-app>
     <v-app-bar app class="transparent-app-bar">
       <v-spacer></v-spacer>
       <v-menu offset-y>
@@ -19,7 +19,8 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-main class="main-background">
+    <v-main>
+       <!-- 배경 이미지가 적용된 v-main -->
       <div class="hero">
         <h1>Welcome to our pos!</h1>
         <p>Explore our menu and place your orders.</p>
@@ -45,8 +46,8 @@
         </v-row>
       </v-container>
     </v-main>
-    <BottomNav />
   </v-app>
+  <BottomNav />
 </template>
 
 <script setup>
@@ -106,7 +107,7 @@ onMounted(() => {
   background-color: rgba(255, 255, 255, 0.5); /* 흰색 배경에 50% 불투명도 */
 }
 
-.v-main.main-background {
+.v-main {
   background: url('https://cambridgeleisure.co.uk/sites/cambridge_leisure/files/styles/whats_on_gallery_small/public/images/shops/gallery/five_guys.jpg?itok=YKUdHJuQ') no-repeat center center fixed;
   background-size: cover;
 }
@@ -115,7 +116,7 @@ onMounted(() => {
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   padding: 20px;
-  margin-top: 220px;
+  margin-top: 235px;
 }
 
 .hero {
@@ -134,10 +135,7 @@ onMounted(() => {
   box-shadow: none;
 }
 
-.no-scroll {
-  overflow: hidden;
-  height: 100vh;
-}
+
 .bottom-nav{
   height: 65px;
   flex-shrink: 0;
