@@ -73,8 +73,8 @@
             <p><strong>상품명:</strong> {{ selectedOrder.storeCommName }}</p>
             <p><strong>상품 수량:</strong> {{ selectedOrder.storeOrderDetailQuantity }}</p>
             <p><strong>상품 단위:</strong> {{ selectedOrder.storeCommArticleUnit }}</p>
-            <p><strong>주문 날짜:</strong> {{ (selectedOrder.storeOrderDate.approvedAt).toLocaleString() }}</p>
-            <p><strong>주문 가격:</strong> {{ (selectedOrder.storeOrderPrice.balanceAmount).toLocaleString() }}</p>
+            <p><strong>주문 날짜:</strong> {{ new Date(selectedOrder.storeOrderDate.approvedAt).toLocaleString() }}</p>
+            <p><strong>주문 가격:</strong> {{ Number(selectedOrder.storeOrderPrice.balanceAmount).toLocaleString() }}</p>
             <p><strong>지점명:</strong> {{ selectedOrder.storeName }}</p>
             <p><strong>지점 주소:</strong> {{ selectedOrder.addressBase }} {{ selectedOrder.addressDetail }}</p>
             <p><strong>전화번호:</strong> {{ selectedOrder.storePhone }}</p>
