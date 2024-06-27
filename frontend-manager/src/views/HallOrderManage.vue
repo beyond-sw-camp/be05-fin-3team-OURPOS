@@ -1,4 +1,3 @@
-hallorder
 
 <template>
   <div>

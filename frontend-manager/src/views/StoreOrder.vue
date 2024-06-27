@@ -1,4 +1,3 @@
-storeorder
 
 <template>
   <div>
