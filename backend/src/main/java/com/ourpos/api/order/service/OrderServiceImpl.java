@@ -235,15 +235,7 @@ public class OrderServiceImpl implements OrderService {
         Store store = getStore(hallOrderRequestDto.getStoreId());
         List<OrderDetail> orderDetails = createOrderDetails(hallOrderRequestDto.getOrderDetailDtos());
 
-        HallOrder order = hallOrderRequestDto.toEntity(customer, store, orderDetails);
-
-        if (customer.getPhone() != null) {
-            smsService.sendOne(customer.getPhone(), "[OURPOS]\n" + store.getName() + " 홀/포장 주문이 완료되었습니다.\n\n"
-                + "주문 상품: " + orderDetails.get(0).getMenu().getName() + " 외 " + (orderDetails.size() - 1) + "개\n"
-                + "총 가격: " + order.getPrice() + "원\n");
-        }
-
-        return order;
+        return hallOrderRequestDto.toEntity(customer, store, orderDetails);
     }
 
     private DeliveryOrder createOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto) {
@@ -253,7 +245,15 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = createOrderDetails(
             deliveryOrderRequestDto.getOrderDetailDtos());
 
-        return deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
+        DeliveryOrder order = deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
+
+        if (customer.getPhone() != null) {
+            smsService.sendOne(customer.getPhone(), "[OURPOS]\n" + store.getName() + " 배달 주문이 완료되었습니다.\n\n"
+                + "주문 상품: " + orderDetails.get(0).getMenu().getName() + " 외 " + (orderDetails.size() - 1) + "개\n"
+                + "총 가격: " + order.getPrice() + "원\n");
+        }
+
+        return order;
     }
 
     private Customer getCustomer(String loginId) {

@@ -91,7 +91,7 @@ const login = async () => {
     const formData = new FormData();
     formData.append('username', username.value);
     formData.append('password', password.value);
-    const response = await axios.post('http://localhost:8080/managers/login', formData);
+    const response = await axios.post('https://api.ourpos.org/managers/login', formData);
     if (response.status === 200) {
       const token = response.headers.authorization;
       console.log(token);

@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title>{{ menu.name }}</v-card-title>
       <v-card-text>
-        <v-img :src="'http://localhost:8080/images/' + menu.pictureUrl" max-height="300"></v-img>
+        <v-img :src="'https://api.ourpos.org/images/' + menu.pictureUrl" max-height="300"></v-img>
         <h2>{{ Number(menu.price).toLocaleString() }}원</h2>
         <p>{{ menu.description }}</p>
         <v-form>
