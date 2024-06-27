@@ -65,7 +65,7 @@
                     <div class="col"><strong>주문 일시: </strong> {{ formatDateTime(order.orderCreatedDateTime) }}</div>
                     <div class="col"><strong>경과 시간: </strong> {{ order.formattedCookingTime }}</div>
                     <!--<div class="col"><strong>결제 수단:</strong> {{ order.price }}</div>-->
-                    <div class="col"><strong>주문 금액: </strong> {{ order.price}}원</div>
+                    <div class="col"><strong>주문 금액: </strong> {{ formatCurrency(order.price)}} 원</div>
                     <div class="col">
                       <button class="btn btn-danger" @click.prevent="showOrderDetail(order)">
                           {{ order.deliveryOrderStatus }}
@@ -255,9 +255,10 @@ export default {
     formatDateTime(dateTime) {
       const date = new Date(dateTime);
       const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-      const formattedDate = date.toLocaleDateString('ko-KR', options).replace(/\./g, '.');
-      const formattedTime = date.toLocaleTimeString('ko-KR', options);
-      return `${formattedDate} ${formattedTime}`;
+      return date.toLocaleString('ko-KR', options).replace(/\./g, '.');
+    },
+    formatCurrency(amount) {
+    return Number(amount).toLocaleString('ko-KR');
     },
     goBack() {
       this.$router.go(-1);

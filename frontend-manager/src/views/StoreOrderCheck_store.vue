@@ -22,8 +22,8 @@
                 <tbody>
                   <tr v-for="(order, index) in orders" :key="index">
                     <td>{{ order.storeOrderId }}</td>
-                    <td>{{ order.storeOrderDate }}</td>
-                    <td>{{ order.storeCommPrice}}원</td>
+                    <td>{{ formatDate(order.storeOrderDate) }}</td>
+                    <td>{{ formatCurrency(order.storeCommPrice)}}원</td>
                     <td>{{ order.storeOrderStatus }}</td>
                     <td>
                       <button class="btn btn-warning" @click="cancelOrder(order.storeOrderId)" style="margin-right: 10px;">취소</button>
@@ -164,7 +164,24 @@ export default {
     },
     closeOrderDetails() {
       this.selectedOrder = null; // 모달 닫기
-    }
+    },
+    formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    const period = hours < 12 ? '오전' : '오후';
+    const formattedHours = (hours % 12 || 12).toString().padStart(2, '0');
+    
+    return `${year}.${month}.${day} ${period} ${formattedHours}:${minutes}:${seconds}`;
+    },
+    formatCurrency(amount) {
+    return Number(amount).toLocaleString('ko-KR');
+    },
+
   }
 };
 </script>
