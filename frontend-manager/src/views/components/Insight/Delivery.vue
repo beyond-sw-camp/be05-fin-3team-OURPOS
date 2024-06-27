@@ -74,15 +74,8 @@ const loadMap = async () => {
   };
 
   const addLocations = (map, locations) => {
-    var redIcon = L.icon({
-      iconUrl: '/blue.png',
-      iconSize: [5, 5], // size of the icon
-      iconAnchor: [5, 5], // point of the icon which will correspond to marker's location
-      popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
-    });
-
     locations.value.forEach(function (location) {
-      L.marker(location, { icon: redIcon }).addTo(map);
+      L.marker(location).addTo(map); // 기본 마커를 사용합니다.
     });
   };
 
