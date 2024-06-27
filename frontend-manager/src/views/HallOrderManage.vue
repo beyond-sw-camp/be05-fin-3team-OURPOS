@@ -53,7 +53,7 @@
                   <li v-for="order in orders" :key="order.orderId" class="list-group-item">
                     <div class="row">
                       <div class="col"><strong>주문 번호:</strong> {{ order.orderId }}</div>
-                      <div class="col"><strong>주문 일시:</strong> {{ formaDateTime(order.orderCreatedDateTime) }}</div>
+                      <div class="col"><strong>주문 일시:</strong> {{ formatDateTime(order.orderCreatedDateTime) }}</div>
                       <div class="col"><strong>경과 시간:</strong> {{ order.formattedCookingTime }}</div>
                       <div class="col"><strong>주문 금액:</strong> {{ formatCurrency(order.price) }} 원</div>
                       <div class="col">

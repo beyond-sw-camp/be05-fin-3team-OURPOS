@@ -166,18 +166,23 @@ export default {
       this.selectedOrder = null; // 모달 닫기
     },
     formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours();
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    const period = hours < 12 ? '오전' : '오후';
-    const formattedHours = (hours % 12 || 12).toString().padStart(2, '0');
-    
-    return `${year}.${month}.${day} ${period} ${formattedHours}:${minutes}:${seconds}`;
+      const [datePart, timePart] = dateString.split('-');
+      const [year, month, day] = datePart.split('-');
+      const [hours, minutes, seconds] = timePart.split(':');
+
+      const date = new Date(year, month - 1, day, hours, minutes, seconds);
+      
+      const formattedYear = date.getFullYear();
+      const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0');
+      const formattedDay = date.getDate().toString().padStart(2, '0');
+      const period = date.getHours() < 12 ? '오전' : '오후';
+      const formattedHours = (date.getHours() % 12 || 12).toString().padStart(2, '0');
+      const formattedMinutes = date.getMinutes().toString().padStart(2, '0');
+      const formattedSeconds = date.getSeconds().toString().padStart(2, '0');
+
+      return `${formattedYear}.${formattedMonth}.${formattedDay} ${period} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     },
+
     formatCurrency(amount) {
     return Number(amount).toLocaleString('ko-KR');
     },
