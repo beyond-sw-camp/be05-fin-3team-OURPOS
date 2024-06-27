@@ -32,11 +32,11 @@
             <v-card class="pa-5">
               <v-card-title>{{ customer.name }}님 안녕하세요!</v-card-title>
               <v-card-text>
-                <v-btn class="ma-4" large @click="hallOrder" stacked>
+                <v-btn class="ma-2" large @click="hallOrder" stacked>
                   <v-icon size="36" class="mb-2">mdi-food</v-icon>
                   홀/포장 주문
                 </v-btn>
-                <v-btn class="ma-4" large @click="deliveryOrder" stacked>
+                <v-btn class="ma-2" large @click="deliveryOrder" stacked>
                   <v-icon size="36" class="mb-2">mdi-truck-delivery</v-icon>
                   배달 주문
                 </v-btn>
@@ -76,7 +76,8 @@ const getMyInfo = async () => {
     } else {
       router.push('/login')
     }
-  });
+  })
+
 };
 
 const logout = () => {
