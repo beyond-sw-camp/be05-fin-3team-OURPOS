@@ -22,7 +22,7 @@
                 <tbody>
                   <tr v-for="(order, index) in orders" :key="index">
                     <td>{{ order.storeOrderId }}</td>
-                    <td>{{ formatDate(order.storeOrderDate) }}</td>
+                    <td>{{ formatDateTime(order.storeOrderDate) }}</td>
                     <td>{{ formatCurrency(order.storeCommPrice)}}원</td>
                     <td>{{ order.storeOrderStatus }}</td>
                     <td>
@@ -165,22 +165,10 @@ export default {
     closeOrderDetails() {
       this.selectedOrder = null; // 모달 닫기
     },
-    formatDate(dateString) {
-      const [datePart, timePart] = dateString.split('-');
-      const [year, month, day] = datePart.split('-');
-      const [hours, minutes, seconds] = timePart.split(':');
-
-      const date = new Date(year, month - 1, day, hours, minutes, seconds);
-      
-      const formattedYear = date.getFullYear();
-      const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0');
-      const formattedDay = date.getDate().toString().padStart(2, '0');
-      const period = date.getHours() < 12 ? '오전' : '오후';
-      const formattedHours = (date.getHours() % 12 || 12).toString().padStart(2, '0');
-      const formattedMinutes = date.getMinutes().toString().padStart(2, '0');
-      const formattedSeconds = date.getSeconds().toString().padStart(2, '0');
-
-      return `${formattedYear}.${formattedMonth}.${formattedDay} ${period} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    formatDateTime(dateTime) {
+      const date = new Date(dateTime);
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      return date.toLocaleString('ko-KR', options).replace(/\./g, '.');
     },
 
     formatCurrency(amount) {

@@ -6,6 +6,8 @@ import com.ourpos.domain.storeorder.StoreCommStatus;
 import com.ourpos.domain.storeorder.StoreOrder;
 import com.ourpos.domain.storeorder.StoreOrderDetail;
 import com.ourpos.domain.storeorder.StoreOrderStatus;
+
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +20,7 @@ import lombok.Setter;
 public class StoreOrderCheckResponseDto {
 	//주문번호 주문일시 주문 금액 주문상태 주문 변경(주문 삭제버튼) 
 	  private Long storeOrderId; 
-	  private String storeOrderDate; 
+	  private LocalDateTime storeOrderDate; 
 	  private Integer storeOrderPrice;
 	  private StoreOrderStatus storeOrderStatus;
 	//주문주소 주문지점명 연락처
@@ -40,7 +42,7 @@ public class StoreOrderCheckResponseDto {
 
 
 	public StoreOrderCheckResponseDto(StoreOrder storeOrder, StoreOrderDetail storeOrderDetail){
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
+		
 
 		this.storeId = storeOrder.getStore().getId();
 		this.storeCommName= storeOrderDetail.getStoreMenu().getName();
@@ -52,7 +54,7 @@ public class StoreOrderCheckResponseDto {
 		this.storeOrderDetailQuantity = storeOrderDetail.getStoreOrder().getQuantity();
 		// 추가
 		this.storeOrderId = storeOrder.getId();
-		this.storeOrderDate = storeOrder.getCreatedDateTime().format(formatter);
+		this.storeOrderDate = storeOrder.getCreatedDateTime();
 		this.storeOrderPrice = storeOrder.getPrice();
 		this.storeOrderStatus = storeOrder.getStatus();
 		// 2차 추가
