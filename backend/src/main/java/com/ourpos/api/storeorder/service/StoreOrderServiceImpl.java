@@ -243,7 +243,7 @@ public class StoreOrderServiceImpl {
     public Page<StoreOrderCheckResponseDto> getStoreOrderchecka(int pageNumber, int pageSize) {
         System.out.println("StoreOrderService.getStoreOrdercheckw");
         //Pageable 객체 생성
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "createdDateTime"));
          // ACCEPTED 상태인 주문을 조회할 상태 리스트 생성
         List<StoreOrderStatus> statuses = Arrays.asList(StoreOrderStatus.ACCEPTED);
         // 상태가 ACCEPTED인 모든 주문을 페이지로 조회
@@ -288,7 +288,7 @@ public class StoreOrderServiceImpl {
     public Page<StoreOrderCheckResponseDto> getStoreOrdercheckd(int pageNumber, int pageSize) {
         System.out.println("StoreOrderService.getStoreOrdercheckd");
         //Pageable 객체 생성
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "createdDateTime"));
          // ACCEPTED 상태인 주문을 조회할 상태 리스트 생성
         List<StoreOrderStatus> statuses = Arrays.asList(StoreOrderStatus.DELIVERING);
         // 상태가 ACCEPTED인 모든 주문을 페이지로 조회
@@ -333,7 +333,7 @@ public class StoreOrderServiceImpl {
     public Page<StoreOrderCheckResponseDto> getStoreOrdercheckdc(int pageNumber, int pageSize) {
         System.out.println("StoreOrderService.getStoreOrdercheckdc");
         //Pageable 객체 생성
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "createdDateTime"));
          // ACCEPTED 상태인 주문을 조회할 상태 리스트 생성
         List<StoreOrderStatus> statuses = Arrays.asList(StoreOrderStatus.COMPLETED);
         // 상태가 ACCEPTED인 모든 주문을 페이지로 조회
