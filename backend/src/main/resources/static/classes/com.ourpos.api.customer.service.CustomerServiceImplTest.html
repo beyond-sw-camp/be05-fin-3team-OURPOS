@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - CustomerServiceImplTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>CustomerServiceImplTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.ourpos.api.customer.service.html">com.ourpos.api.customer.service</a> &gt; CustomerServiceImplTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">8</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.608s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">로그인 고객의 주소를 추가할 수 있다.</td>
+<td class="success">addSubAddress()</td>
+<td class="success">0.014s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인 고객의 주소를 삭제할 수 있다.</td>
+<td class="success">deleteAddress()</td>
+<td class="success">0.089s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인 ID로 고객 정보를 조회할 수 있다.</td>
+<td class="success">findLoginCustomer()</td>
+<td class="success">0.391s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인 ID로 고객 주소를 조회할 수 있다.</td>
+<td class="success">findLoginCustomerAddresses()</td>
+<td class="success">0.018s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인 고객의 기본 주소는 삭제할 수 없다.</td>
+<td class="success">test()</td>
+<td class="success">0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인 고객의 주소를 수정할 수 있다.</td>
+<td class="success">updateAddress()</td>
+<td class="success">0.017s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인 고객의 기본 주소를 변경할 수 있다.</td>
+<td class="success">updateDefaultAddress()</td>
+<td class="success">0.043s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인 고객의 주소가 1개일 때는 기본 주소를 변경할 수 없다.</td>
+<td class="success">updateDefaultAddressEx()</td>
+<td class="success">0.029s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2024-06-27T22:32:36.704+09:00  INFO 68374 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ourpos.api.customer.service.CustomerServiceImplTest]: CustomerServiceImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-06-27T22:32:36.766+09:00  INFO 68374 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ourpos.OurposApplication for test class com.ourpos.api.customer.service.CustomerServiceImplTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2024-06-27T22:32:36.783+09:00  INFO 68374 --- [    Test worker] c.o.a.c.service.CustomerServiceImplTest  : Starting CustomerServiceImplTest using Java 17.0.8 with PID 68374 (started by sangcheol in /Users/sangcheol/Desktop/coding/be05-fin-3team-OURPOS/backend)
+2024-06-27T22:32:36.783+09:00  INFO 68374 --- [    Test worker] c.o.a.c.service.CustomerServiceImplTest  : The following 1 profile is active: &quot;test&quot;
+2024-06-27T22:32:37.507+09:00  INFO 68374 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-27T22:32:37.573+09:00  INFO 68374 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 17 JPA repository interfaces.
+2024-06-27T22:32:38.023+09:00  INFO 68374 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-06-27T22:32:38.300+09:00  INFO 68374 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:28d3886d-417f-4f45-9296-cb3d3f42edc8 user=SA
+2024-06-27T22:32:38.302+09:00  INFO 68374 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-06-27T22:32:38.369+09:00  INFO 68374 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-27T22:32:38.454+09:00  INFO 68374 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-06-27T22:32:38.493+09:00  INFO 68374 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-06-27T22:32:38.636+09:00  INFO 68374 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-06-27T22:32:38.987+09:00  WARN 68374 --- [    Test worker] o.h.boot.model.internal.EntityBinder     : HHH000457: Joined inheritance hierarchy [com.ourpos.domain.order.Order] defined explicit @DiscriminatorColumn.  Legacy Hibernate behavior was to ignore the @DiscriminatorColumn.  However, as part of issue HHH-6911 we now apply the explicit @DiscriminatorColumn.  If you would prefer the legacy behavior, enable the `hibernate.discriminator.ignore_explicit_for_joined` setting (hibernate.discriminator.ignore_explicit_for_joined=true)
+2024-06-27T22:32:39.238+09:00  WARN 68374 --- [    Test worker] org.hibernate.mapping.RootClass          : HHH000038: Composite-id class does not override equals(): com.ourpos.domain.order.OrderNotification
+2024-06-27T22:32:39.239+09:00  WARN 68374 --- [    Test worker] org.hibernate.mapping.RootClass          : HHH000039: Composite-id class does not override hashCode(): com.ourpos.domain.order.OrderNotification
+2024-06-27T22:32:39.993+09:00  INFO 68374 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-06-27T22:32:40.008+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists administrative_building_address cascade 
+2024-06-27T22:32:40.013+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists category cascade 
+2024-06-27T22:32:40.013+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists customer cascade 
+2024-06-27T22:32:40.013+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists customer_address cascade 
+2024-06-27T22:32:40.016+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists delivery_order cascade 
+2024-06-27T22:32:40.016+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists hall_order cascade 
+2024-06-27T22:32:40.017+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists head_office_stock cascade 
+2024-06-27T22:32:40.017+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists manager cascade 
+2024-06-27T22:32:40.017+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists menu cascade 
+2024-06-27T22:32:40.017+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists menu_option cascade 
+2024-06-27T22:32:40.018+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists menu_option_group cascade 
+2024-06-27T22:32:40.018+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists order_address cascade 
+2024-06-27T22:32:40.018+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists order_detail cascade 
+2024-06-27T22:32:40.018+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists order_option cascade 
+2024-06-27T22:32:40.018+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists order_option_group cascade 
+2024-06-27T22:32:40.019+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists order_notification cascade 
+2024-06-27T22:32:40.019+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists orders cascade 
+2024-06-27T22:32:40.019+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists recipe cascade 
+2024-06-27T22:32:40.019+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists rider cascade 
+2024-06-27T22:32:40.019+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists store cascade 
+2024-06-27T22:32:40.019+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists store_address cascade 
+2024-06-27T22:32:40.020+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists store_comm cascade 
+2024-06-27T22:32:40.020+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists store_order_detail cascade 
+2024-06-27T22:32:40.020+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists store_orders cascade 
+2024-06-27T22:32:40.020+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists store_restricted_menu cascade 
+2024-06-27T22:32:40.020+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists store_stock cascade 
+2024-06-27T22:32:40.020+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    drop table if exists temp_order cascade 
+2024-06-27T22:32:40.026+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table administrative_building_address (
+        administrative_building_address_city varchar(255),
+        administrative_building_address_code varchar(255) not null,
+        administrative_building_address_town varchar(255),
+        administrative_building_address_village varchar(255),
+        primary key (administrative_building_address_code)
+    )
+2024-06-27T22:32:40.031+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table category (
+        category_deleted_yn boolean,
+        category_deleted_date_time timestamp(6),
+        category_id bigint generated by default as identity,
+        category_name varchar(255),
+        primary key (category_id)
+    )
+2024-06-27T22:32:40.035+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table customer (
+        created_date_time timestamp(6),
+        customer_id bigint generated by default as identity,
+        modified_date_time timestamp(6),
+        customer_age_range varchar(255),
+        customer_email varchar(255),
+        customer_gender varchar(255),
+        customer_login_id varchar(255) unique,
+        customer_name varchar(255),
+        customer_nickname varchar(255),
+        customer_phone varchar(255),
+        customer_profile_image varchar(255),
+        customer_role varchar(255) check (customer_role in ('ROLE_ADMIN','ROLE_USER','ROLE_SUPER_ADMIN','ROLE_RIDER')),
+        primary key (customer_id)
+    )
+2024-06-27T22:32:40.041+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table customer_address (
+        customer_address_default_yn boolean,
+        customer_address_id bigint generated by default as identity,
+        customer_id bigint,
+        customer_address_base varchar(255),
+        customer_address_detail varchar(255),
+        customer_address_name varchar(255),
+        customer_address_tel_no varchar(255),
+        customer_address_zipcode varchar(255),
+        customer_adrress_receiver_name varchar(255),
+        primary key (customer_address_id)
+    )
+2024-06-27T22:32:40.042+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table delivery_order (
+        delivery_order_disposable_yn boolean,
+        delivery_order_estimated_time time(6),
+        delivery_order_tip integer,
+        order_address_id bigint unique,
+        order_id bigint not null,
+        rider_id bigint,
+        delivery_order_owner_message varchar(255),
+        delivery_order_rider_message varchar(255),
+        delivery_order_status varchar(255) check (delivery_order_status in ('WAITING','COOKING','DELIVERING','COMPLETED','CANCELED')),
+        primary key (order_id)
+    )
+2024-06-27T22:32:40.043+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table hall_order (
+        hall_order_takeout_yn boolean,
+        order_id bigint not null,
+        hall_order_status varchar(255) check (hall_order_status in ('WAITING','COOKING','COMPLETED','CANCELED')),
+        primary key (order_id)
+    )
+2024-06-27T22:32:40.044+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table head_office_stock (
+        head_office_stock_quantity integer,
+        head_office_stock_id bigint generated by default as identity,
+        store_menu_id bigint unique,
+        primary key (head_office_stock_id)
+    )
+2024-06-27T22:32:40.045+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table manager (
+        manager_id bigint generated by default as identity,
+        manager_login_id varchar(255) unique,
+        manager_name varchar(255),
+        manager_password varchar(255),
+        role varchar(255) check (role in ('ROLE_ADMIN','ROLE_USER','ROLE_SUPER_ADMIN','ROLE_RIDER')),
+        primary key (manager_id)
+    )
+2024-06-27T22:32:40.046+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table menu (
+        menu_deleted_yn boolean,
+        menu_price integer,
+        category_id bigint,
+        created_date_time timestamp(6),
+        menu_deleted_datetime timestamp(6),
+        menu_id bigint generated by default as identity,
+        modified_date_time timestamp(6),
+        menu_description varchar(255),
+        menu_name varchar(255),
+        menu_picture_url varchar(255),
+        primary key (menu_id)
+    )
+2024-06-27T22:32:40.047+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table menu_option (
+        menu_option_deleted_yn boolean,
+        menu_option_price integer,
+        menu_option_deleted_datetime timestamp(6),
+        menu_option_group_id bigint,
+        menu_option_id bigint generated by default as identity,
+        menu_option_name varchar(255),
+        primary key (menu_option_id)
+    )
+2024-06-27T22:32:40.049+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table menu_option_group (
+        menu_option_group_deleted_yn boolean,
+        menu_option_group_exclusive_yn boolean,
+        category_id bigint,
+        menu_option_group_deleted_datetime timestamp(6),
+        menu_option_group_id bigint generated by default as identity,
+        menu_option_group_description varchar(255),
+        menu_option_group_name varchar(255),
+        primary key (menu_option_group_id)
+    )
+2024-06-27T22:32:40.050+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table order_address (
+        order_address_id bigint generated by default as identity,
+        administrative_building_address_code varchar(255),
+        order_address_base varchar(255),
+        order_address_detail varchar(255),
+        order_address_receiver_name varchar(255),
+        order_address_tel_no varchar(255),
+        order_address_zipcode varchar(255),
+        primary key (order_address_id)
+    )
+2024-06-27T22:32:40.050+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table order_detail (
+        order_detail_price integer,
+        order_detail_quantity integer,
+        menu_id bigint,
+        order_detail_id bigint generated by default as identity,
+        order_id bigint,
+        primary key (order_detail_id)
+    )
+2024-06-27T22:32:40.051+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table order_option (
+        order_option_price integer,
+        order_option_group_id bigint,
+        order_option_id bigint generated by default as identity,
+        order_option_name varchar(255),
+        primary key (order_option_id)
+    )
+2024-06-27T22:32:40.052+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table order_option_group (
+        order_detail_id bigint,
+        order_option_group_id bigint generated by default as identity,
+        order_option_group_name varchar(255),
+        primary key (order_option_group_id)
+    )
+2024-06-27T22:32:40.052+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table order_notification (
+        order_id bigint not null,
+        order_notification_message varchar(255),
+        primary key (order_id)
+    )
+2024-06-27T22:32:40.053+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table orders (
+        order_price integer,
+        created_date_time timestamp(6),
+        customer_id bigint,
+        modified_date_time timestamp(6),
+        order_completed_datetime timestamp(6),
+        order_id bigint generated by default as identity,
+        store_id bigint,
+        order_type varchar(31) not null,
+        primary key (order_id)
+    )
+2024-06-27T22:32:40.054+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table recipe (
+        recipe_content integer,
+        menu_id bigint,
+        recipe_id bigint generated by default as identity,
+        store_menu_id bigint,
+        primary key (recipe_id)
+    )
+2024-06-27T22:32:40.055+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table rider (
+        created_date_time timestamp(6),
+        modified_date_time timestamp(6),
+        rider_id bigint generated by default as identity,
+        rider_email varchar(255),
+        rider_motor_license_number varchar(255),
+        rider_name varchar(255),
+        rider_password varchar(255),
+        rider_phone varchar(255),
+        rider_registered_number varchar(255),
+        primary key (rider_id)
+    )
+2024-06-27T22:32:40.055+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table store (
+        store_close_time time(6),
+        store_close_yn boolean,
+        store_minimum_order_price integer,
+        store_open_time time(6),
+        created_date_time timestamp(6),
+        kiosk_customer_id bigint unique,
+        manager_id bigint unique,
+        modified_date_time timestamp(6),
+        store_address_id bigint unique,
+        store_closed_datetime timestamp(6),
+        store_id bigint generated by default as identity,
+        store_name varchar(255),
+        store_phone varchar(255),
+        store_picture_url varchar(255),
+        primary key (store_id)
+    )
+2024-06-27T22:32:40.057+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table store_address (
+        store_address_latitude float(53),
+        store_address_longitude float(53),
+        store_address_id bigint generated by default as identity,
+        store_address_base varchar(255),
+        store_address_detail varchar(255),
+        store_address_zipcode varchar(255),
+        primary key (store_address_id)
+    )
+2024-06-27T22:32:40.058+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table store_comm (
+        store_comm_deleted_yn boolean,
+        store_comm_price integer,
+        created_date_time timestamp(6),
+        modified_date_time timestamp(6),
+        store_comm_deleted_datetime timestamp(6),
+        store_comm_id bigint generated by default as identity,
+        store_comm_article_unit varchar(255),
+        store_comm_category varchar(255) check (store_comm_category in ('INGREDIENT','SUPPLIES')),
+        store_comm_description varchar(255),
+        store_comm_name varchar(255),
+        store_comm_picture_url varchar(255),
+        store_comm_status varchar(255) check (store_comm_status in ('WAITING','COOKING','COMPLETED','CANCELED')),
+        primary key (store_comm_id)
+    )
+2024-06-27T22:32:40.059+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table store_order_detail (
+        store_comm_id bigint,
+        store_order_detail_id bigint generated by default as identity,
+        store_order_id bigint,
+        primary key (store_order_detail_id)
+    )
+2024-06-27T22:32:40.060+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table store_orders (
+        store_order_price integer,
+        store_order_quantity integer,
+        created_date_time timestamp(6),
+        delivery_date timestamp(6),
+        modified_date_time timestamp(6),
+        store_id bigint,
+        store_order_id bigint generated by default as identity,
+        store_order_status varchar(255) check (store_order_status in ('WAITING','ACCEPTED','DELIVERING','COMPLETED','CANCELED')),
+        primary key (store_order_id)
+    )
+2024-06-27T22:32:40.060+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table store_restricted_menu (
+        menu_id bigint,
+        store_id bigint,
+        store_restricted_menu_id bigint generated by default as identity,
+        primary key (store_restricted_menu_id)
+    )
+2024-06-27T22:32:40.061+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table store_stock (
+        store_stock_quantity integer,
+        created_at timestamp(6),
+        store_id bigint,
+        store_menu_id bigint,
+        store_stock_id bigint generated by default as identity,
+        primary key (store_stock_id)
+    )
+2024-06-27T22:32:40.062+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    create table temp_order (
+        amount integer not null,
+        is_confirmed boolean not null,
+        id bigint generated by default as identity,
+        temp_order_id varchar(255),
+        primary key (id)
+    )
+2024-06-27T22:32:40.062+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists customer_address 
+       add constraint FKr9ofa0ydsgbaqmt9leb3v5eii 
+       foreign key (customer_id) 
+       references customer
+2024-06-27T22:32:40.071+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists delivery_order 
+       add constraint FKqqengg8klx425fcf76vyw2mtq 
+       foreign key (order_address_id) 
+       references order_address
+2024-06-27T22:32:40.071+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists delivery_order 
+       add constraint FKmppblubx6n5vc3o3veo8o9g68 
+       foreign key (rider_id) 
+       references rider
+2024-06-27T22:32:40.072+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists delivery_order 
+       add constraint FKjdhklh1jpi232q68x4flwafem 
+       foreign key (order_id) 
+       references orders
+2024-06-27T22:32:40.073+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists hall_order 
+       add constraint FK4qr0007x7ewxyrhft7uda04o1 
+       foreign key (order_id) 
+       references orders
+2024-06-27T22:32:40.074+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists head_office_stock 
+       add constraint FKduxcp19tpeg86wmv5uxnc6xs1 
+       foreign key (store_menu_id) 
+       references store_comm
+2024-06-27T22:32:40.075+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists menu 
+       add constraint FKww84tou7nixng06lmxawvcre 
+       foreign key (category_id) 
+       references category
+2024-06-27T22:32:40.075+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists menu_option 
+       add constraint FKf3f59id3b6fmulimxsgpud9nq 
+       foreign key (menu_option_group_id) 
+       references menu_option_group
+2024-06-27T22:32:40.076+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists menu_option_group 
+       add constraint FK7y0p9htht3votj8b37icypxk4 
+       foreign key (category_id) 
+       references category
+2024-06-27T22:32:40.077+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists order_address 
+       add constraint FK8v3d3qf2wb46qq0l3gi4cdd6q 
+       foreign key (administrative_building_address_code) 
+       references administrative_building_address
+2024-06-27T22:32:40.078+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists order_detail 
+       add constraint FK8bc1u2e5w800wtuw8lfmanhbb 
+       foreign key (menu_id) 
+       references menu
+2024-06-27T22:32:40.079+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists order_detail 
+       add constraint FKrws2q0si6oyd6il8gqe2aennc 
+       foreign key (order_id) 
+       references orders
+2024-06-27T22:32:40.079+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists order_option 
+       add constraint FK5s0s4vqbjl928os3xxemwwexu 
+       foreign key (order_option_group_id) 
+       references order_option_group
+2024-06-27T22:32:40.080+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists order_option_group 
+       add constraint FKhaho5y3b8ghjuh7hh2d2qxl1y 
+       foreign key (order_detail_id) 
+       references order_detail
+2024-06-27T22:32:40.081+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists order_notification 
+       add constraint FK4p12l4if1ns3tm7qnsejk3y8v 
+       foreign key (order_id) 
+       references orders
+2024-06-27T22:32:40.082+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists orders 
+       add constraint FK624gtjin3po807j3vix093tlf 
+       foreign key (customer_id) 
+       references customer
+2024-06-27T22:32:40.082+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists orders 
+       add constraint FK5n14sr4mswfdtaoiwj7rkt0mw 
+       foreign key (store_id) 
+       references store
+2024-06-27T22:32:40.083+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists recipe 
+       add constraint FKsdo3n4bu8024sb5jwi3s8l962 
+       foreign key (menu_id) 
+       references menu
+2024-06-27T22:32:40.084+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists recipe 
+       add constraint FKeqhx6808jhn31uie498i7hyv4 
+       foreign key (store_menu_id) 
+       references store_comm
+2024-06-27T22:32:40.085+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists store 
+       add constraint FK2498myrehsvovyhnjwv7wehp6 
+       foreign key (store_address_id) 
+       references store_address
+2024-06-27T22:32:40.086+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists store 
+       add constraint FKecfctbg5r4w14i7nmuypqya07 
+       foreign key (kiosk_customer_id) 
+       references customer
+2024-06-27T22:32:40.086+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists store 
+       add constraint FK7bx7ky8tg4ndmqgk0523kib8d 
+       foreign key (manager_id) 
+       references manager
+2024-06-27T22:32:40.087+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists store_order_detail 
+       add constraint FKir8gkti1t472sjco5lyyalskl 
+       foreign key (store_comm_id) 
+       references store_comm
+2024-06-27T22:32:40.088+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists store_order_detail 
+       add constraint FK15sqegsn0l8r0qo94nw8ehhol 
+       foreign key (store_order_id) 
+       references store_orders
+2024-06-27T22:32:40.088+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists store_orders 
+       add constraint FK8fxd54jmqc9ag6nttq4cy8amf 
+       foreign key (store_id) 
+       references store
+2024-06-27T22:32:40.089+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists store_restricted_menu 
+       add constraint FKpmgl8oe9dpswvua4abtvmdajt 
+       foreign key (menu_id) 
+       references menu
+2024-06-27T22:32:40.090+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists store_restricted_menu 
+       add constraint FK1ojljywr55rbah00gs4ij3pqf 
+       foreign key (store_id) 
+       references store
+2024-06-27T22:32:40.091+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists store_stock 
+       add constraint FKbofk87b024gbpdaal1n55ked0 
+       foreign key (store_id) 
+       references store
+2024-06-27T22:32:40.091+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    alter table if exists store_stock 
+       add constraint FKpuwyabv303fhugq2m2yyy1xat 
+       foreign key (store_menu_id) 
+       references store_comm
+2024-06-27T22:32:40.095+09:00  INFO 68374 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-27T22:32:40.603+09:00  INFO 68374 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-06-27T22:32:41.556+09:00  WARN 68374 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-27T22:32:42.780+09:00  INFO 68374 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@70691043, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@c1efb6e, org.springframework.security.web.context.SecurityContextHolderFilter@740ff2bd, org.springframework.security.web.header.HeaderWriterFilter@241f3f8c, org.springframework.web.filter.CorsFilter@6673cafb, com.ourpos.auth.jwt.CustomerLogoutFilter@6877790f, org.springframework.security.web.authentication.logout.LogoutFilter@3926fd8, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@48fdc833, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@65ebd4b8, com.ourpos.auth.jwt.JwtFilter@5024974a, com.ourpos.auth.jwt.ManagerLoginFilter@2b9ac3ab, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1de9051d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@19cce6b9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@53c6e031, org.springframework.security.web.session.SessionManagementFilter@2a1ded4f, org.springframework.security.web.access.ExceptionTranslationFilter@5eaa0712, org.springframework.security.web.access.intercept.AuthorizationFilter@147d0ede]
+2024-06-27T22:32:43.297+09:00  INFO 68374 --- [    Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2024-06-27T22:32:43.298+09:00  INFO 68374 --- [    Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@50748e55]]
+2024-06-27T22:32:43.299+09:00  INFO 68374 --- [    Test worker] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2024-06-27T22:32:43.314+09:00  INFO 68374 --- [    Test worker] c.o.a.c.service.CustomerServiceImplTest  : Started CustomerServiceImplTest in 6.544 seconds (process running for 9.926)
+2024-06-27T22:32:43.447+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.619+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.715+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.718+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.719+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.739+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.753+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        customer_address 
+    set
+        customer_address_base=?,
+        customer_address_detail=?,
+        customer_id=?,
+        customer_address_default_yn=?,
+        customer_address_name=?,
+        customer_adrress_receiver_name=?,
+        customer_address_tel_no=?,
+        customer_address_zipcode=? 
+    where
+        customer_address_id=?
+2024-06-27T22:32:43.769+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ca1_0.customer_address_id,
+        ca1_0.customer_address_base,
+        ca1_0.customer_address_detail,
+        ca1_0.customer_id,
+        ca1_0.customer_address_default_yn,
+        ca1_0.customer_address_name,
+        ca1_0.customer_adrress_receiver_name,
+        ca1_0.customer_address_tel_no,
+        ca1_0.customer_address_zipcode 
+    from
+        customer_address ca1_0 
+    where
+        ca1_0.customer_id=?
+2024-06-27T22:32:43.807+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.809+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.824+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.835+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.837+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.837+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.839+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.843+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ca1_0.customer_address_id,
+        ca1_0.customer_address_base,
+        ca1_0.customer_address_detail,
+        ca1_0.customer_id,
+        ca1_0.customer_address_default_yn,
+        ca1_0.customer_address_name,
+        ca1_0.customer_adrress_receiver_name,
+        ca1_0.customer_address_tel_no,
+        ca1_0.customer_address_zipcode 
+    from
+        customer_address ca1_0 
+    where
+        ca1_0.customer_id=?
+2024-06-27T22:32:43.854+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.868+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.870+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        customer_address 
+    set
+        customer_address_base=?,
+        customer_address_detail=?,
+        customer_id=?,
+        customer_address_default_yn=?,
+        customer_address_name=?,
+        customer_adrress_receiver_name=?,
+        customer_address_tel_no=?,
+        customer_address_zipcode=? 
+    where
+        customer_address_id=?
+2024-06-27T22:32:43.872+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        customer_address 
+    set
+        customer_address_base=?,
+        customer_address_detail=?,
+        customer_id=?,
+        customer_address_default_yn=?,
+        customer_address_name=?,
+        customer_adrress_receiver_name=?,
+        customer_address_tel_no=?,
+        customer_address_zipcode=? 
+    where
+        customer_address_id=?
+2024-06-27T22:32:43.872+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ca1_0.customer_address_id,
+        ca1_0.customer_address_base,
+        ca1_0.customer_address_detail,
+        ca1_0.customer_id,
+        ca1_0.customer_address_default_yn,
+        ca1_0.customer_address_name,
+        ca1_0.customer_adrress_receiver_name,
+        ca1_0.customer_address_tel_no,
+        ca1_0.customer_address_zipcode 
+    from
+        customer_address ca1_0 
+    where
+        ca1_0.customer_id=?
+2024-06-27T22:32:43.878+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.879+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.880+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.887+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.888+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.888+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.895+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.897+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        customer_address 
+    set
+        customer_address_base=?,
+        customer_address_detail=?,
+        customer_id=?,
+        customer_address_default_yn=?,
+        customer_address_name=?,
+        customer_adrress_receiver_name=?,
+        customer_address_tel_no=?,
+        customer_address_zipcode=? 
+    where
+        customer_address_id=?
+2024-06-27T22:32:43.899+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ca1_0.customer_address_id,
+        ca1_0.customer_address_base,
+        ca1_0.customer_address_detail,
+        ca1_0.customer_id,
+        ca1_0.customer_address_default_yn,
+        ca1_0.customer_address_name,
+        ca1_0.customer_adrress_receiver_name,
+        ca1_0.customer_address_tel_no,
+        ca1_0.customer_address_zipcode 
+    from
+        customer_address ca1_0 
+    where
+        ca1_0.customer_id=?
+2024-06-27T22:32:43.905+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.909+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.910+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.911+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.912+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.913+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.914+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ca1_0.customer_address_id,
+        ca1_0.customer_address_base,
+        ca1_0.customer_address_detail,
+        ca1_0.customer_id,
+        ca1_0.customer_address_default_yn,
+        ca1_0.customer_address_name,
+        ca1_0.customer_adrress_receiver_name,
+        ca1_0.customer_address_tel_no,
+        ca1_0.customer_address_zipcode 
+    from
+        customer_address ca1_0 
+    where
+        ca1_0.customer_id=?
+2024-06-27T22:32:43.920+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.921+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.922+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.928+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:43.931+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ca1_0.customer_address_id,
+        ca1_0.customer_address_base,
+        ca1_0.customer_address_detail,
+        ca1_0.customer_id,
+        ca1_0.customer_address_default_yn,
+        ca1_0.customer_address_name,
+        ca1_0.customer_adrress_receiver_name,
+        ca1_0.customer_address_tel_no,
+        ca1_0.customer_address_zipcode 
+    from
+        customer_address ca1_0 
+    where
+        ca1_0.customer_id=?
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 6. 27. 오후 10:32:45</p>
+</div>
+</div>
+</body>
+</html>

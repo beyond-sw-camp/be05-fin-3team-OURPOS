@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - CustomerRepositoryTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>CustomerRepositoryTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.ourpos.domain.customer.html">com.ourpos.domain.customer</a> &gt; CustomerRepositoryTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.017s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">고객은 로그인 ID로 조회할 수 있다.</td>
+<td class="success">findByLoginId()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">고객은 회원가입을 할 수 있다.</td>
+<td class="success">register()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">고객은 여러 주소를 저장해 둘 수 있다.</td>
+<td class="success">saveCustomerAddress()</td>
+<td class="success">0.004s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2024-06-27T22:32:44.278+09:00  INFO 68374 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ourpos.domain.customer.CustomerRepositoryTest]: CustomerRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-06-27T22:32:44.279+09:00  INFO 68374 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ourpos.OurposApplication for test class com.ourpos.domain.customer.CustomerRepositoryTest
+2024-06-27T22:32:44.282+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.284+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.284+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.285+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.287+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0
+2024-06-27T22:32:44.291+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.292+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.292+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer_address
+        (customer_address_base, customer_address_detail, customer_id, customer_address_default_yn, customer_address_name, customer_adrress_receiver_name, customer_address_tel_no, customer_address_zipcode, customer_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.296+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.297+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id=?
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 6. 27. 오후 10:32:45</p>
+</div>
+</div>
+</body>
+</html>

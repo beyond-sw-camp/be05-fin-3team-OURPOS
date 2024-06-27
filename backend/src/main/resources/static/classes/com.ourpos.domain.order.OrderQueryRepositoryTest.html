@@ -1,0 +1,2859 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - OrderQueryRepositoryTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>OrderQueryRepositoryTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.ourpos.domain.order.html">com.ourpos.domain.order</a> &gt; OrderQueryRepositoryTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">15</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.372s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">특정 가게의 배달 주문을 주문 상태에 따라 조회한다.</td>
+<td class="success">findDeliveryOrders()</td>
+<td class="success">0.027s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 가게의 배달 주문을 조회할 때 주문 상태가 null인 경우 전체 주문을 조회한다.</td>
+<td class="success">findDeliveryOrdersAll()</td>
+<td class="success">0.028s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 고객의 배달 주문을 조회할 때 주문 상태가 null인 경우 전체 주문을 조회한다.</td>
+<td class="success">findDeliveryOrdersByLoginIdAll()</td>
+<td class="success">0.024s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 고객의 배달 주문을 주문 상태에 따라 조회한다.</td>
+<td class="success">findDeliveryOrdersByLoginIdAndStatus()</td>
+<td class="success">0.051s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 고객의 배달 주문을 조회하면 최근에 주문한 순서대로 정렬된다.</td>
+<td class="success">findDeliveryOrdersByLoginIdOrderByCreatedDateTimeDesc()</td>
+<td class="success">0.028s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 가게의 배달 주문을 조회할 때 주문 상태가 완료인 경우 3일 이내의 주문만 조회한다.</td>
+<td class="success">findDeliveryOrdersCompleted()</td>
+<td class="success">0.022s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">배달 주문을 조회하는 경우 페이징 처리가 가능하다. 기본 페이지 크기는 10이다.</td>
+<td class="success">findDeliveryOrdersWithPaging()</td>
+<td class="success">0.029s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 가게의 홀/포장 주문을 주문 상태에 따라 조회한다.</td>
+<td class="success">findHallOrders()</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 가게의 홀/포장 주문을 조회할 때 주문 상태가 null인 경우 전체 주문을 조회한다.</td>
+<td class="success">findHallOrdersAll()</td>
+<td class="success">0.043s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 고객의 홀 주문을 조회한다.</td>
+<td class="success">findHallOrdersByLoginId()</td>
+<td class="success">0.016s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 고객의 홀 주문을 조회할 때 페이징 처리가 가능하다. 기본 페이지 크기는 10이다.</td>
+<td class="success">findHallOrdersByLoginIdWithPaging()</td>
+<td class="success">0.021s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 가게의 홀/포장 주문을 조회할 때 주문 상태가 완료인 경우 3일 이내의 주문만 조회한다.</td>
+<td class="success">findHallOrdersCompleted()</td>
+<td class="success">0.015s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">홀 주문을 조회하는 경우 페이징 처리가 가능하다. 기본 페이지 크기는 10이다.</td>
+<td class="success">findHallOrdersWithPaging()</td>
+<td class="success">0.024s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 가게의 배달 주문을 주문 id를 통해 조회한다.</td>
+<td class="success">findOneDeliveryOrder()</td>
+<td class="success">0.018s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">특정 가게의 특정 홀 주문을 주문 id를 통해 조회한다.</td>
+<td class="success">findOneHallOrder()</td>
+<td class="success">0.015s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2024-06-27T22:32:44.451+09:00  INFO 68374 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ourpos.domain.order.OrderQueryRepositoryTest]: OrderQueryRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-06-27T22:32:44.473+09:00  INFO 68374 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ourpos.OurposApplication for test class com.ourpos.domain.order.OrderQueryRepositoryTest
+2024-06-27T22:32:44.478+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.479+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.480+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.481+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.489+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.490+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.491+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.491+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.492+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.492+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.492+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.493+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.493+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.506+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        do1_0.order_id,
+        do1_1.order_completed_datetime,
+        do1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        do1_1.modified_date_time,
+        do1_1.order_id,
+        do1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        do1_0.delivery_order_disposable_yn,
+        do1_0.delivery_order_estimated_time,
+        oa1_0.order_address_id,
+        oa1_0.order_address_base,
+        oa1_0.order_address_detail,
+        oa1_0.administrative_building_address_code,
+        oa1_0.order_address_receiver_name,
+        oa1_0.order_address_tel_no,
+        oa1_0.order_address_zipcode,
+        do1_0.delivery_order_owner_message,
+        do1_0.rider_id,
+        do1_0.delivery_order_rider_message,
+        do1_0.delivery_order_status,
+        do1_0.delivery_order_tip 
+    from
+        delivery_order do1_0 
+    join
+        orders do1_1 
+            on do1_0.order_id=do1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=do1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=do1_1.store_id 
+    join
+        order_address oa1_0 
+            on oa1_0.order_address_id=do1_0.order_address_id 
+    where
+        c1_0.customer_login_id=? 
+        and do1_0.delivery_order_status=? 
+    order by
+        do1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.529+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.529+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.530+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.531+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.531+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.532+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.532+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.532+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.533+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.533+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.542+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        do1_0.order_id,
+        do1_1.order_completed_datetime,
+        do1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        do1_1.modified_date_time,
+        do1_1.order_id,
+        do1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        do1_0.delivery_order_disposable_yn,
+        do1_0.delivery_order_estimated_time,
+        oa1_0.order_address_id,
+        oa1_0.order_address_base,
+        oa1_0.order_address_detail,
+        oa1_0.administrative_building_address_code,
+        oa1_0.order_address_receiver_name,
+        oa1_0.order_address_tel_no,
+        oa1_0.order_address_zipcode,
+        do1_0.delivery_order_owner_message,
+        do1_0.rider_id,
+        do1_0.delivery_order_rider_message,
+        do1_0.delivery_order_status,
+        do1_0.delivery_order_tip 
+    from
+        delivery_order do1_0 
+    join
+        orders do1_1 
+            on do1_0.order_id=do1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=do1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=do1_1.store_id 
+    join
+        order_address oa1_0 
+            on oa1_0.order_address_id=do1_0.order_address_id 
+    where
+        s1_0.store_id=? 
+        and do1_0.delivery_order_status=? 
+        and do1_1.order_completed_datetime&gt;? 
+    order by
+        do1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.551+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.552+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.553+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.553+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.554+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.555+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.555+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.555+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.556+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.556+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.562+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        do1_0.order_id,
+        do1_1.order_completed_datetime,
+        do1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        do1_1.modified_date_time,
+        do1_1.order_id,
+        do1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        do1_0.delivery_order_disposable_yn,
+        do1_0.delivery_order_estimated_time,
+        oa1_0.order_address_id,
+        oa1_0.order_address_base,
+        oa1_0.order_address_detail,
+        oa1_0.administrative_building_address_code,
+        oa1_0.order_address_receiver_name,
+        oa1_0.order_address_tel_no,
+        oa1_0.order_address_zipcode,
+        do1_0.delivery_order_owner_message,
+        do1_0.rider_id,
+        do1_0.delivery_order_rider_message,
+        do1_0.delivery_order_status,
+        do1_0.delivery_order_tip 
+    from
+        delivery_order do1_0 
+    join
+        orders do1_1 
+            on do1_0.order_id=do1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=do1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=do1_1.store_id 
+    join
+        order_address oa1_0 
+            on oa1_0.order_address_id=do1_0.order_address_id 
+    where
+        c1_0.customer_login_id=? 
+    order by
+        do1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.580+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.582+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.584+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.587+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.588+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.590+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.591+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.592+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.592+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.594+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.599+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ho1_0.order_id,
+        ho1_1.order_completed_datetime,
+        ho1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        ho1_1.modified_date_time,
+        ho1_1.order_id,
+        ho1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        ho1_0.hall_order_takeout_yn,
+        ho1_0.hall_order_status 
+    from
+        hall_order ho1_0 
+    join
+        orders ho1_1 
+            on ho1_0.order_id=ho1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=ho1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=ho1_1.store_id 
+    where
+        s1_0.store_id=? 
+    order by
+        ho1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.613+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        count(ho1_0.order_id) 
+    from
+        hall_order ho1_0 
+    join
+        orders ho1_1 
+            on ho1_0.order_id=ho1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=ho1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=ho1_1.store_id 
+    where
+        s1_0.store_id=?
+2024-06-27T22:32:44.623+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.624+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.625+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.626+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.627+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.628+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.629+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.629+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.630+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.630+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.631+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.632+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.632+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.637+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        do1_0.order_id,
+        do1_1.order_completed_datetime,
+        do1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        do1_1.modified_date_time,
+        do1_1.order_id,
+        do1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        do1_0.delivery_order_disposable_yn,
+        do1_0.delivery_order_estimated_time,
+        oa1_0.order_address_id,
+        oa1_0.order_address_base,
+        oa1_0.order_address_detail,
+        oa1_0.administrative_building_address_code,
+        oa1_0.order_address_receiver_name,
+        oa1_0.order_address_tel_no,
+        oa1_0.order_address_zipcode,
+        do1_0.delivery_order_owner_message,
+        do1_0.rider_id,
+        do1_0.delivery_order_rider_message,
+        do1_0.delivery_order_status,
+        do1_0.delivery_order_tip 
+    from
+        delivery_order do1_0 
+    join
+        orders do1_1 
+            on do1_0.order_id=do1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=do1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=do1_1.store_id 
+    join
+        order_address oa1_0 
+            on oa1_0.order_address_id=do1_0.order_address_id 
+    where
+        s1_0.store_id=? 
+        and do1_0.delivery_order_status=? 
+    order by
+        do1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.650+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.651+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.652+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.653+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.653+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.654+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.657+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ho1_0.order_id,
+        ho1_1.order_completed_datetime,
+        ho1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        ho1_1.modified_date_time,
+        ho1_1.order_id,
+        ho1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        ho1_0.hall_order_takeout_yn,
+        ho1_0.hall_order_status 
+    from
+        hall_order ho1_0 
+    join
+        orders ho1_1 
+            on ho1_0.order_id=ho1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=ho1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=ho1_1.store_id 
+    where
+        ho1_0.order_id=? 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.665+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.665+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.666+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.666+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.667+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.668+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.668+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.669+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.669+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.669+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.669+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.670+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.670+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.670+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.671+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.671+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.672+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.672+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.672+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.673+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.673+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.673+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.673+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.674+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.674+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.674+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.675+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.675+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.675+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.675+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.675+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.676+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.676+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.676+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.676+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.677+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.677+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.677+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.677+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.677+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.678+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.678+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.678+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.679+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.679+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.679+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.680+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.680+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.680+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.682+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        do1_0.order_id,
+        do1_1.order_completed_datetime,
+        do1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        do1_1.modified_date_time,
+        do1_1.order_id,
+        do1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        do1_0.delivery_order_disposable_yn,
+        do1_0.delivery_order_estimated_time,
+        oa1_0.order_address_id,
+        oa1_0.order_address_base,
+        oa1_0.order_address_detail,
+        oa1_0.administrative_building_address_code,
+        oa1_0.order_address_receiver_name,
+        oa1_0.order_address_tel_no,
+        oa1_0.order_address_zipcode,
+        do1_0.delivery_order_owner_message,
+        do1_0.rider_id,
+        do1_0.delivery_order_rider_message,
+        do1_0.delivery_order_status,
+        do1_0.delivery_order_tip 
+    from
+        delivery_order do1_0 
+    join
+        orders do1_1 
+            on do1_0.order_id=do1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=do1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=do1_1.store_id 
+    join
+        order_address oa1_0 
+            on oa1_0.order_address_id=do1_0.order_address_id 
+    where
+        s1_0.store_id=? 
+        and do1_0.delivery_order_status=? 
+    order by
+        do1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.696+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.697+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.698+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.699+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.699+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.700+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.701+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.701+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.702+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.702+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.703+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.703+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.704+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.705+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.705+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.705+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.706+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.706+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.707+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.707+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.707+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.707+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.708+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.708+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.709+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.709+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.709+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.709+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.710+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.710+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.710+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.710+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.710+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.710+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.713+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ho1_0.order_id,
+        ho1_1.order_completed_datetime,
+        ho1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        ho1_1.modified_date_time,
+        ho1_1.order_id,
+        ho1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        ho1_0.hall_order_takeout_yn,
+        ho1_0.hall_order_status 
+    from
+        hall_order ho1_0 
+    join
+        orders ho1_1 
+            on ho1_0.order_id=ho1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=ho1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=ho1_1.store_id 
+    where
+        s1_0.store_id=? 
+        and ho1_0.hall_order_status=? 
+    order by
+        ho1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.721+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.722+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.723+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.724+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.724+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.725+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.725+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.725+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.730+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ho1_0.order_id,
+        ho1_1.order_completed_datetime,
+        ho1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        ho1_1.modified_date_time,
+        ho1_1.order_id,
+        ho1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        ho1_0.hall_order_takeout_yn,
+        ho1_0.hall_order_status 
+    from
+        hall_order ho1_0 
+    join
+        orders ho1_1 
+            on ho1_0.order_id=ho1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=ho1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=ho1_1.store_id 
+    where
+        s1_0.store_id=? 
+        and ho1_0.hall_order_status=? 
+        and ho1_1.order_completed_datetime&gt;? 
+    order by
+        ho1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.737+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.738+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.738+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.739+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.740+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.740+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.741+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.741+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.742+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ho1_0.order_id,
+        ho1_1.order_completed_datetime,
+        ho1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        ho1_1.modified_date_time,
+        ho1_1.order_id,
+        ho1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        ho1_0.hall_order_takeout_yn,
+        ho1_0.hall_order_status 
+    from
+        hall_order ho1_0 
+    join
+        orders ho1_1 
+            on ho1_0.order_id=ho1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=ho1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=ho1_1.store_id 
+    where
+        s1_0.store_id=? 
+        and ho1_0.hall_order_status=? 
+    order by
+        ho1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.748+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.749+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.750+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.751+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.751+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.752+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.753+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.757+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        do1_0.order_id,
+        do1_1.order_completed_datetime,
+        do1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        do1_1.modified_date_time,
+        do1_1.order_id,
+        do1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        do1_0.delivery_order_disposable_yn,
+        do1_0.delivery_order_estimated_time,
+        oa1_0.order_address_id,
+        oa1_0.order_address_base,
+        oa1_0.order_address_detail,
+        oa1_0.administrative_building_address_code,
+        oa1_0.order_address_receiver_name,
+        oa1_0.order_address_tel_no,
+        oa1_0.order_address_zipcode,
+        do1_0.delivery_order_owner_message,
+        do1_0.rider_id,
+        do1_0.delivery_order_rider_message,
+        do1_0.delivery_order_status,
+        do1_0.delivery_order_tip 
+    from
+        delivery_order do1_0 
+    join
+        orders do1_1 
+            on do1_0.order_id=do1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=do1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=do1_1.store_id 
+    join
+        order_address oa1_0 
+            on oa1_0.order_address_id=do1_0.order_address_id 
+    where
+        do1_0.order_id=? 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.768+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.769+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.770+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.770+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.771+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.771+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.772+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.772+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.772+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.773+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.773+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.773+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.774+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.774+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.774+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.774+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.775+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.775+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.775+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.775+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.776+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.776+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.776+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.776+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.776+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.776+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.777+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.777+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.777+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.778+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.778+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.778+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.779+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.779+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.782+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ho1_0.order_id,
+        ho1_1.order_completed_datetime,
+        ho1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        ho1_1.modified_date_time,
+        ho1_1.order_id,
+        ho1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        ho1_0.hall_order_takeout_yn,
+        ho1_0.hall_order_status 
+    from
+        hall_order ho1_0 
+    join
+        orders ho1_1 
+            on ho1_0.order_id=ho1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=ho1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=ho1_1.store_id 
+    where
+        c1_0.customer_login_id=? 
+    order by
+        ho1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.791+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.793+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.794+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.795+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.795+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.796+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.796+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.796+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.797+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.797+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.797+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.797+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.798+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.799+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        do1_0.order_id,
+        do1_1.order_completed_datetime,
+        do1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        do1_1.modified_date_time,
+        do1_1.order_id,
+        do1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        do1_0.delivery_order_disposable_yn,
+        do1_0.delivery_order_estimated_time,
+        oa1_0.order_address_id,
+        oa1_0.order_address_base,
+        oa1_0.order_address_detail,
+        oa1_0.administrative_building_address_code,
+        oa1_0.order_address_receiver_name,
+        oa1_0.order_address_tel_no,
+        oa1_0.order_address_zipcode,
+        do1_0.delivery_order_owner_message,
+        do1_0.rider_id,
+        do1_0.delivery_order_rider_message,
+        do1_0.delivery_order_status,
+        do1_0.delivery_order_tip 
+    from
+        delivery_order do1_0 
+    join
+        orders do1_1 
+            on do1_0.order_id=do1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=do1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=do1_1.store_id 
+    join
+        order_address oa1_0 
+            on oa1_0.order_address_id=do1_0.order_address_id 
+    where
+        c1_0.customer_login_id=? 
+    order by
+        do1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.803+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        count(do1_0.order_id) 
+    from
+        delivery_order do1_0 
+    join
+        orders do1_1 
+            on do1_0.order_id=do1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=do1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=do1_1.store_id 
+    join
+        order_address oa1_0 
+            on oa1_0.order_address_id=do1_0.order_address_id 
+    where
+        c1_0.customer_login_id=?
+2024-06-27T22:32:44.819+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.821+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.822+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.823+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.825+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.825+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.826+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.826+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.826+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.827+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.828+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_address
+        (order_address_base, order_address_detail, administrative_building_address_code, order_address_receiver_name, order_address_tel_no, order_address_zipcode, order_address_id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.828+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'delivery', default)
+2024-06-27T22:32:44.829+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        delivery_order
+        (delivery_order_disposable_yn, delivery_order_estimated_time, order_address_id, delivery_order_owner_message, rider_id, delivery_order_rider_message, delivery_order_status, delivery_order_tip, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2024-06-27T22:32:44.833+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        do1_0.order_id,
+        do1_1.order_completed_datetime,
+        do1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        do1_1.modified_date_time,
+        do1_1.order_id,
+        do1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        do1_0.delivery_order_disposable_yn,
+        do1_0.delivery_order_estimated_time,
+        oa1_0.order_address_id,
+        oa1_0.order_address_base,
+        oa1_0.order_address_detail,
+        oa1_0.administrative_building_address_code,
+        oa1_0.order_address_receiver_name,
+        oa1_0.order_address_tel_no,
+        oa1_0.order_address_zipcode,
+        do1_0.delivery_order_owner_message,
+        do1_0.rider_id,
+        do1_0.delivery_order_rider_message,
+        do1_0.delivery_order_status,
+        do1_0.delivery_order_tip 
+    from
+        delivery_order do1_0 
+    join
+        orders do1_1 
+            on do1_0.order_id=do1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=do1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=do1_1.store_id 
+    join
+        order_address oa1_0 
+            on oa1_0.order_address_id=do1_0.order_address_id 
+    where
+        s1_0.store_id=? 
+    order by
+        do1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.840+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        count(do1_0.order_id) 
+    from
+        delivery_order do1_0 
+    join
+        orders do1_1 
+            on do1_0.order_id=do1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=do1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=do1_1.store_id 
+    join
+        order_address oa1_0 
+            on oa1_0.order_address_id=do1_0.order_address_id 
+    where
+        s1_0.store_id=?
+2024-06-27T22:32:44.846+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.847+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.847+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.848+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.849+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.849+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.850+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.850+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.850+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.850+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.851+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ho1_0.order_id,
+        ho1_1.order_completed_datetime,
+        ho1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        ho1_1.modified_date_time,
+        ho1_1.order_id,
+        ho1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        ho1_0.hall_order_takeout_yn,
+        ho1_0.hall_order_status 
+    from
+        hall_order ho1_0 
+    join
+        orders ho1_1 
+            on ho1_0.order_id=ho1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=ho1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=ho1_1.store_id 
+    where
+        c1_0.customer_login_id=? 
+    order by
+        ho1_1.created_date_time desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 6. 27. 오후 10:32:45</p>
+</div>
+</div>
+</body>
+</html>
