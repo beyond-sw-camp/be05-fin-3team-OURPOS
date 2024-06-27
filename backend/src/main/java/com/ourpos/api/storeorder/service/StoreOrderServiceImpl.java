@@ -192,8 +192,9 @@ public class StoreOrderServiceImpl {
     //대기중
     public Page<StoreOrderCheckResponseDto> getStoreOrdercheckw(int pageNumber, int pageSize) {
         System.out.println("StoreOrderService.getStoreOrdercheckw");
-        //Pageable 객체 생성
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        // 최신 주문 순으로 정렬된 Pageable 객체 생성
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "createdDateTime"));
          // ACCEPTED 상태인 주문을 조회할 상태 리스트 생성
         List<StoreOrderStatus> statuses = Arrays.asList(StoreOrderStatus.WAITING);
         // 상태가 ACCEPTED인 모든 주문을 페이지로 조회
