@@ -1,8 +1,7 @@
-storeordercheck_company
 
 <template>
   <div class="container mt-5">
-    <h2>비품, 식자재 관리</h2>
+    <h2>비품, 식자재 주문 관리</h2>
     
     <!-- 탭 네비게이션 -->
     <ul class="nav nav-tabs">
@@ -121,7 +120,7 @@ export default {
   methods: {
     fetchOrders() {
       this.loading = true;
-      axios.get(`https://api.ourpos.org/api/v1/storeorder/${this.activeTab.toLowerCase()}?page=${this.currentPage - 1}&size=${this.pageSize}&sort=storeOrderDate,desc`, {
+      axios.get(`https://api.ourpos.org/api/v1/storeorder/${this.activeTab.toLowerCase()}?page=${this.currentPage - 1}&size=${this.pageSize}`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': localStorage.getItem('token')

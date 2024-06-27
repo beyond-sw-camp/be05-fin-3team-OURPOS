@@ -1,4 +1,3 @@
-delivery order
 
 <template>
   <div>
