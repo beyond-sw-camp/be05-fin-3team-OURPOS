@@ -131,7 +131,7 @@ import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 }
 
 .double-height-card {
-  height: 74vh; /* 원하는 높이로 조정 */
+  height: 76.5vh; /* 원하는 높이로 조정 */
   display: flex;
   justify-content: center;
   align-items: center;

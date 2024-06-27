@@ -37,7 +37,7 @@
     </div>
 
     <MaterialButton class="fab" @click="openAddDialog">
-      추가하기
+      +
     </MaterialButton>
 
     <MenuManageModal v-if="addDialogGroup" :isOpen="addDialogGroup" title="메뉴 옵션 그룹 추가하기" @close="closeAddDialogGroup" @confirm="addMenuOptionGroup">
