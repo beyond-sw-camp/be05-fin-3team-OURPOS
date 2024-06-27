@@ -233,7 +233,9 @@ public class OrderServiceImpl implements OrderService {
     private HallOrder createOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
         Customer customer = getCustomer(loginId);
         Store store = getStore(hallOrderRequestDto.getStoreId());
-        smsService.sendOne(customer.getPhone(), "[OURPOS]" + store.getName() + "점 홀/포장 주문이 완료되었습니다.");
+        if (customer.getPhone() != null) {
+            smsService.sendOne(customer.getPhone(), "[OURPOS]" + store.getName() + "점 홀/포장 주문이 완료되었습니다.");
+        }
 
         List<OrderDetail> orderDetails = createOrderDetails(hallOrderRequestDto.getOrderDetailDtos());
 
