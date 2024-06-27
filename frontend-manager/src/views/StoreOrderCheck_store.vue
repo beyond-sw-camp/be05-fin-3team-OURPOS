@@ -22,8 +22,8 @@
                 <tbody>
                   <tr v-for="(order, index) in orders" :key="index">
                     <td>{{ order.storeOrderId }}</td>
-                    <td>{{ order.storeOrderDate }}</td>
-                    <td>{{ order.storeCommPrice }}</td>
+                    <td>{{ order.storeOrderDate(jsonData.approvedAt).toLocaleString() }}</td>
+                    <td>{{ order.storeCommPrice(jsonData.balanceAmount).toLocaleString() }}원</td>
                     <td>{{ order.storeOrderStatus }}</td>
                     <td>
                       <button class="btn btn-warning" @click="cancelOrder(order.storeOrderId)" style="margin-right: 10px;">취소</button>
