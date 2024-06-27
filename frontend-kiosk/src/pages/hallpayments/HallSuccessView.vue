@@ -34,7 +34,7 @@
                   </v-card-title>
                   <v-card-subtitle>
                     <v-avatar size="64" class="mx-2 my-2">
-                      <v-img :src="'http://localhost:8080/images/' + detail.menuPictureUrl" cover></v-img>
+                      <v-img :src="'https://api.ourpos.org/images/' + detail.menuPictureUrl" cover></v-img>
                     </v-avatar>
                   </v-card-subtitle>
                   <v-card-text>
@@ -83,7 +83,7 @@ export default {
 
       try {
         const response = await axios.post(
-          'http://localhost:8080/api/v1/orders/kiosk',
+          'https://api.ourpos.org/api/v1/orders/kiosk',
           {
             storeId: orders.value.storeId,
             orderTakeoutYn: orders.value.orderTakeoutYn,
