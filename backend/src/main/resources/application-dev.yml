@@ -3,6 +3,9 @@ spring:
     activate:
       on-profile: dev
 
+  jackson:
+    time-zone: Asia/Seoul
+
   datasource:
     url: ${dev.datasource.url}
     username: ${dev.datasource.username}

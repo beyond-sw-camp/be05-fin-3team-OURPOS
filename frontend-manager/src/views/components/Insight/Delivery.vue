@@ -12,9 +12,18 @@
 <script setup>
 import ChartHolderCard from "@/views/components/ChartHolderCard.vue";
 import "leaflet/dist/leaflet.css";
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import * as L from 'leaflet';
 import axios from 'axios';
+
+// Leaflet의 기본 마커 이미지를 설정합니다.
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png'
+});
 
 const loadMap = async () => {
   const map = L.map('map').setView([37.559819, 126.963895], 11);
@@ -30,12 +39,12 @@ const loadMap = async () => {
   // Choropleth layer example - customize based on your data
   const getColor = d => {
     return d > 1000 ? '#800026' :
-        d > 500  ? '#BD0026' :
-            d > 200  ? '#E31A1C' :
-                d > 100  ? '#FC4E2A' :
-                    d > 50   ? '#FD8D3C' :
-                        d > 20   ? '#FEB24C' :
-                            d > 10   ? '#FED976' :
+        d > 500 ? '#BD0026' :
+            d > 200 ? '#E31A1C' :
+                d > 100 ? '#FC4E2A' :
+                    d > 50 ? '#FD8D3C' :
+                        d > 20 ? '#FEB24C' :
+                            d > 10 ? '#FED976' :
                                 '#FFEDA0';
   };
 
@@ -50,7 +59,7 @@ const loadMap = async () => {
     };
   };
 
-  L.geoJson(data, { style }).addTo(map);
+  L.geoJson(data, {style}).addTo(map);
 
   const locations = ref([]);
 
@@ -74,15 +83,8 @@ const loadMap = async () => {
   };
 
   const addLocations = (map, locations) => {
-    var redIcon = L.icon({
-      iconUrl: '/blue.png',
-      iconSize: [5, 5], // size of the icon
-      iconAnchor: [5, 5], // point of the icon which will correspond to marker's location
-      popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
-    });
-
     locations.value.forEach(function (location) {
-      L.marker(location, { icon: redIcon }).addTo(map);
+      L.marker(location).addTo(map); // 기본 마커를 사용합니다.
     });
   };
 
@@ -93,6 +95,4 @@ const loadMap = async () => {
 onMounted(() => {
   loadMap();
 });
-
-
 </script>
