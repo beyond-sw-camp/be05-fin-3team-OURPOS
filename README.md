@@ -42,38 +42,7 @@
   <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
   <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
-  <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white"> 
-  <img src="https://img.shields.io/badge/slack-%4A154B.svg?style=for-the-badge&logo=slack&logoColor=white"> 
-  <img src="https://img.shields.io/badge/jenkins-D24939.svg?style=for-the-badge&logo=jenkins&logoColor=white"> 
-  <img src="https://img.shields.io/badge/mariaDB-003545.svg?style=for-the-badge&logo=mariaDB&logoColor=white"> 
-  <img src="https://img.shields.io/badge/ngrok-1F1E37.svg?style=for-the-badge&logo=ngrok&logoColor=white"> 
-  <img src="https://img.shields.io/badge/intellijidea-000000.svg?style=for-the-badge&logo=intellijidea&logoColor=white"> 
-  <img src="https://img.shields.io/badge/visualstudiocode-007ACC.svg?style=for-the-badge&logo=visualstudiocode&logoColor=white"> 
-  <img src="https://img.shields.io/badge/figma-F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white">
-  <img src="https://img.shields.io/badge/amazonec2-FF9900.svg?style=for-the-badge&logo=amazonec2&logoColor=white"> 
-</div>
-<br>
-
-<h2 align="left">🏷️ ourpos 프로젝트 문서 </h2>
-
-<details>
-<summary><h3>📁 ourpos 프로젝트 기획서</h3></summary>
-<a href="https://docs.google.com/document/d/16bPZb_D4clrZ0tqKmuFBGady2DPCxes2rAhIDuc3bQ8/edit?usp=sharing">프로젝트 기획서 Link</a>
-</details>
-
-<details>
-<summary><h3>📁 ourpos 업무 표준서 (기능 상세 기술)</h3></summary>
-<a href="https://docs.google.com/document/d/1sSuaMNQTp1y-zOhpg8orO8gqbK2dpxX2T3s0QhyflUU/edit">업무 표준 Link</a>
-</details>
-
-<details>
-<summary><h3>📁 ourpos 요구사항 정의서</h3></summary>
-<a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit#gid=374839476">요구사항 정의서 Link</a>
-</details>
-
-<details>
-<summary><h3>📁 ourpos 시스템 아키텍쳐</h3></summary>
-<a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/5ef0fbd8-2369-431a-a6bc-31f7a8652fe8">시스템 아키텍쳐 Link</a>  
+  <im쳐 Link</a>
 </details>
 
 <details>
@@ -120,4 +89,9 @@
 <details>
 <summary><h3>✔️ ourpos 통합 테스트 결과서 </h3></summary>
 <a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit?gid=1424215889#gid=1424215889">통합 테스트 결과서 Link</a>
+</details>
+
+<details>
+<summary><h3>✔️ ourpos CI/CD 계획서 </h3></summary>
+<a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/aa2a758f-ce47-4b9a-b830-045a29701d2e"> CI/CD 계획서 Link</a>
 </details>
