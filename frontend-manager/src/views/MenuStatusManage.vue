@@ -7,10 +7,10 @@
         <div class="col-2">
           <div class="category-list">
             <material-button
-              v-for="category in categories"
-              :key="category"
-              @click="filterMenus(category)"
-              :class="['btn', selectedCategory === category ? 'btn-primary' : 'btn-light', 'category-button']"
+                v-for="category in categories"
+                :key="category"
+                @click="filterMenus(category)"
+                :class="['btn', selectedCategory === category ? 'btn-primary' : 'btn-light', 'category-button']"
             >
               {{ category }}
             </material-button>
@@ -20,11 +20,12 @@
           <div class="row">
             <div class="col-3 mb-4" v-for="menu in filteredMenus" :key="menu.id">
               <div class="card" :class="{ 'deactivated': !menu.available }"
-                @click="menu.available ? confirmDeactivateMenu(menu.id) : confirmActivateMenu(menu.id)">
-                <img :src="menu.pictureUrl" class="card-img-top" style="height: 200px; object-fit: cover;">
-                  <h2>{{ menu.name }}</h2>
-                  <h3>{{ menu.price }}</h3>
-                  <p>{{ menu.description }}</p>
+                   @click="menu.available ? confirmDeactivateMenu(menu.id) : confirmActivateMenu(menu.id)">
+                <img :src="'https://api.ourpos.org/images/' + menu.pictureUrl"
+                     class="card-img-top" style="height: 200px; object-fit: cover;" alt="메뉴사진">
+                <h2>{{ menu.name }}</h2>
+                <h3>{{ menu.price }}</h3>
+                <p>{{ menu.description }}</p>
               </div>
             </div>
           </div>
@@ -33,10 +34,10 @@
     </div>
 
     <Modal
-      :isOpen="showConfirmModal"
-      :title="modalTitle"
-      @close="closeModal"
-      @confirm="handleConfirm"
+        :isOpen="showConfirmModal"
+        :title="modalTitle"
+        @close="closeModal"
+        @confirm="handleConfirm"
     >
       {{ modalMessage }}
     </Modal>
@@ -44,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
 import MaterialButton from '../components/MaterialButton.vue';
 import Modal from '../views/Modal.vue';
