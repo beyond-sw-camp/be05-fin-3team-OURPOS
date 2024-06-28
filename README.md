@@ -115,7 +115,7 @@
 
 <details>
 <summary><h3>✔️ ourpos 통합 테스트 결과서 </h3></summary>
-<a href="#">통합 테스트 결과서 Link</a>
+<a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit?gid=1424215889#gid=1424215889">통합 테스트 결과서 Link</a>
 </details>
 
 
