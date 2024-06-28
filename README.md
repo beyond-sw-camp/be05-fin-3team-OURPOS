@@ -83,7 +83,7 @@
 
 <details>
 <summary><h3>📁 ourpos ERD</h3></summary>
-![our-pos-erd](https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/a4d0572b-dea2-4002-9b4c-e6fe148dfc03)
+<a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/a4d0572b-dea2-4002-9b4c-e6fe148dfc03">요구사항 정의서 Link</a>
 </details>
 
 <details>
