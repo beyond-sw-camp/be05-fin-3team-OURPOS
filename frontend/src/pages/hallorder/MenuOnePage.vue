@@ -2,8 +2,8 @@
   <v-container fluid>
     <HeaderPage :title="title" />
 
-    <v-row class="justify-center">
-      <v-col cols="12" md="6" class="text-center" v-show="!isNaN(menu.price)">
+    <v-row class="justify-center" v-show="!isNaN(menu.price)">
+      <v-col cols="12" md="6" class="text-center">
         <v-img
           class="mx-auto my-4"
           :src="'https://api.ourpos.org/images/' + menu.pictureUrl"
@@ -11,14 +11,14 @@
         ></v-img>
         <h1 class="mb-2">{{ menu.name }}</h1>
         <h2 class="mb-4">{{ Number(menu.price).toLocaleString() }}원</h2>
-        <v-btn variant="plain" @click="decrementQuantity" :disabled="quantity === 1" class="mr-2">
-          <h2>-</h2>
-        </v-btn>
-        <h2>{{ quantity }}</h2>
-        <v-btn variant="plain" @click="incrementQuantity" class="ml-2">
-          <h2>+</h2>
-        </v-btn>
       </v-col>
+      <v-btn variant="plain" @click="decrementQuantity" :disabled="quantity === 1" class="mr-2">
+        <h2>-</h2>
+      </v-btn>
+      <h2>{{ quantity }}</h2>
+      <v-btn variant="plain" @click="incrementQuantity" class="ml-2">
+        <h2>+</h2>
+      </v-btn>
     </v-row>
 
     <v-form>
