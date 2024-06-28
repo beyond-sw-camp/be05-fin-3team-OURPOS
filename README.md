@@ -117,3 +117,9 @@
 <summary><h3>✔️ ourpos 통합 테스트 결과서 </h3></summary>
 <a href="#">통합 테스트 결과서 Link</a>
 </details>
+
+
+<details>
+<summary><h3>✔️ CI/CD 계획서 </h3></summary>
+<a href="#">통합 테스트 결과서 Link</a>
+</details>
