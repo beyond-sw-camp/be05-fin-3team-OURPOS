@@ -2,7 +2,7 @@
   <v-container>
     <!--    <HeaderPage title="로그인"/>-->
     <v-card-text class="mx-auto pl-12 pr-12" max-width="400" rounded="lg">
-      <v-img class="mx-auto my-8" max-width="228" src="/public/img/Five-Guys-Logo.png"></v-img>
+      <v-img class="mx-auto my-8" max-width="228" src="/public/img/ourpos_logo.png"></v-img>
 
       <v-img
         class="mx-auto my-8 kakao-login-button"
