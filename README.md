@@ -105,14 +105,14 @@
 
 <details>
 <summary><h3>✴️ ourpos 단위 테스트 결과서</h3></summary>
-<a href="#">단위 테스트 결과서 Link</a>
+<a href="https://api.ourpos.org/test/index.html">단위 테스트 결과서 Link</a>
 </details>
 
 <h2 align="left">🏷️ ourpos 프론트 엔드 </h2>
 
 <details>
 <summary><h3>💻 ourpos UI/UX 단위 테스트 </h3></summary>
-<a href="https://api.ourpos.org/test/index.html">UI/UX 단위 테스트 결과서 Link</a>
+<a href="#">UI/UX 단위 테스트 결과서 Link</a>
 </details>
 
 <h2 align="left">🏷️ ourpos 시스템 통합 </h2>
