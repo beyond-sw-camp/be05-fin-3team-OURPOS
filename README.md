@@ -95,8 +95,12 @@
 
 <details>
 <summary><h3>✴️ ourpos API 명세서</h3></summary>
+<div>
 <a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit?gid=1805938231#gid=1805938231">고객용 모바일 어플리케이션, 키오스크 API명세서 Link</a>
+</div>
+<div>
 <a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit?gid=1026222313#gid=1026222313">직영점 pos, 본사용 pos API명세서 Link</a>
+</div>
 </details>
 
 <details>
