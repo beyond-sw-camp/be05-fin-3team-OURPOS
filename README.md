@@ -83,10 +83,7 @@
 
 <details>
 <summary><h3>📁 ourpos ERD</h3></summary>
-<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
-![시스템 아키텍처 FIN](https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/575f4351-e978-4fb9-8796-e69f272da6a4)
-
-
+![our-pos-erd](https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/a4d0572b-dea2-4002-9b4c-e6fe148dfc03)
 </details>
 
 <details>
