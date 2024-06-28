@@ -73,7 +73,8 @@
 
 <details>
 <summary><h3>📁 ourpos 시스템 아키텍쳐</h3></summary>
-![Web App Reference Architecture (3)](https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/155698895/6fda9d1d-f181-41de-822b-88c2b664d5f5)
+  ![시스템 아키텍처 FIN](https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/9c82a049-5d39-4383-a4ec-9ee44b0134e6)
+
 </details>
 
 <details>
