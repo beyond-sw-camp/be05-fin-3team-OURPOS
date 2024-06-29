@@ -2,7 +2,7 @@
   <v-container fluid>
     <AppDeliveryHeader :title="title" />
 
-    <v-row class="justify-center">
+    <v-row class="justify-center" v-show="!isNaN(menu.price)">
       <v-col cols="12" md="6" class="text-center">
         <v-img
           class="mx-auto my-4"
