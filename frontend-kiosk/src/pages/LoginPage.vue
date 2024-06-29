@@ -62,12 +62,27 @@
       <v-expansion-panels>
         <v-expansion-panel
           title="강남점 로그인"
-          text="id: admin, pw: 1234"
+          text="id: admin1, pw: 1234"
         >
         </v-expansion-panel>
         <v-expansion-panel
-          title="강남점 로그인"
-          text="id: admin, pw: 1234"
+          title="고속터미널점 로그인"
+          text="id: admin2, pw: 1234"
+        >
+        </v-expansion-panel>
+        <v-expansion-panel
+          title="서울역점 로그인"
+          text="id: admin3, pw: 1234"
+        >
+        </v-expansion-panel>
+        <v-expansion-panel
+          title="여의도점 로그인"
+          text="id: admin4, pw: 1234"
+        >
+        </v-expansion-panel>
+        <v-expansion-panel
+          title="신대방삼거리점 로그인"
+          text="id: admin5, pw: 1234"
         >
         </v-expansion-panel>
       </v-expansion-panels>
@@ -91,6 +106,8 @@ const login = async () => {
     const formData = new FormData();
     formData.append('username', username.value);
     formData.append('password', password.value);
+    console.log(username.value);
+    console.log(password.value);
     const response = await axios.post('https://api.ourpos.org/managers/login', formData);
     if (response.status === 200) {
       const token = response.headers.authorization;

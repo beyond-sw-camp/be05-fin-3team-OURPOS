@@ -27,7 +27,7 @@ public class Recipe {
     @Column(name = "recipe_id")
     private Long id;
 
-    @JoinColumn(name = "store_menu_id")
+    @JoinColumn(name = "store_comm_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private StoreComm storeComm;
 
