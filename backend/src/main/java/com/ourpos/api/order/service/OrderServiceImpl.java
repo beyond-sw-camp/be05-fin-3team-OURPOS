@@ -181,6 +181,14 @@ public class OrderServiceImpl implements OrderService {
         DeliveryOrder order = deliveryOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
+        if (order.getCustomer().getPhone() != null) {
+            smsService.sendOne(order.getCustomer().getPhone(),
+                "[OURPOS]\n" + order.getStore().getName() + " 배달 주문이 시작되었습니다.\n\n"
+                    + "주문 상품: " + order.getOrderDetails().get(0).getMenu().getName() + " 외 " + (
+                    order.getOrderDetails().size() - 1) + "개\n"
+                    + "총 가격: " + String.format("%,d", order.getPrice()) + "원\n");
+        }
+
         order.startDelivery();
     }
 
@@ -188,6 +196,14 @@ public class OrderServiceImpl implements OrderService {
     public void completeDeliveryOrder(Long orderId) {
         DeliveryOrder order = deliveryOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
+
+        if (order.getCustomer().getPhone() != null) {
+            smsService.sendOne(order.getCustomer().getPhone(),
+                "[OURPOS]\n" + order.getStore().getName() + " 배달 주문이 완료되었습니다.\n\n"
+                    + "주문 상품: " + order.getOrderDetails().get(0).getMenu().getName() + " 외 " + (
+                    order.getOrderDetails().size() - 1) + "개\n"
+                    + "총 가격: " + String.format("%,d", order.getPrice()) + "원\n");
+        }
 
         order.completeOrder(LocalDateTime.now());
     }
@@ -229,11 +245,12 @@ public class OrderServiceImpl implements OrderService {
 
         DeliveryOrder order = deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
 
-        // if (customer.getPhone() != null) {
-        //     smsService.sendOne(customer.getPhone(), "[OURPOS]\n" + store.getName() + " 배달 주문이 완료되었습니다.\n\n"
-        //         + "주문 상품: " + orderDetails.get(0).getMenu().getName() + " 외 " + (orderDetails.size() - 1) + "개\n"
-        //         + "총 가격: " + String.format("%,d", order.getPrice()) + "원\n");
-        // }
+        if (customer.getPhone() != null) {
+            smsService.sendOne(customer.getPhone(),
+                "[OURPOS]\n" + store.getName() + " 배달 주문이 완료되었습니다.\n\n"
+                    + "주문 상품: " + orderDetails.get(0).getMenu().getName() + " 외 " + (orderDetails.size() - 1) + "개\n"
+                    + "총 가격: " + String.format("%,d", order.getPrice()) + "원\n");
+        }
 
         return order;
     }
