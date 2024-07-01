@@ -37,7 +37,7 @@
                     size="60"
                     class="my-2 ml-2"
                   >
-                    <v-img :src="'http://localhost:8080/images/' + menu.pictureUrl" cover></v-img>
+                    <v-img :src="'https://api.ourpos.org/images/' + menu.pictureUrl" cover></v-img>
                   </v-avatar>
                 </v-col>
                 <v-col>
@@ -46,7 +46,7 @@
                     {{ Number(menu.price).toLocaleString() }}원
                   </v-card-subtitle>
                   <v-card-text>
-                    <p style="color: red">{{ menu.description }}</p>
+                    <p style="color: gray">{{ menu.description }}</p>
                   </v-card-text>
                 </v-col>
               </v-row>

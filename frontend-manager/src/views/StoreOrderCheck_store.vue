@@ -22,8 +22,8 @@
                 <tbody>
                   <tr v-for="(order, index) in orders" :key="index">
                     <td>{{ order.storeOrderId }}</td>
-                    <td>{{ new Date(order.storeOrderDate.approvedAt).toLocaleString() }}</td>
-                    <td>{{ Number(order.storeCommPrice.balanceAmount).toLocaleString() }}원</td>
+                    <td>{{ formatDateTime(order.storeOrderDate) }}</td>
+                    <td>{{ formatCurrency(order.storeCommPrice)}}원</td>
                     <td>{{ order.storeOrderStatus }}</td>
                     <td>
                       <button class="btn btn-warning" @click="cancelOrder(order.storeOrderId)" style="margin-right: 10px;">취소</button>
@@ -164,7 +164,17 @@ export default {
     },
     closeOrderDetails() {
       this.selectedOrder = null; // 모달 닫기
-    }
+    },
+    formatDateTime(dateTime) {
+      const date = new Date(dateTime);
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      return date.toLocaleString('ko-KR', options).replace(/\./g, '.');
+    },
+
+    formatCurrency(amount) {
+    return Number(amount).toLocaleString('ko-KR');
+    },
+
   }
 };
 </script>

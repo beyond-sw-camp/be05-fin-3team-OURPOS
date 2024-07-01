@@ -9,7 +9,7 @@
     <v-toolbar-items>
       <v-btn icon>
         <v-badge :content="cartItemCount" color="red" overlap>
-          <v-icon size="34" class="mb-2" @click="goToCart">mdi-truck-delivery</v-icon>
+          <v-icon size="34" class="mb-2" @click="goToCart">mdi-moped</v-icon>
         </v-badge>
       </v-btn>
     </v-toolbar-items>

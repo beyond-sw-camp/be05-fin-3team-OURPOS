@@ -33,7 +33,7 @@
                 size="60"
                 class="my-2"
               >
-                <v-img :src="'http://localhost:8080/images/' + order.menuPictureUrl" cover></v-img>
+                <v-img :src="'https://api.ourpos.org/images/' + order.menuPictureUrl" cover></v-img>
               </v-avatar>
               <div v-for="optionGroup in order.orderOptionGroups" :key="optionGroup.optionGroupName">
                 <h3>{{ optionGroup.optionGroupName }}</h3>

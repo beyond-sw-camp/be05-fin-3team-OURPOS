@@ -29,8 +29,8 @@
               <div class="col-md-6">
                 <h5 class="card-title mb-1">주문 번호: {{ order.storeOrderId }}</h5>
                 <div class="d-flex justify-content-between">
-                  <p class="card-text text-muted mb-1">주문 일시: {{ order.storeOrderDate }}</p>
-                  <p class="card-text text-muted mb-1">주문 금액: {{ order.storeCommPrice }}</p>
+                  <p class="card-text text-muted mb-1">주문 일시: {{ formatDateTime(order.storeOrderDate) }}</p>
+                  <p class="card-text text-muted mb-1">주문 금액: {{ formatCurrency(order.storeCommPrice) }} 원</p>
                   <p class="card-text text-muted mb-1">지점명: {{ order.storeName }}</p>
                   <p class="card-text text-muted mb-1"> {{ order.storeOrderStatus }}</p>
                   
@@ -73,8 +73,8 @@
             <p><strong>상품명:</strong> {{ selectedOrder.storeCommName }}</p>
             <p><strong>상품 수량:</strong> {{ selectedOrder.storeOrderDetailQuantity }}</p>
             <p><strong>상품 단위:</strong> {{ selectedOrder.storeCommArticleUnit }}</p>
-            <p><strong>주문 날짜:</strong> {{ new Date(selectedOrder.storeOrderDate.approvedAt).toLocaleString() }}</p>
-            <p><strong>주문 가격:</strong> {{ Number(selectedOrder.storeOrderPrice.balanceAmount).toLocaleString() }}</p>
+            <p><strong>주문 날짜:</strong> {{ formatDateTime(selectedOrder.storeOrderDate) }}</p>
+            <p><strong>주문 가격:</strong> {{ formatCurrency(selectedOrder.storeOrderPrice) }}원</p>
             <p><strong>지점명:</strong> {{ selectedOrder.storeName }}</p>
             <p><strong>지점 주소:</strong> {{ selectedOrder.addressBase }} {{ selectedOrder.addressDetail }}</p>
             <p><strong>전화번호:</strong> {{ selectedOrder.storePhone }}</p>
@@ -183,8 +183,17 @@ export default {
         console.error(`Error updating order ${orderId} status:`, error);
         
       });
-    }
-  },
+    },
+    formatDateTime(dateTime) {
+      const date = new Date(dateTime);
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      return date.toLocaleString('ko-KR', options).replace(/\./g, '.');
+    },
+
+  formatCurrency(amount) {
+    return Number(amount).toLocaleString('ko-KR');
+  }
+},
   mounted() {
     this.fetchOrders();
   }

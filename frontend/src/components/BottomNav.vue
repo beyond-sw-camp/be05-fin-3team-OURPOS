@@ -1,6 +1,7 @@
 <template>
   <v-footer>
-    <v-bottom-navigation grow>
+    <v-bottom-navigation>
+
       <v-spacer></v-spacer>
 
       <v-btn :class="getButtonClass('/')" @click="goToHome">
@@ -67,10 +68,10 @@ const getIconClass = (path) => {
 
 <style scoped>
 .btn-active {
-  color: rgb(246, 162, 28); 
+  color: rgb(246, 162, 28);
 }
 
 .icon-active {
-  color: rgb(246, 162, 28); 
+  color: rgb(246, 162, 28);
 }
 </style>

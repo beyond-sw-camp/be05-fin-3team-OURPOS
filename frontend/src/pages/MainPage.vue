@@ -1,7 +1,9 @@
 <template>
-  <v-app>
-    <v-app-bar app class="transparent-app-bar">
-      <v-spacer></v-spacer>
+    <v-app-bar color="#f5f5f5" app dark>
+    <v-toolbar-title>
+      <img src="/public/img/ourpos_logo.png" height="80" alt="OurPOS" class="mt-3"/>
+    </v-toolbar-title>
+    <v-toolbar-items>
       <v-menu offset-y>
         <template v-slot:activator="{ props }">
           <v-btn icon v-bind="props">
@@ -13,47 +15,59 @@
         <v-list>
           <v-list-item @click="logout">
             <v-list-item>
-              <v-list-item-title><v-icon>mdi-logout</v-icon>로그아웃</v-list-item-title>
+              <v-list-item-title>
+                <v-icon>mdi-logout</v-icon>
+                로그아웃
+              </v-list-item-title>
             </v-list-item>
           </v-list-item>
         </v-list>
       </v-menu>
-    </v-app-bar>
-    <v-main>
-       <!-- 배경 이미지가 적용된 v-main -->
-      <div class="hero">
-        <h1>Welcome to our pos!</h1>
-        <p>Explore our menu and place your orders.</p>
-      </div>
-
-      <v-container class="main-container">
-        <v-row justify="center">
-          <v-col cols="12" class="text-center">
-            <v-card class="pa-5">
-              <v-card-title>{{ customer.name }}님 안녕하세요!</v-card-title>
-              <v-card-text>
-                <v-btn class="ma-2" large @click="hallOrder" stacked>
-                  <v-icon size="36" class="mb-2">mdi-food</v-icon>
-                  홀/포장 주문
-                </v-btn>
-                <v-btn class="ma-2" large @click="deliveryOrder" stacked>
-                  <v-icon size="36" class="mb-2">mdi-truck-delivery</v-icon>
-                  배달 주문
-                </v-btn>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
-  <BottomNav />
+    </v-toolbar-items>
+  </v-app-bar>
+  <v-main class="d-flex flex-column align-center fill-height main-background">
+    <div class="text-center hero" style="margin-top: 10vh;">
+      <h1 class="display-1">Welcome to OurPOS!</h1>
+      <p class="subtitle-1">Explore our menu and place your orders.</p>
+    </div>
+    <v-container class="d-flex justify-center align-center fill-height hero">
+      <v-row justify="center">
+        <v-col cols="12" class="text-center">
+          <h2>{{ customer.name }}님 안녕하세요!</h2>
+          <v-card-text>
+            <v-btn
+              class="ma-3"
+              width="120"
+              height="120"
+              rounded="xl"
+              stacked
+              @click="hallOrder"
+            >
+              <v-icon size="50" class="mb-2">mdi-food</v-icon>
+              홀/포장 주문
+            </v-btn>
+            <v-btn
+              class="ma-3"
+              width="120"
+              height="120"
+              rounded="xl"
+              stacked
+              @click="deliveryOrder">
+              <v-icon size="60" class="mb-2">mdi-moped</v-icon>
+              배달 주문
+            </v-btn>
+          </v-card-text>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
+  <BottomNav/>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 import axios from "axios";
-import { onMounted, ref } from "vue";
+import {onMounted, ref} from "vue";
 import BottomNav from "@/components/BottomNav.vue";
 
 const router = useRouter();
@@ -77,9 +91,9 @@ const getMyInfo = async () => {
       router.push('/login')
     }
   })
-    .catch(() => {
-      router.push('/login')
-    });
+  // .catch(() => {
+  //   router.push('/login')
+  // });
 };
 
 const logout = () => {
@@ -97,50 +111,16 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.v-avatar img {
-  border-radius: 50%;
+.fill-height {
+  height: 100vh;
 }
 
-.fill-width {
-  object-fit: cover;
-  width: 100%;
-}
-
-.v-carousel .v-btn--icon::before {
-  background-color: rgba(255, 255, 255, 0.5); /* 흰색 배경에 50% 불투명도 */
-}
-
-.v-main {
-  background: url('@/assets/shake.jpg') no-repeat center center fixed;
-  background-size: cover;
-}
-
-.main-container {
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 235px;
+.main-background {
+  background-color: #f5f5f5;
 }
 
 .hero {
-  margin-top: 250px;
   text-align: center;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.mt-5 {
-  margin-top: 50px; /* 50px 상단 마진 */
-}
-
-.transparent-app-bar {
-  background-color: transparent !important;
-  box-shadow: none;
-}
-
-
-.bottom-nav{
-  height: 65px;
-  flex-shrink: 0;
-}
 </style>

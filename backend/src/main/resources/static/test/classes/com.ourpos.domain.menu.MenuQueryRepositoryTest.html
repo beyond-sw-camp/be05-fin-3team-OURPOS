@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - MenuQueryRepositoryTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>MenuQueryRepositoryTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.ourpos.domain.menu.html">com.ourpos.domain.menu</a> &gt; MenuQueryRepositoryTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">2</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.035s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">카테고리 이름으로 삭제 처리 되지 않은 메뉴를 조회할 수 있다.</td>
+<td class="success">findAllWithCategory()</td>
+<td class="success">0.025s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">메뉴 ID로 삭제 처리 되지 않은 메뉴를 조회할 수 있다.</td>
+<td class="success">findOne()</td>
+<td class="success">0.010s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2024-06-27T22:32:44.376+09:00  INFO 68374 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ourpos.domain.menu.MenuQueryRepositoryTest]: MenuQueryRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-06-27T22:32:44.379+09:00  INFO 68374 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ourpos.OurposApplication for test class com.ourpos.domain.menu.MenuQueryRepositoryTest
+2024-06-27T22:32:44.384+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        category
+        (category_deleted_date_time, category_deleted_yn, category_name, category_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.386+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        menu
+        (category_id, created_date_time, menu_deleted_datetime, menu_deleted_yn, menu_description, modified_date_time, menu_name, menu_picture_url, menu_price, menu_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.388+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        menu
+        (category_id, created_date_time, menu_deleted_datetime, menu_deleted_yn, menu_description, modified_date_time, menu_name, menu_picture_url, menu_price, menu_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.398+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        m1_0.menu_id,
+        c1_0.category_id,
+        c1_0.category_deleted_date_time,
+        c1_0.category_deleted_yn,
+        c1_0.category_name,
+        m1_0.created_date_time,
+        m1_0.menu_deleted_datetime,
+        m1_0.menu_deleted_yn,
+        m1_0.menu_description,
+        m1_0.modified_date_time,
+        m1_0.menu_name,
+        m1_0.menu_picture_url,
+        m1_0.menu_price 
+    from
+        menu m1_0 
+    join
+        category c1_0 
+            on c1_0.category_id=m1_0.category_id 
+    where
+        c1_0.category_name=? 
+        and m1_0.menu_deleted_yn=?
+2024-06-27T22:32:44.412+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        category
+        (category_deleted_date_time, category_deleted_yn, category_name, category_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.413+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        menu
+        (category_id, created_date_time, menu_deleted_datetime, menu_deleted_yn, menu_description, modified_date_time, menu_name, menu_picture_url, menu_price, menu_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.413+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        menu
+        (category_id, created_date_time, menu_deleted_datetime, menu_deleted_yn, menu_description, modified_date_time, menu_name, menu_picture_url, menu_price, menu_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.415+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        m1_0.menu_id,
+        m1_0.category_id,
+        m1_0.created_date_time,
+        m1_0.menu_deleted_datetime,
+        m1_0.menu_deleted_yn,
+        m1_0.menu_description,
+        m1_0.modified_date_time,
+        m1_0.menu_name,
+        m1_0.menu_picture_url,
+        m1_0.menu_price 
+    from
+        menu m1_0 
+    where
+        m1_0.menu_id=? 
+        and m1_0.menu_deleted_yn=? 
+    fetch
+        first ? rows only
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 6. 27. 오후 10:32:45</p>
+</div>
+</div>
+</body>
+</html>

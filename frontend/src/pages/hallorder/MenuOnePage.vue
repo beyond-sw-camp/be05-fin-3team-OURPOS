@@ -2,7 +2,7 @@
   <v-container fluid>
     <HeaderPage :title="title" />
 
-    <v-row class="justify-center">
+    <v-row class="justify-center" v-show="!isNaN(menu.price)">
       <v-col cols="12" md="6" class="text-center">
         <v-img
           class="mx-auto my-4"
@@ -67,27 +67,6 @@
       </v-card>
     </v-bottom-sheet>
 
-<!--    <v-bottom-sheet v-model="errorSheet" inset>-->
-<!--      <v-card class="text-center py-4 red lighten-4">-->
-<!--        <v-card-text class="red&#45;&#45;text">-->
-<!--          <v-icon color="red" large>mdi-alert-circle</v-icon>-->
-<!--          <div class="my-2">-->
-<!--            장바구니에는 같은 지점의 메뉴만 담을 수 있습니다.-->
-<!--          </div>-->
-<!--          <div class="text-medium-emphasis text-caption my-2">-->
-<!--            장바구니로 이동하여 기존 메뉴를 삭제하시겠습니까?-->
-<!--          </div>-->
-<!--          <v-btn variant="text" @click="navigateToCart">-->
-<!--            장바구니 이동-->
-<!--          </v-btn>-->
-<!--          <v-btn variant="text" @click="errorSheet = !errorSheet">-->
-<!--            닫기-->
-<!--          </v-btn>-->
-<!--        </v-card-text>-->
-<!--      </v-card>-->
-<!--    </v-bottom-sheet>-->
-
-    <!-- 하단 고정 떠다니는 버튼 -->
     <v-btn
       fab
       dark

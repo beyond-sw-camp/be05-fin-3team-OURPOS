@@ -4,14 +4,10 @@
       class="mx-auto pa-16 my-16"
       elevation="8"
       max-width="600"
-      height="1000"
+      height="1200"
       rounded="lg"
     >
-      <v-img
-        class="mx-auto pa-6"
-        max-width="456"
-        src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
-      ></v-img>
+      <v-img class="mx-auto" max-width="228" max-height="228" src="/public/img/ourpos_logo.png"></v-img>
 
       <div class="text-subtitle-1 text-medium-emphasis">ID</div>
 
@@ -62,12 +58,27 @@
       <v-expansion-panels>
         <v-expansion-panel
           title="강남점 로그인"
-          text="id: admin, pw: 1234"
+          text="id: admin1, pw: 1234"
         >
         </v-expansion-panel>
         <v-expansion-panel
-          title="강남점 로그인"
-          text="id: admin, pw: 1234"
+          title="고속터미널점 로그인"
+          text="id: admin2, pw: 1234"
+        >
+        </v-expansion-panel>
+        <v-expansion-panel
+          title="서울역점 로그인"
+          text="id: admin3, pw: 1234"
+        >
+        </v-expansion-panel>
+        <v-expansion-panel
+          title="여의도점 로그인"
+          text="id: admin4, pw: 1234"
+        >
+        </v-expansion-panel>
+        <v-expansion-panel
+          title="신대방삼거리점 로그인"
+          text="id: admin5, pw: 1234"
         >
         </v-expansion-panel>
       </v-expansion-panels>
@@ -91,7 +102,9 @@ const login = async () => {
     const formData = new FormData();
     formData.append('username', username.value);
     formData.append('password', password.value);
-    const response = await axios.post('http://localhost:8080/managers/login', formData);
+    console.log(username.value);
+    console.log(password.value);
+    const response = await axios.post('https://api.ourpos.org/managers/login', formData);
     if (response.status === 200) {
       const token = response.headers.authorization;
       console.log(token);

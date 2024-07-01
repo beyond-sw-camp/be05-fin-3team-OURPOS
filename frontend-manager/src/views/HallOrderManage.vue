@@ -53,9 +53,9 @@
                   <li v-for="order in orders" :key="order.orderId" class="list-group-item">
                     <div class="row">
                       <div class="col"><strong>주문 번호:</strong> {{ order.orderId }}</div>
-                      <div class="col"><strong>주문 일시:</strong> {{ new Date(order.orderCreatedDateTime.approvedAt).toLocaleString() }}</div>
+                      <div class="col"><strong>주문 일시:</strong> {{ formatDateTime(order.orderCreatedDateTime) }}</div>
                       <div class="col"><strong>경과 시간:</strong> {{ order.formattedCookingTime }}</div>
-                      <div class="col"><strong>주문 금액:</strong> {{ Number(order.price.balanceAmount).toLocaleString() }} 원</div>
+                      <div class="col"><strong>주문 금액:</strong> {{ formatCurrency(order.price) }} 원</div>
                       <div class="col">
                         <button class="btn btn-danger" @click.prevent="showOrderDetail(order)">
                           {{ order.hallOrderStatus }}
@@ -227,6 +227,14 @@ export default {
         this.error = `Error changing order status: ${error.message}`;
         console.error('Error changing order status:', error);
       }
+    },
+    formatDateTime(dateTime) {
+      const date = new Date(dateTime);
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      return date.toLocaleString('ko-KR', options).replace(/\./g, '.');
+    },
+    formatCurrency(amount) {
+    return Number(amount).toLocaleString('ko-KR');
     },
     goBack() {
       this.$router.go(-1); 

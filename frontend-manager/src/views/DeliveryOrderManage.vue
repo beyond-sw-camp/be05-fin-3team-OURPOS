@@ -1,4 +1,3 @@
-
 <template>
   <div>
   <Navbar2/>
@@ -63,10 +62,10 @@
                 <li v-for="order in orders" :key="order.orderId" class="list-group-item">
                   <div class="row">
                     <div class="col"><strong>주문 번호: </strong> {{ order.orderId }}</div>
-                    <div class="col"><strong>주문 일시: </strong> {{ new Date(order.orderCreatedDateTime).toLocaleString() }}</div>
+                    <div class="col"><strong>주문 일시: </strong> {{ formatDateTime(order.orderCreatedDateTime) }}</div>
                     <div class="col"><strong>경과 시간: </strong> {{ order.formattedCookingTime }}</div>
                     <!--<div class="col"><strong>결제 수단:</strong> {{ order.price }}</div>-->
-                    <div class="col"><strong>주문 금액: </strong> {{ Number(order.pricejsonData.balanceAmount).toLocaleString() }}원</div>
+                    <div class="col"><strong>주문 금액: </strong> {{ formatCurrency(order.price)}} 원</div>
                     <div class="col">
                       <button class="btn btn-danger" @click.prevent="showOrderDetail(order)">
                           {{ order.deliveryOrderStatus }}
@@ -148,10 +147,8 @@
 import axios from 'axios';
 import Navbar2 from "@/examples/Navbars/Navbar2.vue";
 
-
-
 export default {
-  components: {Navbar2},
+  components: { Navbar2 },
 
   data() {
     return {
@@ -166,7 +163,7 @@ export default {
     };
   },
   created() {
-    this.fetchOrders(this.selectedTab,this.pageNumber, this.pageSize);
+    this.fetchOrders(this.selectedTab, this.pageNumber, this.pageSize);
   },
   methods: {
     async fetchOrders(status, page, size) {
@@ -182,7 +179,7 @@ export default {
       }
 
       try {
-        const response = await axios.get(`https://api.ourpos.org/api/v1/orders/delivery/my`, {
+        const response = await axios.get('https://api.ourpos.org/api/v1/orders/delivery/my', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `${token}`
@@ -249,17 +246,26 @@ export default {
         });
 
         this.selectedOrderDetail = null;
-        this.fetchOrders(this.selectedTab,this.pageNumber, this.pageSize); 
+        this.fetchOrders(this.selectedTab, this.pageNumber, this.pageSize);
       } catch (error) {
         this.error = `Error changing order status: ${error.message}`;
         console.error('Error changing order status:', error);
       }
     },
+    formatDateTime(dateTime) {
+      const date = new Date(dateTime);
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      return date.toLocaleString('ko-KR', options).replace(/\./g, '.');
+    },
+    formatCurrency(amount) {
+    return Number(amount).toLocaleString('ko-KR');
+    },
     goBack() {
-      this.$router.go(-1); 
+      this.$router.go(-1);
     }
   }
 };
+
 </script>
 
 <style>
