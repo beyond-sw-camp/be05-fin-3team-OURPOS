@@ -97,14 +97,25 @@ const updateChart = (labels, datasets) => {
       options: {
         scales: {
           y: {
-            beginAtZero: true,
+            min: 15000000, // y축의 최저 값을 설정
             ticks: {
               callback: function (value) {
                 return value;
               }
             }
           }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              font: {
+                size: 14, // 폰트 크기 설정
+              },
+              color: '#ffffff' // 폰트 색상 설정
+            }
+          }
         }
+      },
       }
     });
   }
