@@ -4,7 +4,7 @@
       title="월별 매출량"
       subtitle="월 단위 소비 트랜드 분석자료"
       update="실시간 업데이트"
-      color="light"
+      color="dark"
   >
     <div class="canvas">
       <canvas id="monthAllChart"></canvas>
@@ -26,11 +26,11 @@ const isLoading = ref(false);
 const myChart = ref(null);
 
 const colorMap = {
-  '강남점': '#102C57',
-  '고속터미널점': '#C80036',
-  '서울역점': '#45474B',
-  '여의도점': '#E88D67',
-  '신대방삼거리점': '#FFDB00'
+  '강남점': '#FF00FF',
+  '고속터미널점': '#FF9900',
+  '서울역점': '#BAFF1A',
+  '여의도점': '#00FFFF',
+  '신대방삼거리점': '#8000FF'
 };
 
 const fetchData = async () => {

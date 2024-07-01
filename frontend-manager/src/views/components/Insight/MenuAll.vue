@@ -1,7 +1,7 @@
 <template>
     <chart-holder-card title="메뉴 선호도"
                        subtitle="메뉴별 소비 트랜드 분석자료"
-                       update="실시간 업데이트"  color="dark">
+                       update="실시간 업데이트"  color="light">
         <div class="canvas">
             <canvas id="menuPreferAllChart"></canvas>
         </div>
