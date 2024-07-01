@@ -74,16 +74,16 @@ const updateChart = (salesData) => {
           label: '식사 유형별 매출량',
           data: Object.values(salesData),
           backgroundColor: [
-            '#5AB2FF',
-            '#FFF9D0',
+            '#00215E',
+            '#FFD1E3',
             'rgba(255, 206, 86, 0.2)',
             'rgba(75, 192, 192, 0.2)',
             'rgba(153, 102, 255, 0.2)',
             'rgba(255, 159, 64, 0.2)'
           ],
           borderColor: [
-            '#5AB2FF',
-            '#FFF9D0',
+            '#ffffff',
+            '#ffffff',
             'rgba(255, 206, 86, 1)',
             'rgba(75, 192, 192, 1)',
             'rgba(153, 102, 255, 1)',

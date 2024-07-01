@@ -60,8 +60,8 @@ const fetchData = async () => {
       return {
         label: storeName,
         data: generateTimeRangeData(salesData),
-        backgroundColor: colorMap[storeName] || '#E88D67',
-        borderColor: colorMap[storeName] || '#E88D67',
+        backgroundColor: colorMap[storeName] || '#C80036',
+        borderColor: colorMap[storeName] || '#C80036',
         borderWidth: 2,
       }
     });
