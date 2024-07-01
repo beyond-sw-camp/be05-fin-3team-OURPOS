@@ -29,7 +29,7 @@ const colorMap = {
   '강남점': '#FF00FF',
   '고속터미널점': '#FF9900',
   '서울역점': '#BAFF1A',
-  '여의도점': '#00FFFF',
+  '여의도역점': '#00FFFF',
   '신대방삼거리점': '#8000FF'
 };
 
@@ -103,6 +103,17 @@ const updateChart = (datasets) => {
                 return value;
               }
             },
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              font: {
+                size: 14, // 폰트 크기 설정
+                weight: 'bold' // 폰트 굵기 설정
+              },
+              color: '#ffffff' // 폰트 색상 설정
+            }
           }
         }
       }
