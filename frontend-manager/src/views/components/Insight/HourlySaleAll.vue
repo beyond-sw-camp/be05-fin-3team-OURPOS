@@ -72,7 +72,7 @@ const fetchData = async () => {
             'rgba(255, 159, 64, 1)'
           ],
           borderWidth: 2,
-          pointRadius: 2 
+          // pointRadius: 1
       }
     })
 
@@ -113,7 +113,6 @@ const updateChart = (datasets) => {
                 return value; 
               }
             },
-            max : '400000'
           }
         }
       }
