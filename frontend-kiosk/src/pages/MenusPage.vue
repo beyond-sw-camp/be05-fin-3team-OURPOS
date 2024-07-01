@@ -46,7 +46,7 @@
                     {{ Number(menu.price).toLocaleString() }}원
                   </v-card-subtitle>
                   <v-card-text>
-                    <p style="color: red">{{ menu.description }}</p>
+                    <p style="color: gray">{{ menu.description }}</p>
                   </v-card-text>
                 </v-col>
               </v-row>
