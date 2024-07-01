@@ -118,14 +118,14 @@ const updateChart = (salesData) => {
                 }
               }
             },
-              animation: {
-                animateRotate: true,
-                animateScale: true
-              }
-            },
-
-        });
+          animation: {
+            animateRotate: true,
+            animateScale: true
+          }
+    });
+  }
 };
+
 
 onMounted(() => {
     fetchData();
