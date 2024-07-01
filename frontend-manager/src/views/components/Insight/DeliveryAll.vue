@@ -97,10 +97,10 @@ const props = defineProps(["storeId"]);
   
     // Function to get color based on frequency
     const getColor = (frequency) => {
-      return frequency >= 10 ? '#800026' :
-             frequency >= 8  ? '#BD0026' :
-             frequency >= 6  ? '#E31A1C' :
-             frequency >= 4  ? '#FC4E2A' :
+      return frequency >= 6 ? '#800026' :
+             frequency >= 5  ? '#BD0026' :
+             frequency >= 4  ? '#E31A1C' :
+             frequency >= 3  ? '#FC4E2A' :
              frequency >= 2  ? '#FD8D3C' :
              frequency >= 1  ? '#FEB24C' :
                                '#FFFFFF';
