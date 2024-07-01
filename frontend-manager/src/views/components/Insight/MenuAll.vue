@@ -1,7 +1,7 @@
 <template>
     <chart-holder-card title="메뉴 선호도"
                        subtitle="메뉴별 소비 트랜드 분석자료"
-                       update="실시간 업데이트"  color="light">
+                       update="실시간 업데이트"  color="dark">
         <div class="canvas">
             <canvas id="menuPreferAllChart"></canvas>
         </div>
@@ -107,11 +107,23 @@ const updateChart = (salesData) => {
                   display: false, // y 축 눈금선을 숨김
                 }
               },
+              plugins: {
+                legend: {
+                  labels: {
+                    font: {
+                      size: 14, // 폰트 크기 설정
+                    },
+                    color: '#ffffff' // 폰트 색상 설정
+                  }
+                }
+              }
+            },
               animation: {
                 animateRotate: true,
                 animateScale: true
               }
-            }
+            },
+
         });
     }
 };

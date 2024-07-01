@@ -97,7 +97,7 @@ const updateChart = (datasets) => {
             }
           },
           y: {
-            beginAtZero: true,
+            min: 10000000, // y축의 최저 값을 설정
             ticks: {
               callback: function(value) {
                 return value;
@@ -110,7 +110,6 @@ const updateChart = (datasets) => {
             labels: {
               font: {
                 size: 14, // 폰트 크기 설정
-                weight: 'bold' // 폰트 굵기 설정
               },
               color: '#ffffff' // 폰트 색상 설정
             }
@@ -123,7 +122,7 @@ const updateChart = (datasets) => {
 
 const generateTimeRangeData = (salesData) => {
   const timeRangeData = {};
-  for (let i = 9; i < 23; i++) {
+  for (let i = 9; i < 22; i++) {
     timeRangeData[i] = salesData[i] || 0;
   }
   return timeRangeData;

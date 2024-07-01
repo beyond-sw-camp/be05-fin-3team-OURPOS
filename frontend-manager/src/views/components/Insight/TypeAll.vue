@@ -3,7 +3,7 @@
       title="식사유형 선호도"
       subtitle="배달/매장 소비 트랜드 분석자료"
       update="실시간 업데이트"
-      color="light"
+      color="dark"
   >
     <div class="canvas">
       <canvas id="mealTypeAllChart"></canvas>
@@ -107,6 +107,14 @@ const updateChart = (salesData) => {
               label: (tooltipItem) => {
                 return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString() + '원';
               }
+            }
+          },
+          legend: {
+            labels: {
+              font: {
+                size: 14, // 폰트 크기 설정
+              },
+              color: '#ffffff' // 폰트 색상 설정
             }
           }
         },
