@@ -1,7 +1,7 @@
 <template>
     <chart-holder-card title="메뉴 선호도"
                        subtitle="메뉴별 소비 트랜드 분석자료"
-                       update="실시간 업데이트"  color="dark">
+                       update="실시간 업데이트"  color="light">
         <div class="canvas">
             <canvas id="menuPreferAllChart"></canvas>
         </div>
@@ -73,7 +73,10 @@ const updateChart = (salesData) => {
                         'rgba(255, 206, 86, 0.2)',
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                        'rgba(255, 159, 64, 0.2)',
+                        '#1E90FF',
+                        '#A52A2A',
+                        '#7FFF00'
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
@@ -81,7 +84,10 @@ const updateChart = (salesData) => {
                         'rgba(255, 206, 86, 1)',
                         'rgba(75, 192, 192, 1)',
                         'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        'rgba(255, 159, 64, 1)',
+                        '#1E90FF',
+                        '#A52A2A',
+                        '#7FFF00'
                     ],
                     borderWidth: 1
                 }]

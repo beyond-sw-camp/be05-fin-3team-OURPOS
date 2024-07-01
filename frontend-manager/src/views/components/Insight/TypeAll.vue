@@ -4,7 +4,7 @@
         title="식사유형 선호도"
         subtitle="배달/매장 소비 트랜드 분석자료"
         update="실시간 업데이트"
-      color="dark"
+        color="light"
     >
     <div class = "canvas">
       <canvas id="mealTypeAllChart"></canvas>
