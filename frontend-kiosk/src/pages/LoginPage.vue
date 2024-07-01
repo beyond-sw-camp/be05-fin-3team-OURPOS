@@ -4,14 +4,10 @@
       class="mx-auto pa-16 my-16"
       elevation="8"
       max-width="600"
-      height="1000"
+      height="1200"
       rounded="lg"
     >
-      <v-img
-        class="mx-auto pa-6"
-        max-width="456"
-        src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
-      ></v-img>
+      <v-img class="mx-auto" max-width="228" max-height="228" src="/public/img/ourpos_logo.png"></v-img>
 
       <div class="text-subtitle-1 text-medium-emphasis">ID</div>
 
