@@ -3,18 +3,18 @@
     <h5>현재 재고량</h5>
     <table class="stock-table">
       <thead>
-      <tr>
-        <th>식자재/비품명</th>
-        <th>수량</th>
-        <th>입고일</th>
-      </tr>
+        <tr>
+          <th>식자재/비품명</th>
+          <th>수량</th>
+          <th>입고일</th>
+        </tr>
       </thead>
       <tbody>
-      <tr v-for="(item, index) in incomingStockList" :key="index">
-        <td>{{ item.stockName }}</td>
-        <td>{{ item.stockAmount }}</td>
-        <td>{{ item.stockingTime }}</td>
-      </tr>
+        <tr v-for="(item, index) in incomingStockList" :key="index">
+          <td>{{ item.stockName }}</td>
+          <td>{{ item.stockAmount }}</td>
+          <td>{{ item.stockingTime }}</td>
+        </tr>
       </tbody>
     </table>
 
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, watch} from 'vue';
 
 const incomingStockList = ref([]);
 const totalPages = ref(0);
@@ -52,6 +52,12 @@ const fetchIncomingStock = async (page) => {
 onMounted(() => {
   fetchIncomingStock(0); // Initial page load
 });
+
+watch(incomingStockList, (newList) => {
+  const list = newList.filter(item => item.stockAmount <= 50).map(item => item.stockName);
+  if (list.length === 0) return;
+  alert(`${list.join(', ')}의 재고가 50개 이하입니다.`);
+}, {deep: true});
 </script>
 
 <style scoped>
@@ -82,7 +88,8 @@ onMounted(() => {
   margin-right: 5px;
   cursor: pointer;
 }
-.now-stock{
+
+.now-stock {
   height: calc(40vh - 8px);
 }
 </style>
