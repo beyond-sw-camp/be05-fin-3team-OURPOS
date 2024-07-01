@@ -3,7 +3,7 @@
       title="시간대별 매출량"
       subtitle="시간 단위 소비 트렌드 분석자료"
       update="실시간 업데이트"
-      color="light"
+      color="dark"
   >
     <div class="canvas">
       <canvas id="mealTimeAllChart"></canvas>
@@ -26,11 +26,11 @@ const myChart = ref(null);
 
 // 지점별 색상 매핑
 const colorMap = {
-  '강남점': '#102C57',
-  '고속터미널점': '#C80036',
-  '서울역점': '#45474B',
-  '여의도점': '#E88D67',
-  '신대방삼거리점': '#FFDB00'
+  '강남점': '#FF00FF',
+  '고속터미널점': '#FF9900',
+  '서울역점': '#BAFF1A',
+  '여의도점': '#00FFFF',
+  '신대방삼거리점': '#8000FF'
 };
 
 const fetchData = async () => {
