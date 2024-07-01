@@ -122,6 +122,7 @@ const updateChart = (salesData) => {
           animateRotate: true,
           animateScale: true
         }
+
       }
     });
   }

@@ -114,8 +114,11 @@ const updateChart = (labels, datasets) => {
               color: '#ffffff' // 폰트 색상 설정
             }
           }
+        },
+        animation: {
+          animateRotate: true,
+          animateScale: true
         }
-      },
       }
     });
   }

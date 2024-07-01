@@ -110,6 +110,7 @@ const updateChart = (datasets) => {
             labels: {
               font: {
                 size: 14, // 폰트 크기 설정
+
               },
               color: '#ffffff' // 폰트 색상 설정
             }
