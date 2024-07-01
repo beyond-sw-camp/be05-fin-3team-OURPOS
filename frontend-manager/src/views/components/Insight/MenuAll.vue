@@ -125,7 +125,6 @@ const updateChart = (salesData) => {
             },
 
         });
-    }
 };
 
 onMounted(() => {
