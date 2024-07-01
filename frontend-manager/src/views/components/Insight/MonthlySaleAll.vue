@@ -26,11 +26,11 @@ const isLoading = ref(false);
 const myChart = ref(null);
 
 const colorMap = {
-  '강남점': 'rgba(255, 99, 132, 1)',
-  '고속터미널점': 'rgba(54, 162, 235, 1)',
-  '서울역점' : 'rgba(255, 206, 86, 0.2)',
-  '여의도점' : 'rgba(153, 102, 255, 0.2)',
-  '신대방삼거리점': 'rgba(255, 159, 64, 0.2)'
+  '강남점': '#102C57',
+  '고속터미널점': '#C80036',
+  '서울역점' : '#850F8D',
+  '여의도점' : '#E88D67',
+  '신대방삼거리점': '#FFDB00'
 };
 
 const fetchData = async () => {
@@ -67,8 +67,8 @@ const fetchData = async () => {
       return {
         label: storeName,
         data: sortedLabels.map(label => salesData[label] || 0),
-        backgroundColor: colorMap[storeName] || 'rgba(75, 192, 192, 0.2)',
-        borderColor: colorMap[storeName] || 'rgba(75, 192, 192, 1)',
+        backgroundColor: colorMap[storeName] || '#E88D67',
+        borderColor: colorMap[storeName] || '#E88D67',
         borderWidth: 1,
       };
     });

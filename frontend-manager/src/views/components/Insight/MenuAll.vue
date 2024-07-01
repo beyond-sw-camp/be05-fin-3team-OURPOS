@@ -68,41 +68,49 @@ const updateChart = (salesData) => {
                     label: '식사 유형별 매출량',
                     data: Object.values(salesData),
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
+                        '#7469B6',
+                        '#AD88C6',
+                        '#E1AFD1',
+                        '#F27BBD',
+                        '#CAF4FF',
+                        '#0A6847',
                         '#1E90FF',
-                        '#A52A2A',
-                        '#7FFF00'
+                        '#2C4E80',
+                        '#1E0342',
+                        '#B3C8CF',
+                        '#A1C398',
+                        '#627254',
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        '#1E90FF',
-                        '#A52A2A',
-                        '#7FFF00'
+                      '#7469B6',
+                      '#AD88C6',
+                      '#E1AFD1',
+                      '#F27BBD',
+                      '#CAF4FF',
+                      '#0A6847',
+                      '#1E90FF',
+                      '#2C4E80',
+                      '#1E0342',
+                      '#B3C8CF',
+                      '#A1C398',
+                      '#627254',
                     ],
                     borderWidth: 1
                 }]
             },
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function (value) {
-                                return value;
-                            }
-                        }
-                    }
+              scales: {
+                x: {
+                  display: false, // x 축 눈금선을 숨김
+                },
+                y: {
+                  display: false, // y 축 눈금선을 숨김
                 }
+              },
+              animation: {
+                animateRotate: true,
+                animateScale: true
+              }
             }
         });
     }
