@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 const incomingStockList = ref([]);
 const totalPages = ref(0);
@@ -52,6 +52,14 @@ const fetchIncomingStock = async (page) => {
 onMounted(() => {
   fetchIncomingStock(0); // Initial page load
 });
+
+watch(incomingStockList, (newList) => {
+  newList.forEach(item => {
+    if (item.stockAmount <= 50) {
+      alert(`${item.stockName}의 재고가 50개 이하입니다.`);
+    }
+  });
+}, { deep: true });
 </script>
 
 <style scoped>
@@ -82,7 +90,8 @@ onMounted(() => {
   margin-right: 5px;
   cursor: pointer;
 }
-.now-stock{
+
+.now-stock {
   height: calc(40vh - 8px);
 }
 </style>
