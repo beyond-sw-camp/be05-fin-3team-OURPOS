@@ -10,26 +10,14 @@
       <v-col>
         <v-row>
           <v-col v-if="loading" cols="12" class="text-center">
-            <v-progress-circular
-              indeterminate
-              color="primary"
-            ></v-progress-circular>
+            <v-progress-circular indeterminate color="primary"></v-progress-circular>
             <p>현재 위치를 가져오는 중...</p>
           </v-col>
           <v-col v-else v-for="store in stores" :key="store.storeId" cols="12" md="6">
-            <v-card
-              @click="openOrderTypeDialog(store)"
-              link
-              class="mx-auto"
-              max-width="400"
-            >
+            <v-card @click="openOrderTypeDialog(store)" link class="mx-auto" max-width="400">
               <v-row no-gutters>
                 <v-col cols="auto">
-                  <v-avatar
-                    color="grey"
-                    size="110"
-                    class="my-2 ml-2"
-                  >
+                  <v-avatar color="grey" size="110" class="my-2 ml-2">
                     <v-img :src="'https://api.ourpos.org/images/' + store.pictureUrl"></v-img>
                   </v-avatar>
                 </v-col>
@@ -62,14 +50,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary"
-                 prepend-icon="mdi-silverware-fork-knife"
-                 @click="setOrderType(false)" stacked>
+          <v-btn color="primary" prepend-icon="mdi-silverware-fork-knife" @click="setOrderType(false)" stacked>
             매장 식사
           </v-btn>
-          <v-btn color="primary"
-                 prepend-icon="mdi-shopping"
-                 @click="setOrderType(true)" stacked>
+          <v-btn color="primary" prepend-icon="mdi-shopping" @click="setOrderType(true)" stacked>
             테이크아웃
           </v-btn>
         </v-card-actions>
@@ -81,7 +65,7 @@
 
 <script setup>
 import BottomNav from "@/components/BottomNav.vue";
-import {ref} from 'vue';
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
 import {useRouter} from 'vue-router';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
@@ -194,28 +178,36 @@ const formatDistance = (distance) => {
   }
 };
 
-const latitude = getItemWithExpiration('latitude');
-const longitude = getItemWithExpiration('longitude');
+const initMap = async () => {
+  const latitude = getItemWithExpiration('latitude');
+  const longitude = getItemWithExpiration('longitude');
 
-const initMap = () => {
   if (latitude && longitude) {
-    findItems(latitude, longitude);
+    await findItems(latitude, longitude);
   } else {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      findItems(latitude, longitude);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        await findItems(latitude, longitude);
 
-      setItemWithExpiration('latitude', latitude.toString());
-      setItemWithExpiration('longitude', longitude.toString());
-    }, (error) => {
-      console.error('Error getting location:', error);
-      loading.value = false;
-    });
+        setItemWithExpiration('latitude', latitude.toString());
+        setItemWithExpiration('longitude', longitude.toString());
+      },
+      (error) => {
+        console.error('Error getting location:', error);
+        loading.value = false;
+
+        // 새로고침 시도
+        window.location.reload();
+      }
+    );
   }
-}
+};
 
-initMap();
+onMounted(async () => {
+  await initMap();
+});
 
 const goBack = () => {
   router.push('/');

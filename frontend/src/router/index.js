@@ -38,7 +38,7 @@ const router = createRouter({
       name: 'home',
       path: '/',
       component: MainPage,
-      meta: {requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       name: 'login',
@@ -49,13 +49,13 @@ const router = createRouter({
       name: 'findHallStore',
       path: '/stores',
       component: FindStoreHallPage,
-      meta: {requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       name: 'findDeliveryStore',
       path: '/stores/delivery',
       component: FindStoreDeliveryPage,
-      meta: {requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       name: 'deliveryAddress',
@@ -67,34 +67,37 @@ const router = createRouter({
       name: 'deliveryStoreMenus',
       path: '/stores/:id/delivery/menus',
       component: DeliveryMenusPage,
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       name: 'deliveryStoreMenu',
       path: '/stores/:storeId/delivery/menus/:menuId',
       component: DeliveryMenuOnePage,
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       name: 'deliveryCart',
       path: '/cart/delivery',
       component: DeliveryCartPage,
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       name: 'store',
       path: '/stores/:id/menus',
       component: MenusPage,
-      meta: {requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       name: 'storeMenu',
       path: '/stores/:storeId/menus/:menuId',
       component: MenuOnePage,
-      meta: {requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       name: 'cart',
       path: '/cart',
       component: CartPage,
-      meta: {requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}
+      meta: {requiredRoles: ['ROLE_USER']}
     },
 
     {
@@ -102,56 +105,64 @@ const router = createRouter({
       path: '/signup-success',
       component: SignupSuccess
     },
- 
+
     {
       name: 'mypage',
       path: '/mypage',
       component: MyPage,
-      meta: {requiredRoles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}
+      meta: {requiredRoles: ['ROLE_USER']}
     },
-  
- 
+
+
 
 
     {
       name: 'addressmanage',
       path: '/change-address',
-      component: CustomerAddressManage
+      component: CustomerAddressManage,
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       name: 'ordercheck',
       path: '/order-check',
-      component: CustomerOrderCheckPage
+      component: CustomerOrderCheckPage,
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       name: 'pay',
       path: '/pay',
-      component: CheckoutView
+      component: CheckoutView,
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       path: '/success',
       name: 'success',
-      component: SuccessView
+      component: SuccessView,
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       path: '/fail',
       name: 'fail',
-      component: FailView
+      component: FailView,
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       path: '/hall/pay',
       name: 'hall-pay',
-      component: HallCheckoutView
+      component: HallCheckoutView,
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       path: '/hall/success',
       name: 'hall-success',
-      component: HallSuccessView
+      component: HallSuccessView,
+      meta: {requiredRoles: ['ROLE_USER']}
     },
     {
       path: '/hall/fail',
       name: 'hall-fail',
-      component: HallFailView
+      component: HallFailView,
+      meta: {requiredRoles: ['ROLE_USER']}
     }
 
   ]
