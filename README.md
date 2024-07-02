@@ -95,8 +95,12 @@
 
 <details>
 <summary><h3>✴️ ourpos API 명세서</h3></summary>
+<li>
 <a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit?gid=1805938231#gid=1805938231">고객용 모바일 어플리케이션, 키오스크 API명세서 Link</a>
+</li>
+<li>
 <a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit?gid=1026222313#gid=1026222313">직영점 pos, 본사용 pos API명세서 Link</a>
+</li>
 </details>
 
 <details>
@@ -107,13 +111,21 @@
 <h2 align="left">🏷️ ourpos 프론트 엔드 </h2>
 
 <details>
-<summary><h3>💻 ourpos UI/UX 단위 테스트 </h3></summary>
-1. 모바일 어플리케이션
-https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/fb013e51-4d25-422a-be1a-86f2cdc37189
-2. 직영점 POS
-https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/19109ca5-108a-4800-a748-d96de10c9647
-3. 본사용 POS
-https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/34e71eef-d525-498d-9474-96c08afe2451
+  <summary><h3>💻 ourpos UI/UX 단위 테스트 </h3></summary>
+  <ul>
+    <li>
+      <a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/fb013e51-4d25-422a-be1a-86f2cdc37189">모바일 어플리케이션</a>
+    </li>
+    <li>
+      <a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/348dca93-efa3-4e67-870e-988c30de45cb">키오스크</a>
+    </li>
+    <li>
+      <a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/19109ca5-108a-4800-a748-d96de10c9647">직영점 POS</a>
+    </li>
+    <li>
+      <a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/34e71eef-d525-498d-9474-96c08afe2451">본사용 POS</a>
+    </li>
+  </ul>
 </details>
 
 <h2 align="left">🏷️ ourpos 시스템 통합 </h2>
