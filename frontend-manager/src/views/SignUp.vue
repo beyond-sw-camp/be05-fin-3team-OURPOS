@@ -80,6 +80,8 @@
               <div class="mt-3">
                 <p class="text-muted">샘플 계정:</p>
                 <ul class="text-muted">
+                  <li><strong>본사</strong>  id: super, pw: 1234</li>
+                  <span>==========================================</span>
                   <li><strong>강남점</strong>  id: admin1, pw: 1234</li>
                   <li><strong>고속터미널점</strong>  id: admin2, pw: 1234</li>
                   <li><strong>서울역점</strong>  id: admin3, pw: 1234</li>
