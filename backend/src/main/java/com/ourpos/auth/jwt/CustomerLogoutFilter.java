@@ -10,6 +10,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.filter.GenericFilterBean;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -67,12 +68,21 @@ public class CustomerLogoutFilter extends GenericFilterBean {
             return;
         }
 
-        Cookie cookie = new Cookie("Authorization", null);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        cookie.setDomain(".ourpos.org");
+        ResponseCookie cookie = createLogoutCookie();
 
-        response.addCookie(cookie);
+        response.addHeader("Set-Cookie", cookie.toString());
         response.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    private ResponseCookie createLogoutCookie() {
+
+        return ResponseCookie.from("Authorization", null)
+            .httpOnly(true)
+            .maxAge(0)
+            .domain(".ourpos.org")
+            .path("/")
+            .sameSite("None")
+            .secure(true)
+            .build();
     }
 }
