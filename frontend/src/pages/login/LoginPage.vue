@@ -35,10 +35,8 @@
           color="primary"
           @click="testLogin"
         >
-          <v-icon>mdi-account</v-icon>
-          <span
-            class="text-body-1 font-weight-bold"
-          >테스트 계정으로 로그인</span>
+          <v-icon class="text-h5">mdi-account</v-icon>
+          <span class="font-weight-bold ml-3 larger-font">테스트 로그인</span>
         </v-btn>
       </v-row>
 
@@ -115,5 +113,10 @@ if (route.path === '/signup-success') {
 .kakao-login-button, .naver-login-button {
   cursor: pointer;
   transition: transform 0.2s ease;
+}
+
+.larger-font {
+  font-size: 1.3rem; /* 원하는 폰트 크기로 변경 */
+  font-family: sans-serif;
 }
 </style>
