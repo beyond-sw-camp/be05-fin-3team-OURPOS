@@ -178,18 +178,18 @@ const formatDistance = (distance) => {
   }
 };
 
-const initMap = () => {
+const initMap = async () => {
   const latitude = getItemWithExpiration('latitude');
   const longitude = getItemWithExpiration('longitude');
 
   if (latitude && longitude) {
-    findItems(latitude, longitude);
+    await findItems(latitude, longitude);
   } else {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        findItems(latitude, longitude);
+        await findItems(latitude, longitude);
 
         setItemWithExpiration('latitude', latitude.toString());
         setItemWithExpiration('longitude', longitude.toString());
@@ -210,8 +210,8 @@ const initMap = () => {
   }
 };
 
-onMounted(() => {
-  initMap();
+onMounted(async () => {
+  await initMap();
 });
 
 const goBack = () => {
