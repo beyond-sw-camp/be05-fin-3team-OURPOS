@@ -144,26 +144,31 @@ const findStores = async () => {
 };
 
 const viewStore = (storeId, storeName, minOrderAmount) => {
-  const existingOrder = JSON.parse(localStorage.getItem('deliveryOrder'));
+  let storeDeliveryOrder = localStorage.getItem('deliveryOrder');
 
-  if (existingOrder) {
-    existingOrder.storeId = storeId;
-    existingOrder.storeName = storeName;
-    existingOrder.orderAddressRequestDto = address.value;
-  } else {
-    const newOrder = {
-      storeId: storeId,
-      storeName: storeName,
-      orderAddressRequestDto: address.value,
-      minOrderAmount: minOrderAmount,
-      ownerMessage: '',
-      riderMessage: '',
-      disposableYn: false,
-      orderDetailDtos: []
-    };
-    localStorage.setItem('deliveryOrder', JSON.stringify(newOrder));
+  if (storeDeliveryOrder !== null) {
+    storeDeliveryOrder = JSON.parse(storeDeliveryOrder);
+    storeDeliveryOrder.storeId = storeId;
+    storeDeliveryOrder.storeName = storeName;
+    storeDeliveryOrder.orderAddressRequestDto = address.value;
+    storeDeliveryOrder.minOrderAmount = minOrderAmount;
+    localStorage.setItem('deliveryOrder', JSON.stringify(storeDeliveryOrder));
+    router.push('/stores/' + storeId + '/delivery/menus');
+    return;
   }
 
+  const newOrder = {
+    storeId: storeId,
+    storeName: storeName,
+    orderAddressRequestDto: address.value,
+    minOrderAmount: minOrderAmount,
+    ownerMessage: '',
+    riderMessage: '',
+    disposableYn: false,
+    orderDetailDtos: []
+  };
+
+  localStorage.setItem('deliveryOrder', JSON.stringify(newOrder));
   router.push('/stores/' + storeId + '/delivery/menus');
 };
 
