@@ -110,6 +110,10 @@
 <summary><h3>💻 ourpos UI/UX 단위 테스트 </h3></summary>
 1. 모바일 어플리케이션
 https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/fb013e51-4d25-422a-be1a-86f2cdc37189
+2. 직영점 POS
+https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/19109ca5-108a-4800-a748-d96de10c9647
+3. 본사용 POS
+https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/34e71eef-d525-498d-9474-96c08afe2451
 </details>
 
 <h2 align="left">🏷️ ourpos 시스템 통합 </h2>
