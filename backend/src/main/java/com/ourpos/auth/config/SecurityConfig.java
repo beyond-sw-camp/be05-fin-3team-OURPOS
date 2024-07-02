@@ -61,7 +61,9 @@ public class SecurityConfig {
 
                 CorsConfiguration configuration = new CorsConfiguration();
 
-                configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3001"));
+                configuration.setAllowedOrigins(
+                    List.of("https://m.ourpos.org", "https://admin.ourpos.org", "https://kiosk.ourpos.org"
+                        , "http://localhost:3000"));
                 configuration.setAllowedMethods(Collections.singletonList("*"));
                 configuration.setAllowCredentials(true);
                 configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -85,9 +87,13 @@ public class SecurityConfig {
         http
             .httpBasic(AbstractHttpConfigurer::disable);
 
-        http
-            .addFilterAfter(new JwtFilter(jwtUtil), OAuth2LoginAuthenticationFilter.class)
-            .addFilterBefore(new CustomerLogoutFilter(jwtUtil), LogoutFilter.class);
+        // 기존의 JWT 필터를 OAuth2LoginAuthenticationFilter 뒤에 추가합니다.
+        JwtFilter jwtFilter = new JwtFilter(jwtUtil);
+        http.addFilterAfter(jwtFilter, OAuth2LoginAuthenticationFilter.class);
+
+        // CustomerLogoutFilter를 LogoutFilter 앞에 추가합니다.
+        CustomerLogoutFilter logoutFilter = new CustomerLogoutFilter(jwtUtil);
+        http.addFilterBefore(logoutFilter, LogoutFilter.class);
 
         http
             .oauth2Login(oauth2 -> oauth2
@@ -104,12 +110,13 @@ public class SecurityConfig {
 
         loginFilter.setFilterProcessesUrl("/managers/login");
 
+        // UsernamePasswordAuthenticationFilter 대신 로그인 필터를 추가합니다.
         http
             .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/managers/login", "/login").permitAll()
+                .requestMatchers("/managers/join", "/managers/login", "/login", "/healthcheck", "/test/**").permitAll()
                 .anyRequest().authenticated());
 
         http
@@ -119,4 +126,3 @@ public class SecurityConfig {
         return http.build();
     }
 }
-

@@ -4,13 +4,14 @@ import org.springframework.stereotype.Service;
 
 import com.ourpos.api.order.dto.request.DeliveryOrderRequestDto;
 import com.ourpos.api.order.dto.request.HallOrderRequestDto;
+import com.ourpos.domain.order.TempOrder;
 
 @Service
 public interface OrderService {
 
     Long createHallOrder(String loginId, HallOrderRequestDto hallOrderRequestDto);
 
-    void createDeliveryOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto);
+    void createDeliveryOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto, String tempOrderId);
 
     void cancelHallOrder(Long orderId);
 
@@ -25,4 +26,8 @@ public interface OrderService {
     void startDelivery(Long orderId);
 
     void completeDeliveryOrder(Long orderId);
+
+    TempOrder saveTempOrder(String tempOrderId, int amount);
+
+    void deleteTempOrder(String orderId);
 }

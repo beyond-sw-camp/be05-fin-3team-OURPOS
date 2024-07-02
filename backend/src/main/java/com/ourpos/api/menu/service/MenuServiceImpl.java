@@ -2,6 +2,8 @@ package com.ourpos.api.menu.service;
 
 import java.time.LocalDateTime;
 
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +13,7 @@ import com.ourpos.api.file.UploadFile;
 import com.ourpos.api.menu.dto.request.MenuRequestDto;
 import com.ourpos.api.menu.dto.request.MenuUpdateDto;
 import com.ourpos.api.menu.dto.request.StoreRestrictedMenuRequestDto;
+import com.ourpos.auth.dto.manager.ManagerUserDetails;
 import com.ourpos.domain.menu.Category;
 import com.ourpos.domain.menu.CategoryRepository;
 import com.ourpos.domain.menu.Menu;
@@ -28,81 +31,92 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class MenuServiceImpl implements MenuService {
-	public static final String MENU_NOT_FOUND_MESSAGE = "해당 메뉴가 존재하지 않습니다.";
-	public static final String CATEGORY_NOT_FOUND_MESSAGE = "해당 카테고리가 존재하지 않습니다.";
-	public static final String STORE_NOT_FOUND_MESSAGE = "해당 직영점이 존재하지 않습니다.";
+    public static final String MENU_NOT_FOUND_MESSAGE = "해당 메뉴가 존재하지 않습니다.";
+    public static final String CATEGORY_NOT_FOUND_MESSAGE = "해당 카테고리가 존재하지 않습니다.";
+    public static final String STORE_NOT_FOUND_MESSAGE = "해당 직영점이 존재하지 않습니다.";
 
-	private final MenuRepository menuRepository;
-	private final CategoryRepository categoryRepository;
-	private final FileStore fileStore;
-	private final StoreRepository storeRepository;
-	private final StoreRestrictedMenuRepository storeRestrictedMenuRepository;
+    private final MenuRepository menuRepository;
+    private final CategoryRepository categoryRepository;
+    private final FileStore fileStore;
+    private final StoreRepository storeRepository;
+    private final StoreRestrictedMenuRepository storeRestrictedMenuRepository;
 
-	@Override
-	public void addMenu(MenuRequestDto menuRequestDto, MultipartFile multipartFile) {
-		log.info("MenuService.addMenu() called");
+    public void deactivateMenu(StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
+        log.info("MenuService,deactivateMenu() called");
 
-		Category category = categoryRepository.findById(menuRequestDto.getCategoryId()).orElseThrow(
-			() -> new IllegalArgumentException(CATEGORY_NOT_FOUND_MESSAGE));
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ManagerUserDetails managerUserDetails = (ManagerUserDetails)principal;
+        String managerLoginId = managerUserDetails.getUsername();
 
-		addMenuPicture(menuRequestDto, multipartFile);
-		Menu menu = menuRequestDto.toEntity(category);
+        Menu menu = menuRepository.findById(storeRestrictedMenuRequestDto.getMenuId()).orElseThrow(
+            () -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
+        Store store = storeRepository.findByManagerLoginId(managerLoginId).orElseThrow(
+            () -> new IllegalArgumentException(STORE_NOT_FOUND_MESSAGE));
 
-		menuRepository.save(menu);
-	}
+        StoreRestrictedMenu storeRestrictedMenu = storeRestrictedMenuRequestDto.toEntity(menu, store);
+        storeRestrictedMenuRepository.save(storeRestrictedMenu);
+    }
 
-	private void addMenuPicture(MenuRequestDto menuRequestDto, MultipartFile multipartFile) {
-		if (multipartFile != null) {
-			UploadFile uploadFile = fileStore.storeFile(multipartFile);
-			menuRequestDto.setPictureUrl(uploadFile.getStoreFilename());
-		} else {
-			menuRequestDto.setPictureUrl("default.png");
-		}
-	}
+    public void activateMenu(StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
+        log.info("MenuService,activateMenu() called");
 
-	public void deactivateMenu(StoreRestrictedMenuRequestDto storeRestrictedMenuRequestDto) {
-		log.info("MenuService,deactivateMenu() called");
-		Menu menu = menuRepository.findById(storeRestrictedMenuRequestDto.getMenuId()).orElseThrow(
-			() -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
-		Store store = storeRepository.findById(storeRestrictedMenuRequestDto.getMenuId()).orElseThrow(
-			() -> new IllegalArgumentException());
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ManagerUserDetails managerUserDetails = (ManagerUserDetails)principal;
+        String managerLoginId = managerUserDetails.getUsername();
 
-		StoreRestrictedMenu storeRestrictedMenu = storeRestrictedMenuRequestDto.toEntity(store, menu);
-		storeRestrictedMenuRepository.save(storeRestrictedMenu);
+        Menu menu = menuRepository.findById(storeRestrictedMenuRequestDto.getMenuId()).orElseThrow(
+            () -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
+        Store store = storeRepository.findByManagerLoginId(managerLoginId).orElseThrow(
+            () -> new IllegalArgumentException(STORE_NOT_FOUND_MESSAGE));
 
-	}
+        log.info("Initiate Deleting StoreRestrictedMenu with menuId: {} and storeId: {}", menu.getId(), store.getId());
+        storeRestrictedMenuRepository.deleteByMenuIdAndStoreId(menu.getId(), store.getId());
+        log.info("finish Deleting StoreRestrictedMenu with menuId: {} and storeId: {}", menu.getId(), store.getId());
+    }
 
-	@Transactional
-	public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto, MultipartFile multipartFile) {
-		log.info("MenuService.updateMenu() called");
-		Menu menu = menuRepository.findById(menuId)
-			.filter(m -> !m.getDeletedYn())
-			.orElseThrow(
-				() -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
-		Category category = categoryRepository.findById(menuUpdateDto.getCategoryId()).orElseThrow(
-			() -> new IllegalArgumentException(CATEGORY_NOT_FOUND_MESSAGE));
-		updateMenuPicture(menuUpdateDto, multipartFile);
+    @Override
+    public void addMenu(MenuRequestDto menuRequestDto, MultipartFile multipartFile) {
+        log.info("MenuService.addMenu() called");
 
-		menu.update(category, menuUpdateDto.getName(), menuUpdateDto.getPrice(),
-			menuUpdateDto.getDescription(), menuUpdateDto.getPictureUrl());
-	}
+        Category category = categoryRepository.findById(menuRequestDto.getCategoryId()).orElseThrow(
+            () -> new IllegalArgumentException(CATEGORY_NOT_FOUND_MESSAGE));
 
-	private void updateMenuPicture(MenuUpdateDto menuUpdateDto, MultipartFile multipartFile) {
-		if (multipartFile != null) {
-			UploadFile uploadFile = fileStore.storeFile(multipartFile);
-			menuUpdateDto.setPictureUrl(uploadFile.getStoreFilename());
-		} else {
-			menuUpdateDto.setPictureUrl("default.png");
-		}
-	}
+        addMenuPicture(menuRequestDto, multipartFile);
+        Menu menu = menuRequestDto.toEntity(category);
 
-	@Transactional
-	public void deleteMenu(Long menuId) {
-		log.info("MenuService.deleteMenu() called");
-		Menu menu = menuRepository.findById(menuId).orElseThrow(
-			() -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
+        menuRepository.save(menu);
+    }
 
-		menu.delete(LocalDateTime.now());
-	}
+    private void addMenuPicture(MenuRequestDto menuRequestDto, MultipartFile multipartFile) {
+        if (multipartFile != null) {
+            UploadFile uploadFile = fileStore.storeFile(multipartFile);
+            menuRequestDto.setPictureUrl(uploadFile.getStoreFilename());
+        } else {
+            menuRequestDto.setPictureUrl("default.png");
+        }
+    }
+
+    @Override
+    public void updateMenu(Long menuId, MenuUpdateDto menuUpdateDto) {
+        log.info("MenuService.updateMenu() called");
+        Menu menu = menuRepository.findById(menuId)
+            .filter(m -> !m.getDeletedYn())
+            .orElseThrow(
+                () -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
+        Category category = categoryRepository.findById(menuUpdateDto.getCategoryId()).orElseThrow(
+            () -> new IllegalArgumentException(CATEGORY_NOT_FOUND_MESSAGE));
+
+        menu.update(category, menuUpdateDto.getName(), menuUpdateDto.getPrice(),
+            menuUpdateDto.getDescription());
+    }
+
+    @Transactional
+    public void deleteMenu(Long menuId) {
+        log.info("MenuService.deleteMenu() called");
+        Menu menu = menuRepository.findById(menuId).orElseThrow(
+            () -> new IllegalArgumentException(MENU_NOT_FOUND_MESSAGE));
+
+        menu.delete(LocalDateTime.now());
+    }
 
 }

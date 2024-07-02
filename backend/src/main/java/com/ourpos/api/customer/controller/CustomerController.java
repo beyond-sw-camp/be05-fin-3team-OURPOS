@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -124,12 +125,12 @@ public class CustomerController implements CustomerControllerDocs {
     // 마이페이지 - 내가 주문한 배달 주문 내역 조회
     @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/my/orders/delivery")
-    public Result<Page<DeliveryOrderResponseDto>> getMyDeliveryOrders(@PageableDefault(size = 10) Pageable pageable,
+    public Result<Slice<DeliveryOrderResponseDto>> getMyDeliveryOrders(@PageableDefault(size = 10) Pageable pageable,
         @RequestParam(required = false) String status) {
         String loginId = getCustomerLoginId();
         log.info("나의 배달 주문 내역 조회: {}", loginId);
 
-        Page<DeliveryOrderResponseDto> deliveryOrders = orderQueryService.findDeliveryOrderByLoginId(loginId, status,
+        Slice<DeliveryOrderResponseDto> deliveryOrders = orderQueryService.findDeliveryOrderByLoginId(loginId, status,
             pageable);
         return new Result<>(HttpStatus.OK.value(), "나의 배달 주문 내역 조회가 완료되었습니다.", deliveryOrders);
     }

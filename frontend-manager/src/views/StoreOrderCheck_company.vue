@@ -1,107 +1,93 @@
+
 <template>
-  <div>
-    <div class="container mt-4">
-      <h2>주문 목록</h2>
-      <div class="row mb-3">
-        <div class="col">
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a 
-                class="nav-link" 
-                :class="{ active: selectedTab === 'WAITING' }" 
-                @click="fetchOrders('WAITING')"
-                href="#"
-              >
-                대기중
-              </a>
-            </li>
-            <li class="nav-item">
-              <a 
-                class="nav-link" 
-                :class="{ active: selectedTab === 'ACCEPTED' }" 
-                @click="fetchOrders('ACCEPTED')"
-                href="#"
-              >
-                주문승인
-              </a>
-            </li>
-            <li class="nav-item">
-              <a 
-                class="nav-link" 
-                :class="{ active: selectedTab === 'DELIVERING' }" 
-                @click="fetchOrders('DELIVERING')"
-                href="#"
-              >
-                배송중
-              </a>
-            </li>
-            <li class="nav-item">
-              <a 
-                class="nav-link" 
-                :class="{ active: selectedTab === 'COMPLETED' }" 
-                @click="fetchOrders('COMPLETED')"
-                href="#"
-              >
-                배송 완료
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-9">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">주문 리스트</h5>
-              <ul class="list-group">
-                <li v-for="order in filteredOrders" :key="order.storeOrderId" class="list-group-item">
-                  <div class="row">
-                    <div class="col"><strong>주문 번호:</strong> {{ order.storeOrderId }}</div>
-                    <div class="col"><strong>주문 일시:</strong> {{ order.storeOrderDate }}</div>
-                    <div class="col"><strong>주문 금액:</strong> {{ order.storeOrderPrice }}</div>
-                    <div class="col"><strong>지점명:</strong> {{ order.storeName }}</div>
-                    <div class="col">
-                      <a href="#" @click="showOrderDetail(order)">
-                        {{ order.storeOrderStatus }}
-                      </a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+  <div class="container mt-5">
+    <h2>비품, 식자재 주문 관리</h2>
+    
+    <!-- 탭 네비게이션 -->
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" :class="{ active: activeTab === 'WAITING' }" @click="changeTab('WAITING')">대기중</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" :class="{ active: activeTab === 'ACCEPTED' }" @click="changeTab('ACCEPTED')">주문승인</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" :class="{ active: activeTab === 'DELIVERING' }" @click="changeTab('DELIVERING')">배달중</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" :class="{ active: activeTab === 'COMPLETED' }" @click="changeTab('COMPLETED')">배달완료</a>
+      </li>
+    </ul>
+    
+    <!-- 주문 목록 -->
+    <div class="mt-4">
+      <div v-if="loading">불러오는 중...</div>
+      <div v-else>
+        <div v-for="order in filteredOrders" :key="order.storeOrderId" class="card mb-3 shadow-sm order-card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="card-title mb-1">주문 번호: {{ order.storeOrderId }}</h5>
+                <div class="d-flex justify-content-between">
+                  <p class="card-text text-muted mb-1">주문 일시: {{ formatDateTime(order.storeOrderDate) }}</p>
+                  <p class="card-text text-muted mb-1">주문 금액: {{ formatCurrency(order.storeCommPrice) }} 원</p>
+                  <p class="card-text text-muted mb-1">지점명: {{ order.storeName }}</p>
+                  <p class="card-text text-muted mb-1"> {{ order.storeOrderStatus }}</p>
+                  
+                </div>
+              </div>
+              <div class="col-md-6 d-flex align-items-center justify-content-end">
+                <button class="btn btn-outline-primary" @click="openModal(order)">상세 보기</button>
+              </div>
             </div>
           </div>
         </div>
-        <!-- 주문 세부 정보 표시 -->
-        <div class="col-3" v-if="selectedOrderDetail">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">주문 세부 정보</h5>
-              <div>
-                <div><strong>상품명:</strong> {{ selectedOrderDetail.storeCommName }}</div>
-                <div><strong>주문 날짜:</strong> {{ selectedOrderDetail.storeOrderDate }}</div>
-                <div><strong>주문 가격:</strong> {{ selectedOrderDetail.storeOrderPrice }}</div>
-                <div><strong>지점명:</strong> {{ selectedOrderDetail.storeName }}</div>
-                <div><strong>지점 주소:</strong> {{ selectedOrderDetail.addressDetail }}</div>
-                <div><strong>전화번호:</strong> {{ selectedOrderDetail.storePhone }}</div>
-              </div>
-              <!-- 주문 상태 변경 버튼 -->
-              <div class="mt-3">
-                <button v-if="selectedOrderDetail.storeOrderStatus === 'WAITING'"
-                        @click="changeOrderStatus(selectedOrderDetail.storeOrderId, 'ACCEPTED')"
-                        class="btn btn-success btn-sm">
-                  ACCEPTED
-                </button>
-                <button v-else-if="selectedOrderDetail.storeOrderStatus === 'ACCEPTED'"
-                        @click="changeOrderStatus(selectedOrderDetail.storeOrderId, 'DELIVERING')"
-                        class="btn btn-primary btn-sm">
-                  DELIVERING
-                </button>
-                <button v-else-if="selectedOrderDetail.storeOrderStatus === 'DELIVERING'"
-                        @click="changeOrderStatus(selectedOrderDetail.storeOrderId, 'COMPLETED')"
-                        class="btn btn-primary btn-sm">
-                  COMPLETED
-                </button>
-              </div>
+        <!-- 페이징 -->
+        <nav v-if="totalPages > 1" aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+              <a class="page-link" href="#" @click.prevent="prevPage">&laquo;</a>
+            </li>
+            <li class="page-item" v-for="page in totalPages" :key="page" :class="{ 'active': currentPage === page }">
+              <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+              <a class="page-link" href="#" @click.prevent="nextPage">&raquo;</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    
+    <!-- 주문 상태 변경 모달 -->
+    <div class="modal fade" tabindex="-1" role="dialog" :class="{ 'show d-block': showModal }">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">주문 상세 정보</h5>
+            <button type="button" class="close" @click="closeModal">
+            <i class="fas fa-times"></i>
+          </button>
+          </div>
+          <div class="modal-body" v-if="selectedOrder">
+            <p><strong>상품명:</strong> {{ selectedOrder.storeCommName }}</p>
+            <p><strong>상품 수량:</strong> {{ selectedOrder.storeOrderDetailQuantity }}</p>
+            <p><strong>상품 단위:</strong> {{ selectedOrder.storeCommArticleUnit }}</p>
+            <p><strong>주문 날짜:</strong> {{ formatDateTime(selectedOrder.storeOrderDate) }}</p>
+            <p><strong>주문 가격:</strong> {{ formatCurrency(selectedOrder.storeOrderPrice) }}원</p>
+            <p><strong>지점명:</strong> {{ selectedOrder.storeName }}</p>
+            <p><strong>지점 주소:</strong> {{ selectedOrder.addressBase }} {{ selectedOrder.addressDetail }}</p>
+            <p><strong>전화번호:</strong> {{ selectedOrder.storePhone }}</p>
+            
+            <!-- 주문 상태 변경 버튼 -->
+            <div class="text-center" v-if="selectedOrder.storeOrderStatus === 'WAITING'">
+              <button class="btn btn-primary" @click="updateOrderStatus(selectedOrder.storeOrderId, 'accepted')">주문 승인</button>
+            </div>
+            <div class="text-center" v-else-if="selectedOrder.storeOrderStatus === 'ACCEPTED'">
+              <button class="btn btn-primary" @click="updateOrderStatus(selectedOrder.storeOrderId, 'delivering')">배달 중</button>
+            </div>
+            <div class="text-center" v-else-if="selectedOrder.storeOrderStatus === 'DELIVERING'">
+              <button class="btn btn-primary" @click="updateOrderStatus(selectedOrder.storeOrderId, 'complete')">배달 완료</button>
             </div>
           </div>
         </div>
@@ -116,114 +102,143 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      activeTab: 'WAITING',
       orders: [],
       loading: false,
-      error: null,
-      selectedOrderDetail: null, // 선택된 주문의 세부 정보를 저장할 상태
-      selectedTab: 'WAITING', // 현재 선택된 탭의 상태
+      currentPage: 1,
+      pageSize: 5,
+      totalPages: 0,
+      showModal: false,
+      selectedOrder: null
     };
   },
   computed: {
-    // 현재 선택된 탭에 해당하는 주문 가져오기
     filteredOrders() {
-      return this.orders.filter(order => {
-        if (this.selectedTab === 'WAITING') {
-          return order.storeOrderStatus === 'WAITING';
-        } else if (this.selectedTab === 'ACCEPTED') {
-          return order.storeOrderStatus === 'ACCEPTED';
-        } else if (this.selectedTab === 'DELIVERING') {
-          return order.storeOrderStatus === 'DELIVERING';
-        } else if (this.selectedTab === 'COMPLETED') {
-          return order.storeOrderStatus === 'COMPLETED';
-        }
-        return false;
-      });
+      return this.orders.filter(order => order.storeOrderStatus === this.activeTab);
     }
   },
-  created() {
-    this.fetchOrders(this.selectedTab);
-  },
   methods: {
-    async fetchOrders(status) {
+    fetchOrders() {
       this.loading = true;
-      this.error = null;
-      this.selectedTab = status;
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        this.error = 'No token found in local storage';
-        this.loading = false;
-        return;
-      }
-
-      try {
-        const response = await axios.get(`http://localhost:8080/api/v1/storeorder/1/check`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `${token}`
-          },
-          withCredentials: true,
-          params: {
-            status: status
-          }
-        });
-        this.orders = response.data.data;
-        console.log(response.data.data);
-      
-      } catch (error) {
-        this.error = 'Error fetching orders';
-        console.error('Error fetching orders:', error);
-
-        if (error.response && error.response.status === 401) {
-          this.error = 'Unauthorized: Invalid or expired token';
-          console.error('Unauthorized: Invalid or expired token');
+      axios.get(`https://api.ourpos.org/api/v1/storeorder/${this.activeTab.toLowerCase()}?page=${this.currentPage - 1}&size=${this.pageSize}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
         }
-      } finally {
+      })
+      .then(response => {
+        this.orders = response.data.data.content;
+        this.totalPages = response.data.data.totalPages;
         this.loading = false;
+      })
+      .catch(error => {
+        console.error('Error fetching orders:', error);
+        this.loading = false;
+      });
+    },
+    changeTab(tab) {
+      this.activeTab = tab;
+      this.currentPage = 1; 
+      this.fetchOrders();
+    },
+    goToPage(page) {
+      this.currentPage = page;
+      this.fetchOrders();
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.fetchOrders();
       }
     },
-
-    showOrderDetail(order) {
-      // 선택된 주문의 세부 정보를 저장, 표시
-      this.selectedOrderDetail = order;
-    },
-
-    async changeOrderStatus(storeOrderId, action) {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        this.error = 'No token found in local storage';
-        return;
-      }
-
-      let url = `http://localhost:8080/api/v1/storeorder/${storeOrderId}`;
-      if (action === 'ACCEPTED') {
-        url += '/accepted';
-      } else if (action === 'DELIVERING') {
-        url += '/delivering';
-      } else if (action === 'COMPLETED') {
-        url += '/complete';
-      }
-
-      try {
-        await axios.put(url, {}, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `${token}`
-          },
-          withCredentials: true
-        });
-        this.selectedOrderDetail = null; // 상태 변경 후 세부 정보 탭 숨기기
-        this.fetchOrders(this.selectedTab); // 상태 변경 후 주문 목록 새로고침
-      } catch (error) {
-        this.error = `Error changing order status: ${error.message}`;
-        console.error('Error changing order status:', error);
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.fetchOrders();
       }
     },
-  },
+    openModal(order) {
+      this.selectedOrder = order;
+      this.showModal = true;
+    },
+    closeModal() {
+      this.selectedOrder = null; 
+      this.showModal = false;
+    },
+    updateOrderStatus(orderId, newStatus) {
+      axios.put(`https://api.ourpos.org/api/v1/storeorder/${orderId}/${newStatus}`, null, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
+        }
+      })
+      .then(response => {
+        console.log(`Order ${orderId} status updated to ${newStatus}`);
+        // Update 
+        console.log('Response:', response.data);
+        this.fetchOrders();
+        this.closeModal();
+      })
+      .catch(error => {
+        console.error(`Error updating order ${orderId} status:`, error);
+        
+      });
+    },
+    formatDateTime(dateTime) {
+      const date = new Date(dateTime);
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+      return date.toLocaleString('ko-KR', options).replace(/\./g, '.');
+    },
+
+  formatCurrency(amount) {
+    return Number(amount).toLocaleString('ko-KR');
+  }
+},
+  mounted() {
+    this.fetchOrders();
+  }
 };
 </script>
 
 <style>
+.order-card {
+  border-radius: 0.5rem;
+  transition: transform 0.2s;
+}
 
+.order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal.show.d-block {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.pagination .page-link {
+  color: #333333;
+}
+
+.pagination .page-link:hover {
+  color: #0056b3;
+}
+
+.modal-dialog {
+  max-width: 600px;
+}
+
+.modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
 </style>

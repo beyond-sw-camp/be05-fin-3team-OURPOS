@@ -1,37 +1,33 @@
 <template>
   <div>
-    <div class="navigation-bar">
-      <h1>OUR POS</h1>
-      <router-link to="/head-office-landing">
-        <button class="icon-button">
-          <i class="mdi mdi-export"></i>
-        </button>
-      </router-link>
-    </div>
-
+    <div class="container mt-5">
+      <h2>메뉴 옵션 관리</h2>
+      <hr class="styled-line">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-3">
-          <button
-            :class="selectedCategory.value === 'group' ? 'btn primary' : 'btn'"
-            @click="selectCategory('group')"
-          >
-            메뉴 옵션 그룹
-          </button>
-          <button
-            :class="selectedCategory.value === 'option' ? 'btn primary' : 'btn'"
-            @click="selectCategory('option')"
-          >
-            메뉴 옵션
-          </button>
+        <div class="col-2">
+          <div class="category-list">
+            <material-button
+              :class="['category-material-button', { primary: selectedCategory === 'group', default: selectedCategory !== 'group' }]"
+              @click="selectCategory('group')"
+            >
+              메뉴 옵션 그룹
+            </material-button>
+            <material-button
+              :class="['category-material-button', { primary: selectedCategory === 'option', default: selectedCategory !== 'option' }]"
+              @click="selectCategory('option')"
+            >
+              메뉴 옵션
+            </material-button>
+          </div>
         </div>
-        <div class="col-9">
+        <div class="col-10">
           <div class="row">
-            <div class="col-12 col-sm-4" v-for="(item, index) in selectedItems" :key="index">
+            <div class="col-12 col-sm-3" v-for="(item, index) in selectedItems" :key="index">
               <div class="card" @click="openEditDialog(item, index)">
                 <h2>{{ item.name }}</h2>
                 <h3>{{ item.description }}</h3>
-                <p v-if="selectedCategory.value === 'option'">단위: {{ item.unit }}</p>
+                <p v-if="selectedCategory === 'option'">단위: {{ item.unit }}</p>
                 <p>가격: {{ item.price }}</p>
               </div>
             </div>
@@ -40,23 +36,23 @@
       </div>
     </div>
 
-    <button class="fab" @click="openAddDialog">
-      추가하기
-    </button>
+    <MaterialButton class="fab" @click="openAddDialog">
+      +
+    </MaterialButton>
 
-    <!-- Add Dialog for 그룹 -->
-    <Modal v-if="addDialogGroup" @close="closeAddDialogGroup">
-      <h2>메뉴 옵션 그룹 추가하기</h2>
+    <MenuManageModal v-if="addDialogGroup" :isOpen="addDialogGroup" title="메뉴 옵션 그룹 추가하기" @close="closeAddDialogGroup" @confirm="addMenuOptionGroup">
       <div class="form-group">
         <label>메뉴 옵션 그룹 이름</label>
-        <input type="text" v-model="newItem.name" class="form-control">
+        <input v-model="newItem.name" @input="validateAddGroupName" placeholder="메뉴 옵션 그룹 이름" class="form-control">
+        <span v-if="AddGroupNameErrorMessage" class="error-message">{{ AddGroupNameErrorMessage }}</span>
       </div>
       <div class="form-group">
         <label>메뉴 옵션 그룹 설명</label>
-        <input type="text" v-model="newItem.description" class="form-control">
+        <input type="text" v-model="newItem.description" @input="validateAddGroupDescription" placeholder="메뉴 옵션 그룹 설명" class="form-control">
+        <span v-if="AddGroupDescriptionErrorMessage" class="error-message">{{ AddGroupDescriptionErrorMessage }}</span>
       </div>
       <div class="form-group">
-        <label>카테고리 이름</label>
+        <label>카테고리 선택</label>
         <select v-model="selectedCategoryName" class="form-control">
           <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
         </select>
@@ -66,18 +62,13 @@
           <input type="checkbox" v-model="newItem.exclusiveYn"> 배타선택 여부
         </label>
       </div>
-      <div class="actions">
-        <button @click="addMenuOptionGroup" class="btn btn-primary">저장</button>
-        <button @click="closeAddDialogGroup" class="btn btn-secondary">취소</button>
-      </div>
-    </Modal>
+    </MenuManageModal>
 
-    <!-- Add Dialog for 옵션 -->
-    <Modal v-if="addDialogOption" @close="closeAddDialogOption">
-      <h2>메뉴 옵션 추가하기</h2>
+    <MenuManageModal v-if="addDialogOption" :isOpen="addDialogOption" title="메뉴 옵션 추가하기" @close="closeAddDialogOption" @confirm="addMenuOption">
       <div class="form-group">
         <label>메뉴 옵션 이름</label>
-        <input type="text" v-model="newItem.name" class="form-control">
+        <input type="text" v-model="newItem.name" @input="validateAddOptionName" placeholder="메뉴 옵션 이름" class="form-control">
+        <span v-if="AddOptionNameErrorMessage" class="error-message">{{ AddOptionNameErrorMessage }}</span>
       </div>
       <div class="form-group">
         <label>메뉴 옵션 그룹</label>
@@ -87,27 +78,24 @@
       </div>
       <div class="form-group">
         <label>추가금액</label>
-        <input type="number" v-model="newItem.price" class="form-control">
+        <input  v-model="newItem.price" @input="validateAddOptionPrice" placeholder="메뉴 옵션 가격" class="form-control">
+        <span v-if="AddOptionPriceErrorMessage" class="error-message">{{ AddOptionPriceErrorMessage }}</span>
       </div>
-      <div class="actions">
-        <button @click="addMenuOption" class="btn btn-primary">저장</button>
-        <button @click="closeAddDialogOption" class="btn btn-secondary">취소</button>
-      </div>
-    </Modal>
+    </MenuManageModal>
 
-    <!-- Edit Dialog for 그룹 -->
-    <Modal v-if="editDialogGroup" @close="closeEditDialogGroup">
-      <h2>메뉴 옵션 그룹 수정하기</h2>
+    <MenuManageModal v-if="editDialogGroup" :isOpen="editDialogGroup" title="메뉴 옵션 그룹 수정하기" @close="closeEditDialogGroup" @confirm="saveMenuOptionGroup">
       <div class="form-group">
         <label>메뉴 옵션 그룹 이름</label>
-        <input type="text" v-model="currentItem.name" class="form-control">
+        <input type="text" v-model="currentItem.name" @input="validateUpdateGroupName" placeholder="메뉴 옵션 그룹 이름" class="form-control">
+        <span v-if="UpdateGroupNameErrorMessage" class="error-message">{{ UpdateGroupNameErrorMessage }}</span>
       </div>
       <div class="form-group">
         <label>메뉴 옵션 그룹 설명</label>
-        <input type="text" v-model="currentItem.description" class="form-control">
+        <input type="text" v-model="currentItem.description" @input="validateUpdateGroupDescription" placeholder="메뉴 옵션 그룹 설명" class="form-control">
+        <span v-if="UpdateGroupDescriptionErrorMessage" class="error-message">{{ UpdateGroupDescriptionErrorMessage }}</span>
       </div>
       <div class="form-group">
-        <label>카테고리 이름</label>
+        <label>카테고리 선택</label>
         <select v-model="currentCategoryName" class="form-control">
           <option v-for="category in categories" :key="category.id">{{ category.name }}</option>
         </select>
@@ -117,19 +105,14 @@
           <input type="checkbox" v-model="currentItem.exclusiveYn"> 배타선택 여부
         </label>
       </div>
-      <div class="actions">
-        <button @click="saveMenuOptionGroup" class="btn btn-primary">저장</button>
-        <button @click="closeEditDialogGroup" class="btn btn-secondary">취소</button>
-        <button @click="deleteMenuOptionGroup" class="btn btn-danger">삭제</button>
-      </div>
-    </Modal>
+      <MaterialButton @click="deleteMenuOptionGroup" class="btn btn-danger">삭제</MaterialButton>
+    </MenuManageModal>
 
-    <!-- Edit Dialog for 옵션 -->
-    <Modal v-if="editDialogOption" @close="closeEditDialogOption">
-      <h2>메뉴 옵션 수정하기</h2>
+    <MenuManageModal v-if="editDialogOption" :isOpen="editDialogOption" title="메뉴 옵션 수정하기" @close="closeEditDialogOption" @confirm="saveMenuOption">
       <div class="form-group">
         <label>메뉴 옵션 이름</label>
-        <input type="text" v-model="currentItem.name" class="form-control">
+        <input type="text" v-model="currentItem.name" @input="validateUpdateOptionName" placeholder="메뉴 옵션 이름" class="form-control">
+        <span v-if="UpdateOptionNameErrorMessage" class="error-message">{{ UpdateOptionNameErrorMessage }}</span>
       </div>
       <div class="form-group">
         <label>메뉴 옵션 그룹</label>
@@ -139,21 +122,20 @@
       </div>
       <div class="form-group">
         <label>추가금액</label>
-        <input type="number" v-model="currentItem.price" class="form-control">
+        <input  v-model="currentItem.price" @input="validateUpdateOptionPrice" placeholder="메뉴 옵션 가격" class="form-control">
+        <span v-if="UpdateOptionPriceErrorMessage" class="error-message">{{ UpdateOptionPriceErrorMessage }}</span>
       </div>
-      <div class="actions">
-        <button @click="saveMenuOption" class="btn btn-primary">저장</button>
-        <button @click="closeEditDialogOption" class="btn btn-secondary">취소</button>
-        <button @click="deleteMenuOption" class="btn btn-danger">삭제</button>
-      </div>
-    </Modal>
+      <MaterialButton @click="deleteMenuOption" class="btn btn-danger">삭제</MaterialButton>
+    </MenuManageModal>
+  </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import Modal from './Modal.vue';
+import MenuManageModal from '../views/MenuManageModal.vue';
+import MaterialButton from '../components/MaterialButton.vue';
 
 const addDialogGroup = ref(false);
 const addDialogOption = ref(false);
@@ -187,9 +169,91 @@ const newItem = ref({
 const selectedCategoryName = ref('');
 const currentCategoryName = ref('');
 
+const AddGroupNameErrorMessage = ref('');
+const AddGroupDescriptionErrorMessage = ref('');
+const UpdateGroupNameErrorMessage = ref('');
+const UpdateGroupDescriptionErrorMessage = ref('');
+const AddOptionNameErrorMessage = ref('');
+const AddOptionPriceErrorMessage = ref('');
+const UpdateOptionNameErrorMessage = ref('');
+const UpdateOptionPriceErrorMessage = ref('');
+
+const validateAddGroupName = () => {
+const regex = /^[ㄱ-ㅎ|가-힣]+$/; // Regex to allow only Korean characters
+if (!regex.test(newItem.value.name)) {
+  AddGroupNameErrorMessage.value = '한글만 입력 가능합니다';
+} else {
+  AddGroupNameErrorMessage.value = '';
+}
+};
+
+const validateAddGroupDescription = () => {
+const regex = /^[ㄱ-ㅎ|가-힣]+$/; // Regex to allow only Korean characters
+if (!regex.test(newItem.value.description)) {
+  AddGroupDescriptionErrorMessage.value = '한글만 입력 가능합니다';
+} else {
+  AddGroupDescriptionErrorMessage.value = '';
+}
+};
+
+const validateUpdateGroupName = () => {
+const regex = /^[ㄱ-ㅎ|가-힣]+$/; // Regex to allow only Korean characters
+if (!regex.test(currentItem.value.name)) {
+  UpdateGroupNameErrorMessage.value = '한글만 입력 가능합니다';
+} else {
+  UpdateGroupNameErrorMessage.value = '';
+}
+};
+
+const validateUpdateGroupDescription = () => {
+const regex = /^[ㄱ-ㅎ|가-힣]+$/; // Regex to allow only Korean characters
+if (!regex.test(currentItem.value.description)) {
+  UpdateGroupDescriptionErrorMessage.value = '한글만 입력 가능합니다';
+} else {
+  UpdateGroupDescriptionErrorMessage.value = '';
+}
+};
+
+const validateAddOptionName = () => {
+const regex = /^[ㄱ-ㅎ|가-힣]+$/; // Regex to allow only Korean characters
+if (!regex.test(newItem.value.name)) {
+  AddOptionNameErrorMessage.value = '한글만 입력 가능합니다';
+} else {
+  AddOptionNameErrorMessage.value = '';
+}
+};
+
+const validateAddOptionPrice = () => {
+const regex = /^[0-9]*$/; // This regex allows only numbers
+if (!regex.test(newItem.value.price)) {
+  AddOptionPriceErrorMessage.value = '숫자만 입력 가능합니다';
+} else {
+  AddOptionPriceErrorMessage.value = '';
+}
+};
+
+const validateUpdateOptionName = () => {
+const regex = /^[ㄱ-ㅎ|가-힣]+$/; // Regex to allow only Korean characters
+if (!regex.test(currentItem.value.name)) {
+  UpdateOptionNameErrorMessage.value = '한글만 입력 가능합니다';
+} else {
+  UpdateOptionNameErrorMessage.value = '';
+}
+};
+
+const validateUpdateOptionPrice = () => {
+  const regex = /^[0-9]*$/; // This regex allows only numbers
+if (!regex.test(currentItem.value.price)) {
+  UpdateOptionPriceErrorMessage.value = '숫자만 입력 가능합니다';
+} else {
+  UpdateOptionPriceErrorMessage.value = '';
+}
+};
+
+
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/categories', {
+    const response = await axios.get('https://api.ourpos.org/api/v1/categories', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -300,7 +364,7 @@ const addMenuOptionGroup = async () => {
   try {
     const category = categories.value.find(cat => cat.name === selectedCategoryName.value);
     if (category) {
-      await axios.post('http://localhost:8080/api/v1/menuOptionGroups', {
+      await axios.post('https://api.ourpos.org/api/v1/menuOptionGroups', {
         name: newItem.value.name,
         categoryId: category.id,
         exclusiveYn: newItem.value.exclusiveYn,
@@ -323,7 +387,7 @@ const addMenuOption = async () => {
   try {
     const group = menuOptionGroups.value.find(g => g.name === newItem.value.group);
     if (group) {
-      await axios.post('http://localhost:8080/api/v1/menuOptions', {
+      await axios.post('https://api.ourpos.org/api/v1/menuOptions', {
         menuOptionGroupId: group.id,
         name: newItem.value.name,
         price: newItem.value.price
@@ -347,7 +411,7 @@ const saveMenuOptionGroup = async () => {
     try {
       const category = categories.value.find(cat => cat.name === currentCategoryName.value);
       if (category) {
-        await axios.put(`http://localhost:8080/api/v1/menuOptionGroups/${currentItem.value.id}/update`, {
+        await axios.put(`https://api.ourpos.org/api/v1/menuOptionGroups/${currentItem.value.id}/update`, {
           name: currentItem.value.name,
           categoryId: category.id,
           exclusiveYn: currentItem.value.exclusiveYn,
@@ -372,7 +436,7 @@ const saveMenuOption = async () => {
     try {
       const group = menuOptionGroups.value.find(g => g.name === currentItem.value.group);
       if (group) {
-        await axios.put(`http://localhost:8080/api/v1/menuOptions/${currentItem.value.menuOptionId}/update`, {
+        await axios.put(`https://api.ourpos.org/api/v1/menuOptions/${currentItem.value.menuOptionId}/update`, {
           menuOptionGroupId: group.id,
           name: currentItem.value.name,
           price: currentItem.value.price
@@ -394,7 +458,7 @@ const saveMenuOption = async () => {
 const deleteMenuOptionGroup = async () => {
   if (currentItemIndex.value !== null) {
     try {
-      await axios.put(`http://localhost:8080/api/v1/menuOptionGroups/${currentItem.value.id}/delete`,{},{
+      await axios.put(`https://api.ourpos.org/api/v1/menuOptionGroups/${currentItem.value.id}/delete`,{},{
         headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -412,7 +476,7 @@ const deleteMenuOptionGroup = async () => {
 const deleteMenuOption = async () => {
   if (currentItemIndex.value !== null) {
     try {
-      await axios.put(`http://localhost:8080/api/v1/menuOptions/${currentItem.value.menuOptionId}/delete`,{},{
+      await axios.put(`https://api.ourpos.org/api/v1/menuOptions/${currentItem.value.menuOptionId}/delete`,{},{
         headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -449,13 +513,14 @@ onMounted(() => {
   display: block;
   width: 100%;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 20px; /* Increased padding for height */
+  font-size: 1.25rem; /* Increased font size */
   text-align: center;
   cursor: pointer;
 }
 
-.btn.primary {
-  background-color: #3f51b5;
+.primary {
+  background-color: #28282B; /* Selected state color */
   color: white;
 }
 
@@ -468,12 +533,13 @@ onMounted(() => {
   position: fixed;
   bottom: 16px;
   right: 16px;
-  background-color: #3f51b5;
+  background-color: #28282B;
   color: white;
   border: none;
   border-radius: 50%;
-  width: 56px;
-  height: 56px;
+  width: 70px; /* Increased width */
+  height: 70px; /* Increased height */
+  font-size: 1.5rem; /* Increased font size */
   cursor: pointer;
 }
 
@@ -483,6 +549,18 @@ onMounted(() => {
   border-radius: 8px;
   cursor: pointer;
   margin-bottom: 16px;
+}
+
+.card h2 {
+  font-size: 1.75rem; /* Increased font size */
+}
+
+.card h3 {
+  font-size: 1.5rem; /* Increased font size */
+}
+
+.card p {
+  font-size: 1.25rem; /* Increased font size */
 }
 
 .actions {
@@ -507,9 +585,32 @@ onMounted(() => {
   font-weight: 500;
 }
 
-.icon-button {
+.icon-MaterialButton {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+.category-material-button, .action-material-button {
+  font-size: 1.25rem; /* Increased font size */
+  padding: 10px 20px;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.primary {
+  background-color: #28282B;
+  color: white;
+}
+
+.default {
+  background-color: white;
+  color: black;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 5px; /* Add some margin to space it from the input field */
 }
 </style>

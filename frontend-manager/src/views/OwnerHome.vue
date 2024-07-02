@@ -6,26 +6,14 @@
 
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-            <mini-statistics-card :title="{ text: 'New Clients', value: '3,462' }"
-              detail="<span class='text-danger text-sm font-weight-bolder'>-2%</span> than yesterday" :icon="{
+            <mini-statistics-card :title="{ text: '현재 지점수', value: '5' }"
+              detail="<span class='text-danger text-sm font-weight-bolder'></span>" :icon="{
                 name: 'person',
                 color: 'text-white',
                 background: 'success',
               }" />
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-            <mini-statistics-card :title="{ text: 'Sales', value: '$103,430' }"
-              detail="<span class='text-success text-sm font-weight-bolder'>+5%</span> Just updated" :icon="{
-                name: 'weekend',
-                color: 'text-white',
-                background: 'info',
-              }" />
-              <button @click="goToStore">지점 이동</button>
-          </div>
         </div>
-
-
-
 
 
         <div class="row mb-4 col-lg-12">
@@ -68,78 +56,13 @@
 
     <div class="row">
       <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
-        <project-card title="Projects"
-          description="<i class='fa fa-check text-info' aria-hidden='true'></i> <span class='font-weight-bold ms-1'>30 done</span> this month"
-          :headers="['Companies', 'Members', 'Budget', 'Progress']" :projects="[
-            {
-              logo: logoXD,
-              title: 'Material XD Material XD Version',
-              members: [team1, team2, team3, team4],
-              budget: '$14,000',
-              progress: { percentage: 60, color: 'info' },
-            },
-            {
-              logo: logoAtlassian,
-              title: 'Add Progress Track',
-              members: [team2, team4],
-              budget: '$3,000',
-              progress: { percentage: 10, color: 'info' },
-            },
-            {
-              logo: logoSlack,
-              title: 'Fix Platform Errors',
-              members: [team3, team1],
-              budget: 'Not set',
-              progress: { percentage: 100, color: 'success' },
-            },
-            {
-              logo: logoSpotify,
-              title: 'Launch our Mobile App',
-              members: [team4, team3, team4, team1],
-              budget: '$20,500',
-              progress: { percentage: 100, color: 'success' },
-            },
-            {
-              logo: logoJira,
-              title: 'Add the New Pricing Page',
-              members: [team4],
-              budget: '$500',
-              progress: { percentage: 25, color: 'info' },
-            },
-            {
-              logo: logoJira,
-              title: 'Redesign New Online Shop',
-              members: [team1, team4],
-              budget: '$2,000',
-              progress: { percentage: 40, color: 'info' },
-            },
-          ]" />
+        <project-card title="Current States Of Franchise"
+          description="<i class='fa fa-check text-info' aria-hidden='true'></i> <span class='font-weight-bold ms-1'>5 franchies</span> real time"
+                      :headers="['Branch', 'DashBoard', 'Address']"
+                      :projects="franchises"
+        />
       </div>
-      <div class="col-lg-4 col-md-6">
-        <timeline-list class="h-100" title="Orders overview" description="<i class='fa fa-arrow-up text-success' aria-hidden='true'></i>
-        <span class='font-weight-bold'>24%</span> this month">
-          <timeline-item :icon="{
-            component: 'notifications',
-            class: 'text-success',
-          }" title="$2400 Design changes" date-time="22 DEC 7:20 PM" />
-          <TimelineItem :icon="{
-            component: 'code',
-            class: 'text-danger',
-          }" title="New order #1832412" date-time="21 DEC 11 PM" />
-          <TimelineItem :icon="{
-            component: 'shopping_cart',
-            class: 'text-info',
-          }" title="Server payments for April" date-time="21 DEC 9:34 PM" />
-          <TimelineItem :icon="{
-            component: 'credit_card',
-            class: 'text-warning',
-          }" title="New card added for order #4395133" date-time="20 DEC 2:20 AM" />
-          <TimelineItem :icon="{
-            component: 'vpn_key',
-            class: 'text-primary',
-          }" title="Unlock packages for development" date-time="18 DEC 4:54 AM" class="pb-1" />
-        </timeline-list>
-      </div>
+
     </div>
   </div>
 </template>
@@ -148,19 +71,50 @@
 
   import MiniStatisticsCard from "./components/MiniStatisticsCard.vue";
   import ProjectCard from "./components/ProjectCard.vue";
-  import TimelineList from "@/examples/Cards/TimelineList.vue";
-  import TimelineItem from "@/examples/Cards/TimelineItem.vue";
   import MonthlySaleAll from "./components/Insight/MonthlySaleAll.vue";
   import HourlySaleAll from "./components/Insight/HourlySaleAll.vue";
   import TypeAll from "./components/Insight/TypeAll.vue";
   import DeliveryAll from "./components/Insight/DeliveryAll.vue";
   import MenuAll from "./components/Insight/MenuAll.vue";
-  import { useRouter } from 'vue-router';
-  
-  const router = useRouter();
+  import {ref} from "vue";
+  import logo from "@/assets/img/logos/store-check-outline.png";
 
-  const goToStore = () => {
-    router.push({ name: "SubDash" });
-  };
+
+  const franchises = ref([
+    {
+      logo: logo,
+      title: "강남역점",
+      dashboard: "강남역점 대시보드",
+      address: "서울 특별시 서초구 강남대로 435",
+      storeId: "1", // 각 프랜차이즈에 해당하는 storeId 설정
+    },
+    {
+      logo: logo,
+      title: "고속터미널점",
+      dashboard: "고속터미널점 대시보드",
+      address: "서울특별시 서초구 신반포로 176",
+      storeId: "2",
+    },{
+      logo: logo,
+      title: '서울역점',
+      dashboard: '서울역점 대시보드',
+      address: '서울특별시 중구 한강대로 405 2층',
+      storeId: "3",
+    },
+    {
+      logo: logo,
+      title: '여의도점',
+      dashboard: '여의도점 대시보드',
+      address: '서울특별시 영등포구 여의대로 108 더현대 서울 B1',
+      storeId: "4",
+    },
+    {
+      logo: logo,
+      title: '신대방삼거리점',
+      dashboard: '신대방삼거리점 대시보드',
+      address: '서울특별시 동작구 보라매로 87',
+      storeId: "5",
+    },
+  ]);
 
 </script>

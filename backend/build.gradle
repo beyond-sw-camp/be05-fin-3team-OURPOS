@@ -8,6 +8,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'jacoco'
 }
 
 group = 'com'
@@ -30,7 +31,6 @@ repositories {
 dependencies {
     // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    //implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -88,6 +88,48 @@ clean {
     delete file(generated)
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+
+    jacoco {
+        destinationFile = layout.buildDirectory.file('jacoco/jacocoTest.exec').get().asFile
+        classDumpDir = layout.buildDirectory.dir('jacoco/classpathdumps').get().asFile
+    }
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.11"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.3
+            }
+        }
+
+        rule {
+            enabled = false
+            element = 'CLASS'
+            includes = ['org.gradle.*']
+
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 0.3
+            }
+        }
+    }
 }

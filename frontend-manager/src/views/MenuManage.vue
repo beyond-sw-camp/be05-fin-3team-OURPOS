@@ -1,36 +1,31 @@
 <template>
   <div>
-    <div class="navigation-bar">
-      <h1>OUR POS</h1>
-      <router-link to="/">
-        <button class="icon-button">
-          <i class="mdi mdi-export"></i>
-        </button>
-      </router-link>
-    </div>
+    <div class="container mt-5">
+      <h2>메뉴 관리</h2>
+      <hr class="styled-line">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-3">
+        <div class="col-2">
           <div class="category-list">
-            <button
+            <material-button
               v-for="category in categories"
               :key="category.id"
-              @click="filterMenus(category)"
-              :class="selectedCategory === category.name ? 'category-button primary' : 'category-button default'"
+              @click="selectCategory(category)"
+              :class="['category-material-button', { primary: selectedCategory === category, default: selectedCategory !== category }]"
             >
               {{ category.name }}
-            </button>
-            <button @click="openDialog('addCategory')" class="action-button">카테고리 추가</button>
-            <button @click="openDialog('editCategory')" class="action-button">카테고리 수정</button>
-            <button @click="openDialog('deleteCategory')" class="action-button">카테고리 삭제</button>
-            <button @click="openDialog('addMenu')" class="action-button">메뉴 추가</button>
+            </material-button>
+            <material-button @click="openDialog('addCategory')" class="action-material-button">카테고리 추가</material-button>
+            <material-button  @click="openDialog('editCategory')" class="action-material-button">카테고리 수정</material-button>
+            <material-button  @click="openDialog('deleteCategory')" class="action-material-button">카테고리 삭제</material-button>
+            <material-button  @click="openDialog('addMenu')" class="action-material-button">메뉴 추가</material-button>
           </div>
         </div>
-        <div class="col-9">
+        <div class="col-10">
           <div class="row">
-            <div class="col-4 mb-4" v-for="menu in filteredMenus" :key="menu.id">
+            <div class="col-3 mb-4" v-for="menu in filteredMenus" :key="menu.id">
               <div class="card" @click="openUpdateMenuDialog(menu)">
-                <img :src="getMenuImageUrl(menu.pictureUrl)" height="200px" />
+                <img :src="getMenuImageUrl(menu.pictureUrl)" style="height: 200px; object-fit: cover;" />
                 <h2>{{ menu.name }}</h2>
                 <h3>{{ menu.price }}</h3>
                 <p>{{ menu.description }}</p>
@@ -42,111 +37,147 @@
     </div>
 
     <!-- Add Category Modal -->
-    <Modal v-if="dialog.addCategory" @close="closeDialog">
-      <h2>추가할 카테고리</h2>
-      <input v-model="newCategory" placeholder="카테고리 이름" />
-      <div class="actions">
-        <button @click="addCategory">확인</button>
-        <button @click="closeDialog">취소</button>
-      </div>
-    </Modal>
+    <MenuManageModal
+          v-if="dialog.addCategory"
+          :isOpen="dialog.addCategory"
+          title="카테고리 추가"
+          @close="closeDialog"
+          @confirm="addCategory"
+        >
+          <div class="form-group">
+            <input v-model="newCategoryName" @input="validateAddCategoryName" placeholder="카테고리 이름을 입력하세요" class="form-control" />
+            <span v-if="AddCategoryNameErrorMessage" class="error-message">{{ AddCategoryNameErrorMessage }}</span>
+          </div>
+    </MenuManageModal>
 
     <!-- Edit Category Modal -->
-    <Modal v-if="dialog.editCategory" @close="closeDialog">
-      <h2>카테고리 수정</h2>
-      <select v-model="selectedEditCategory">
-        <option v-for="name in categoryNames" :key="name">{{ name }}</option>
-      </select>
-      <input v-model="updatedCategoryName" placeholder="변경 후 카테고리 이름" />
-      <div class="actions">
-        <button @click="editCategory">확인</button>
-        <button @click="closeDialog">취소</button>
-      </div>
-    </Modal>
+    <MenuManageModal
+        v-if="dialog.editCategory"
+        :isOpen="dialog.editCategory"
+        title="카테고리 수정"
+        @close="closeDialog"
+        @confirm="editCategory"
+      >
+        <div class="form-group">
+          <label for="selectEditCategory">카테고리 선택</label>
+          <select id="selectEditCategory" v-model="selectedEditCategory" class="form-control border-visible">
+            <option v-for="name in categoryNames" :key="name">{{ name }}</option>
+          </select>
+          <input v-model="updatedCategoryName" @input="validateUpdateCategoryName" placeholder="변경 후 카테고리 이름" class="form-control" />
+          <span v-if="UpdateCategoryNameErrorMessage" class="error-message">{{ UpdateCategoryNameErrorMessage }}</span>
+        </div>
+    </MenuManageModal>
 
     <!-- Delete Category Modal -->
-    <Modal v-if="dialog.deleteCategory" @close="closeDialog">
-      <h2>카테고리 삭제</h2>
-      <select v-model="selectedDeleteCategory">
+    <MenuManageModal
+      v-if="dialog.deleteCategory"
+      :isOpen="dialog.deleteCategory"
+      title="카테고리 삭제"
+      @close="closeDialog"
+      @confirm="deleteCategory"> 
+      <div class="form-group">
+        <label for="deleteCategoryName">카테고리 선택</label>
+        <select id="deleteCategoryName" v-model="selectedDeleteCategory">
+          <option v-for="name in categoryNames" :key="name">{{ name }}</option>
+        </select>
+      </div>
+    </MenuManageModal>
+
+   <!-- Add Menu Modal -->
+  <MenuManageModal
+    v-if="dialog.addMenu"
+    :isOpen="dialog.addMenu"
+    title="메뉴 추가"
+    @close="closeDialog"
+    @confirm="addMenu"
+  >
+    <div class="row">
+      <div class="col-6">
+        <img :src="newMenu.image" height="200px" />
+        
+        <div class="form-group">
+          <label for="menuName">제품명</label>
+          <input id="menuName" v-model="newMenu.name" @input="validateAddMenuName" placeholder="제품명" />
+          <!-- Ensure error message is displayed only if it exists -->
+          <span v-if="AddMenuNameErrorMessage" class="error-message">{{ AddMenuNameErrorMessage }}</span>
+        </div>
+        <div class="form-group">
+          <label for="AddMenuCategory">카테고리 선택</label>
+          <select id="AddMenuCategory" v-model="newMenu.category">
+            <option v-for="name in categoryNames" :key="name">{{ name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="AddMenuPrice">가격 입력</label>
+          <input id="AddMenuPrice" v-model="newMenu.price" @input="validateAddMenuPrice" placeholder="가격" />
+          <span v-if="AddMenuPriceErrorMessage" class="error-message">{{ AddMenuPriceErrorMessage }}</span>
+        </div>
+        <div class="form-group">
+          <label for="AddMenuImage">사진 URL</label>
+          <input id="AddMenuImage" v-model="newMenu.image" placeholder="사진 URL" />
+        </div>
+        <div class="form-group">
+          <input id="fileInput" type="file" ref="fileInput" @change="handleFileChange" style="display: none" />
+          <material-button @click="triggerFileInput">Browse</material-button>
+        </div>
+        <div class="form-group">
+          <label for="AddMenuDescription">설명 입력</label>
+          <textarea id="AddMenuDescription" v-model="newMenu.description" @input="validateAddMenuDescription" placeholder="메뉴 설명"></textarea>
+          <span v-if="AddMenuDescriptionErrorMessage" class="error-message">{{ AddMenuDescriptionErrorMessage }}</span>
+        </div>
+      </div>
+    </div>
+  </MenuManageModal>
+
+<!-- Update Menu Modal -->
+<MenuManageModal
+  v-if="dialog.updateMenu"
+  :isOpen="dialog.updateMenu"
+  title="메뉴 수정"
+  @close="closeDialog"
+  @confirm="updateMenu"
+>
+  <div class="row">
+    <div class="col-6">
+      <img :src="newMenu.image" height="200px" />
+
+      <div class="form-group">
+        <label for="updateMenuName">제품명 입력</label>
+        <input id="updateMenuName" v-model="selectedMenu.name" @input="validateUpdateMenuName" placeholder="제품명"/>
+        <span v-if="UpdateMenuNameErrorMessage" class="error-message">{{ UpdateMenuNameErrorMessage }}</span>
+      </div>
+      
+      <select v-model="selectedMenu.category">
         <option v-for="name in categoryNames" :key="name">{{ name }}</option>
       </select>
-      <div class="actions">
-        <button @click="deleteCategory">확인</button>
-        <button @click="closeDialog">취소</button>
+      <div class="form-group">
+        <label for="updateMenuPrice">가격 입력</label>
+        <input id="updateMenuPrice" v-model="selectedMenu.price" @input="validateUpdateMenuPrice" placeholder="가격"/>
+        <span v-if="UpdateMenuPriceErrorMessage" class="error-message">{{ UpdateMenuPriceErrorMessage }}</span>
       </div>
-    </Modal>
+      <div class="form-group">
+        <label for="updateMenuDescription">설명 입력</label>
+        <textarea id="updateMenuDescription" v-model="selectedMenu.description" @input="validateUpdateMenuDescription" placeholder="메뉴 설명"></textarea>
+        <span v-if="UpdateMenuDescriptionErrorMessage" class="error-message">{{ UpdateMenuDescriptionErrorMessage }}</span>
+      </div>
+        
+    </div>
+    <div class="col-6">
+      <material-button @click="deleteMenu">메뉴 삭제</material-button>
+    </div>
+  </div>
+</MenuManageModal>
 
-    <!-- Add Menu Modal -->
-    <Modal v-if="dialog.addMenu" @close="closeDialog">
-      <h2>메뉴 추가</h2>
-      <div class="row">
-        <div class="col-6">
-          <img :src="newMenu.image" height="200px" />
-          <input v-model="newMenu.name" placeholder="제품명" />
-          <select v-model="newMenu.category">
-            <option v-for="name in categoryNames" :key="name">{{ name }}</option>
-          </select>
-          <input v-model="newMenu.price" placeholder="가격" />
-          <input v-model="newMenu.image" placeholder="사진 URL" />
-          <input type="file" ref="fileInput" @change="handleFileChange" style="display: none" />
-          <button @click="triggerFileInput">Browse</button>
-          <textarea v-model="newMenu.description" placeholder="메뉴 설명"></textarea>
-        </div>
-        <div class="col-6">
-          <button @click="addMenu">메뉴 추가</button>
-          <button @click="closeDialog">취소</button>
-        </div>
-      </div>
-    </Modal>
-
-    <!-- Update Menu Modal -->
-    <Modal v-if="dialog.updateMenu" @close="closeDialog">
-      <h2>메뉴 수정</h2>
-      <div class="row">
-        <div class="col-6">
-          <img :src="getMenuImageUrl(selectedMenu.pictureUrl)" height="200px" />
-          <input v-model="selectedMenu.name" placeholder="제품명" />
-          <select v-model="selectedMenu.category">
-            <option v-for="name in categoryNames" :key="name">{{ name }}</option>
-          </select>
-          <input v-model="selectedMenu.price" placeholder="가격" />
-          <input v-model="selectedMenu.pictureUrl" placeholder="사진 URL" />
-          <input type="file" ref="fileInputUpdate" @change="handleFileChangeUpdate" style="display: none" />
-          <button @click="triggerFileInputUpdate">Browse</button>
-          <textarea v-model="selectedMenu.description" placeholder="메뉴 설명"></textarea>
-        </div>
-        <div class="col-6">
-          <button @click="updateMenu">수정 반영</button>
-          <button @click="deleteMenu">메뉴 삭제</button>
-          <button @click="closeDialog">뒤로가기</button>
-        </div>
-      </div>
-    </Modal>
+  </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import Modal from './Modal.vue';
-
-const categories = ref([]);
-const categoryNames = ref([]);
-
-const menus = ref([]);
-const selectedCategory = ref(null);
-
-const filteredMenus = ref([]); // Make sure this is correctly initialized
-
-const filterMenus = (category) => {
-  selectedCategory.value = category;
-  filteredMenus.value = menus.value.filter(menu => menu.category === category.name);
-};
-
-// Helper method to get full URL of menu image
-const getMenuImageUrl = (imagePath) => {
-  return `http://localhost:8080/images/${imagePath}`;
-};
+import MenuManageModal from '../views/MenuManageModal.vue';
+import MaterialButton from '../components/MaterialButton.vue';
+// import MaterialInput from '../components/MaterialInput.vue';
 
 // Dialogs state
 const dialog = ref({
@@ -156,6 +187,27 @@ const dialog = ref({
   addMenu: false,
   updateMenu: false,
 });
+
+const categories = ref([]);
+const categoryNames = ref([]);
+
+const menus = ref([]);
+const selectedCategory = ref(null);
+
+const filteredMenus = ref([]); // Make sure this is correctly initialized
+
+const errorMessage = ref('');
+
+const AddCategoryNameErrorMessage = ref('');
+const UpdateCategoryNameErrorMessage = ref('');
+const AddMenuNameErrorMessage = ref('');
+const AddMenuPriceErrorMessage = ref('');
+const AddMenuDescriptionErrorMessage = ref('');
+const UpdateMenuNameErrorMessage = ref('');
+const UpdateMenuPriceErrorMessage = ref('');
+const UpdateMenuDescriptionErrorMessage = ref('');
+
+const newCategoryName = ref('');
 
 const newCategory = ref('');
 const selectedEditCategory = ref(null);
@@ -175,9 +227,103 @@ const selectedMenu = ref({
   name: '',
   category: '',
   price: '',
-  pictureUrl: '',
   description: ''
 });
+
+const validateAddCategoryName = () => {
+  const regex = /^[a-zA-Z]*$/;
+  if (!regex.test(newCategoryName.value)) {
+    AddCategoryNameErrorMessage.value = '영어만 입력 가능합니다';
+  } else {
+    AddCategoryNameErrorMessage.value = '';
+  }
+};
+
+const validateUpdateCategoryName = () => {
+  const regex = /^[a-zA-Z]*$/;
+  if (!regex.test(updatedCategoryName.value)) {
+    UpdateCategoryNameErrorMessage.value = '영어만 입력 가능합니다';
+  } else {
+    UpdateCategoryNameErrorMessage.value = '';
+  }
+};
+
+const validateAddMenuName = () => {
+
+  const regex = /^[ㄱ-ㅎ|가-힣]+$/; // Regex to allow only Korean characters
+  if (!regex.test(newMenu.value.name)) {
+    AddMenuNameErrorMessage.value = '한글만 입력 가능합니다';
+  } else {
+    AddMenuNameErrorMessage.value = '';
+  }
+};
+
+const validateAddMenuPrice = () => {
+  const regex = /^[0-9]*$/; // This regex allows only numbers
+  if (!regex.test(newMenu.value.price)) {
+    AddMenuPriceErrorMessage.value = '숫자만 입력 가능합니다';
+  } else {
+    AddMenuPriceErrorMessage.value = '';
+  }
+};
+
+const validateAddMenuDescription = () => {
+  const regex = /^[가-힣\s]*$/; // This regex allows only Korean characters and spaces
+  if (!regex.test(newMenu.value.description)) {
+    AddMenuDescriptionErrorMessage.value = '한글만 입력 가능합니다';
+  } else {
+    AddMenuDescriptionErrorMessage.value = '';
+  }
+};
+
+const validateUpdateMenuName = () => {
+  const regex = /^[ㄱ-ㅎ|가-힣]+$/; // This regex allows only Korean characters and spaces
+  if (!regex.test(selectedMenu.value.name)) {
+    UpdateMenuNameErrorMessage.value = '한글만 입력 가능합니다';
+  } else {
+    UpdateMenuNameErrorMessage.value = '';
+  }
+};
+
+const validateUpdateMenuDescription = () => {
+  const regex = /^[가-힣\s]*$/; // This regex allows only Korean characters and spaces
+  if (!regex.test(selectedMenu.value.description)) {
+    UpdateMenuDescriptionErrorMessage.value = '한글만 입력 가능합니다';
+  } else {
+    UpdateMenuDescriptionErrorMessage.value = '';
+  }
+};
+
+const validateUpdateMenuPrice = () => {
+  const regex = /^[0-9]*$/; // This regex allows only numbers
+  if (!regex.test(selectedMenu.value.price)) {
+    UpdateMenuPriceErrorMessage.value = '숫자만 입력 가능합니다';
+  } else {
+    UpdateMenuPriceErrorMessage.value = '';
+  }
+};
+
+
+
+
+const selectCategory = (category) => {
+  selectedCategory.value = category;
+  filterMenus(category);
+};
+
+const filterMenus = (category) => {
+  selectedCategory.value = category;
+  filteredMenus.value = menus.value.filter(menu => menu.category === category.name);
+};
+
+// Helper method to get full URL of menu image
+const getMenuImageUrl = (imagePath) => {
+  return `https://api.ourpos.org/images/${imagePath}`;
+};
+
+
+
+
 
 const openDialog = (type) => {
   dialog.value[type] = true;
@@ -192,11 +338,12 @@ const closeDialog = () => {
 };
 
 const addCategory = async () => {
+  if (errorMessage.value)  return;
   try {
     const response = await axios.post(
-      'http://localhost:8080/api/v1/categories',
+      'https://api.ourpos.org/api/v1/categories',
       {
-        name: newCategory.value,
+        name: newCategoryName.value,
       },
       {
         headers: {
@@ -207,7 +354,7 @@ const addCategory = async () => {
     );
     if (response.status === 200) {
       // Update categories after successfully adding
-      fetchCategoriesAndMenus();
+      await fetchCategoriesAndMenus();
       newCategory.value = '';
       closeDialog();
     } else {
@@ -216,16 +363,19 @@ const addCategory = async () => {
   } catch (error) {
     console.error('Error adding category:', error);
   }
+    closeDialog();
 };
 
+
 const editCategory = async () => {
+  if (errorMessage.value) return;
   try {
     const categoryId = categories.value.find(cat => cat.name === selectedEditCategory.value)?.id;
     if (!categoryId) {
       console.error('Category ID not found');
       return;
     }
-    const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/update`, {
+    const response = await axios.put(`https://api.ourpos.org/api/v1/categories/${categoryId}/update`, {
       name: updatedCategoryName.value
     },
     {
@@ -256,7 +406,7 @@ const deleteCategory = async () => {
       console.error('Category ID not found');
       return;
     }
-    const response = await axios.put(`http://localhost:8080/api/v1/categories/${categoryId}/delete`,{},{
+    const response = await axios.put(`https://api.ourpos.org/api/v1/categories/${categoryId}/delete`,{},{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': localStorage.getItem('token')
@@ -289,7 +439,7 @@ const addMenu = async () => {
   formData.append('multipartFile', newMenuFile.value);
 
   try {
-    const response = await axios.post('http://localhost:8080/api/v1/menus', formData, {
+    const response = await axios.post('https://api.ourpos.org/api/v1/menus', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': localStorage.getItem('token')
@@ -320,21 +470,22 @@ const openUpdateMenuDialog = (menu) => {
 };
 
 const updateMenu = async () => {
+  const menuUpdateDto = {
+    categoryId: categories.value.find(category => category.name === selectedMenu.value.category)?.id,
+    name: selectedMenu.value.name,
+    price: parseInt(selectedMenu.value.price),
+    description: selectedMenu.value.description
+  };
+
   try {
-    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/update`, {
-      name: selectedMenu.value.name,
-      category: selectedMenu.value.category,
-      price: selectedMenu.value.price,
-      description: selectedMenu.value.description,
-      pictureUrl: selectedMenu.value.pictureUrl
-    },{
+    const response = await axios.put(`https://api.ourpos.org/api/v1/menus/${selectedMenu.value.id}/update`, menuUpdateDto, {
       headers: {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        }
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
     });
     if (response.status === 200) {
-      fetchCategoriesAndMenus();
+      await fetchCategoriesAndMenus();
       closeDialog();
     } else {
       console.error('Error updating menu:', response);
@@ -346,7 +497,7 @@ const updateMenu = async () => {
 
 const deleteMenu = async () => {
   try {
-    const response = await axios.put(`http://localhost:8080/api/v1/menus/${selectedMenu.value.id}/delete`,{},{
+    const response = await axios.put(`https://api.ourpos.org/api/v1/menus/${selectedMenu.value.id}/delete`,{},{
       headers: {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
@@ -379,25 +530,12 @@ const handleFileChange = (event) => {
   }
 };
 
-const triggerFileInputUpdate = () => {
-  document.querySelector('input[type="file"]').click();
-};
 
-const handleFileChangeUpdate = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      selectedMenu.value.image = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-};
 
 const fetchCategoriesAndMenus = async () => {
   try {
     // Fetch categories
-    const categoriesResponse = await axios.get('http://localhost:8080/api/v1/categories', {
+    const categoriesResponse = await axios.get('https://api.ourpos.org/api/v1/categories', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -410,7 +548,7 @@ const fetchCategoriesAndMenus = async () => {
     categoryNames.value = categories.value.map(category => category.name);
 
     // Fetch menus
-    const menusResponse = await axios.get('http://localhost:8080/api/v1/menus/all', {
+    const menusResponse = await axios.get('https://api.ourpos.org/api/v1/menus/all', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -439,10 +577,17 @@ onMounted(() => {
 });
 </script>
 
-
 <style scoped>
-.navigation-bar {
-  background-color: #3f51b5;
+.form-control {
+  margin-bottom: 10px;
+  height: 40px;
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.border-visible {
+  border: 2px solid #000; /* Making the border more visible */
 }
 
 .category-list {
@@ -450,12 +595,16 @@ onMounted(() => {
   flex-direction: column;
 }
 
-.category-button, .action-button {
-  margin-bottom: 10px;
+.category-material-button, .action-material-button {
+  font-size: 1.25rem; /* Increased font size */
+  padding: 10px 20px;
+  margin: 10px 0;
+  width: 100%;
+  
 }
 
 .primary {
-  background-color: #3f51b5;
+  background-color: #2A2A2D;
   color: white;
 }
 
@@ -464,7 +613,7 @@ onMounted(() => {
   color: black;
 }
 
-.modal {
+.MenuManageModal {
   background: white;
   padding: 20px;
   border-radius: 5px;
@@ -474,18 +623,7 @@ onMounted(() => {
   z-index: 1000;
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
+
 
 .actions {
   display: flex;
@@ -493,9 +631,35 @@ onMounted(() => {
   margin-top: 20px;
 }
 
-.icon-button {
-  background: none;
-  border: none;
-  cursor: pointer;
+.icon-material-button {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin: 10px 0;
+}
+
+.POS-name {
+  font-size: 3rem; /* Increased font size */
+  color: aliceblue;
+}
+
+.mdi {
+  font-size: 1.25rem; /* Increased font size */
+}
+
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 5px; /* Add some margin to space it from the input field */
 }
 </style>

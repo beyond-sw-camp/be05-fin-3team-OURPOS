@@ -1,12 +1,11 @@
 <template>
     <chart-holder-card
       color="white"
-      update="real-time update"
-      title="Frequency of Delivery Request Occurrence"
-      subtitle="행정구역 기준"
+      update="실시간 업데이트"
+      title="배달 발생 빈도수 히트맵"
+      subtitle="행정구역 기준으로 배달 위치를 분석하여 시각화한 자료"
     >
     <div id="map" style="height: 796px;"></div>
-    <p>Store ID: {{ storeId }}</p>
     </chart-holder-card>
   </template>
   
@@ -32,7 +31,7 @@ const props = defineProps(["storeId"]);
     const boundaryData = response.data;
   
     // Fetching location data with frequency information
-    const locationResponse = await axios.get('http://localhost:8080/api/v1/orders/delivery/frequency', {
+    const locationResponse = await axios.get('https://api.ourpos.org/api/v1/orders/delivery/frequency', {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
@@ -98,10 +97,10 @@ const props = defineProps(["storeId"]);
   
     // Function to get color based on frequency
     const getColor = (frequency) => {
-      return frequency >= 10 ? '#800026' :
-             frequency >= 8  ? '#BD0026' :
-             frequency >= 6  ? '#E31A1C' :
-             frequency >= 4  ? '#FC4E2A' :
+      return frequency >= 6 ? '#800026' :
+             frequency >= 5  ? '#BD0026' :
+             frequency >= 4  ? '#E31A1C' :
+             frequency >= 3  ? '#FC4E2A' :
              frequency >= 2  ? '#FD8D3C' :
              frequency >= 1  ? '#FEB24C' :
                                '#FFFFFF';

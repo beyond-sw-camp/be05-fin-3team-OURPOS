@@ -21,7 +21,12 @@ public class ImageController {
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN')")
     @GetMapping("/images/{fileName}")
-    public Resource downloadImage(@PathVariable String fileName) throws MalformedURLException {
-        return new UrlResource("file:" + fileStore.getFullPath(fileName));
+    public Resource downloadImage(@PathVariable String fileName) {
+        try {
+            return new UrlResource("file:" + fileStore.getFullPath(fileName));
+        } catch (MalformedURLException e) {
+            log.error("Failed to download image", e);
+            return null;
+        }
     }
 }

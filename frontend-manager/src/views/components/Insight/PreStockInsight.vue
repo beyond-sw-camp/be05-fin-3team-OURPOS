@@ -1,0 +1,103 @@
+<template>
+  <div class="pre-stock">
+    <div class="header">
+      <h5>입고 예정 재고량 </h5>
+      <router-link to="/storeordercheck" class="btn btn-outline-secondary">주문 내역 확인</router-link>
+    </div>
+    <table class="stock-table">
+      <thead>
+        <tr>
+          <th>식자재/비품명</th>
+          <th>수량</th>
+          <th>주문상태</th>
+          <th>주문 요청일</th>
+          <th>배송 시작일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in incomingStockList" :key="index">
+          <td>{{ item.stockName }}</td>
+          <td>{{ item.stockAmount }}</td>
+          <td>{{ item.status }}</td>
+          <td>{{ item.orderdate }}</td>
+          <td>{{ item.deliverydate ? item.deliverydate : '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <button v-for="pageNumber in totalPages" :key="pageNumber" @click="fetchIncomingStock(pageNumber - 1)">
+        {{ pageNumber }}
+      </button>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+
+
+
+const incomingStockList = ref([]);
+const totalPages = ref(0);
+
+const fetchIncomingStock = async (page) => {
+  try {
+    const response = await fetch(`https://api.ourpos.org/api/v1/store/incoming-stock/my?page=${page}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      }
+    });
+    const data = await response.json();
+    incomingStockList.value = data.data.content;
+    totalPages.value = data.data.totalPages;
+    console.log("totalPage : ", totalPages.value);
+  } catch (error) {
+    console.error('Error fetching incoming stock:', error);
+  }
+};
+
+onMounted(() => {
+  fetchIncomingStock(0); // 초기 페이지 로딩
+});
+</script>
+
+<style>
+.stock-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.stock-table th, .stock-table td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #dddddd;
+}
+
+.stock-table th {
+  background-color: #f2f2f2;
+}
+
+.pagination {
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination button {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.pre-stock {
+  height: calc(40vh - 8px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

@@ -3,6 +3,7 @@ package com.ourpos.api.sms;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
@@ -13,6 +14,7 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Transactional
 @PropertySource("classpath:config.properties")
 @Service
 public class SmsService {

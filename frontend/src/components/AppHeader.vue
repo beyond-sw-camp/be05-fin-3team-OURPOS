@@ -5,9 +5,9 @@
     </v-btn>
     <v-toolbar-title>{{storeName}} {{ title }}</v-toolbar-title>
     <v-toolbar-items>
-      <v-btn icon>
+      <v-btn>
         <v-badge :content="cartItemCount" color="red" overlap>
-          <FontAwesomeIcon :icon="faShoppingCart" @click="goToCart"/>
+          <v-icon size="36" class="mb-2" @click="goToCart">mdi-food</v-icon>
         </v-badge>
       </v-btn>
     </v-toolbar-items>
@@ -18,8 +18,6 @@
 <script setup>
 import {computed, ref} from 'vue';
 import { useRouter } from 'vue-router';
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { defineProps } from 'vue';
 
 // Setup router
@@ -31,7 +29,7 @@ const storeName = ref('');
 
 // Method to go back to the previous page
 const goBack = () => {
-  router.back();
+  router.go(-1);
 };
 
 // Method to navigate to cart page

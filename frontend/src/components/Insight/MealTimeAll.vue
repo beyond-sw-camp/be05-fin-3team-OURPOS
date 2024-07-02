@@ -16,22 +16,22 @@
       </v-row>
     </v-container>
 </template>
-  
+
   <script setup>
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import { Chart, registerables } from 'chart.js';
   Chart.register(...registerables);
-  
-  
+
+
   const sales = ref([]);
   const isLoading = ref(false);
   const myChart = ref(null);
-  
-  const fetchData = async () => {   
+
+  const fetchData = async () => {
     isLoading.value = true;
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/orders/meal-time', {
+      const response = await axios.get('https://api.ourpos.org/api/v1/orders/meal-time', {
       withCredentials: true
     });
       sales.value = response.data.data;
@@ -42,7 +42,7 @@
         }
         groupedData[record.storeName][record.hour] = record.total;
       });
-      
+
       const datasets = Object.keys(groupedData).map(storeName => {
         const salesData = groupedData[storeName];
         return {
@@ -65,10 +65,10 @@
             'rgba(255, 159, 64, 1)'
           ],
           borderWidth: 1,
-          pointRadius: 0 
+          pointRadius: 0
         };
       });
-  
+
       updateChart(datasets);
     } catch (error) {
       console.error('데이터를 가져오는 중 에러가 발생했습니다:', error);
@@ -76,7 +76,7 @@
       isLoading.value = false;
     }
   };
-  
+
   const updateChart = (datasets) => {
     const ctx = document.getElementById('mealTimeAllChart').getContext('2d');
     if (myChart.value) {
@@ -96,14 +96,14 @@
               ticks: {
                 stepSize: 1,
                 autoSkip: false,
-                maxTicksLimit: undefined 
+                maxTicksLimit: undefined
               }
             },
             y: {
               beginAtZero: true,
               ticks: {
                 callback: function(value) {
-                  return value; 
+                  return value;
                 }
               }
             }
@@ -112,7 +112,7 @@
       });
     }
   };
-    
+
   const generateTimeRangeData = (salesData) => {
     const timeRangeData = {};
     for (let i = 9; i < 23; i++) {
@@ -120,26 +120,25 @@
     }
     return timeRangeData;
   };
-  
+
   const generateTimeLabels = () => {
     // 0-23시간 레이블 생성 함수
     return Array.from({ length: 24 }, (_, i) => i);
   };
-  
+
   onMounted(() => {
     fetchData();
   });
   </script>
-  
+
   <style scoped>
   .canvas-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   .canvas {
     height: 300px;
   }
   </style>
-  

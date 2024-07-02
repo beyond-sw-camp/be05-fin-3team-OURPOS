@@ -86,19 +86,6 @@ public class JwtFilter extends OncePerRequestFilter {
         return false;
     }
 
-    private boolean accessManagerPath(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain,
-        String[] superAdminPaths, String requestURI) throws ServletException, IOException {
-        if (superAdminPaths != null) {
-            for (String path : superAdminPaths) {
-                if (requestURI.matches(path)) {
-                    managerFilter(request, response, filterChain);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     private void managerFilter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws
         ServletException,
         IOException {

@@ -1,39 +1,42 @@
 <template>
-    <chart-holder-card
-      title="Hourly Sales Volume Report"
-      subtitle="Sales Trends Across All Locations"
-      update="real-time update"
-      color="light"
-    >
-    <div class = "canvas">
+  <chart-holder-card
+      title="시간대별 매출량"
+      subtitle="시간 단위 소비 트렌드 분석자료"
+      update="실시간 업데이트"
+      color="dark"
+  >
+    <div class="canvas">
       <canvas id="mealTimeAllChart"></canvas>
-      <p>Store ID: {{ storeId }}</p>
-      </div>
-    </chart-holder-card>
-  </template>
-  
-
+    </div>
+  </chart-holder-card>
+</template>
 
 <script setup>
-
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Chart from 'chart.js/auto';
 import ChartHolderCard from "../ChartHolderCard.vue";
+import { defineProps } from "vue";
 
-import { defineProps } from "vue"
-
-// eslint-disable-next-line no-unused-vars
 const props = defineProps(["storeId"]);
 
 const sales = ref([]);
 const isLoading = ref(false);
 const myChart = ref(null);
 
-const fetchData = async () => {   
+// 지점별 색상 매핑
+const colorMap = {
+  '강남점': '#FF00FF',
+  '고속터미널점': '#FF9900',
+  '서울역점': '#BAFF1A',
+  '여의도역점': '#00FFFF',
+  '신대방삼거리점': '#8000FF'
+};
+
+const fetchData = async () => {
   isLoading.value = true;
   try {
-    const response = await axios.get('http://localhost:8080/api/v1/orders/meal-time', {
+    const response = await axios.get('https://api.ourpos.org/api/v1/orders/meal-time', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -43,39 +46,25 @@ const fetchData = async () => {
       }
     });
     sales.value = response.data.data;
-    // const salesData = {};
+
     const groupedData = {};
-    sales.value.forEach(record =>{
-      if(!groupedData[record.storeName]){
+    sales.value.forEach(record => {
+      if (!groupedData[record.storeName]) {
         groupedData[record.storeName] = {};
       }
       groupedData[record.storeName][record.hour] = record.total;
     });
-    
+
     const datasets = Object.keys(groupedData).map(storeName => {
       const salesData = groupedData[storeName];
-      return {label: storeName,
-      data: generateTimeRangeData(salesData),
-      backgroundColor: [
-            '#102C57',
-            '#C80036',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            '#102C57',
-            '#C80036',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 2,
-          pointRadius: 2 
+      return {
+        label: storeName,
+        data: generateTimeRangeData(salesData),
+        backgroundColor: colorMap[storeName] || '#C80036',
+        borderColor: colorMap[storeName] || '#C80036',
+        borderWidth: 2,
       }
-    })
+    });
 
     updateChart(datasets);
   } catch (error) {
@@ -100,35 +89,46 @@ const updateChart = (datasets) => {
       options: {
         scales: {
           x: {
-            min : '9',
+            min: '9',
             ticks: {
               stepSize: 1,
               autoSkip: false,
-              maxTicksLimit: undefined 
+              maxTicksLimit: undefined
             }
           },
           y: {
-            beginAtZero: true,
+            min: 10000000, // y축의 최저 값을 설정
             ticks: {
               callback: function(value) {
-                return value; 
+                return value;
               }
             },
-            max : '400000'
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              font: {
+                size: 14, // 폰트 크기 설정
+
+              },
+              color: '#ffffff' // 폰트 색상 설정
+            }
           }
         }
       }
     });
   }
 };
-  
+
 const generateTimeRangeData = (salesData) => {
   const timeRangeData = {};
-  for (let i = 9; i < 23; i++) {
+  for (let i = 9; i < 22; i++) {
     timeRangeData[i] = salesData[i] || 0;
   }
   return timeRangeData;
 };
+
 const generateTimeLabels = () => {
   // 0-23시간 레이블 생성 함수
   return Array.from({ length: 24 }, (_, i) => i);
@@ -142,6 +142,6 @@ onMounted(() => {
 
 <style scoped>
 .canvas {
-    height: 300px;
+  height: 300px;
 }
 </style>

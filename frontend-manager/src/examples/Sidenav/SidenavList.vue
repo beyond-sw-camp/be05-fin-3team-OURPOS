@@ -9,8 +9,8 @@
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="dashboard"
-          navText="Dashboard"
+          collapseRef="owner"
+          navText="비즈니스 인사이트"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">dashboard</i>
@@ -19,24 +19,11 @@
       </li>
       <li class="nav-item">
         <sidenav-collapse
-          url="#"
-          :aria-controls="''"
-          v-bind:collapse="false"
-          collapseRef="tables"
-          navText="Tables"
-        >
-          <template v-slot:icon>
-            <i class="material-icons-round opacity-10 fs-5">table_view</i>
-          </template>
-        </sidenav-collapse>
-      </li>
-      <li class="nav-item">
-        <sidenav-collapse
-          url="#"
-          :aria-controls="''"
-          v-bind:collapse="false"
-          collapseRef="billing"
-          navText="Billing"
+            url="#"
+            :aria-controls="''"
+            v-bind:collapse="false"
+            collapseRef="supplies"
+            navText="비품/식자재 주문 관리"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">receipt_long</i>
@@ -48,8 +35,34 @@
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="rtl-page"
-          navText="Rtl"
+          collapseRef="menu-manage"
+          navText="메뉴/카테고리 관리"
+        >
+          <template v-slot:icon>
+            <i class="material-icons-round opacity-10 fs-5">table_view</i>
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse
+          url="#"
+          :aria-controls="''"
+          v-bind:collapse="false"
+          collapseRef="menu-option-group-manage"
+          navText="메뉴 옵션 및 옵션 그룹 관리"
+        >
+          <template v-slot:icon>
+            <i class="material-icons-round opacity-10 fs-5">table_view</i>
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse
+          url="#"
+          :aria-controls="''"
+          v-bind:collapse="false"
+          collapseRef="infra"
+          navText="신규 점포 예상 매출액 산출"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5"
@@ -71,19 +84,6 @@
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="profile"
-          navText="Profile"
-        >
-          <template v-slot:icon>
-            <i class="material-icons-round opacity-10 fs-5">person</i>
-          </template>
-        </sidenav-collapse>
-      </li>
-      <li class="nav-item">
-        <sidenav-collapse
-          url="#"
-          :aria-controls="''"
-          v-bind:collapse="false"
           collapseRef="sign-up"
           navText="Login"
         >
@@ -93,16 +93,7 @@
         </sidenav-collapse>
       </li>
     </ul>
-    <div class="sidenav-footer position-absolute w-100 bottom-0">
-      <div class="mx-3">
-        <a
-          class="btn mt-4 w-100"
-          :class="`bg-gradient-${this.$store.state.color}`"
-          href="https://www.creative-tim.com/product/vue-material-dashboard-2-pro"
-          >Upgrade to pro</a
-        >
-      </div>
-    </div>
+
   </div>
 </template>
 <script>

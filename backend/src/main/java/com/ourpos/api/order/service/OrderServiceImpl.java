@@ -12,6 +12,7 @@ import com.ourpos.api.map.MapService;
 import com.ourpos.api.order.dto.request.DeliveryOrderRequestDto;
 import com.ourpos.api.order.dto.request.HallOrderRequestDto;
 import com.ourpos.api.order.dto.request.OrderDetailRequestDto;
+import com.ourpos.api.sms.SmsService;
 import com.ourpos.domain.customer.Customer;
 import com.ourpos.domain.customer.CustomerRepository;
 import com.ourpos.domain.menu.Menu;
@@ -25,6 +26,8 @@ import com.ourpos.domain.order.HallOrder;
 import com.ourpos.domain.order.Order;
 import com.ourpos.domain.order.OrderAddress;
 import com.ourpos.domain.order.OrderRepository;
+import com.ourpos.domain.order.TempOrder;
+import com.ourpos.domain.order.TempOrderRepository;
 import com.ourpos.domain.orderdetail.OrderDetail;
 import com.ourpos.domain.recipe.Recipe;
 import com.ourpos.domain.recipe.RecipeRepository;
@@ -52,6 +55,8 @@ public class OrderServiceImpl implements OrderService {
     private final StoreRestrictedMenuRepository storeRestrictedMenuRepository;
     private final MapService mapService;
     private final AdministrativeBuildingAddressRepository administrativeBuildingAddressRepository;
+    private final TempOrderRepository tempOrderRepository;
+    private final SmsService smsService;
 
     @Override
     public Long createHallOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
@@ -64,10 +69,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createDeliveryOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto) {
+    public void createDeliveryOrder(String loginId, DeliveryOrderRequestDto deliveryOrderRequestDto,
+        String tempOrderId) {
+
         DeliveryOrder deliveryOrder = createOrder(loginId, deliveryOrderRequestDto);
         if (deliveryOrder.getPrice() < deliveryOrder.getStore().getMinimumOrderPrice()) {
             throw new IllegalArgumentException("최소 주문 금액을 충족하지 못했습니다.");
+        }
+
+        TempOrder tempOrder = tempOrderRepository.findByTempOrderId(tempOrderId).orElseThrow(
+            () -> new IllegalArgumentException("해당 임시 주문이 존재하지 않습니다."));
+
+        if (deliveryOrder.getPrice() != tempOrder.getAmount()) {
+            throw new IllegalArgumentException("주문 금액이 일치하지 않습니다.");
         }
 
         storeStockCalculate(deliveryOrder);
@@ -122,24 +136,6 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    //비활성화 된 메뉴 재활성화
-    /*
-    public void enableMenu(Menu menu, Store store) {
-        List<StoreRestrictedMenu> restrictedMenus = storeRestrictedMenuRepository.findByStore(store);
-        StoreRestrictedMenu restrictedMenuToRemove = null;
-        for (StoreRestrictedMenu restrictedMenu : restrictedMenus) {
-            if (restrictedMenu.getMenu().equals(menu)) {
-                restrictedMenuToRemove = restrictedMenu;
-                break;
-            }
-        }
-        if (restrictedMenuToRemove != null) {
-            storeRestrictedMenuRepository.delete(restrictedMenuToRemove);
-        }
-    }
-
-     */
-
     @Override
     public void cancelHallOrder(Long orderId) {
         HallOrder order = hallOrderRepository.findById(orderId)
@@ -185,6 +181,14 @@ public class OrderServiceImpl implements OrderService {
         DeliveryOrder order = deliveryOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
+        if (order.getCustomer().getPhone() != null) {
+            smsService.sendOne(order.getCustomer().getPhone(),
+                "[OURPOS]\n" + order.getStore().getName() + " 배달 주문이 시작되었습니다.\n\n"
+                    + "주문 상품: " + order.getOrderDetails().get(0).getMenu().getName() + " 외 " + (
+                    order.getOrderDetails().size() - 1) + "개\n"
+                    + "총 가격: " + String.format("%,d", order.getPrice()) + "원\n");
+        }
+
         order.startDelivery();
     }
 
@@ -193,13 +197,40 @@ public class OrderServiceImpl implements OrderService {
         DeliveryOrder order = deliveryOrderRepository.findById(orderId)
             .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND));
 
+        if (order.getCustomer().getPhone() != null) {
+            smsService.sendOne(order.getCustomer().getPhone(),
+                "[OURPOS]\n" + order.getStore().getName() + " 배달 주문이 완료되었습니다.\n\n"
+                    + "주문 상품: " + order.getOrderDetails().get(0).getMenu().getName() + " 외 " + (
+                    order.getOrderDetails().size() - 1) + "개\n"
+                    + "총 가격: " + String.format("%,d", order.getPrice()) + "원\n");
+        }
+
         order.completeOrder(LocalDateTime.now());
+    }
+
+    @Override
+    public TempOrder saveTempOrder(String tempOrderId, int amount) {
+
+        TempOrder tempOrder = TempOrder.builder()
+            .tempOrderId(tempOrderId)
+            .amount(amount)
+            .isConfirmed(false)
+            .build();
+
+        return tempOrderRepository.save(tempOrder);
+    }
+
+    @Override
+    public void deleteTempOrder(String orderId) {
+        TempOrder tempOrder = tempOrderRepository.findByTempOrderId(orderId).orElseThrow(
+            () -> new IllegalArgumentException("해당 임시 주문이 존재하지 않습니다."));
+
+        tempOrderRepository.delete(tempOrder);
     }
 
     private HallOrder createOrder(String loginId, HallOrderRequestDto hallOrderRequestDto) {
         Customer customer = getCustomer(loginId);
         Store store = getStore(hallOrderRequestDto.getStoreId());
-
         List<OrderDetail> orderDetails = createOrderDetails(hallOrderRequestDto.getOrderDetailDtos());
 
         return hallOrderRequestDto.toEntity(customer, store, orderDetails);
@@ -211,7 +242,17 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderDetail> orderDetails = createOrderDetails(
             deliveryOrderRequestDto.getOrderDetailDtos());
-        return deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
+
+        DeliveryOrder order = deliveryOrderRequestDto.toEntity(customer, store, orderDetails);
+
+        if (customer.getPhone() != null) {
+            smsService.sendOne(customer.getPhone(),
+                "[OURPOS]\n" + store.getName() + " 배달 주문이 완료되었습니다.\n\n"
+                    + "주문 상품: " + orderDetails.get(0).getMenu().getName() + " 외 " + (orderDetails.size() - 1) + "개\n"
+                    + "총 가격: " + String.format("%,d", order.getPrice()) + "원\n");
+        }
+
+        return order;
     }
 
     private Customer getCustomer(String loginId) {
@@ -219,12 +260,12 @@ public class OrderServiceImpl implements OrderService {
             () -> new IllegalArgumentException("해당 고객이 존재하지 않습니다."));
     }
 
-    private Store getStore(Long hallOrderRequestDto) {
-        return storeRepository.findById(hallOrderRequestDto).orElseThrow(
+    private Store getStore(Long storeId) {
+        return storeRepository.findById(storeId).orElseThrow(
             () -> new IllegalArgumentException("해당 매장이 존재하지 않습니다."));
     }
 
-    private List<OrderDetail> createOrderDetails(List<OrderDetailRequestDto> orderDetailRequestDtos) {
+    List<OrderDetail> createOrderDetails(List<OrderDetailRequestDto> orderDetailRequestDtos) {
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (OrderDetailRequestDto orderDetailDto : orderDetailRequestDtos) {
             Menu menu = menuRepository.findById(orderDetailDto.getMenuId()).orElseThrow(

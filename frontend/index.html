@@ -4,15 +4,36 @@
 <head>
     <meta charset="UTF-8"/>
     <link rel="icon" href="/favicon.ico"/>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png">
+    <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-    <script src="/dist/main.js"></script>
     <title>Five Guys</title>
 </head>
 
 <body>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+    <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            // Register a service worker hosted at the root of the
+            // site using the default scope.
+            navigator.serviceWorker
+                .register("/registerServiceWorker.js")
+                .then((registration) => {
+                    console.log("Service worker registration succeeded:", registration);
+                })
+                .catch((err) => {
+                    console.log("Service worker registration failed:", error);
+                });
+        } else {
+            console.log("Service workers are not supported.");
+        }
+    </script>
 </body>
 
 </html>

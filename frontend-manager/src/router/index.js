@@ -21,6 +21,9 @@ import MenuStatusManage from "../views/MenuStatusManage.vue";
 import HeadOfficeLanding from "../views/HeadOfficeLanding.vue";
 import MenuManage from "../views/MenuManage.vue";
 import MenuOptionGroupManage from "../views/MenuOptionGroupManage.vue";
+import ManagerInsight from "@/views/ManagerInsight.vue";
+import InfraAnalysis from "@/views/InfraAnalysis.vue";
+import StockInsight from "@/views/components/Insight/PreStockInsight.vue";
 
 const routes = [
   {
@@ -68,44 +71,56 @@ const routes = [
     path: "/subdash",
     name: "SubDash",
     component: SubDash,
-    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] },
   },
   {
     path: "/manager",
     name: "ManagerHome",
     component: ManagerHome,
-    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true},
   },
   {
     path:"/store-landing",
     name:"StoreLanding",
     component:StoreLanding,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
   {
     path:"/store-landing/delivery-order-manage",
     name:"DeliveryOrderManage",
     component:DeliveryOrderManage,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
   {
     path:"/store-landing/menu-status-manage",
     name:"MenuStatusManage",
     component:MenuStatusManage,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
   {
     path:"/head-office-landing",
     name:"HeadOfficeLanding",
     component:HeadOfficeLanding,
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] , hideSidenav: true}
   },
   {
-    path:"/head-office-landing/menu-manage",
+    path:"/menu-manage",
     name:"MenuManage",
     component:MenuManage,
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] },
   },
   {
-    path:"/head-office-landing/menu-option-group-manage",
+    path:"/menu-option-group-manage",
     name:"MenuOptionGroupManage",
     component:MenuOptionGroupManage,
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] },
   },
+  {
+    path:"/manager/insight",
+    name: "ManagerInsight",
+    component: ManagerInsight,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
+  }
   ,
   {
     path: "/sign-up",
@@ -114,24 +129,40 @@ const routes = [
   },
   {
     name: 'storeordercheck_company',
-    path: '/storeorder/:storeId/check',
-    component: StoreOrderCheck_company
+    path: '/supplies',
+    component: StoreOrderCheck_company,
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
   },
   {
     name: 'storeordercheck_store',
-    path: '/storeorder/:storeId/checkforstore',
-    component: StoreOrderCheck_store
+    path: '/storeordercheck',
+    component: StoreOrderCheck_store,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
   {
     name: 'HallOrderManage',
     path: '/hallordermanage',
-    component: HallOrderManage
+    component: HallOrderManage,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
   {
     name: 'StoreOrder',
     path: '/storeorder',
-    component: StoreOrder
+    component: StoreOrder,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
   },
+  {
+    name: 'InfraAnalysis',
+    path: '/infra',
+    component: InfraAnalysis,
+    meta: { requiredRoles: ['ROLE_SUPER_ADMIN'] }
+  },
+  {
+    name: 'storeStockInsight',
+    path: '/stock-insight',
+    component: StockInsight,
+    meta: { requiredRoles: ['ROLE_ADMIN'] , hideSidenav: true}
+  }
 
 ];
 

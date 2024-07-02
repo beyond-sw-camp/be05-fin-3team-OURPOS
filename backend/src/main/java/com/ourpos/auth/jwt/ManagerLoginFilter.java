@@ -14,7 +14,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerLoginFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -39,7 +41,7 @@ public class ManagerLoginFilter extends UsernamePasswordAuthenticationFilter {
         authResult.getAuthorities().stream().findFirst().ifPresent(
             authority -> {
                 String role = authority.getAuthority();
-                String token = jwtUtil.createJwt(authResult.getName(), role, 60L * 60 * 24 * 7);
+                String token = jwtUtil.createJwt(authResult.getName(), role, 1000 * 60L * 60 * 24 * 7);
                 response.addHeader("Authorization", "Bearer " + token);
             }
         );
@@ -48,6 +50,7 @@ public class ManagerLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
         AuthenticationException failed) throws IOException, ServletException {
+        log.error("로그인 실패: {}", failed.getMessage());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 

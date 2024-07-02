@@ -53,7 +53,7 @@ public class StoreController {
     @GetMapping("/delivery")
     @PreAuthorize("hasRole('ROLE_USER')")
     public Result<List<StoreResponseDto>> findStoresOrderByDeliveryDistance() {
-        log.info("현재 위치에서 가장 가까운 배달 매장 정렬 조회");
+        log.info("나의 주소에서 가까운 배달 매장 정렬 조회");
         String loginId = getCustomerLoginId();
         List<StoreResponseDto> stores = storeService.findStoresOrderByDeliveryDistance(loginId);
 

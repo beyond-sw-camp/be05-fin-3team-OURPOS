@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - OrderServiceImplTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>OrderServiceImplTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.ourpos.api.order.service.html">com.ourpos.api.order.service</a> &gt; OrderServiceImplTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.275s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">주문한 메뉴의 가격을 수량과 옵션을 고려하여 계산한다.</td>
+<td class="success">calculatePrice()</td>
+<td class="success">0.149s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">포장/홀 주문을 통해 주문 하게 되면 레시피만큼 재고가 감소한다.</td>
+<td class="success">decreaseStoreStock()</td>
+<td class="success">0.072s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">재고가 모두 소진되면 주문이 불가능하고, 그 메뉴는 가게별제한메뉴 테이블에 저장된다.</td>
+<td class="success">soldOut()</td>
+<td class="success">0.054s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2024-06-27T22:32:43.940+09:00  INFO 68374 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ourpos.api.order.service.OrderServiceImplTest]: OrderServiceImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2024-06-27T22:32:43.964+09:00  INFO 68374 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ourpos.OurposApplication for test class com.ourpos.api.order.service.OrderServiceImplTest
+2024-06-27T22:32:43.973+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.978+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.980+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        category
+        (category_deleted_date_time, category_deleted_yn, category_name, category_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:43.984+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        menu
+        (category_id, created_date_time, menu_deleted_datetime, menu_deleted_yn, menu_description, modified_date_time, menu_name, menu_picture_url, menu_price, menu_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.986+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        category
+        (category_deleted_date_time, category_deleted_yn, category_name, category_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:43.987+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        menu
+        (category_id, created_date_time, menu_deleted_datetime, menu_deleted_yn, menu_description, modified_date_time, menu_name, menu_picture_url, menu_price, menu_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.992+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store_comm
+        (store_comm_article_unit, store_comm_category, created_date_time, store_comm_deleted_datetime, store_comm_deleted_yn, store_comm_description, modified_date_time, store_comm_name, store_comm_picture_url, store_comm_price, store_comm_status, store_comm_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:43.994+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        recipe
+        (recipe_content, menu_id, store_menu_id, recipe_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:43.995+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        recipe
+        (recipe_content, menu_id, store_menu_id, recipe_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:43.996+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store_stock
+        (created_at, store_stock_quantity, store_id, store_menu_id, store_stock_id) 
+    values
+        (?, ?, ?, ?, default)
+2024-06-27T22:32:44.007+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id is null
+2024-06-27T22:32:44.013+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        r1_0.recipe_id,
+        r1_0.recipe_content,
+        r1_0.menu_id,
+        r1_0.store_menu_id 
+    from
+        recipe r1_0 
+    left join
+        menu m1_0 
+            on m1_0.menu_id=r1_0.menu_id 
+    where
+        m1_0.menu_id=?
+2024-06-27T22:32:44.016+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ss1_0.store_stock_id,
+        ss1_0.created_at,
+        ss1_0.store_stock_quantity,
+        ss1_0.store_id,
+        ss1_0.store_menu_id 
+    from
+        store_stock ss1_0 
+    left join
+        store s1_0 
+            on s1_0.store_id=ss1_0.store_id 
+    left join
+        store_comm sc1_0 
+            on sc1_0.store_comm_id=ss1_0.store_menu_id 
+    where
+        s1_0.store_id=? 
+        and sc1_0.store_comm_id=?
+2024-06-27T22:32:44.018+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store_restricted_menu
+        (menu_id, store_id, store_restricted_menu_id) 
+    values
+        (?, ?, default)
+2024-06-27T22:32:44.020+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        srm1_0.store_restricted_menu_id,
+        srm1_0.menu_id,
+        srm1_0.store_id 
+    from
+        store_restricted_menu srm1_0 
+    left join
+        store s1_0 
+            on s1_0.store_id=srm1_0.store_id 
+    where
+        s1_0.store_id=?
+2024-06-27T22:32:44.026+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.027+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.028+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        category
+        (category_deleted_date_time, category_deleted_yn, category_name, category_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.029+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        menu
+        (category_id, created_date_time, menu_deleted_datetime, menu_deleted_yn, menu_description, modified_date_time, menu_name, menu_picture_url, menu_price, menu_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.031+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id is null
+2024-06-27T22:32:44.032+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        r1_0.recipe_id,
+        r1_0.recipe_content,
+        r1_0.menu_id,
+        r1_0.store_menu_id 
+    from
+        recipe r1_0 
+    left join
+        menu m1_0 
+            on m1_0.menu_id=r1_0.menu_id 
+    where
+        m1_0.menu_id=?
+2024-06-27T22:32:44.044+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.046+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.046+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_detail
+        (menu_id, order_id, order_detail_price, order_detail_quantity, order_detail_id) 
+    values
+        (?, ?, ?, ?, default)
+2024-06-27T22:32:44.047+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option_group
+        (order_option_group_name, order_detail_id, order_option_group_id) 
+    values
+        (?, ?, default)
+2024-06-27T22:32:44.048+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option
+        (order_option_name, order_option_group_id, order_option_price, order_option_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.163+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ho1_0.order_id,
+        ho1_1.order_completed_datetime,
+        ho1_1.created_date_time,
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role,
+        ho1_1.modified_date_time,
+        ho1_1.order_id,
+        ho1_1.order_price,
+        s1_0.store_id,
+        s1_0.store_address_id,
+        s1_0.store_close_time,
+        s1_0.store_close_yn,
+        s1_0.store_closed_datetime,
+        s1_0.created_date_time,
+        s1_0.kiosk_customer_id,
+        s1_0.manager_id,
+        s1_0.store_minimum_order_price,
+        s1_0.modified_date_time,
+        s1_0.store_name,
+        s1_0.store_open_time,
+        s1_0.store_phone,
+        s1_0.store_picture_url,
+        ho1_0.hall_order_takeout_yn,
+        ho1_0.hall_order_status 
+    from
+        hall_order ho1_0 
+    join
+        orders ho1_1 
+            on ho1_0.order_id=ho1_1.order_id 
+    join
+        customer c1_0 
+            on c1_0.customer_id=ho1_1.customer_id 
+    join
+        store s1_0 
+            on s1_0.store_id=ho1_1.store_id 
+    where
+        ho1_0.order_id=? 
+    fetch
+        first ? rows only
+2024-06-27T22:32:44.177+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        customer
+        (customer_age_range, created_date_time, customer_email, customer_gender, customer_login_id, modified_date_time, customer_name, customer_nickname, customer_phone, customer_profile_image, customer_role, customer_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.178+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store
+        (store_address_id, store_close_time, store_close_yn, store_closed_datetime, created_date_time, kiosk_customer_id, manager_id, store_minimum_order_price, modified_date_time, store_name, store_open_time, store_phone, store_picture_url, store_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.179+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        category
+        (category_deleted_date_time, category_deleted_yn, category_name, category_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.179+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        menu
+        (category_id, created_date_time, menu_deleted_datetime, menu_deleted_yn, menu_description, modified_date_time, menu_name, menu_picture_url, menu_price, menu_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.180+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        category
+        (category_deleted_date_time, category_deleted_yn, category_name, category_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.181+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        menu
+        (category_id, created_date_time, menu_deleted_datetime, menu_deleted_yn, menu_description, modified_date_time, menu_name, menu_picture_url, menu_price, menu_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.181+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store_comm
+        (store_comm_article_unit, store_comm_category, created_date_time, store_comm_deleted_datetime, store_comm_deleted_yn, store_comm_description, modified_date_time, store_comm_name, store_comm_picture_url, store_comm_price, store_comm_status, store_comm_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2024-06-27T22:32:44.182+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        recipe
+        (recipe_content, menu_id, store_menu_id, recipe_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.182+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        recipe
+        (recipe_content, menu_id, store_menu_id, recipe_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.182+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        store_stock
+        (created_at, store_stock_quantity, store_id, store_menu_id, store_stock_id) 
+    values
+        (?, ?, ?, ?, default)
+2024-06-27T22:32:44.185+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        c1_0.customer_id,
+        c1_0.customer_age_range,
+        c1_0.created_date_time,
+        c1_0.customer_email,
+        c1_0.customer_gender,
+        c1_0.customer_login_id,
+        c1_0.modified_date_time,
+        c1_0.customer_name,
+        c1_0.customer_nickname,
+        c1_0.customer_phone,
+        c1_0.customer_profile_image,
+        c1_0.customer_role 
+    from
+        customer c1_0 
+    where
+        c1_0.customer_login_id is null
+2024-06-27T22:32:44.190+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        r1_0.recipe_id,
+        r1_0.recipe_content,
+        r1_0.menu_id,
+        r1_0.store_menu_id 
+    from
+        recipe r1_0 
+    left join
+        menu m1_0 
+            on m1_0.menu_id=r1_0.menu_id 
+    where
+        m1_0.menu_id=?
+2024-06-27T22:32:44.195+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ss1_0.store_stock_id,
+        ss1_0.created_at,
+        ss1_0.store_stock_quantity,
+        ss1_0.store_id,
+        ss1_0.store_menu_id 
+    from
+        store_stock ss1_0 
+    left join
+        store s1_0 
+            on s1_0.store_id=ss1_0.store_id 
+    left join
+        store_comm sc1_0 
+            on sc1_0.store_comm_id=ss1_0.store_menu_id 
+    where
+        s1_0.store_id=? 
+        and sc1_0.store_comm_id=?
+2024-06-27T22:32:44.200+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        r1_0.recipe_id,
+        r1_0.recipe_content,
+        r1_0.menu_id,
+        r1_0.store_menu_id 
+    from
+        recipe r1_0 
+    left join
+        menu m1_0 
+            on m1_0.menu_id=r1_0.menu_id 
+    where
+        m1_0.menu_id=?
+2024-06-27T22:32:44.204+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    update
+        store_stock 
+    set
+        store_stock_quantity=?,
+        store_id=?,
+        store_menu_id=? 
+    where
+        store_stock_id=?
+2024-06-27T22:32:44.207+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    select
+        ss1_0.store_stock_id,
+        ss1_0.created_at,
+        ss1_0.store_stock_quantity,
+        ss1_0.store_id,
+        ss1_0.store_menu_id 
+    from
+        store_stock ss1_0 
+    left join
+        store s1_0 
+            on s1_0.store_id=ss1_0.store_id 
+    left join
+        store_comm sc1_0 
+            on sc1_0.store_comm_id=ss1_0.store_menu_id 
+    where
+        s1_0.store_id=? 
+        and sc1_0.store_comm_id=?
+2024-06-27T22:32:44.209+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        orders
+        (order_completed_datetime, created_date_time, customer_id, modified_date_time, order_price, store_id, order_type, order_id) 
+    values
+        (?, ?, ?, ?, ?, ?, 'hall', default)
+2024-06-27T22:32:44.211+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        hall_order
+        (hall_order_takeout_yn, hall_order_status, order_id) 
+    values
+        (?, ?, ?)
+2024-06-27T22:32:44.232+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_detail
+        (menu_id, order_id, order_detail_price, order_detail_quantity, order_detail_id) 
+    values
+        (?, ?, ?, ?, default)
+2024-06-27T22:32:44.236+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option_group
+        (order_option_group_name, order_detail_id, order_option_group_id) 
+    values
+        (?, ?, default)
+2024-06-27T22:32:44.237+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option
+        (order_option_name, order_option_group_id, order_option_price, order_option_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.237+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option
+        (order_option_name, order_option_group_id, order_option_price, order_option_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.237+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option_group
+        (order_option_group_name, order_detail_id, order_option_group_id) 
+    values
+        (?, ?, default)
+2024-06-27T22:32:44.238+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option
+        (order_option_name, order_option_group_id, order_option_price, order_option_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.238+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_detail
+        (menu_id, order_id, order_detail_price, order_detail_quantity, order_detail_id) 
+    values
+        (?, ?, ?, ?, default)
+2024-06-27T22:32:44.239+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option_group
+        (order_option_group_name, order_detail_id, order_option_group_id) 
+    values
+        (?, ?, default)
+2024-06-27T22:32:44.239+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option
+        (order_option_name, order_option_group_id, order_option_price, order_option_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.240+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option
+        (order_option_name, order_option_group_id, order_option_price, order_option_id) 
+    values
+        (?, ?, ?, default)
+2024-06-27T22:32:44.240+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option_group
+        (order_option_group_name, order_detail_id, order_option_group_id) 
+    values
+        (?, ?, default)
+2024-06-27T22:32:44.241+09:00 DEBUG 68374 --- [    Test worker] org.hibernate.SQL                        : 
+    insert 
+    into
+        order_option
+        (order_option_name, order_option_group_id, order_option_price, order_option_id) 
+    values
+        (?, ?, ?, default)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.7</a> at 2024. 6. 27. 오후 10:32:45</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,9 +1,9 @@
 <template>
-    <chart-holder-card title="Menu Preference Report" subtitle="Sales Trends Across All Locations"
-        update="real-time update" color="dark">
+    <chart-holder-card title="메뉴 선호도"
+                       subtitle="메뉴별 소비 트랜드 분석자료"
+                       update="실시간 업데이트"  color="dark">
         <div class="canvas">
             <canvas id="menuPreferAllChart"></canvas>
-            <p>Store ID: {{ storeId }}</p>
         </div>
     </chart-holder-card>
 </template>
@@ -26,7 +26,7 @@ const myChart = ref(null);
 const fetchData = async () => {
     isLoading.value = true;
     try {
-        const response = await axios.get('http://localhost:8080/api/v1/orders/menu-prefer', {
+        const response = await axios.get('https://api.ourpos.org/api/v1/orders/menu-prefer', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('token')
@@ -68,39 +68,64 @@ const updateChart = (salesData) => {
                     label: '식사 유형별 매출량',
                     data: Object.values(salesData),
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                        '#7469B6',
+                        '#AD88C6',
+                        '#E1AFD1',
+                        '#F27BBD',
+                        '#CAF4FF',
+                        '#0A6847',
+                        '#1E90FF',
+                        '#2C4E80',
+                        '#1E0342',
+                        '#B3C8CF',
+                        '#A1C398',
+                        '#627254',
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                      '#ffffff',
+                      '#ffffff',
+                      '#ffffff',
+                      '#ffffff',
+                      '#ffffff',
+                      '#ffffff',
+                      '#ffffff',
+                      '#ffffff',
+                      '#ffffff',
+                      '#ffffff',
+                      '#ffffff',
+                      '#ffffff',
                     ],
                     borderWidth: 1
                 }]
             },
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function (value) {
-                                return value;
-                            }
-                        }
-                    }
+              scales: {
+                x: {
+                  display: false, // x 축 눈금선을 숨김
+                },
+                y: {
+                  display: false, // y 축 눈금선을 숨김
                 }
-            }
-        });
-    }
+              },
+              plugins: {
+                legend: {
+                  labels: {
+                    font: {
+                      size: 14, // 폰트 크기 설정
+                    },
+                    color: '#ffffff' // 폰트 색상 설정
+                  }
+                }
+              }
+            },
+          animation: {
+            animateRotate: true,
+            animateScale: true
+          }
+    });
+  }
 };
+
 
 onMounted(() => {
     fetchData();

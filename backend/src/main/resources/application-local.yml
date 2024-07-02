@@ -4,9 +4,9 @@ spring:
       on-profile: local
 
   datasource:
-    url: jdbc:h2:tcp://localhost/~/ourpos
-    username: sa
-    password:
+    url: ${local.datasource.url}
+    username: ${local.datasource.username}
+    password: ${local.datasource.password}
     driver-class-name: org.h2.Driver
 
   jpa:
@@ -40,4 +40,6 @@ logging.level:
 
 # 프로필 사진이 저장되는 위치 설정
 file:
-  dir: \Users\user\Desktop\
+  dir: /Users/sangcheol/image/
+
+# 윈도우는 /Users/sangcheol/image\

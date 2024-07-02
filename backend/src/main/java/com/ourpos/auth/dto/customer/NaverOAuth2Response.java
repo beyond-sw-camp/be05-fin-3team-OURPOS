@@ -47,7 +47,7 @@ public class NaverOAuth2Response implements OAuth2Response {
 
     @Override
     public String getPhone() {
-        return attributes.get("mobile").toString();
+        return attributes.get("mobile").toString().replace("-", "");
     }
 
     @Override
