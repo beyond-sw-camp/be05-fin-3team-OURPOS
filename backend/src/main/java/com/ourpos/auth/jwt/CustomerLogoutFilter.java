@@ -70,6 +70,7 @@ public class CustomerLogoutFilter extends GenericFilterBean {
         Cookie cookie = new Cookie("Authorization", null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
+        cookie.setDomain(".ourpos.org");
 
         response.addCookie(cookie);
         response.setStatus(HttpServletResponse.SC_OK);

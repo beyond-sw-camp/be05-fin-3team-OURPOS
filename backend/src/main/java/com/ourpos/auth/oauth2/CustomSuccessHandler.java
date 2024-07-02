@@ -37,7 +37,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             () -> new LoginRequiredException("권한이 없습니다.")
         ).getAuthority();
 
-        String token = jwtUtil.createJwt(loginId, role, 1000 * 60L * 60 * 24 * 7);
+        String token = jwtUtil.createJwt(loginId, role, 60L * 60 * 24 * 7);
 
         if (customCustomerDetails.isNewUser() && role.equals("ROLE_USER")) {
             ResponseCookie cookie = createCookie(token);
@@ -55,7 +55,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         return ResponseCookie.from("Authorization", value)
             .httpOnly(true)
-            .maxAge(1000 * 60 * 60 * 24 * 7)
+            .maxAge(60 * 60 * 24 * 7)
             .domain(".ourpos.org")
             .path("/")
             .sameSite("None")
