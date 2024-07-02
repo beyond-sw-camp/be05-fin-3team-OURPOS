@@ -85,7 +85,7 @@ import {ref} from 'vue';
 import axios from 'axios';
 import {useRouter} from 'vue-router';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {faClock, faMapLocation, faPhone, faShoppingBag} from "@fortawesome/free-solid-svg-icons";
+import {faClock, faMapLocation, faPhone} from "@fortawesome/free-solid-svg-icons";
 
 const stores = ref([]);
 const router = useRouter();

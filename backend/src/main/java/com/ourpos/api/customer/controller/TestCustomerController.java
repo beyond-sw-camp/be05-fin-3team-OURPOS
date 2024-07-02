@@ -60,7 +60,7 @@ public class TestCustomerController {
 
         return ResponseCookie.from("Authorization", value)
             .httpOnly(true)
-            .maxAge(1000 * 60 * 60 * 24 * 7)
+            .maxAge(60 * 60 * 24 * 7)
             .domain(".ourpos.org")
             .path("/")
             .sameSite("None")
