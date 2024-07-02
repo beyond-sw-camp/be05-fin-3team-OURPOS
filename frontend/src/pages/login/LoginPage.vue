@@ -78,7 +78,7 @@ const testLogin = async () => {
     console.log('testLogin');
     localStorage.clear();
 
-    const response = await axios.post('http://localhost:8080/test/login', {}, {
+    const response = await axios.post('https://api.ourpos.org/test/login', {}, {
       withCredentials: true, // 쿠키를 포함하여 요청
     });
     console.log(response);
