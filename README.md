@@ -108,7 +108,8 @@
 
 <details>
 <summary><h3>💻 ourpos UI/UX 단위 테스트 </h3></summary>
-<a href="#">UI/UX 단위 테스트 결과서 Link</a>
+1. 모바일 어플리케이션
+https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/fb013e51-4d25-422a-be1a-86f2cdc37189
 </details>
 
 <h2 align="left">🏷️ ourpos 시스템 통합 </h2>
