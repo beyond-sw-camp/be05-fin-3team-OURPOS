@@ -77,9 +77,20 @@
                   </p>
                 </div>
               </div>
+              <div class="mt-3">
+                <p class="text-muted">샘플 계정:</p>
+                <ul class="text-muted">
+                  <li><strong>강남점</strong>  id: admin1, pw: 1234</li>
+                  <li><strong>고속터미널점</strong>  id: admin2, pw: 1234</li>
+                  <li><strong>서울역점</strong>  id: admin3, pw: 1234</li>
+                  <li><strong>여의도역점</strong>  id: admin4, pw: 1234</li>
+                  <li><strong>신대방삼거리점</strong>  id: admin5, pw: 1234</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
+
       </section>
     </main>
   </div>
@@ -100,7 +111,7 @@ const password = ref('');
 const illustrationImage = require('@/assets/img/illustrations/illustration-signin.jpg');
 const store = useStore();
 const router = useRouter();
-import {parseJwt} from "@/utils/auth";
+import { parseJwt } from "@/utils/auth";
 const body = document.getElementsByTagName("body")[0];
 
 const updateBodyClass = (revert = false) => {
