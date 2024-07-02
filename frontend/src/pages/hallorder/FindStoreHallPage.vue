@@ -104,43 +104,7 @@ const setOrderType = (orderTakeoutYn) => {
   orderTypeDialog.value = false;
 };
 
-const EXPIRATION_TIME = 10 * 60 * 1000; // 10분
-
-function setItemWithExpiration(key, value) {
-  const now = new Date().getTime();
-  const item = {
-    value: value,
-    timestamp: now
-  };
-  localStorage.setItem(key, JSON.stringify(item));
-}
-
-function getItemWithExpiration(key) {
-  const itemStr = localStorage.getItem(key);
-
-  if (!itemStr) {
-    return null;
-  }
-
-  const item = JSON.parse(itemStr);
-  const now = new Date().getTime();
-
-  if (now - item.timestamp > EXPIRATION_TIME) {
-    localStorage.removeItem(key);
-    return null;
-  }
-
-  return item.value;
-}
-
 const findItems = async (latitude, longitude) => {
-  const cachedStores = getItemWithExpiration('hallStores');
-  if (cachedStores) {
-    stores.value = cachedStores;
-    loading.value = false;
-    return;
-  }
-
   try {
     const response = await axios.get('https://api.ourpos.org/api/v1/stores/hall', {
       withCredentials: true,
@@ -154,7 +118,6 @@ const findItems = async (latitude, longitude) => {
       return;
     }
     stores.value = response.data.data;
-    setItemWithExpiration('hallStores', stores.value);
   } catch (error) {
     console.error('Error fetching items:', error);
   } finally {
@@ -194,25 +157,15 @@ const formatDistance = (distance) => {
   }
 };
 
-const latitude = getItemWithExpiration('latitude');
-const longitude = getItemWithExpiration('longitude');
-
 const initMap = () => {
-  if (latitude && longitude) {
+  navigator.geolocation.watchPosition((position) => {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
     findItems(latitude, longitude);
-  } else {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      findItems(latitude, longitude);
-
-      setItemWithExpiration('latitude', latitude.toString());
-      setItemWithExpiration('longitude', longitude.toString());
-    }, (error) => {
-      console.error('Error getting location:', error);
-      loading.value = false;
-    });
-  }
+  }, (error) => {
+    console.error('Error getting location:', error);
+    loading.value = false;
+  });
 }
 
 initMap();
