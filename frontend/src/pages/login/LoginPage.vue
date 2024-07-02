@@ -74,17 +74,27 @@ const onKakaoLogin = () => {
 }
 
 const testLogin = async () => {
-  console.log('testLogin');
-  localStorage.clear();
-  let response = await axios.post('https://api.ourpos.org/test/login');
-  console.log(response);
+  try {
+    console.log('testLogin');
+    localStorage.clear();
 
-  if (response.data.code === 200) {
-    router.push('/');
-  } else {
-    alert('로그인에 실패했습니다.');
+    const response = await axios.post('http://localhost:8080/test/login', {}, {
+      withCredentials: true, // 쿠키를 포함하여 요청
+    });
+    console.log(response);
+
+    if (response.data.code === 200) {
+      // 로그인 성공 시 홈 페이지로 이동
+      await router.push('/');
+    } else {
+      alert('로그인에 실패했습니다.');
+    }
+  } catch (error) {
+    console.error('로그인 중 오류가 발생했습니다:', error);
+    alert('로그인 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
   }
-}
+};
+
 
 const scaleUp = (event) => {
   event.target.style.transform = 'scale(1.1)';
