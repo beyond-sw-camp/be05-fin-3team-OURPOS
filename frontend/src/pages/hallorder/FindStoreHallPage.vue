@@ -65,11 +65,11 @@
 
 <script setup>
 import BottomNav from "@/components/BottomNav.vue";
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
-import { useRouter } from 'vue-router';
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faClock, faMapLocation, faPhone } from "@fortawesome/free-solid-svg-icons";
+import {useRouter} from 'vue-router';
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {faClock, faMapLocation, faPhone} from "@fortawesome/free-solid-svg-icons";
 
 const stores = ref([]);
 const router = useRouter();
@@ -198,13 +198,8 @@ const initMap = async () => {
         console.error('Error getting location:', error);
         loading.value = false;
 
-        // 오류 메시지 표시
-        alert('위치 정보를 가져올 수 없습니다. 브라우저 설정을 확인해 주세요.');
-      },
-      {
-        enableHighAccuracy: true, // 높은 정확도 요구
-        timeout: 5000, // 5초 내에 위치 정보 가져오기 시도
-        maximumAge: 0 // 항상 최신 위치 정보 가져오기
+        // 새로고침 시도
+        window.location.reload();
       }
     );
   }
