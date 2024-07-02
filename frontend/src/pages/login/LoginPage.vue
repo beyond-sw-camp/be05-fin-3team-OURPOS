@@ -73,10 +73,10 @@ const onKakaoLogin = () => {
   window.location.href = 'https://api.ourpos.org/oauth2/authorization/kakao';
 }
 
-const testLogin = () => {
+const testLogin = async () => {
   console.log('testLogin');
   localStorage.clear();
-  let response = axios.post('https://api.ourpos.org/test/login');
+  let response = await axios.post('https://api.ourpos.org/test/login');
   console.log(response);
 
   if (response.data.code === 200) {
