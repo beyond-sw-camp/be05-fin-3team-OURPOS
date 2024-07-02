@@ -52,7 +52,7 @@ public class TestCustomerController {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
             customOAuth2Customer, null, customOAuth2Customer.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authToken);
-        
+
         return new Result<>(HttpStatus.OK.value(), "테스트 로그인 성공", null);
     }
 
