@@ -6,12 +6,9 @@
 
 // Plugins
 import { registerPlugins } from '@/plugins'
-import './registerServiceWorker'
 
 // Components
 import App from './App.vue'
-
-// Composables
 import { createApp } from 'vue'
 
 const app = createApp(App)

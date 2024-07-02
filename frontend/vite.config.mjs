@@ -10,14 +10,12 @@ import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import { VitePWA } from 'vite-plugin-pwa'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     VueRouter(),
     Vue({
       template: { transformAssetUrls }
     }),
-    // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
     Vuetify({
       autoImport: true,
       styles: {
@@ -34,7 +32,42 @@ export default defineConfig({
       },
     }),
     VitePWA({
-      registerType: 'auto'
+      registerType: 'autoUpdate',
+      devOptions: {
+        enabled: true
+      },
+      manifest: {
+        "theme_color": "#f9f9f9",
+        "background_color": "#f9f9f9",
+        "display": "standalone",
+        "scope": "/",
+        "start_url": "/",
+        "name": "ourpos",
+        "short_name": "ourpos",
+        "description": "\ud584\ubc84\uac70 \ud504\ub79c\ucc28\uc774\uc988 \uc8fc\ubb38 \uc5b4\ud50c",
+        "icons": [
+          {
+            "src": "icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+          },
+          {
+            "src": "icons/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+          },
+          {
+            "src": "icons/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+          },
+          {
+            "src": "icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+          }
+        ]
+      }
     })
   ],
   define: { 'process.env': {} },
