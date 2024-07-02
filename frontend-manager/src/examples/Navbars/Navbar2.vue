@@ -3,6 +3,10 @@ export default {
   methods: {
     goBack() {
       this.$router.push('/manager');  // 이전 페이지로 이동
+    },
+    logout() {
+      localStorage.removeItem('token');  // 토큰 삭제
+      this.$router.push('/sign-up');  // 로그인 페이지로 이동
     }
   }
 }
@@ -16,6 +20,11 @@ export default {
     <div class="ml-auto">
       <button class="btn" @click="goBack">
         <i class="mdi mdi-export"></i>뒤로가기
+      </button>
+    </div>
+    <div class="ml-auto">
+      <button class="btn" @click="logout">
+        <i class="mdi mdi-export"></i>로그아웃
       </button>
     </div>
   </nav>
