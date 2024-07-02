@@ -58,54 +58,88 @@
 
 <details>
 <summary><h3>📁 ourpos 프로젝트 기획서</h3></summary>
+ <ul>
+<li>
 <a href="https://docs.google.com/document/d/16bPZb_D4clrZ0tqKmuFBGady2DPCxes2rAhIDuc3bQ8/edit?usp=sharing">프로젝트 기획서 Link</a>
+</li>
+ </ul>
 </details>
 
 <details>
 <summary><h3>📁 ourpos 업무 표준서 (기능 상세 기술)</h3></summary>
+ <ul>
+<li>
 <a href="https://docs.google.com/document/d/1sSuaMNQTp1y-zOhpg8orO8gqbK2dpxX2T3s0QhyflUU/edit">업무 표준 Link</a>
+</li>
+ </ul>
 </details>
 
 <details>
 <summary><h3>📁 ourpos 요구사항 정의서</h3></summary>
+   <ul>
+  <li>
 <a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit#gid=374839476">요구사항 정의서 Link</a>
+  </li>
+   </ul>
 </details>
 
 <details>
 <summary><h3>📁 ourpos 시스템 아키텍쳐</h3></summary>
+   <ul>
+  <li>
 <a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/75d372c8-16ce-4171-bb36-a0498bc54eb3">시스템 아키텍쳐 Link</a>
+  </li>
+   </ul>
 </details>
 
 <details>
 <summary><h3>📁 ourpos WBS</h3></summary>
+  <ul>
+  <li>
 <a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit#gid=1308199476">WBS Link</a>
+  </li>
+   </ul>
 </details>
 
 <details>
 <summary><h3>📁 ourpos ERD</h3></summary>
+ <ul>
+<li>
 <a href="https://www.erdcloud.com/d/JPNjAZ5zpek8r2zGC">ERD Link</a>
+</li>
+ </ul>
 </details>
 
 <details>
 <summary><h3>📁 ourpos 화면 설계서(Figma)</h3></summary>
+ <ul>
+<li>
 <a href="https://www.figma.com/design/iqi38u8n1XngmPmkvINnDV/Untitled?node-id=0-1&t=jTdCdDf0tgFWFKv9-0">화면설계서 Link</a>
+</li>
+ </ul>
 </details>
 
 <h2 align="left">🏷️ ourpos 백엔드  </h2>
 
 <details>
 <summary><h3>✴️ ourpos API 명세서</h3></summary>
+ <ul>
 <li>
 <a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit?gid=1805938231#gid=1805938231">고객용 모바일 어플리케이션, 키오스크 API명세서 Link</a>
 </li>
 <li>
 <a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit?gid=1026222313#gid=1026222313">직영점 pos, 본사용 pos API명세서 Link</a>
 </li>
+ </ul>
 </details>
 
 <details>
 <summary><h3>✴️ ourpos 단위 테스트 결과서</h3></summary>
+   <ul>
+  <li>
 <a href="https://api.ourpos.org/test/index.html">단위 테스트 결과서 Link</a>
+  </li>
+   </ul>
 </details>
 
 <h2 align="left">🏷️ ourpos 프론트 엔드 </h2>
@@ -132,11 +166,18 @@
 
 <details>
 <summary><h3>✔️ ourpos 통합 테스트 결과서 </h3></summary>
+  <ul>
+  <li>
 <a href="https://docs.google.com/spreadsheets/d/1OGhBM0uMtSuOBnyiKaoTmFWCNzh9yBIWZsBinWN29qI/edit?gid=1424215889#gid=1424215889">통합 테스트 결과서 Link</a>
+  </li> 
+  </ul>
 </details>
 
 <details>
 <summary><h3>✔️ ourpos CI/CD 계획서 </h3></summary>
+ <ul>
+<li>
 <a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/75d372c8-16ce-4171-bb36-a0498bc54eb3">CI/CD 계획서 Link</a>
-
+</li>
+ </ul>
 </details>
