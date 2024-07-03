@@ -74,7 +74,7 @@ const loadOrders = () => {
   const storedOrders = JSON.parse(localStorage.getItem('orders'));
   if (storedOrders && storedOrders.orderDetailDtos) {
     orders.value = storedOrders.orderDetailDtos.map(order => {
-      order.totalPrice = order.totalPrice || order.basePrice * order.quantity;
+      order.totalPrice = order.totalPrice || order.menuPrice * order.quantity;
       return order;
     });
     calculateTotalOrderPrice();
