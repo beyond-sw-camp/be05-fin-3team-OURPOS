@@ -84,7 +84,7 @@ const loadOrders = () => {
       order.totalPrice = calculateOrderTotalPrice(order);
       return order;
     });
-    calculateTotalOrderPrice();
+    // calculateTotalOrderPrice();
   }
 };
 
