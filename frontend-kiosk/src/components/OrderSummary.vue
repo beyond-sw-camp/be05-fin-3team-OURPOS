@@ -70,11 +70,18 @@ import { ref, watchEffect, onMounted } from 'vue';
 const orders = ref([]);
 const totalOrderPrice = ref(0);
 
+const calculateOrderTotalPrice = (order) => {
+  // const optionPrice = order.orderOptionGroups.reduce((sum, group) => {
+  //   return sum + group.orderOptions.reduce((groupSum, option) => groupSum + option.price, 0);
+  // }, 0);
+  return order.menuPrice * order.quantity;
+};
+
 const loadOrders = () => {
   const storedOrders = JSON.parse(localStorage.getItem('orders'));
   if (storedOrders && storedOrders.orderDetailDtos) {
     orders.value = storedOrders.orderDetailDtos.map(order => {
-      order.totalPrice = order.totalPrice || order.basePrice * order.quantity;
+      order.totalPrice = calculateOrderTotalPrice(order);
       return order;
     });
     calculateTotalOrderPrice();
@@ -94,7 +101,7 @@ const removeOrder = (index) => {
 const updateQuantity = (order, newQuantity) => {
   if (newQuantity > 0) {
     order.quantity = newQuantity;
-    order.totalPrice = order.menuPrice * newQuantity;
+    order.totalPrice = calculateOrderTotalPrice(order);
     updateLocalStorage();
     calculateTotalOrderPrice();
   }
