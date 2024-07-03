@@ -71,10 +71,10 @@ const orders = ref([]);
 const totalOrderPrice = ref(0);
 
 const calculateOrderTotalPrice = (order) => {
-  const optionPrice = order.orderOptionGroups.reduce((sum, group) => {
-    return sum + group.orderOptions.reduce((groupSum, option) => groupSum + option.price, 0);
-  }, 0);
-  return (order.menuPrice + optionPrice) * order.quantity;
+  // const optionPrice = order.orderOptionGroups.reduce((sum, group) => {
+  //   return sum + group.orderOptions.reduce((groupSum, option) => groupSum + option.price, 0);
+  // }, 0);
+  return order.menuPrice * order.quantity;
 };
 
 const loadOrders = () => {
@@ -84,7 +84,7 @@ const loadOrders = () => {
       order.totalPrice = calculateOrderTotalPrice(order);
       return order;
     });
-    // calculateTotalOrderPrice();
+    calculateTotalOrderPrice();
   }
 };
 
