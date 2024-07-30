@@ -55,7 +55,20 @@
 <br>
 
 <h2 align="left">🎬 프로젝트 소개 영상</h2>
-
+<ul>
+    <li>
+      <a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/fb013e51-4d25-422a-be1a-86f2cdc37189">모바일 어플리케이션</a>
+    </li>
+    <li>
+      <a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/348dca93-efa3-4e67-870e-988c30de45cb">키오스크</a>
+    </li>
+    <li>
+      <a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/19109ca5-108a-4800-a748-d96de10c9647">직영점 POS</a>
+    </li>
+    <li>
+      <a href="https://github.com/beyond-sw-camp/be05-fin-3team-OURPOS/assets/140836341/34e71eef-d525-498d-9474-96c08afe2451">본사용 POS</a>
+    </li>
+</ul>
 
 <h2 align="left">🔗 ourpos 페이지 링크</h2>
 <ul>
