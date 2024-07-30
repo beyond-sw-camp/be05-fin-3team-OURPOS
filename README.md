@@ -54,15 +54,34 @@
 </div>
 <br>
 
+<h2 align="left">🎬 프로젝트 소개 영상</h2>
+
+
+<h2 align="left">🔗 ourpos 페이지 링크</h2>
+<ul>
+  <li>
+  <a href="https://m.ourpos.org/">모바일 어플리케이션</a>
+  </li>
+  
+  <li>
+  <a href="https://admin.ourpos.org/sign-up">본사 및 직영점 관리 POS기</a>
+  </li>
+
+  
+  <li>
+  <a href="https://kiosk.ourpos.org/">주문 키오스크</a>
+  </li>
+</ul>
+
 <h2 align="left">🏷️ ourpos 프로젝트 문서 </h2>
 
 <details>
 <summary><h3>📁 ourpos 프로젝트 기획서</h3></summary>
- <ul>
-<li>
-<a href="https://docs.google.com/document/d/16bPZb_D4clrZ0tqKmuFBGady2DPCxes2rAhIDuc3bQ8/edit?usp=sharing">프로젝트 기획서 Link</a>
-</li>
- </ul>
+<ul>
+  <li>
+  <a href="https://docs.google.com/document/d/16bPZb_D4clrZ0tqKmuFBGady2DPCxes2rAhIDuc3bQ8/edit?usp=sharing">프로젝트 기획서 Link</a>
+  </li>
+</ul>
 </details>
 
 <details>
